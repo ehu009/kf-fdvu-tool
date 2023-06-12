@@ -246,10 +246,25 @@ function setupColumnFilter(name, options)	{
 	
 	document.body.appendChild(c)
 	
-	
-	populateCheckboxes(name + "-field", options, null);
-	allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
-	allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
+	let file = document.getElementById(name + "-file");
+	file.onchange = function() {
+		console.log("boif")
+		
+					if (file.files.length < 1) {
+						return;
+					}
+					spinnerFunction(name + "-spinner", function() {
+								let r = new FileReader();
+								r.onload = function(){
+											let arr = CSVToArray(r.result, ";");
+											let options = arr[0];
+											populateCheckboxes(name + "-field", options, null);
+											allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
+											allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
+										};
+								r.readAsText(file.files[0]);
+							});
+				};
 	
 	
 	let button = document.getElementById(name + "-download");
@@ -274,7 +289,7 @@ function setupColumnFilter(name, options)	{
 												wanted.push(e[0]);
 											}
 										}
-										downloadCSV(arrayToCSV(arrayFilter(arr, wanted),";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+										downloadCSV(arrayToCSV(arrayColFilter(arr, wanted),";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
 									};
 							r.readAsText(fileInput.files[0]);
 						});
