@@ -161,6 +161,7 @@ function createCheckboxSelection (containerId, defaultsMap) {
 }
 
 function populateCheckboxes(containerId, nameList, defaults) {
+	document.getElementById(containerId).innerHTML = "";
 	if (defaults != null) {
 		createCheckboxSelection(containerId, defaults);
 	}
