@@ -1,0 +1,64 @@
+body {
+	padding: 25px;
+}
+
+p, td {
+	border: 2px solid;
+}
+p {
+	 padding: 25px;
+}
+div.container {
+	border: 2px solid;
+	padding: 25px;
+}
+th {
+	color: white;
+	font-weight: bold;
+	background-color: black;
+}
+
+tr:nth-child(odd) {
+	background-color: #ffffff;
+}
+tr:nth-child(even) {
+	background-color: #eeeeee;
+}
+.missing {
+	background-color: yellow;
+}
+.danger {
+	background-color: red;
+}
+.passive {
+	color: white;
+	background-color: green;
+}
+.double {
+	background-color: orange;
+}
+.checkbox-container {
+	border: 1px solid;
+	margin: 4px;
+	padding: 4px;
+	display: inline-block;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(359deg);
+		-webkit-transform: rotate(359deg);
+		-ms-transform: rotate(359deg);
+	}
+}
+.spinning {
+	font-weight: bold;
+	animation: rotation 2s infinite linear;
+	display: inline-block;
+	visibility: hidden;
+}
