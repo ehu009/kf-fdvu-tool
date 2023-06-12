@@ -1,0 +1,73 @@
+<html>
+<head>
+<script type="text/javascript" src="gen.js">
+</script>
+<style type="text/css">
+body {
+	padding: 25px;
+}
+
+p, td {
+	border: 2px solid;
+}
+p {
+	 padding: 25px;
+}
+th {
+	color: white;
+	font-weight: bold;
+	background-color: black;
+}
+
+tr:nth-child(odd) {
+	background-color: #ffffff;
+}
+tr:nth-child(even) {
+	background-color: #eeeeee;
+}
+.missing {
+	background-color: yellow;
+}
+.danger {
+	background-color: red;
+}
+.passive {
+	color: white;
+	background-color: green;
+}
+.double {
+	background-color: orange;
+}
+</style>
+</head>
+
+<body>
+	<h3>Nøkler som skal til KF</h3>
+	<p>
+		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
+		<input type="file" id="active-file">
+	</p>
+	
+	<p>
+		<s>
+		Liste over alle nåværende utleiekontrakter som ikke har status <i>avsluttet</i>: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
+		Inkluderer <i>mottatt, under behandling, løpende, under fornying, under avslutning</i>.<br/>
+		<input type="file" id="current-contract-file" disabled>
+		</s>
+	</p>
+	<p>
+		Liste over <b>alle</b> nøkler: <a href="https://fdvu.net/fmentitykey/list?FmEntityId=905164f2-88a0-48cb-baa2-0ff0a0be75bc">(lenke)</a><br/>
+		
+		<input type="file" id="key-file">
+	</p>
+	
+	<p>
+		<!--<button onclick="testCalc();" type="button">test utregning</button>-->
+		<button onclick="beginKeys('calc-table', 'result-table');" type="button">lag venstre-flett</button>
+		<!--<button onclick="boingo();" type="button">test array</button>-->
+	</p>
+	
+	<p>
+		<table id="calc-table"></table>
+	</p>
+</body>
