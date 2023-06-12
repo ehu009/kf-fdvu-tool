@@ -186,6 +186,7 @@ function setupColumnFilter(name, options)	{
 		i.id = name + "-remove";
 		i.name = name + "-option";
 		i.value = "remove";
+		i.checked = true;
 		
 		let l = document.createElement("label");
 		l.for = name + "-remove";
