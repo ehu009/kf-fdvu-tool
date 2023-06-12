@@ -170,7 +170,7 @@ function populateCheckboxes(containerId, nameList, defaults) {
 	}
 }
 
-function setupColumnFilter(name, options)	{
+function setupColumnFilter(name)	{
 	let c = document.getElementById(name + "-container");
 	{
 		let input = document.createElement("input");
