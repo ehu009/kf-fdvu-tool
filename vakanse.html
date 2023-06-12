@@ -5,29 +5,18 @@
 </head>
 
 <body>
-	<h3>Inntektsberegning januar t.o.m. april</h3>
+	<h3>Inntektsberegning</h3>
 	<p>
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
 		<input type="file" id="active-file">
 	</p>
-	
-	<p>
-		<s>
-		Liste over alle nåværende utleiekontrakter som ikke har status <i>avsluttet</i>: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
-		Inkluderer <i>mottatt, under behandling, løpende, under fornying, under avslutning</i>.<br/>
-		<input type="file" id="current-contract-file" disabled>
-		</s>
-	</p>
 	<p>
 		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
-		
 		<input type="file" id="all-contract-file">
 	</p>
 	
 	<p>
-		<!--<button onclick="testCalc();" type="button">test utregning</button>-->
 		<button onclick="beginLoss('calc-table', 'result-table');" type="button">lag venstre-flett</button>
-		<!--<button onclick="boingo();" type="button">test array</button>-->
 	</p>
 	
 	<hr/>
@@ -61,12 +50,8 @@
 	<hr/>
 	<p>
 		<b>
-		
 		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
-		Oransje markering er brukt når en seksjon <span class="double">har overlappende kontrakter</span>.
-		
-		
-		</b>
+		Oransje markering er brukt når en seksjon <span class="double">har overlappende kontrakter</span>.</b>
 		
 		<table id="calc-table"></table>
 	</p>
