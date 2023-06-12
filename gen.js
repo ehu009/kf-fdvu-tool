@@ -170,7 +170,7 @@ function populateCheckboxes(containerId, nameList, defaults) {
 	}
 }
 
-function setupColumnFilter(name)	{
+function setupColumnFilter(name) {
 	let c = document.getElementById(name + "-container");
 	{
 		let input = document.createElement("input");
@@ -247,34 +247,26 @@ function setupColumnFilter(name)	{
 	
 	document.body.appendChild(c)
 	
+	let button = document.getElementById(name + "-download");
 	let file = document.getElementById(name + "-file");
 	file.onchange = function() {
-		console.log("boif")
 		
-					if (file.files.length < 1) {
-						return;
-					}
-					spinnerFunction(name + "-spinner", function() {
-								let r = new FileReader();
-								r.onload = function(){
-											let arr = CSVToArray(r.result, ";");
-											let options = arr[0];
-											populateCheckboxes(name + "-field", options, null);
-											allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
-											allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
-										};
-								r.readAsText(file.files[0]);
-							});
-				};
-	
-	
-	let button = document.getElementById(name + "-download");
-	document.getElementById(name + "-file").onchange = function() {
-				if (document.getElementById(name + "-file").files.length == 0) {
-					button.disabled = true;
-				} else {
-					button.disabled = false;
+				button.disabled = true;
+				if (file.files.length < 1) {
+					return;
 				}
+				spinnerFunction(name + "-spinner", function() {
+							let r = new FileReader();
+							r.onload = function(){
+										let arr = CSVToArray(r.result, ";");
+										let options = arr[0];
+										populateCheckboxes(name + "-field", options, null);
+										allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
+										allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
+										button.disabled = false;
+									};
+							r.readAsText(file.files[0]);
+						});
 			};
 	
 	button.onclick = function() {
