@@ -1,0 +1,98 @@
+<html>
+<head>
+<script type="text/javascript" src="gen.js">
+</script>
+<style type="text/css">
+body {
+	padding: 25px;
+}
+
+p, td {
+	border: 2px solid;
+}
+p {
+	 padding: 25px;
+}
+th {
+	color: white;
+	font-weight: bold;
+	background-color: black;
+}
+tr:nth-child(even) {
+	background-color: #eeeeee;
+}
+.missing {
+	background-color: yellow;
+}
+.danger {
+	background-color: red;
+}
+.passive {
+	background-color: green;
+}
+</style>
+</head>
+
+<body>
+	<h3>Tidsbestemt inntektsberegning</h3>
+	<p>
+		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
+		<input type="file" id="active-file">
+	</p>
+
+	<p>
+		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
+		<input type="file" id="all-contract-file">
+	</p>
+	
+	<p>
+		Velg tidsspenn:<br>
+		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
+
+		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table');" type="button" disabled>Lag flett</button>
+		<script type="text/javascript">
+			let from = document.getElementById("date-from");
+			let to = document.getElementById("date-to");
+			let btn = document.getElementById("calc-btn");
+			from.onchange = function () {
+				if (to.value != "") {
+					btn.disabled = false;
+				} else {
+					btn.disabled = true;
+				}
+				console.log(from.value);
+			}
+			to.onchange = function () {
+				if (from.value != "") {
+					btn.disabled = false;
+				} else {
+					btn.disabled = true;
+				}
+				console.log(to.value);
+			}
+		</script>
+	</p>
+	
+	<hr/>
+	<p>
+		<table id="result-table">
+			<tr>
+				<th>Sum av ikke-passive boliger</th>
+				<th>Sum av passive boliger</th>
+				<th>Totalsum - inntekter</th>
+				<th>Gjennomsnitt inntekt per måned</th>
+			</tr>
+		</table>
+	</p>
+	<hr/>
+	<p>
+		<b>
+		<!--I tilfeller der seksjon ikke har tilknyttet kontrakt, er kontrakt-pris <span class="missing"> kopiert fra seksjons-pris og markert i gult</span>.<br/>-->
+		Rød markering er brukt når <span class="danger">kontrakt mangler pris<!-- eller en kontrakt har hatt pris lik 0--></span> i Facilit.<br>
+		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
+		<span class="passive">Passiv kontrakt og Driftskontrakt</span> er markert i grønt.<br>
+		</b>
+		<button type="button" disabled id="download-calc-btn">Last ned CSV</button>
+		<table id="calc-table"></table>
+	</p>
+</body>
