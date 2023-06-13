@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="./kode/style.css"/>
 </head>
 
-<body>
+<body onload="ensureDates('date-from', 'date-to', 'loss-btn');">
 	<h2>Vakanse</h2>
 	<p>
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
@@ -14,7 +14,11 @@
 		<input type="file" id="all-contract-file">
 		<br/><br/>
 	
-		<button onclick="beginLoss('calc-table', 'result-table');" type="button">Lag flett</button>
+		Velg tidsspenn:<br>
+		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
+		<br/>
+		
+		<button disabled id="loss-btn" onclick="beginLoss('calc-table', 'result-table');" type="button">Lag flett</button>
 	</p>
 	
 	<hr/>
