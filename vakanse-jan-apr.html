@@ -1,0 +1,57 @@
+<html>
+<head>
+<script type="text/javascript" src="./kode/gen.js"></script>
+<link rel="stylesheet" href="./kode/style.css"/>
+</head>
+
+<body>
+	<h2>Vakanse</h2>
+	<p>
+		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
+		<input type="file" id="active-file">
+		<br/><br/>
+		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
+		<input type="file" id="all-contract-file">
+		<br/><br/>
+	
+		<button id="loss-btn" onclick="beginLoss('calc-table', 'result-table');" type="button">Lag flett</button>
+	</p>
+	
+	<hr/>
+		Tap for vakanse og vedlikehold beregnes separat.<br/>
+ 		Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris.<br/>
+		I vedlikehold medregnes kontrakter der leietaker heter en av følgende:
+		<ul>
+			<li>Driftsadministrasjonen</li>
+			<li>Driftsavdelingen</li>
+			<li>Tromsø kommune v/Byggforvaltningen</li>
+			<li>Drift Leide Boliger</li>
+			<li>Stiftelsen Kommunale Boliger</li>
+		</ul>
+		
+		Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer.<br/>
+		Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter.
+		<table id="result-table">
+			<tr>
+				<th>Måned</th>
+				<th>Sum - dager vakant</th>
+				<th>Sum - vakansetap</th>
+				<th>Sum - dager hos drift</th>
+				<th>Sum - tap pga drift</th>
+				<th>Sum - dager passiv</th>
+				<th>Sum - passiv kostnad</th>
+				
+				<th>Sum - Vakanse + Drift</th>
+			</tr>
+		</table>
+	
+	<hr/>
+	<p>
+		<b>
+		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
+		Oransje markering er brukt når en seksjon <span class="double">har overlappende kontrakter</span>.</b>
+		
+		<table id="calc-table"></table>
+	</p>
+</body>
+</html>
