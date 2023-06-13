@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="./kode/style.css"/>
 </head>
 
-<body>
+<body onload="ensureDates('date-from', 'date-to', 'calc-btn');">
 	<h2>Inntekter</h2>
 	<p>
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
@@ -12,14 +12,11 @@
 		<br/><br/>
 		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
 		<input type="file" id="all-contract-file">
-<br/><br/>
+		<br/><br/>
 		Velg tidsspenn:<br>
 		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
-<br/>
+		<br/>
 		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table');" type="button" disabled>Lag flett</button>
-		<script type="text/javascript">
-		ensureDates("date-from", "date-to", "calc-btn");
-		</script>
 	</p>
 	
 	<hr/>
