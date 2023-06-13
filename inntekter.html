@@ -18,25 +18,7 @@
 <br/>
 		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table');" type="button" disabled>Lag flett</button>
 		<script type="text/javascript">
-			let from = document.getElementById("date-from");
-			let to = document.getElementById("date-to");
-			let btn = document.getElementById("calc-btn");
-			from.onchange = function () {
-				if (to.value != "") {
-					btn.disabled = false;
-				} else {
-					btn.disabled = true;
-				}
-				console.log(from.value);
-			}
-			to.onchange = function () {
-				if (from.value != "") {
-					btn.disabled = false;
-				} else {
-					btn.disabled = true;
-				}
-				console.log(to.value);
-			}
+		ensureDates("date-from", "date-to", "calc-btn");
 		</script>
 	</p>
 	

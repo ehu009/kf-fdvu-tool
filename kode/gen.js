@@ -169,7 +169,26 @@ function populateCheckboxes(containerId, nameList, defaults) {
 		createCheckbox(containerId, c);
 	}
 }
-
+function ensureDates(fromId, toId, buttonId) {
+	let from = document.getElementById(fromId);
+	let to = document.getElementById(toId);
+	let btn = document.getElementById(buttonId);
+	from.onchange = function () {
+		if (to.value != "") {
+			btn.disabled = false;
+		} else {
+			btn.disabled = true;
+		}
+		console.log(from.value);
+	}
+	to.onchange = function () {
+		if (from.value != "") {
+			btn.disabled = false;
+		} else {
+			btn.disabled = true;
+		}
+	}
+}
 function setupColumnFilter(name) {
 	let c = document.getElementById(name + "-container");
 	{
