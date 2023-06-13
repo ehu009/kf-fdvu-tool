@@ -51,9 +51,9 @@ function downloadCSV(csvContent, fileName) {
 	link.setAttribute("href", encodedUri);
 	link.setAttribute("download", fileName);
 	link.hidden = true;
-	document.body.appendChild(link); // Required for FF
+	document.body.appendChild(link);
 
-	link.click(); // This will download the data file named "my_data.csv".
+	link.click();
 }
 
 
@@ -214,7 +214,6 @@ function setupColumnFilter(name) {
 		f.appendChild(i);
 		f.appendChild(l);
 		f.appendChild(document.createElement("br"));
-		//
 		
 		i = document.createElement("input");
 		i.type = "radio";
@@ -490,7 +489,6 @@ function writeArrayTo(array, containerId) {
 			var cell = document.createElement("td");
 			
 			if (c == 2) {
-				//val = stringToNumber(val);
 				if (val < 0) {
 					cell.classList.add("passive");
 					val = null;
@@ -506,25 +504,8 @@ function writeArrayTo(array, containerId) {
 		if (array[r].length < 3) {
 			var cell = document.createElement("td");
 			cell.classList.add("missing");
-			//cell.appendChild(document.createTextNode());
 			row.appendChild(cell);
 		}
-			
-			
-			
-			
-				/*
-		if (array[r].length < 4) {
-			var cell = document.createElement("td");
-			cell.appendChild(document.createTextNode(array[r][2]));
-			cell.classList.add("missing");
-			row.appendChild(cell);
-		}*/
-		
-		
-		
-		//color green
-		
 		
 		table.appendChild(row);
 	}
@@ -547,8 +528,6 @@ function mapKeys(arr) {
 			out.set(name, [row[0]]);
 		}
 	}
-	
-	
 	
 	return out;
 }
@@ -630,7 +609,6 @@ function drawKeys(arr, map, dst) {
 			above += 1;
 		}
 	}
-	//console.log("under: "+under+", above: "+above)
 	return out;
 }
 
@@ -666,7 +644,6 @@ function writeEndResult(array, containerId) {
 	row.appendChild(cell)
 	cell = document.createElement("td");
 	cell.appendChild(document.createTextNode(active));
-	//cell.appendChild(document.createTextNode(contract));
 	row.appendChild(cell);
 	cell = document.createElement("td");
 	cell.appendChild(document.createTextNode(active/4));
@@ -838,14 +815,7 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 		var val = stringToNumber(arr[r][3]);
 		if (arr[r][0] == "Passiv" || arr[r][0] == "Driftsadministrasjonen") {
 			val = -1;
-			//if (!map.has(fnr)) {
-				map.set(fnr, -1);
-			/*
-			} else {
-				var s = map.get(fnr);
-				s += (days*val/30);
-				map.set(fnr, s);
-			}*/
+			map.set(fnr, -1);
 		}
 		
 		var from = arr[r][1];
@@ -905,10 +875,6 @@ function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, e
 				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, "01.03.2023", "01.04.2023", 31), m);
 				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, "01.04.2023", "01.05.2023", 30), a);
 			}
-			
-			//out.set(arr[r][nameIdx], [j, f, m, a]);
-		//} else {
-			//
 		}
 		out.set(arr[r][nameIdx], [j, f, m, a]);
 	}
@@ -1017,19 +983,6 @@ function beginLoss(calcTable, resultTable) {
 				var row;
 				var cell;
 				
-				/*
-				row = document.createElement("tr");
-				var head = arr[0].concat(["måned", "dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"])
-				for (let c = 0; c < head.length; c += 1) {
-					if (c == 2) {
-						continue;
-					}
-					cell = document.createElement("th");
-					cell.appendChild(document.createTextNode(head[c]));
-					row.appendChild(cell);
-				}
-				table.appendChild(row);
-				*/
 				var monthNames = ["Januar", "Februar", "Mars", "April"];
 				
 				function newRow(content, className) {
@@ -1093,28 +1046,12 @@ function beginLoss(calcTable, resultTable) {
 					console.log(row)
 					table.appendChild(newRow(row, ""));
 				}
-				
-				
 				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
 				table.appendChild(newRow(totals), "");
-				
-				
-				
-				
-				
 			}
 			
 			fjott(activeList, monthly, resultTable)
 			
-			
-			
-			/*
-			var total = totalResultCalc(activeList, monthly)
-			
-			
-			drawTotals(monthsWithNames, total, resultTable);
-			*/
-			//console.log(monthsWithNames)
 		});
 	
 	var f1 = new FileReader();
@@ -1173,19 +1110,6 @@ function beginOldLoss(calcTable, resultTable) {
 				var row;
 				var cell;
 				
-				/*
-				row = document.createElement("tr");
-				var head = arr[0].concat(["måned", "dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"])
-				for (let c = 0; c < head.length; c += 1) {
-					if (c == 2) {
-						continue;
-					}
-					cell = document.createElement("th");
-					cell.appendChild(document.createTextNode(head[c]));
-					row.appendChild(cell);
-				}
-				table.appendChild(row);
-				*/
 				var monthNames = ["Januar", "Februar", "Mars", "April"];
 				
 				function newRow(content, className) {
@@ -1249,28 +1173,12 @@ function beginOldLoss(calcTable, resultTable) {
 					console.log(row)
 					table.appendChild(newRow(row, ""));
 				}
-				
-				
 				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
 				table.appendChild(newRow(totals), "");
-				
-				
-				
-				
-				
 			}
 			
 			fjott(activeList, monthly, resultTable)
 			
-			
-			
-			/*
-			var total = totalResultCalc(activeList, monthly)
-			
-			
-			drawTotals(monthsWithNames, total, resultTable);
-			*/
-			//console.log(monthsWithNames)
 		});
 	
 	var f1 = new FileReader();
@@ -1320,7 +1228,6 @@ function beginGainCalc(calcTable, resultTable) {
 			var B = contractList;
 			
 			A[0][0] = "Fasilitetsnummer";
-			//A[0][2] = "Seksjon pris";
 			B[0][1] = "Sum inntekter";
 			var result = arrayMerge(A, B, "Fasilitetsnummer");
 			
