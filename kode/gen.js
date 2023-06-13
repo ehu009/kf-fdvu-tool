@@ -179,7 +179,6 @@ function ensureDates(fromId, toId, buttonId) {
 		} else {
 			btn.disabled = true;
 		}
-		console.log(from.value);
 	}
 	to.onchange = function () {
 		if (from.value != "") {
@@ -536,7 +535,7 @@ function drawKeys(arr, map, dst) {
 	var table = document.getElementById(dst);
 	var row;
 	var cell;
-	console.log(map)
+	
 	row = document.createElement("tr");
 	cell = document.createElement("th");
 	cell.appendChild(document.createTextNode("Seksjon#"));
@@ -570,7 +569,6 @@ function drawKeys(arr, map, dst) {
 			var l = map.get(arr[r][0]);
 			if (l == undefined) {
 				continue;
-				console.log(arr[r])
 			}
 			for (c = 0; c < l.length; c += 1) {
 				var c1 = arr[r][0];
@@ -622,7 +620,7 @@ function writeEndResult(array, containerId) {
 	var boliger = 0;
 	var active = 0;
 	var passive = 0;
-	console.log(array.length)
+	
 	for (let row = 1; row < array.length; row += 1) {
 		var v = array[row][2];
 		if (v != null) {
@@ -807,7 +805,6 @@ function contractFilter(arr, cutoffLow, cutoffHigh) {
 
 function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 	var out = [["Fasilitetsnummer", "Sum"]];
-	console.log(arr)
 	var map = new Map();
 	
 	for (let r = 1; r < arr.length; r += 1) {
@@ -831,7 +828,6 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 		
 		
 		var days = calcDays(arr[r][1], arr[r][2], dateParse(cutoffLow), dateParse(cutoffHigh));
-		console.log("days: "+days);
 		if (!map.has(fnr)) {
 			map.set(fnr, (days*val/30));
 		} else {
@@ -1043,7 +1039,6 @@ function beginLoss(calcTable, resultTable) {
 				rows.push(j, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					console.log(row)
 					table.appendChild(newRow(row, ""));
 				}
 				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
@@ -1170,7 +1165,6 @@ function beginOldLoss(calcTable, resultTable) {
 				rows.push(j, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					console.log(row)
 					table.appendChild(newRow(row, ""));
 				}
 				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
