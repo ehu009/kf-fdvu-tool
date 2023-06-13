@@ -1135,6 +1135,162 @@ function beginLoss(calcTable, resultTable) {
 	
 }
 
+function beginOldLoss(calcTable, resultTable) {
+	
+	var readyTarget = {
+			count:2
+		};
+	const readyEvent = new Event("dataReady");
+	var ready = new Proxy(readyTarget, {
+			set: function (target, key, value) {
+					target[key] = value;
+					
+					if (target[key] == 0) {
+						document.dispatchEvent(readyEvent);
+					}
+					return true;
+				}
+		});
+	
+	var actives = document.getElementById('active-file');
+	var activeList = null;
+	var contracts = document.getElementById('all-contract-file');
+	var contractMap = null;
+	
+	
+	document.addEventListener("dataReady", () => {
+			var A = activeList;
+			var B = contractMap;
+			
+			var perSection = contractLossCalc(A, 0, 2, B, 0, 1, 2, 3);
+			var monthly = monthResultCalc(perSection);
+			drawSections(activeList, monthly, calcTable);
+			
+			
+			function fjott (arr, map, containerId) {
+				
+				var table = document.getElementById(containerId);
+				var row;
+				var cell;
+				
+				/*
+				row = document.createElement("tr");
+				var head = arr[0].concat(["måned", "dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"])
+				for (let c = 0; c < head.length; c += 1) {
+					if (c == 2) {
+						continue;
+					}
+					cell = document.createElement("th");
+					cell.appendChild(document.createTextNode(head[c]));
+					row.appendChild(cell);
+				}
+				table.appendChild(row);
+				*/
+				var monthNames = ["Januar", "Februar", "Mars", "April"];
+				
+				function newRow(content, className) {
+					var r = document.createElement("tr");
+					for (let i = 0; i < content.length; i += 1) {
+						var c = document.createElement("td");
+						if (i > 1) {
+							if (className != "") {
+								c.classList.add(className);
+							}
+						}
+						c.appendChild(document.createTextNode(content[i]));
+						r.appendChild(c);
+					}
+					return r;
+				}
+				
+				var rows = [];
+				var j = [0,0,0,0,0,0,0];
+				var f = [0,0,0,0,0,0,0];
+				var m = [0,0,0,0,0,0,0];
+				var a = [0,0,0,0,0,0,0];
+				function addLine(src, dst) {
+					if (src[1] >= 0){
+						arrayAddition(src, dst);
+					}
+				}
+				
+				for (let r = 1; r < arr.length; r += 1) {
+					
+					if (map.has(arr[r][0])) {
+						var months = map.get(arr[r][0]);
+						addLine(months[0], j);
+						addLine(months[1], f);
+						addLine(months[2], m);
+						addLine(months[3], a);
+					} else {
+						var empty = [0,0,0,0,0,0];
+						arrayAddition(empty, j);
+						arrayAddition(empty, f);
+						arrayAddition(empty, m);
+						arrayAddition(empty, a);
+					}
+				}
+				
+				var totals = [0, 0, 0, 0, 0, 0, 0];
+				arrayAddition(j, totals);
+				arrayAddition(f, totals);
+				arrayAddition(m, totals);
+				arrayAddition(a, totals);
+				totals.unshift("Sum");
+				
+				j.unshift("Januar");
+				f.unshift("Februar");
+				m.unshift("Mars");
+				a.unshift("April");
+				
+				rows.push(j, f, m, a)
+				for (let r = 0; r < rows.length; r += 1) {
+					row = rows[r];
+					console.log(row)
+					table.appendChild(newRow(row, ""));
+				}
+				
+				
+				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
+				table.appendChild(newRow(totals), "");
+				
+				
+				
+				
+				
+			}
+			
+			fjott(activeList, monthly, resultTable)
+			
+			
+			
+			/*
+			var total = totalResultCalc(activeList, monthly)
+			
+			
+			drawTotals(monthsWithNames, total, resultTable);
+			*/
+			//console.log(monthsWithNames)
+		});
+	
+	var f1 = new FileReader();
+	f1.onload = function(){
+			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
+			ready["count"] -= 1;
+		}
+	f1.readAsText(actives.files[0]);
+	
+	var f2 = new FileReader();
+	f2.onload = function(){
+			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date("2023 01 01"), new Date("2023 05 01"), 6, 7, 12);
+			var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
+			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5);
+			ready["count"] -= 1;
+		}
+	f2.readAsText(contracts.files[0]);
+	
+}
+
 function beginGainCalc(calcTable, resultTable) {
 	
 	var readyTarget = {
