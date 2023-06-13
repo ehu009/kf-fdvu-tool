@@ -940,13 +940,11 @@ function attachMonthNames(monthly) {
 	return out;
 }
 
-
-function beginLoss(calcTable, resultTable) {
-	
+function semaphore(name) {
 	var readyTarget = {
 			count:2
 		};
-	const readyEvent = new Event("dataReady");
+	const readyEvent = new Event(name);
 	var ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
@@ -958,13 +956,20 @@ function beginLoss(calcTable, resultTable) {
 				}
 		});
 	
+	return ready;
+}
+
+function beginLoss(calcTable, resultTable) {
+	let eventName = "dataReady";
+	let ready = semaphore(eventName);
+	
 	var actives = document.getElementById('active-file');
 	var activeList = null;
 	var contracts = document.getElementById('all-contract-file');
 	var contractMap = null;
 	
 	
-	document.addEventListener("dataReady", () => {
+	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractMap;
 			
@@ -1068,21 +1073,9 @@ function beginLoss(calcTable, resultTable) {
 }
 
 function beginOldLoss(calcTable, resultTable) {
+	let eventName = "dataReady";
+	let ready = semaphore(eventName);
 	
-	var readyTarget = {
-			count:2
-		};
-	const readyEvent = new Event("dataReady");
-	var ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
-					target[key] = value;
-					
-					if (target[key] == 0) {
-						document.dispatchEvent(readyEvent);
-					}
-					return true;
-				}
-		});
 	
 	var actives = document.getElementById('active-file');
 	var activeList = null;
@@ -1090,7 +1083,7 @@ function beginOldLoss(calcTable, resultTable) {
 	var contractMap = null;
 	
 	
-	document.addEventListener("dataReady", () => {
+	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractMap;
 			
@@ -1195,10 +1188,8 @@ function beginOldLoss(calcTable, resultTable) {
 
 function beginGainCalc(calcTable, resultTable) {
 	
-	var readyTarget = {
-			count:2
-		};
-	const readyEvent = new Event("dataReady");
+	let eventName = "dataReady";
+	let ready = semaphore(eventName);
 	
 	
 	var actives = document.getElementById('active-file');
@@ -1206,18 +1197,7 @@ function beginGainCalc(calcTable, resultTable) {
 	var contracts = document.getElementById('all-contract-file');
 	var contractList = null;
 	
-	var ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
-					target[key] = value;
-					
-					if (target[key] == 0) {
-						document.dispatchEvent(readyEvent);
-					}
-					return true;
-				}
-		});
-	
-	document.addEventListener("dataReady", () => {
+	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractList;
 			
@@ -1268,20 +1248,8 @@ function beginGainCalc(calcTable, resultTable) {
 
 function beginKeys(calcTable, resultTable, downloadButtonId) {
 	
-	var readyTarget = {
-			count:2
-		};
-	const readyEvent = new Event("dataReady");
-	var ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
-					target[key] = value;
-					
-					if (target[key] == 0) {
-						document.dispatchEvent(readyEvent);
-					}
-					return true;
-				}
-		});
+	let eventName = "dataReady";
+	let ready = semaphore(eventName);
 	
 	var actives = document.getElementById('active-file');
 	var activeList = null;
@@ -1289,7 +1257,7 @@ function beginKeys(calcTable, resultTable, downloadButtonId) {
 	var keysMap = null;
 	
 	
-	document.addEventListener("dataReady", () => {
+	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = keysMap;
 			
