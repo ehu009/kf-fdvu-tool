@@ -1119,7 +1119,7 @@ function beginLoss(calcTable, resultTable) {
 	
 	var f1 = new FileReader();
 	f1.onload = function(){
-			activeList = arrayFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
+			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
 			ready["count"] -= 1;
 		}
 	f1.readAsText(actives.files[0]);
@@ -1127,7 +1127,7 @@ function beginLoss(calcTable, resultTable) {
 	var f2 = new FileReader();
 	f2.onload = function(){
 			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date("2023 01 01"), new Date("2023 05 01"), 6, 7, 12);
-			var filter2 = arrayFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
+			var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5);
 			ready["count"] -= 1;
 		}
