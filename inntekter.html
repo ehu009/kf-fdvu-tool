@@ -9,17 +9,13 @@
 	<p>
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
 		<input type="file" id="active-file">
-	</p>
-
-	<p>
+		<br/><br/>
 		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
 		<input type="file" id="all-contract-file">
-	</p>
-	
-	<p>
+<br/><br/>
 		Velg tidsspenn:<br>
 		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
-
+<br/>
 		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table');" type="button" disabled>Lag flett</button>
 		<script type="text/javascript">
 			let from = document.getElementById("date-from");

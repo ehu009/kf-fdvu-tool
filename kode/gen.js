@@ -229,6 +229,7 @@ function setupColumnFilter(name) {
 		let e = document.createElement("div");
 		e.id = name + "-field";
 		c.appendChild(e);
+		c.appendChild(document.createElement("br"));
 		
 		e = document.createElement("button");
 		e.id = name + "-download";
