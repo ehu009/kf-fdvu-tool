@@ -571,7 +571,7 @@ function drawKeys(arr, map, dst) {
 	table.appendChild(row);
 	
 	var counter = new Map();
-	
+	let out = [];
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (map.has(arr[r][0] == false)) {
@@ -617,10 +617,8 @@ function drawKeys(arr, map, dst) {
 				row.appendChild(cell);
 				table.appendChild(row);
 			}
-			
+			out.push([arr[r][0], arr[r][1]].concat(l))
 		}
-		
-		
 	}
 	
 	var under = 0;
@@ -632,7 +630,8 @@ function drawKeys(arr, map, dst) {
 			above += 1;
 		}
 	}
-	console.log("under: "+under+", above: "+above)
+	//console.log("under: "+under+", above: "+above)
+	return out;
 }
 
 
@@ -1210,7 +1209,7 @@ function beginGainCalc(calcTable, resultTable) {
 	
 }
 
-function beginKeys(calcTable, resultTable) {
+function beginKeys(calcTable, resultTable, downloadButtonId) {
 	
 	var readyTarget = {
 			count:2
@@ -1237,7 +1236,12 @@ function beginKeys(calcTable, resultTable) {
 			var A = activeList;
 			var B = keysMap;
 			
-			drawKeys(A, B, calcTable);
+			let c = drawKeys(A, B, calcTable);
+			let btn = document.getElementById(downloadButtonId);
+			btn.disabled = false;
+			btn.onclick = function () {
+				downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
+			};
 		});
 	
 	var f1 = new FileReader();
