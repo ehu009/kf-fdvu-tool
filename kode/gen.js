@@ -544,12 +544,12 @@ function drawKeys(arr, map, dst) {
 	cell.appendChild(document.createTextNode("Navn"));
 	row.appendChild(cell);
 	cell = document.createElement("th");
-	cell.appendChild(document.createTextNode("Nøkler"));
+	cell.appendChild(document.createTextNode("Nøklerinos"));
 	row.appendChild(cell);
 	table.appendChild(row);
 	
 	var counter = new Map();
-	let out = [];
+	let out = [arr[0].concat(["Nøklerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (map.has(arr[r][0] == false)) {
@@ -594,7 +594,7 @@ function drawKeys(arr, map, dst) {
 				row.appendChild(cell);
 				table.appendChild(row);
 			}
-			out.push([arr[r][0], arr[r][1]].concat(l))
+			out.push(arr[r].concat(l))
 		}
 	}
 	
@@ -607,6 +607,7 @@ function drawKeys(arr, map, dst) {
 			above += 1;
 		}
 	}
+	console.log("under: " + under + ", over: " + above);
 	return out;
 }
 
@@ -843,6 +844,39 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 	return out;
 }
 
+
+function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh) {
+	
+	var out = new Map();
+	for (let r = 1; r < arr.length; r += 1) {
+		
+		var p;
+		try {
+			p = stringToNumber(arr[r][sPriceIdx]);
+		}
+		catch(f) {
+			p = 0;
+		}
+		let d = 0;
+		
+		
+		
+		
+		var j = [31, p, 0, 0, 0, 0];
+		
+		if (map.has(arr[r][nameIdx])) {
+			
+			var contracts = map.get(arr[r][nameIdx]);
+			
+			for (let c = 0; c < contracts.length; c += 1) {
+				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh), j);
+			}
+		}
+		out.set(arr[r][nameIdx], [j, f, m, a]);
+	}
+	return out;
+}
+
 function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx) {
 	
 	var out = new Map();
@@ -959,7 +993,7 @@ function semaphore(name) {
 	return ready;
 }
 
-function beginLoss(calcTable, resultTable) {
+function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
@@ -973,7 +1007,7 @@ function beginLoss(calcTable, resultTable) {
 			var A = activeList;
 			var B = contractMap;
 			
-			var perSection = contractLossCalc(A, 0, 2, B, 0, 1, 2, 3);
+			var perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, cutoffLow, cutoffHigh);
 			var monthly = monthResultCalc(perSection);
 			drawSections(activeList, monthly, calcTable);
 			
@@ -1063,9 +1097,18 @@ function beginLoss(calcTable, resultTable) {
 	
 	var f2 = new FileReader();
 	f2.onload = function(){
-			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date("2023 01 01"), new Date("2023 05 01"), 6, 7, 12);
+			var from = document.getElementById("date-from").value;
+			var to = document.getElementById("date-to").value;
+			
+			function fun (date) {
+				let arr = date.split("-");
+				return arr.reverse().join(".");
+			}
+			from = fun(from);
+			to = fun(to);
+			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
 			var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
-			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5);
+			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
 			ready["count"] -= 1;
 		}
 	f2.readAsText(contracts.files[0]);
@@ -1271,7 +1314,7 @@ function beginKeys(calcTable, resultTable, downloadButtonId) {
 	
 	var f1 = new FileReader();
 	f1.onload = function(){
-			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]);
+			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
 			ready["count"] -= 1;
 		}
 	f1.readAsText(actives.files[0]);
