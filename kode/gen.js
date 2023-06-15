@@ -974,6 +974,12 @@ function semaphore(name) {
 	return ready;
 }
 
+
+function dateFun (date) {
+	let arr = date.split("-");
+	return arr.reverse().join(".");
+}
+
 function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
@@ -986,12 +992,8 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	var from = document.getElementById("date-from").value;
 	var to = document.getElementById("date-to").value;
 	
-	function fun (date) {
-		let arr = date.split("-");
-		return arr.reverse().join(".");
-	}
-	from = fun(from);
-	to = fun(to);
+	from = dateFun(from);
+	to = dateFun(to);
 	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractMap;
@@ -1232,13 +1234,8 @@ function beginGainCalc(calcTable, resultTable) {
 			
 			var from = document.getElementById("date-from").value;
 			var to = document.getElementById("date-to").value;
-			
-			function fun (date) {
-				let arr = date.split("-");
-				return arr.reverse().join(".");
-			}
-			from = fun(from);
-			to = fun(to);
+			from = dateFun(from);
+			to = dateFun(to);
 			
 			var c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 			
