@@ -47,7 +47,7 @@ function arrayToCSV(arr, separator) {
 function downloadCSV(csvContent, fileName) {
 	
 	var encodedUri = encodeURI(csvContent);
-	var link = document.createElement("a");
+	var link = xcd("a");
 	link.setAttribute("href", encodedUri);
 	link.setAttribute("download", fileName);
 	link.hidden = true;
@@ -58,10 +58,18 @@ function downloadCSV(csvContent, fileName) {
 
 
 
-
+function xcd(t) {
+	return document.createElement(t);
+}
+function txcd(t) {
+	return document.createTextNode(t);
+}
+function fxcd(t) {
+	return document.getElementById(t);
+}
 
 function spinnerFunction(spinnerId, func) {
-	let spinner = document.getElementById(spinnerId);
+	let spinner = fxcd(spinnerId);
 	spinner.style.visibility = "visible";
 	func();
 	spinner.style.visibility = "hidden";
@@ -70,7 +78,7 @@ function spinnerFunction(spinnerId, func) {
 
 
 function toggleCheckbox(id) {
-	let b = document.getElementById(id);
+	let b = fxcd(id);
 	if (b.checked == true) {
 		b.checked = false;
 	} else if (b.checked == false) {
@@ -81,28 +89,28 @@ function toggleCheckbox(id) {
 
 function createCheckbox(container, name) {
 	let n = "checkbox";
-	let c = document.createElement("span");
+	let c = xcd("span");
 	{
-		let label = document.createElement("label");
-		label.appendChild(document.createTextNode(name));
+		let label = xcd("label");
+		label.appendChild(txcd(name));
 		label.onclick = function () {
 					toggleCheckbox(name + "-" + n);
 				}
 		c.appendChild(label);
 	}
 	{
-		let box = document.createElement("input");
+		let box = xcd("input");
 		box.type = n;
 		box.id = name + "-" + n;
 		c.appendChild(box);
 	}
 	c.classList.add("checkbox-container");
-	document.getElementById(container).appendChild(c);
+	fxcd(container).appendChild(c);
 }
 
 function mapCheckboxes(containerId) {
 	let out = new Map();	
-	for (let n of document.getElementById(containerId).childNodes) {
+	for (let n of fxcd(containerId).childNodes) {
 		if (n.type == "div") {
 			continue;
 		}
@@ -115,7 +123,7 @@ function mapCheckboxes(containerId) {
 
 function setCheckboxValues(containerId, options) {
 	
-	for (let n of document.getElementById(containerId).childNodes) {
+	for (let n of fxcd(containerId).childNodes) {
 		if (n.type == "div") {
 			continue;
 		}
@@ -129,7 +137,7 @@ function setCheckboxValues(containerId, options) {
 }
 
 function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
-	let button = document.getElementById(buttonId).onclick = function () {
+	let button = fxcd(buttonId).onclick = function () {
 		let m = new Map();
 		for (let e of allOptions) {
 			m.set(e, desired);
@@ -139,29 +147,29 @@ function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 }
 
 function createCheckboxSelection (containerId, defaultsMap) {
-	let i = document.createElement("select");
-	let c = document.createElement("option");
-	c.appendChild(document.createTextNode("velg innstilling"));
+	let i = xcd("select");
+	let c = xcd("option");
+	c.appendChild(txcd("velg innstilling"));
 	c.disabled = true;
 	c.selected = "selected"
 	i.appendChild(c);
 	
 	for (let k of defaultsMap.keys()) {
-		c = document.createElement("option");
-		c.appendChild(document.createTextNode(k));
+		c = xcd("option");
+		c.appendChild(txcd(k));
 		i.appendChild(c);
 	}
 	i.onchange = function(e) {
 				setCheckboxes(containerId, defaultsMap.get(i.value))
 			}
 	
-	let d = document.createElement("div");
+	let d = xcd("div");
 	d.appendChild(i);
-	document.getElementById(containerId).appendChild(d);
+	fxcd(containerId).appendChild(d);
 }
 
 function populateCheckboxes(containerId, nameList, defaults) {
-	document.getElementById(containerId).innerHTML = "";
+	fxcd(containerId).innerHTML = "";
 	if (defaults != null) {
 		createCheckboxSelection(containerId, defaults);
 	}
@@ -170,9 +178,9 @@ function populateCheckboxes(containerId, nameList, defaults) {
 	}
 }
 function ensureDates(fromId, toId, buttonId) {
-	let from = document.getElementById(fromId);
-	let to = document.getElementById(toId);
-	let btn = document.getElementById(buttonId);
+	let from = fxcd(fromId);
+	let to = fxcd(toId);
+	let btn = fxcd(buttonId);
 	from.onchange = function () {
 		if (to.value != "") {
 			btn.disabled = false;
@@ -189,90 +197,87 @@ function ensureDates(fromId, toId, buttonId) {
 	}
 }
 function setupColumnFilter(name) {
-	let c = document.getElementById(name + "-container");
+	let c = fxcd(name + "-container");
 	{
-		let input = document.createElement("input");
+		let input = xcd("input");
 		input.type = "file";
 		input.id = name + "-file";
 		c.appendChild(input);
-		c.appendChild(document.createElement("br"));
+		c.appendChild(xcd("br"));
 	}
 	{	
-		let f = document.createElement("form");
+		let f = xcd("form");
 		
-		let i = document.createElement("input");
+		let i = xcd("input");
 		i.type = "radio";
 		i.id = name + "-remove";
 		i.name = name + "-option";
 		i.value = "remove";
 		i.checked = true;
 		
-		let l = document.createElement("label");
+		let l = xcd("label");
 		l.for = name + "-remove";
-		l.appendChild(document.createTextNode("Filtrer bort"));
+		l.appendChild(txcd("Filtrer bort"));
 		f.appendChild(i);
 		f.appendChild(l);
-		f.appendChild(document.createElement("br"));
+		f.appendChild(xcd("br"));
 		
-		i = document.createElement("input");
+		i = xcd("input");
 		i.type = "radio";
 		i.id = name + "-keep";
 		i.name = name + "-option";
 		i.value = "keep";
 		
-		l = document.createElement("label");
+		l = xcd("label");
 		l.for = name + "-keep";
-		l.appendChild(document.createTextNode("Behold"));
+		l.appendChild(txcd("Behold"));
 		f.appendChild(i);
 		f.appendChild(l);
-		f.appendChild(document.createElement("br"));
+		f.appendChild(xcd("br"));
 		
 		c.appendChild(f);
 	}
 	{
-		let b = document.createElement("button");
-		b.type = "button";
-		b.id = name + "-all-btn";
-		b.appendChild(document.createTextNode("Velg alle"));
-		c.appendChild(b);
+		function btn(idSuffix, txt) {
+			let b = xcd("button");
+			b.type = "button";
+			b.id = name + idSuffix;
+			b.appendChild(txcd(txt));
+			return b;
+		}
 		
-		b = document.createElement("button");
-		b.type = "button";
-		b.id = name + "-none-btn";
-		b.appendChild(document.createTextNode("Velg ingen"));
-		c.appendChild(b);
+		c.appendChild(btn("-all-btn", "Velg alle"));
+		c.appendChild(btn("-none-btn", "Velg ingen"));
 	}
 	{
-		let e = document.createElement("div");
+		let e = xcd("div");
 		e.id = name + "-field";
 		c.appendChild(e);
-		c.appendChild(document.createElement("br"));
+		c.appendChild(xcd("br"));
 		
-		e = document.createElement("button");
+		e = xcd("button");
 		e.id = name + "-download";
 		e.type="button";
 		e.disabled = true;
-		e.appendChild(document.createTextNode("Generer og last ned"));
+		e.appendChild(txcd("Generer og last ned"));
 		c.appendChild(e);
-		c.appendChild(document.createTextNode(" "));
+		c.appendChild(txcd(" "));
 		
-		e = document.createElement("div");
+		e = xcd("div");
 		e.id = name + "-spinner";
 		e.classList.add("spinning");
-		e.appendChild(document.createTextNode("⚙"));
+		e.appendChild(txcd("⚙"));
 		c.appendChild(e);
 	}
 	
 	document.body.appendChild(c)
 	
-	let button = document.getElementById(name + "-download");
-	let file = document.getElementById(name + "-file");
+	let button = fxcd(name + "-download");
+	let file = fxcd(name + "-file");
 	file.onchange = function() {
-		
+				spinnerFunction(name + "-spinner", function() {
 				button.disabled = true;
-				if (file.files.length < 1) {
-					return;
-				}
+				if (file.files.length >= 1) {
 				spinnerFunction(name + "-spinner", function() {
 							let r = new FileReader();
 							r.onload = function(){
@@ -285,16 +290,18 @@ function setupColumnFilter(name) {
 									};
 							r.readAsText(file.files[0]);
 						});
+				}
+				});
 			};
 	
 	button.onclick = function() {
 				spinnerFunction(name + "-spinner", function() {
 							let r = new FileReader();
-							let fileInput = document.getElementById(name + "-file");
+							let fileInput = fxcd(name + "-file");
 							r.onload = function(){
 										let arr = CSVToArray(r.result, ";");
 										let wanted = [];
-										var checkFn = function (value) {return (value == document.getElementById(name + "-keep").checked)};
+										var checkFn = function (value) {return (value == fxcd(name + "-keep").checked)};
 										for (let e of mapCheckboxes(name + "-field").entries()) {
 											if (checkFn(e[1]) == true) {
 												wanted.push(e[0]);
@@ -385,11 +392,11 @@ function arrayMerge(arr1, arr2, columnName) {
 
 function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	
-	var table = document.getElementById(containerId);
+	var table = fxcd(containerId);
 	var row;
 	var cell;
 	
-	row = document.createElement("tr");
+	row = xcd("tr");
 	let kk = ["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"];
 	if (includeMonthName == true) {
 		kk.unshift("måned");
@@ -399,8 +406,8 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		if (c == 2) {
 			continue;
 		}
-		cell = document.createElement("th");
-		cell.appendChild(document.createTextNode(head[c]));
+		cell = xcd("th");
+		cell.appendChild(txcd(head[c]));
 		row.appendChild(cell);
 	}
 	table.appendChild(row);
@@ -408,15 +415,15 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	var monthNames = ["Januar", "Februar", "Mars", "April"];
 	
 	function newRow(content, className) {
-		var r = document.createElement("tr");
+		var r = xcd("tr");
 		for (let i = 0; i < content.length; i += 1) {
-			var c = document.createElement("td");
+			var c = xcd("td");
 			if (i > 1) {
 				if (className != "") {
 					c.classList.add(className);
 				}
 			}
-			c.appendChild(document.createTextNode(content[i]));
+			c.appendChild(txcd(content[i]));
 			r.appendChild(c);
 		}
 		return r;
@@ -473,22 +480,22 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 
 function writeArrayTo(array, containerId) {
 	
-	var table = document.getElementById(containerId);
-	var header = document.createElement("tr");
+	var table = fxcd(containerId);
+	var header = xcd("tr");
 	for (let c = 0; c < array[0].length; c += 1) {
-		var cell = document.createElement("th");
-		cell.appendChild(document.createTextNode(array[0][c]));
+		var cell = xcd("th");
+		cell.appendChild(txcd(array[0][c]));
 		header.appendChild(cell);
 	}
 	table.appendChild(header);
 	
 	for (let r = 1; r < array.length; r += 1) {
 		
-		var row = document.createElement("tr");
+		var row = xcd("tr");
 		
 		for (let c = 0; c < array[r].length; c += 1) {
 			var val = array[r][c];
-			var cell = document.createElement("td");
+			var cell = xcd("td");
 			
 			if (c == 2) {
 				if (val < 0) {
@@ -500,11 +507,11 @@ function writeArrayTo(array, containerId) {
 				}
 			}
 			
-			cell.appendChild(document.createTextNode(val));
+			cell.appendChild(txcd(val));
 			row.appendChild(cell);
 		}
 		if (array[r].length < 3) {
-			var cell = document.createElement("td");
+			var cell = xcd("td");
 			cell.classList.add("missing");
 			row.appendChild(cell);
 		}
@@ -535,19 +542,19 @@ function mapKeys(arr) {
 }
 
 function drawKeys(arr, map, dst) {
-	var table = document.getElementById(dst);
+	var table = fxcd(dst);
 	var row;
 	var cell;
 	
-	row = document.createElement("tr");
-	cell = document.createElement("th");
-	cell.appendChild(document.createTextNode("Seksjon#"));
+	row = xcd("tr");
+	cell = xcd("th");
+	cell.appendChild(txcd("Seksjon#"));
 	row.appendChild(cell);
-	cell = document.createElement("th");
-	cell.appendChild(document.createTextNode("Navn"));
+	cell = xcd("th");
+	cell.appendChild(txcd("Navn"));
 	row.appendChild(cell);
-	cell = document.createElement("th");
-	cell.appendChild(document.createTextNode("Nøklerinos"));
+	cell = xcd("th");
+	cell.appendChild(txcd("Nøklerinos"));
 	row.appendChild(cell);
 	table.appendChild(row);
 	
@@ -556,15 +563,15 @@ function drawKeys(arr, map, dst) {
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (map.has(arr[r][0] == false)) {
-			row = document.createElement("tr");
-			cell = document.createElement("td");
-			cell.appendChild(document.createTextNode(arr[r][0]));
+			row = xcd("tr");
+			cell = xcd("td");
+			cell.appendChild(txcd(arr[r][0]));
 			row.appendChild(cell);
-			cell = document.createElement("td");
-			cell.appendChild(document.createTextNode(arr[r][1]));
+			cell = xcd("td");
+			cell.appendChild(txcd(arr[r][1]));
 			row.appendChild(cell);
-			cell = document.createElement("td");
-			cell.appendChild(document.createTextNode(""));
+			cell = xcd("td");
+			cell.appendChild(txcd(""));
 			cell.classList.add("missing");
 			row.appendChild(cell);
 			table.appendChild(row);
@@ -585,15 +592,15 @@ function drawKeys(arr, map, dst) {
 					counter.set(l[c], true);
 				}
 				
-				row = document.createElement("tr");
-				cell = document.createElement("td");
-				cell.appendChild(document.createTextNode(c1));
+				row = xcd("tr");
+				cell = xcd("td");
+				cell.appendChild(txcd(c1));
 				row.appendChild(cell);
-				cell = document.createElement("td");
-				cell.appendChild(document.createTextNode(c2));
+				cell = xcd("td");
+				cell.appendChild(txcd(c2));
 				row.appendChild(cell);
-				cell = document.createElement("td");
-				cell.appendChild(document.createTextNode(l[c]));
+				cell = xcd("td");
+				cell.appendChild(txcd(l[c]));
 				row.appendChild(cell);
 				table.appendChild(row);
 			}
@@ -637,20 +644,20 @@ function writeEndResult(array, containerId) {
 		}
 	}
 	
-	var row = document.createElement("tr");
-	var cell = document.createElement("td");
-	cell.appendChild(document.createTextNode(boliger));
+	var row = xcd("tr");
+	var cell = xcd("td");
+	cell.appendChild(txcd(boliger));
 	row.appendChild(cell);
-	var cell = document.createElement("td");
-	cell.appendChild(document.createTextNode(passive));
+	var cell = xcd("td");
+	cell.appendChild(txcd(passive));
 	row.appendChild(cell)
-	cell = document.createElement("td");
-	cell.appendChild(document.createTextNode(active));
+	cell = xcd("td");
+	cell.appendChild(txcd(active));
 	row.appendChild(cell);
-	cell = document.createElement("td");/*
-	cell.appendChild(document.createTextNode(active/4));
+	cell = xcd("td");/*
+	cell.appendChild(txcd(active/4));
 	row.appendChild(cell);*/
-	document.getElementById(containerId).appendChild(row);
+	fxcd(containerId).appendChild(row);
 }
 
 
@@ -981,16 +988,19 @@ function dateFun (date) {
 }
 
 function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
+	let spinner = fxcd(spinnerId);
+	spinner.style.visibility = "visible";
+	
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
-	var actives = document.getElementById('active-file');
+	var actives = fxcd('active-file');
 	var activeList = null;
-	var contracts = document.getElementById('all-contract-file');
+	var contracts = fxcd('all-contract-file');
 	var contractMap = null;
 	
-	var from = document.getElementById("date-from").value;
-	var to = document.getElementById("date-to").value;
+	var from = fxcd("date-from").value;
+	var to = fxcd("date-to").value;
 	
 	from = dateFun(from);
 	to = dateFun(to);
@@ -1008,20 +1018,20 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			
 			function fjott (arr, map, containerId) {
 				
-				var table = document.getElementById(containerId);
+				var table = fxcd(containerId);
 				var row;
 				var cell;
 				
 				function newRow(content, className) {
-					var r = document.createElement("tr");
+					var r = xcd("tr");
 					for (let i = 0; i < content.length; i += 1) {
-						var c = document.createElement("td");
+						var c = xcd("td");
 						if (i > 1) {
 							if (className != "") {
 								c.classList.add(className);
 							}
 						}
-						c.appendChild(document.createTextNode(content[i]));
+						c.appendChild(txcd(content[i]));
 						r.appendChild(c);
 					}
 					return r;
@@ -1057,7 +1067,7 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			}
 			
 			fjott(activeList, monthly, resultTable)
-			
+			spinner.Style.visibility = "hidden";
 		});
 	
 	var f1 = new FileReader();
@@ -1078,14 +1088,16 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	
 }
 
-function beginOldLoss(calcTable, resultTable) {
+function beginOldLoss(calcTable, resultTable, spinnerId) {
+	let spinner = fxcd(spinnerId);
+	spinner.style.visibility = "visible";
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
 	
-	var actives = document.getElementById('active-file');
+	var actives = fxcd('active-file');
 	var activeList = null;
-	var contracts = document.getElementById('all-contract-file');
+	var contracts = fxcd('all-contract-file');
 	var contractMap = null;
 	
 	
@@ -1100,22 +1112,22 @@ function beginOldLoss(calcTable, resultTable) {
 			
 			function fjott (arr, map, containerId) {
 				
-				var table = document.getElementById(containerId);
+				var table = fxcd(containerId);
 				var row;
 				var cell;
 				
 				var monthNames = ["Januar", "Februar", "Mars", "April"];
 				
 				function newRow(content, className) {
-					var r = document.createElement("tr");
+					var r = xcd("tr");
 					for (let i = 0; i < content.length; i += 1) {
-						var c = document.createElement("td");
+						var c = xcd("td");
 						if (i > 1) {
 							if (className != "") {
 								c.classList.add(className);
 							}
 						}
-						c.appendChild(document.createTextNode(content[i]));
+						c.appendChild(txcd(content[i]));
 						r.appendChild(c);
 					}
 					return r;
@@ -1171,7 +1183,7 @@ function beginOldLoss(calcTable, resultTable) {
 			}
 			
 			fjott(activeList, monthly, resultTable)
-			
+	spinner.style.visibility = "hidden";
 		});
 	
 	var f1 = new FileReader();
@@ -1192,18 +1204,21 @@ function beginOldLoss(calcTable, resultTable) {
 	
 }
 
-function beginGainCalc(calcTable, resultTable) {
+function beginGainCalc(calcTable, resultTable, spinnerId) {
+	let spinner = fxcd(spinnerId);
+	spinner.style.visibility = "visible";
 	
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
 	
-	var actives = document.getElementById('active-file');
+	var actives = fxcd('active-file');
 	var activeList = null;
-	var contracts = document.getElementById('all-contract-file');
+	var contracts = fxcd('all-contract-file');
 	var contractList = null;
 	
 	document.addEventListener(eventName, () => {
+			
 			var A = activeList;
 			var B = contractList;
 			
@@ -1212,14 +1227,14 @@ function beginGainCalc(calcTable, resultTable) {
 			var result = arrayMerge(A, B, "Fasilitetsnummer");
 			
 			writeArrayTo(result, calcTable);
-			let btn = document.getElementById("download-calc-btn");
+			let btn = fxcd("download-calc-btn");
 			btn.disabled = false;
 			btn.onclick = function () {
-						downloadCSV(arrayToCSV(result,";"), "inntekter " + document.getElementById("date-from").value + " til " + document.getElementById("date-to").value + ".csv");
+						downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd("date-from").value + " til " + fxcd("date-to").value + ".csv");
 					};
 			
 			writeEndResult(result, resultTable);
-			
+			spinner.style.visibility = "hidden";
 		});	
 	
 	var f1 = new FileReader();
@@ -1232,8 +1247,8 @@ function beginGainCalc(calcTable, resultTable) {
 	var f2 = new FileReader();
 	f2.onload = function(){
 			
-			var from = document.getElementById("date-from").value;
-			var to = document.getElementById("date-to").value;
+			var from = fxcd("date-from").value;
+			var to = fxcd("date-to").value;
 			from = dateFun(from);
 			to = dateFun(to);
 			
@@ -1246,14 +1261,15 @@ function beginGainCalc(calcTable, resultTable) {
 	
 }
 
-function beginKeys(calcTable, resultTable, downloadButtonId) {
-	
+function beginKeys(calcTable, resultTable, downloadButtonId, spinnerId) {
+	let spinner = fxcd(spinnerId);
+	spinner.style.visibility = "visible";
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
-	var actives = document.getElementById('active-file');
+	var actives = fxcd('active-file');
 	var activeList = null;
-	var keys = document.getElementById('key-file');
+	var keys = fxcd('key-file');
 	var keysMap = null;
 	
 	
@@ -1262,11 +1278,13 @@ function beginKeys(calcTable, resultTable, downloadButtonId) {
 			var B = keysMap;
 			
 			let c = drawKeys(A, B, calcTable);
-			let btn = document.getElementById(downloadButtonId);
+			let btn = fxcd(downloadButtonId);
 			btn.disabled = false;
 			btn.onclick = function () {
 				downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
 			};
+			
+	spinner.style.visibility = "hidden";
 		});
 	
 	var f1 = new FileReader();

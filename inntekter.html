@@ -16,7 +16,7 @@
 		Velg tidsspenn:<br>
 		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
 		<br/>
-		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table');" type="button" disabled>Lag flett</button>
+		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table', 'gain-spinner');" type="button" disabled>Lag flett</button>
 	</p>
 	
 	<hr/>
@@ -39,7 +39,8 @@
 		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
 		<span class="passive">Passiv kontrakt og Driftskontrakt</span> er markert i grønt.<br>
 		</b>
-		<button type="button" disabled id="download-calc-btn">Last ned CSV</button>
+		<button type="button" disabled id="download-calc-btn">Last ned CSV</button>&nbsp;<div class="spinning" id="gain-spinner">⚙</div>
+		<br/><br/>
 		<table id="calc-table"></table>
 	</p>
 </body>
