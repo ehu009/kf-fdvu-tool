@@ -9,10 +9,40 @@
 .knappis:hover {
 	background-color:#ddd;
 }
+.carousel-item > iframe {
+	width: 100%;
+	height: 100%;
+}
 </style>
+<script>
+var urls = ["./inntekter.html", "./vakanse.html", "./nøkler.html", "./kolonne-filter.html"];
+
+function a(parent, element) {
+	parent.appendChild(element);
+}
+function c(type) {
+	return document.createElement(type);
+}
+function n(url, active) {
+	let d = c("div");
+	let i = c("iframe");
+	i.src = url;
+	a(d, i);
+	d.classList.add("carousel-item");
+	if (active == true) {
+		d.classList.add("active");
+	}
+	return d;
+}
+function setup(id) {
+	for (let i = 0; i < urls.length; i += 1) {
+		a(document.getElementById(id), n(urls[i], i == 0));
+	}
+}
+</script>
 </head>
 
-<body>
+<body onload="setup('carousel-inner');">
 <div class="container-fluid row">
 <div class="col-4 knappis" data-bs-target="#karusell" data-bs-slide="prev"  align="right">‹</div>
 <div class="col-4"></div>
@@ -20,20 +50,7 @@
 </div>
 
 <div id="karusell" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000000000">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <iframe src="./kolonne-filter.html" width="100%" height="100%"></iframe>
-    </div>
-    <div class="carousel-item">
-      <iframe src="./inntekter.html" width="100%" height="100%"></iframe>
-    </div>
-    <div class="carousel-item">
-		<iframe src="./vakanse.html" width="100%" height="100%"></iframe>
-    </div>
-	<div class="carousel-item">
-		<iframe src="./nøkler.html" width="100%" height="100%"></iframe>
-    </div>
-  </div>
+	<div class="carousel-inner" id="carousel-inner"></div>
 </div>
 </body>
 </html>
