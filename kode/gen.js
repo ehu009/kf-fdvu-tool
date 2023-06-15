@@ -656,9 +656,9 @@ function writeEndResult(array, containerId) {
 	cell = document.createElement("td");
 	cell.appendChild(document.createTextNode(active));
 	row.appendChild(cell);
-	cell = document.createElement("td");
+	cell = document.createElement("td");/*
 	cell.appendChild(document.createTextNode(active/4));
-	row.appendChild(cell);
+	row.appendChild(cell);*/
 	document.getElementById(containerId).appendChild(row);
 }
 
@@ -839,8 +839,9 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 			arr[r][2] = cutoffHigh;
 		}
 		
-		
-		var days = calcDays(arr[r][1], arr[r][2], dateParse(cutoffLow), dateParse(cutoffHigh));
+		var days = calcDays(arr[r][1], arr[r][2], cutoffLow, cutoffHigh);
+		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
+		nDays /= Math.round(1000*60*60*24);
 		if (!map.has(fnr)) {
 			map.set(fnr, (days*val/30));
 		} else {
@@ -1313,7 +1314,7 @@ function beginGainCalc(calcTable, resultTable) {
 			from = fun(from);
 			to = fun(to);
 			
-			
+			console.log(from, to)
 			var c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 			
 			contractList = c
