@@ -2,11 +2,8 @@ body {
 	padding: 25px;
 }
 
-p, td {
+td {
 	border: 2px solid;
-}
-p {
-	 padding: 25px;
 }
 div.cont {
 	border: 2px solid;
