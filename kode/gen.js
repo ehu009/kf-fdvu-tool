@@ -456,15 +456,6 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		
 		var cls = "missing";
 		var maxAllowed = nDays;
-		/*
-		switch(row[2]) {
-			case "Februar":
-			maxAllowed = 28;
-			break;
-			case "April":
-			maxAllowed = 30;
-			break;
-		}*/
 		let idx = 2;
 		if (includeMonthName == true) {
 			idx += 1;
@@ -873,7 +864,7 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 		
 		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
-		console.log (nDays)
+		
 		var j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
 			var contracts = map.get(arr[r][nameIdx]);
@@ -948,20 +939,9 @@ function monthLossCalc(map) {
 	
 	for (let e of map.entries()) {
 		var jT = [0, 0, 0, 0, 0, 0];
-/*	
-	var fT = [0, 0, 0, 0, 0, 0];
-		var mT = [0, 0, 0, 0, 0, 0];
-		var aT = [0, 0, 0, 0, 0, 0];
-	*/
 		arrayAddition(e[1][0], jT);
 		jT.push(jT[1]+jT[3])
-		/*arrayAddition(e[1][1], fT);
-		fT.push(fT[1]+fT[3])
-		arrayAddition(e[1][2], mT);
-		mT.push(mT[1]+mT[3])
-		arrayAddition(e[1][3], aT);
-		aT.push(aT[1]+aT[3])*/
-		out.set(e[0], [jT/*, fT, mT, aT*/]);
+		out.set(e[0], [jT]);
 	}
 	return out;
 }
@@ -969,60 +949,11 @@ function monthLossCalc(map) {
 function totalResultCalc(months, header) {
 	var t = [0, 0, 0, 0, 0, 0];
 	arrayAddition(months[0], t);
-	/*
-	arrayAddition(months[1], t);
-	arrayAddition(months[2], t);
-	arrayAddition(months[3], t);
-	*/
 	t.unshift("");
 	return t;
 }
 
 
-function attachNames(arr, map) {
-	var out = [arr[0].concat(["måned", "dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad"])];
-	var monthNames = ["Januar", "Februar", "Mars", "April"]
-	for (let r = 1; r < arr.length; r += 1) {
-		var add = [];
-		if (map.has(arr[r][0])) {
-			var l = map.get(arr[r][0]);
-			for (let c = 0; c < l.length; c += 1) {
-				add.push([monthNames[c]].concat(l[c]));
-			}
-		}
-		out.push([arr[r][0], arr[r][1], add])
-	}
-	return out;
-}
-function attachNames2(arr, map) {
-	var out = [arr[0].concat(["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad"])];
-	/*var monthNames = ["Januar", "Februar", "Mars", "April"]*/
-	for (let r = 1; r < arr.length; r += 1) {
-		var add = [];
-		if (map.has(arr[r][0])) {
-			var l = map.get(arr[r][0]);
-			for (let c = 0; c < l.length; c += 1) {
-				add.push(l[c]);
-			}
-		}
-		out.push([arr[r][0], arr[r][1], add])
-	}
-	return out;
-}
-
-
-function attachMonthNames(monthly) {
-	var out = [];
-	var monthNames = ["Januar", "Februar", "Mars", "April"]
-	for (let r = 0; r < monthly.length; r += 1) {
-		var row = [monthNames[r]];
-		for (let c = 0; c < monthly[r].length; c += 1) {
-			row.push(monthly[r][c]);
-		}
-		out.push(row);
-	}
-	return out;
-}
 
 function semaphore(name) {
 	var readyTarget = {
@@ -1115,17 +1046,12 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 				
 				var totals = [0, 0, 0, 0, 0, 0, 0];
 				arrayAddition(j, totals);
-				//totals.unshift("Sum");
 				
 				rows.push(j)//, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
 					table.appendChild(newRow(row, ""));
 				}
-				/*
-				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
-				table.appendChild(newRow(totals), "");
-				*/
 			}
 			
 			fjott(activeList, monthly, resultTable)
@@ -1314,7 +1240,6 @@ function beginGainCalc(calcTable, resultTable) {
 			from = fun(from);
 			to = fun(to);
 			
-			console.log(from, to)
 			var c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 			
 			contractList = c
