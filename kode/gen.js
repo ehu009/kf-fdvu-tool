@@ -383,14 +383,18 @@ function arrayMerge(arr1, arr2, columnName) {
 }
 
 
-function drawSections(arr, map, containerId) {
+function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	
 	var table = document.getElementById(containerId);
 	var row;
 	var cell;
 	
 	row = document.createElement("tr");
-	var head = arr[0].concat(["måned", "dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"])
+	let kk = ["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"];
+	if (includeMonthName == true) {
+		kk.unshift("måned");
+	}
+	var head = arr[0].concat(kk)
 	for (let c = 0; c < head.length; c += 1) {
 		if (c == 2) {
 			continue;
@@ -428,7 +432,9 @@ function drawSections(arr, map, containerId) {
 				if (m == 0) {
 					pt = [arr[r][0], arr[r][1]];
 				}
-				pt.push(monthNames[m]);
+				if (includeMonthName == true) {
+					pt.push(monthNames[m]);
+				}
 				rows.push(pt.concat(months[m]));
 			}
 		} else {
@@ -438,7 +444,9 @@ function drawSections(arr, map, containerId) {
 				if (m == 0) {
 					pt = [arr[r][0], arr[r][1]];
 				}
-				pt.push(monthNames[m]);
+				if (includeMonthName == true) {
+					pt.push(monthNames[m]);
+				}
 				rows.push(pt.concat([0,0,0,0,0,0]));
 			}
 		}
@@ -447,7 +455,8 @@ function drawSections(arr, map, containerId) {
 		var row = rows[r];
 		
 		var cls = "missing";
-		var maxAllowed = 31;
+		var maxAllowed = nDays;
+		/*
 		switch(row[2]) {
 			case "Februar":
 			maxAllowed = 28;
@@ -455,11 +464,14 @@ function drawSections(arr, map, containerId) {
 			case "April":
 			maxAllowed = 30;
 			break;
+		}*/
+		let idx = 2;
+		if (includeMonthName == true) {
+			idx += 1;
 		}
-		if (row[3] < maxAllowed) {
-			
+		if (row[idx] < maxAllowed) {
 			cls = "";
-			if (row[3] < 0) {
+			if (row[idx] < 0) {
 				cls = "double";
 			}
 		}
@@ -757,7 +769,7 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 	var repLoss = 0;
 	var pas = 0;
 	var pasLoss = 0;
-						
+	
 	var cost = Math.ceil(duration * (monthCost/nDays))
 	var occupant = contract[occupantIdx];
 	if (["Driftsadministrasjonen", "Tromsø kommune v/Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"].includes(occupant)) {
@@ -857,22 +869,18 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 		catch(f) {
 			p = 0;
 		}
-		let d = 0;
 		
-		
-		
-		
-		var j = [31, p, 0, 0, 0, 0];
-		
+		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
+		nDays /= Math.round(1000*60*60*24);
+		console.log (nDays)
+		var j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
-			
 			var contracts = map.get(arr[r][nameIdx]);
-			
 			for (let c = 0; c < contracts.length; c += 1) {
-				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh), j);
+				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays), j);
 			}
 		}
-		out.set(arr[r][nameIdx], [j, f, m, a]);
+		out.set(arr[r][nameIdx], [j]);
 	}
 	return out;
 }
@@ -933,13 +941,38 @@ function monthResultCalc(map) {
 	return out;
 }
 
+
+function monthLossCalc(map) {
+	var out = new Map();
+	
+	for (let e of map.entries()) {
+		var jT = [0, 0, 0, 0, 0, 0];
+/*	
+	var fT = [0, 0, 0, 0, 0, 0];
+		var mT = [0, 0, 0, 0, 0, 0];
+		var aT = [0, 0, 0, 0, 0, 0];
+	*/
+		arrayAddition(e[1][0], jT);
+		jT.push(jT[1]+jT[3])
+		/*arrayAddition(e[1][1], fT);
+		fT.push(fT[1]+fT[3])
+		arrayAddition(e[1][2], mT);
+		mT.push(mT[1]+mT[3])
+		arrayAddition(e[1][3], aT);
+		aT.push(aT[1]+aT[3])*/
+		out.set(e[0], [jT/*, fT, mT, aT*/]);
+	}
+	return out;
+}
+
 function totalResultCalc(months, header) {
 	var t = [0, 0, 0, 0, 0, 0];
 	arrayAddition(months[0], t);
+	/*
 	arrayAddition(months[1], t);
 	arrayAddition(months[2], t);
 	arrayAddition(months[3], t);
-	
+	*/
 	t.unshift("");
 	return t;
 }
@@ -960,7 +993,23 @@ function attachNames(arr, map) {
 	}
 	return out;
 }
-	
+function attachNames2(arr, map) {
+	var out = [arr[0].concat(["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad"])];
+	/*var monthNames = ["Januar", "Februar", "Mars", "April"]*/
+	for (let r = 1; r < arr.length; r += 1) {
+		var add = [];
+		if (map.has(arr[r][0])) {
+			var l = map.get(arr[r][0]);
+			for (let c = 0; c < l.length; c += 1) {
+				add.push(l[c]);
+			}
+		}
+		out.push([arr[r][0], arr[r][1], add])
+	}
+	return out;
+}
+
+
 function attachMonthNames(monthly) {
 	var out = [];
 	var monthNames = ["Januar", "Februar", "Mars", "April"]
@@ -1002,23 +1051,32 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	var contracts = document.getElementById('all-contract-file');
 	var contractMap = null;
 	
+	var from = document.getElementById("date-from").value;
+	var to = document.getElementById("date-to").value;
 	
+	function fun (date) {
+		let arr = date.split("-");
+		return arr.reverse().join(".");
+	}
+	from = fun(from);
+	to = fun(to);
 	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractMap;
 			
-			var perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, cutoffLow, cutoffHigh);
-			var monthly = monthResultCalc(perSection);
-			drawSections(activeList, monthly, calcTable);
+			var perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, from, to);
+			var monthly = monthLossCalc(perSection);
 			
+			let nDays = dateParse(to) - dateParse(from);
+			nDays /= Math.round(1000*60*60*24);
+			
+			drawSections(activeList, monthly, calcTable, false, nDays);
 			
 			function fjott (arr, map, containerId) {
 				
 				var table = document.getElementById(containerId);
 				var row;
 				var cell;
-				
-				var monthNames = ["Januar", "Februar", "Mars", "April"];
 				
 				function newRow(content, className) {
 					var r = document.createElement("tr");
@@ -1037,9 +1095,6 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 				
 				var rows = [];
 				var j = [0,0,0,0,0,0,0];
-				var f = [0,0,0,0,0,0,0];
-				var m = [0,0,0,0,0,0,0];
-				var a = [0,0,0,0,0,0,0];
 				function addLine(src, dst) {
 					if (src[1] >= 0){
 						arrayAddition(src, dst);
@@ -1051,37 +1106,25 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 					if (map.has(arr[r][0])) {
 						var months = map.get(arr[r][0]);
 						addLine(months[0], j);
-						addLine(months[1], f);
-						addLine(months[2], m);
-						addLine(months[3], a);
 					} else {
 						var empty = [0,0,0,0,0,0];
 						arrayAddition(empty, j);
-						arrayAddition(empty, f);
-						arrayAddition(empty, m);
-						arrayAddition(empty, a);
 					}
 				}
 				
 				var totals = [0, 0, 0, 0, 0, 0, 0];
 				arrayAddition(j, totals);
-				arrayAddition(f, totals);
-				arrayAddition(m, totals);
-				arrayAddition(a, totals);
-				totals.unshift("Sum");
+				//totals.unshift("Sum");
 				
-				j.unshift("Januar");
-				f.unshift("Februar");
-				m.unshift("Mars");
-				a.unshift("April");
-				
-				rows.push(j, f, m, a)
+				rows.push(j)//, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
 					table.appendChild(newRow(row, ""));
 				}
+				/*
 				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
 				table.appendChild(newRow(totals), "");
+				*/
 			}
 			
 			fjott(activeList, monthly, resultTable)
@@ -1097,15 +1140,6 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	
 	var f2 = new FileReader();
 	f2.onload = function(){
-			var from = document.getElementById("date-from").value;
-			var to = document.getElementById("date-to").value;
-			
-			function fun (date) {
-				let arr = date.split("-");
-				return arr.reverse().join(".");
-			}
-			from = fun(from);
-			to = fun(to);
 			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
 			var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
@@ -1132,7 +1166,7 @@ function beginOldLoss(calcTable, resultTable) {
 			
 			var perSection = contractLossCalc(A, 0, 2, B, 0, 1, 2, 3);
 			var monthly = monthResultCalc(perSection);
-			drawSections(activeList, monthly, calcTable);
+			drawSections(activeList, monthly, calcTable, true, 0);
 			
 			
 			function fjott (arr, map, containerId) {
