@@ -6,7 +6,7 @@
 
 <body onload="ensureDates('date-from', 'date-to', 'calc-btn');">
 	<h2>Inntekter</h2>
-	<p>
+	<div id="gains-container" class="cont">
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
 		<input type="file" id="active-file">
 		<br/><br/>
@@ -17,10 +17,10 @@
 		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
 		<br/>
 		<button id="calc-btn" onclick="beginGainCalc('calc-table', 'result-table', 'gain-spinner');" type="button" disabled>Lag flett</button>
-	</p>
 	
-	<hr/>
-	<p>
+	
+		<hr/>
+	
 		<table id="result-table">
 			<tr>
 				<th>Sum av ikke-passive boliger</th>
@@ -31,9 +31,9 @@
 				-->
 			</tr>
 		</table>
-	</p>
+	
 	<hr/>
-	<p>
+	
 		<b>
 		Rød markering er brukt når <span class="danger">kontrakt mangler pris</span> i Facilit.<br>
 		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
@@ -42,6 +42,6 @@
 		<button type="button" disabled id="download-calc-btn">Last ned CSV</button>&nbsp;<div class="spinning" id="gain-spinner">⚙</div>
 		<br/><br/>
 		<table id="calc-table"></table>
-	</p>
+	</div>
 </body>
 </html>

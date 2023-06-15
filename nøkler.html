@@ -6,7 +6,7 @@
 
 <body>
 	<h2>Nøkler</h2>
-	<p>
+	<div id="keys-container" class="cont">
 		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
 		<input type="file" id="active-file"/>
 		<br/><br/>
@@ -16,10 +16,15 @@
 		<button onclick="beginKeys('calc-table', 'result-table', 'download-keys-btn', 'key-spinner');" type="button">Lag flett</button>
 		<br/><br/>
 		<button type="button" disabled id="download-keys-btn">Last ned CSV</button>&nbsp;<div class="spinning" id="key-spinner">⚙</div>
+	<!--
 	</p>
 	
 	<p>
+	-->
 		<table id="calc-table"></table>
+	<!--
 	</p>
+	-->
+	</div>
 </body>
 </html>
