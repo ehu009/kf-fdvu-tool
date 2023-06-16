@@ -177,25 +177,7 @@ function populateCheckboxes(containerId, nameList, defaults) {
 		createCheckbox(containerId, c);
 	}
 }
-function ensureDates(fromId, toId, buttonId) {
-	let from = fxcd(fromId);
-	let to = fxcd(toId);
-	let btn = fxcd(buttonId);
-	from.onchange = function () {
-		if (to.value != "") {
-			btn.disabled = false;
-		} else {
-			btn.disabled = true;
-		}
-	}
-	to.onchange = function () {
-		if (from.value != "") {
-			btn.disabled = false;
-		} else {
-			btn.disabled = true;
-		}
-	}
-}
+
 function setupColumnFilter(name) {
 	let c = fxcd(name + "-container");
 	{
@@ -221,6 +203,9 @@ function setupColumnFilter(name) {
 		f.appendChild(i);
 		f.appendChild(l);
 		f.appendChild(xcd("br"));
+		l.onclick = function () {
+			toggleCheckbox(name + "-remove");
+		}
 		
 		i = xcd("input");
 		i.type = "radio";
@@ -234,13 +219,16 @@ function setupColumnFilter(name) {
 		f.appendChild(i);
 		f.appendChild(l);
 		f.appendChild(xcd("br"));
-		
+		l.onclick = function () {
+			toggleCheckbox(name + "-keep");
+		}
 		c.appendChild(f);
 	}
 	{
 		function btn(idSuffix, txt) {
 			let b = xcd("button");
 			b.type = "button";
+			b.disabled = true;
 			b.id = name + idSuffix;
 			b.appendChild(txcd(txt));
 			return b;
@@ -287,10 +275,16 @@ function setupColumnFilter(name) {
 										populateCheckboxes(name + "-field", options, null);
 										allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
 										allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
+										fxcd(name+"-all-btn").disabled = false;
+										fxcd(name+"-none-btn").disabled = false;
 										button.disabled = false;
 									};
 							r.readAsText(file.files[0]);
 						});
+				} else {
+					fxcd(name + "-field").innerHTML = "";
+					fxcd(name+"-all-btn").disabled = true;
+					fxcd(name+"-none-btn").disabled = true;
 				}
 				});
 			};
@@ -392,7 +386,6 @@ function arrayMerge(arr1, arr2, columnName) {
 
 
 function drawSections(arr, map, containerId, includeMonthName, nDays) {
-	
 	var table = fxcd(containerId);
 	var row;
 	var cell;
@@ -402,6 +395,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	if (includeMonthName == true) {
 		kk.unshift("måned");
 	}
+	let head2 = [];
 	var head = arr[0].concat(kk)
 	for (let c = 0; c < head.length; c += 1) {
 		if (c == 2) {
@@ -410,6 +404,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		cell = xcd("th");
 		cell.appendChild(txcd(head[c]));
 		row.appendChild(cell);
+		head2.push(head[c]);
 	}
 	table.appendChild(row);
 	
@@ -474,9 +469,12 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 				cls = "double";
 			}
 		}
-		
 		table.appendChild(newRow(row, cls));
 	}
+	
+	
+	return [head2].concat(rows);
+	
 }
 
 function writeArrayTo(array, containerId) {
@@ -961,11 +959,14 @@ function totalResultCalc(months, header) {
 	return t;
 }
 
-
+function eNumToNNum(n) {
+				let u = String(n);
+				return u.replace(".", ",");
+			}
 
 function semaphore(name) {
 	var readyTarget = {
-			count:2
+			count: 2
 		};
 	const readyEvent = new Event(name);
 	var ready = new Proxy(readyTarget, {
@@ -982,6 +983,25 @@ function semaphore(name) {
 	return ready;
 }
 
+function ensureDates(fromId, toId, buttonId) {
+	let from = fxcd(fromId);
+	let to = fxcd(toId);
+	let btn = fxcd(buttonId);
+	from.onchange = function () {
+		if (to.value != "") {
+			btn.disabled = false;
+		} else {
+			btn.disabled = true;
+		}
+	}
+	to.onchange = function () {
+		if (from.value != "") {
+			btn.disabled = false;
+		} else {
+			btn.disabled = true;
+		}
+	}
+}
 
 function dateFun (date) {
 	let arr = date.split("-");
@@ -989,7 +1009,7 @@ function dateFun (date) {
 }
 
 function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
-	let spinner = fxcd(spinnerId);
+	let spinner = fxcd("loss-spinner");
 	spinner.style.visibility = "visible";
 	
 	let eventName = "dataReady";
@@ -999,9 +1019,31 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 	var activeList = null;
 	var contracts = fxcd('all-contract-file');
 	var contractMap = null;
+	/*
+	var from = fxcd("date-from");
+	from.onchange = function () {
+		if (from.value == "") {
+			ready["count"] += 1;
+			return;
+		}
+		ready["count"] -= 1;
+	};
+	var to = fxcd("date-to");
+	to.onchange = function () {
+		if (to.value == "") {
+			ready["count"] += 1;
+			return;
+		}
+		ready["count"] -= 1;
+	};
+	*/
 	
-	var from = fxcd("date-from").value;
-	var to = fxcd("date-to").value;
+	/*
+	actives.onchange = function() {
+		if (actives)
+		
+	}*/
+	
 	
 	from = dateFun(from);
 	to = dateFun(to);
@@ -1015,7 +1057,7 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
 			
-			drawSections(activeList, monthly, calcTable, false, nDays);
+			let vv = drawSections(activeList, monthly, calcTable, false, nDays);
 			
 			function fjott (arr, map, containerId) {
 				
@@ -1067,8 +1109,23 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 				}
 			}
 			
-			fjott(activeList, monthly, resultTable)
-			spinner.Style.visibility = "hidden";
+			fjott(activeList, monthly, resultTable);
+			
+			
+			
+			for (let r = 1; r < vv.length; r += 1) {
+				let row = vv[r];
+				for (let c = 2; c < row.length; c += 1) {
+					row[c] = eNumToNNum(row[c]);
+				}
+			}
+			
+			let btn = fxcd("download-loss-btn");
+			btn.disabled = false;
+			btn.onclick = function () {
+						downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd("date-from").value + " til " + fxcd("date-to").value + ".csv");
+					};
+			spinner.style.visibility = "hidden";
 		});
 	
 	var f1 = new FileReader();
@@ -1184,6 +1241,7 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 			}
 			
 			fjott(activeList, monthly, resultTable)
+			
 	spinner.style.visibility = "hidden";
 		});
 	
@@ -1212,7 +1270,6 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 	let eventName = "dataReady";
 	let ready = semaphore(eventName);
 	
-	
 	var actives = fxcd('active-file');
 	var activeList = null;
 	var contracts = fxcd('all-contract-file');
@@ -1228,13 +1285,20 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			var result = arrayMerge(A, B, "Fasilitetsnummer");
 			
 			writeArrayTo(result, calcTable);
+			writeEndResult(result, resultTable);
+			
+			for (let r = 1; r < result.length; r += 1) {
+				let row = result[r];
+				for (let c = 2; c < row.length; c += 1) {
+					row[c] = eNumToNNum(row[c]);
+				}
+			}
+			
 			let btn = fxcd("download-calc-btn");
 			btn.disabled = false;
 			btn.onclick = function () {
 						downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd("date-from").value + " til " + fxcd("date-to").value + ".csv");
 					};
-			
-			writeEndResult(result, resultTable);
 			spinner.style.visibility = "hidden";
 		});	
 	
@@ -1285,7 +1349,7 @@ function beginKeys(calcTable, resultTable, downloadButtonId, spinnerId) {
 				downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
 			};
 			
-	spinner.style.visibility = "hidden";
+			spinner.style.visibility = "hidden";
 		});
 	
 	var f1 = new FileReader();
