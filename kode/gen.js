@@ -247,6 +247,7 @@ function setupColumnFilter(name) {
 		}
 		
 		c.appendChild(btn("-all-btn", "Velg alle"));
+		c.appendChild(txcd(' '))
 		c.appendChild(btn("-none-btn", "Velg ingen"));
 	}
 	{
@@ -259,7 +260,7 @@ function setupColumnFilter(name) {
 		e.id = name + "-download";
 		e.type="button";
 		e.disabled = true;
-		e.appendChild(txcd("Generer og last ned"));
+		e.appendChild(txcd("Last ned CSV"));
 		c.appendChild(e);
 		c.appendChild(txcd(" "));
 		
