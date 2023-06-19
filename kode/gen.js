@@ -867,9 +867,10 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 		catch(f) {
 			p = 0;
 		}
-		
+		console.log(cutoffLow, cutoffHigh)
 		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
+		console.log(nDays);
 		
 		var j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
@@ -1008,46 +1009,79 @@ function dateFun (date) {
 	return arr.reverse().join(".");
 }
 
-function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
+function beginLoss(calcTable, resultTable) {
 	let spinner = fxcd("loss-spinner");
-	spinner.style.visibility = "visible";
-	
-	let eventName = "dataReady";
-	let ready = semaphore(eventName);
 	
 	var actives = fxcd('active-file');
 	var activeList = null;
 	var contracts = fxcd('all-contract-file');
 	var contractMap = null;
-	/*
+	
 	var from = fxcd("date-from");
-	from.onchange = function () {
-		if (from.value == "") {
-			ready["count"] += 1;
-			return;
-		}
-		ready["count"] -= 1;
-	};
 	var to = fxcd("date-to");
-	to.onchange = function () {
-		if (to.value == "") {
-			ready["count"] += 1;
-			return;
+	
+	let eventName = "dataReady";
+	var readyTarget = {
+			countA: 2,
+			countB: 2,
+			dateA: 1,
+			dateB: 1
+		};
+	const readyEvent = new Event(eventName);
+	const enableEvent = new Event("calcEnable");
+	var ready = new Proxy(readyTarget, {
+			set: function (target, key, value) {
+					target[key] = value;
+					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
+						document.dispatchEvent(readyEvent);
+					} else {
+						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] == 0) {
+							document.dispatchEvent(enableEvent);
+						} else {
+							fxcd("loss-btn").disabled = true;
+						}
+					}
+					return true;
+				}
+		});
+	
+	fxcd("date-to").onchange = function () {
+		if (fxcd("date-to").value == "") {
+			ready["dateB"] = 1;
+		} else {
+		ready["dateB"] -= 1;
 		}
-		ready["count"] -= 1;
 	};
-	*/
+	fxcd("date-from").onchange = function () {
+		if (fxcd("date-from").value == "") {
+		ready["dateA"] = 1;	
+		} else {
+		ready["dateA"] -= 1;
+		}
+	};
+	actives.onchange = function () {
+		if (actives.files.length > 0) {
+			ready["countA"] -= 1;
+		} else {
+			ready["countA"] += 1;
+		}
+	}
+	contracts.onchange = function () {
+		if (contracts.files.length > 0) {
+			ready["countA"] -= 1;
+		} else {
+			ready["countA"] += 1;
+		}
+	}
+	document.addEventListener("calcEnable", () => {
+		fxcd("loss-btn").disabled = false;
+	});
 	
-	/*
-	actives.onchange = function() {
-		if (actives)
-		
-	}*/
 	
 	
-	from = dateFun(from);
-	to = dateFun(to);
 	document.addEventListener(eventName, () => {
+			from = dateFun(from.value);
+			to = dateFun(to.value);
 			var A = activeList;
 			var B = contractMap;
 			
@@ -1056,6 +1090,9 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
+			
+			console.log(activeList);
+			console.log(perSection);
 			
 			let vv = drawSections(activeList, monthly, calcTable, false, nDays);
 			
@@ -1111,8 +1148,6 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			
 			fjott(activeList, monthly, resultTable);
 			
-			
-			
 			for (let r = 1; r < vv.length; r += 1) {
 				let row = vv[r];
 				for (let c = 2; c < row.length; c += 1) {
@@ -1128,10 +1163,12 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			spinner.style.visibility = "hidden";
 		});
 	
+	fxcd("loss-btn").onclick = function () {
+	spinner.style.visibility = "visible";
 	var f1 = new FileReader();
 	f1.onload = function(){
 			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
-			ready["count"] -= 1;
+			ready["countB"] -= 1;
 		}
 	f1.readAsText(actives.files[0]);
 	
@@ -1140,10 +1177,10 @@ function beginLoss(calcTable, resultTable, cutoffLow, cutoffHigh) {
 			var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
 			var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 			contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
-			ready["count"] -= 1;
+			ready["countB"] -= 1;
 		}
 	f2.readAsText(contracts.files[0]);
-	
+	}
 }
 
 function beginOldLoss(calcTable, resultTable, spinnerId) {
