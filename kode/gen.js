@@ -51,13 +51,15 @@ function downloadCSV(csvContent, fileName) {
 	link.setAttribute("href", encodedUri);
 	link.setAttribute("download", fileName);
 	link.hidden = true;
-	document.body.appendChild(link);
+	axcd(document.body, link);
 
 	link.click();
 }
 
 
-
+function axcd(p, e) {
+	p.appendChild(e);
+}
 function xcd(t) {
 	return document.createElement(t);
 }
@@ -92,20 +94,20 @@ function createCheckbox(container, name) {
 	let c = xcd("span");
 	{
 		let label = xcd("label");
-		label.appendChild(txcd(name));
+		axcd(label, txcd(name));
 		label.onclick = function () {
 					toggleCheckbox(name + "-" + n);
 				}
-		c.appendChild(label);
+		axcd(c, label);
 	}
 	{
 		let box = xcd("input");
 		box.type = n;
 		box.id = name + "-" + n;
-		c.appendChild(box);
+		axcd(c, box);
 	}
 	c.classList.add("checkbox-container");
-	fxcd(container).appendChild(c);
+	axcd(fxcd(container), c);
 }
 
 function mapCheckboxes(containerId) {
@@ -149,23 +151,23 @@ function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 function createCheckboxSelection (containerId, defaultsMap) {
 	let i = xcd("select");
 	let c = xcd("option");
-	c.appendChild(txcd("velg innstilling"));
+	axcd(c, txcd("velg innstilling"));
 	c.disabled = true;
 	c.selected = "selected"
-	i.appendChild(c);
+	axcd(i, c);
 	
 	for (let k of defaultsMap.keys()) {
 		c = xcd("option");
-		c.appendChild(txcd(k));
-		i.appendChild(c);
+		axcd(c, txcd(k));
+		axcd(i, c);
 	}
 	i.onchange = function(e) {
 				setCheckboxes(containerId, defaultsMap.get(i.value))
 			}
 	
 	let d = xcd("div");
-	d.appendChild(i);
-	fxcd(containerId).appendChild(d);
+	axcd(d, i);
+	axcd(fxcd(containerId), d);
 }
 
 function populateCheckboxes(containerId, nameList, defaults) {
@@ -184,8 +186,8 @@ function setupColumnFilter(name) {
 		let input = xcd("input");
 		input.type = "file";
 		input.id = name + "-file";
-		c.appendChild(input);
-		c.appendChild(xcd("br"));
+		axcd(c, input);
+		axcd(c, xcd("br"));
 	}
 	{	
 		let f = xcd("form");
@@ -199,10 +201,10 @@ function setupColumnFilter(name) {
 		
 		let l = xcd("label");
 		l.for = name + "-remove";
-		l.appendChild(txcd("Filtrer bort"));
-		f.appendChild(i);
-		f.appendChild(l);
-		f.appendChild(xcd("br"));
+		axcd(l, txcd("Filtrer bort"));
+		axcd(f, i);
+		axcd(f, l);
+		axcd(f, xcd("br"));
 		l.onclick = function () {
 			toggleCheckbox(name + "-remove");
 		}
@@ -215,14 +217,14 @@ function setupColumnFilter(name) {
 		
 		l = xcd("label");
 		l.for = name + "-keep";
-		l.appendChild(txcd("Behold"));
-		f.appendChild(i);
-		f.appendChild(l);
-		f.appendChild(xcd("br"));
+		axcd(l, txcd("Behold"));
+		axcd(f, i);
+		axcd(f, l);
+		axcd(f, xcd("br"));
 		l.onclick = function () {
 			toggleCheckbox(name + "-keep");
 		}
-		c.appendChild(f);
+		axcd(c, f);
 	}
 	{
 		function btn(idSuffix, txt) {
@@ -230,36 +232,36 @@ function setupColumnFilter(name) {
 			b.type = "button";
 			b.disabled = true;
 			b.id = name + idSuffix;
-			b.appendChild(txcd(txt));
+			axcd(b, txcd(txt));
 			return b;
 		}
 		
-		c.appendChild(btn("-all-btn", "Velg alle"));
-		c.appendChild(txcd(' '))
-		c.appendChild(btn("-none-btn", "Velg ingen"));
+		axcd(c, btn("-all-btn", "Velg alle"));
+		axcd(c, txcd(' '))
+		axcd(c, btn("-none-btn", "Velg ingen"));
 	}
 	{
 		let e = xcd("div");
 		e.id = name + "-field";
-		c.appendChild(e);
-		c.appendChild(xcd("br"));
+		axcd(c, e);
+		axcd(c, xcd("br"));
 		
 		e = xcd("button");
 		e.id = name + "-download";
 		e.type="button";
 		e.disabled = true;
-		e.appendChild(txcd("Last ned CSV"));
-		c.appendChild(e);
-		c.appendChild(txcd(" "));
+		axcd(e, txcd("Last ned CSV"));
+		axcd(c, e);
+		axcd(c, txcd(" "));
 		
 		e = xcd("div");
 		e.id = name + "-spinner";
 		e.classList.add("spinning");
-		e.appendChild(txcd("⚙"));
-		c.appendChild(e);
+		axcd(e, txcd("⚙"));
+		axcd(c, e);
 	}
 	
-	document.body.appendChild(c)
+	axcd(document.body, c)
 	
 	let button = fxcd(name + "-download");
 	let file = fxcd(name + "-file");
@@ -402,11 +404,11 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 			continue;
 		}
 		cell = xcd("th");
-		cell.appendChild(txcd(head[c]));
-		row.appendChild(cell);
+		axcd(cell, txcd(head[c]));
+		axcd(row, cell);
 		head2.push(head[c]);
 	}
-	table.appendChild(row);
+	axcd(table, row);
 	
 	var monthNames = ["Januar", "Februar", "Mars", "April"];
 	
@@ -419,8 +421,8 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 					c.classList.add(className);
 				}
 			}
-			c.appendChild(txcd(content[i]));
-			r.appendChild(c);
+			axcd(c, txcd(content[i]));
+			axcd(r, c);
 		}
 		return r;
 	}
@@ -469,7 +471,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 				cls = "double";
 			}
 		}
-		table.appendChild(newRow(row, cls));
+		axcd(table, newRow(row, cls));
 	}
 	
 	
@@ -483,10 +485,10 @@ function writeArrayTo(array, containerId) {
 	var header = xcd("tr");
 	for (let c = 0; c < array[0].length; c += 1) {
 		var cell = xcd("th");
-		cell.appendChild(txcd(array[0][c]));
-		header.appendChild(cell);
+		axcd(cell, txcd(array[0][c]));
+		axcd(header, cell);
 	}
-	table.appendChild(header);
+	axcd(table, header);
 	
 	for (let r = 1; r < array.length; r += 1) {
 		
@@ -506,16 +508,16 @@ function writeArrayTo(array, containerId) {
 				}
 			}
 			
-			cell.appendChild(txcd(val));
-			row.appendChild(cell);
+			axcd(cell, txcd(val));
+			axcd(row, cell);
 		}
 		if (array[r].length < 3) {
 			var cell = xcd("td");
 			cell.classList.add("missing");
-			row.appendChild(cell);
+			axcd(row, cell);
 		}
 		
-		table.appendChild(row);
+		axcd(table, row);
 	}
 }
 
@@ -547,15 +549,15 @@ function drawKeys(arr, map, dst) {
 	
 	row = xcd("tr");
 	cell = xcd("th");
-	cell.appendChild(txcd("Seksjon#"));
-	row.appendChild(cell);
+	axcd(cell, txcd("Seksjon#"));
+	axcd(row, cell);
 	cell = xcd("th");
-	cell.appendChild(txcd("Navn"));
-	row.appendChild(cell);
+	axcd(cell, txcd("Navn"));
+	axcd(row, cell);
 	cell = xcd("th");
-	cell.appendChild(txcd("Nøklerinos"));
-	row.appendChild(cell);
-	table.appendChild(row);
+	axcd(cell, txcd("Nøklerinos"));
+	axcd(row, cell);
+	axcd(table, row);
 	
 	var counter = new Map();
 	let out = [arr[0].concat(["Nøklerinos"])];
@@ -564,16 +566,16 @@ function drawKeys(arr, map, dst) {
 		if (map.has(arr[r][0] == false)) {
 			row = xcd("tr");
 			cell = xcd("td");
-			cell.appendChild(txcd(arr[r][0]));
-			row.appendChild(cell);
+			axcd(cell, txcd(arr[r][0]));
+			axcd(row, cell);
 			cell = xcd("td");
-			cell.appendChild(txcd(arr[r][1]));
-			row.appendChild(cell);
+			axcd(cell, txcd(arr[r][1]));
+			axcd(row, cell);
 			cell = xcd("td");
-			cell.appendChild(txcd(""));
+			axcd(cell, txcd(""));
 			cell.classList.add("missing");
-			row.appendChild(cell);
-			table.appendChild(row);
+			axcd(row, cell);
+			axcd(table, row);
 		} else {
 			var l = map.get(arr[r][0]);
 			if (l == undefined) {
@@ -593,15 +595,15 @@ function drawKeys(arr, map, dst) {
 				
 				row = xcd("tr");
 				cell = xcd("td");
-				cell.appendChild(txcd(c1));
-				row.appendChild(cell);
+				axcd(cell, txcd(c1));
+				axcd(row, cell);
 				cell = xcd("td");
-				cell.appendChild(txcd(c2));
-				row.appendChild(cell);
+				axcd(cell, txcd(c2));
+				axcd(row, cell);
 				cell = xcd("td");
-				cell.appendChild(txcd(l[c]));
-				row.appendChild(cell);
-				table.appendChild(row);
+				axcd(cell, txcd(l[c]));
+				axcd(row, cell);
+				axcd(table, row);
 			}
 			out.push(arr[r].concat(l))
 		}
@@ -645,18 +647,18 @@ function writeEndResult(array, containerId) {
 	
 	var row = xcd("tr");
 	var cell = xcd("td");
-	cell.appendChild(txcd(boliger));
-	row.appendChild(cell);
+	axcd(cell, txcd(boliger));
+	axcd(row, cell);
 	var cell = xcd("td");
-	cell.appendChild(txcd(passive));
-	row.appendChild(cell)
+	axcd(cell, txcd(passive));
+	axcd(row, cell)
 	cell = xcd("td");
-	cell.appendChild(txcd(active));
-	row.appendChild(cell);
+	axcd(cell, txcd(active));
+	axcd(row, cell);
 	cell = xcd("td");/*
 	cell.appendChild(txcd(active/4));
 	row.appendChild(cell);*/
-	fxcd(containerId).appendChild(row);
+	axcd(fxcd(containerId), row);
 }
 
 
@@ -1106,8 +1108,8 @@ function beginLoss(calcTable, resultTable) {
 								c.classList.add(className);
 							}
 						}
-						c.appendChild(txcd(content[i]));
-						r.appendChild(c);
+						axcd(c, txcd(content[i]));
+						axcd(r, c);
 					}
 					return r;
 				}
@@ -1137,7 +1139,7 @@ function beginLoss(calcTable, resultTable) {
 				rows.push(j)//, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					table.appendChild(newRow(row, ""));
+					axcd(table, newRow(row, ""));
 				}
 			}
 			
@@ -1217,8 +1219,8 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 								c.classList.add(className);
 							}
 						}
-						c.appendChild(txcd(content[i]));
-						r.appendChild(c);
+						axcd(c, txcd(content[i]));
+						axcd(r, c);
 					}
 					return r;
 				}
@@ -1266,10 +1268,10 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 				rows.push(j, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					table.appendChild(newRow(row, ""));
+					axcd(table, newRow(row, ""));
 				}
-				table.appendChild(newRow(["", "", "", "", "", "", "", ""], ""));
-				table.appendChild(newRow(totals), "");
+				axcd(table, newRow(["", "", "", "", "", "", "", ""], ""));
+				axcd(table, newRow(totals), "");
 			}
 			
 			fjott(activeList, monthly, resultTable)
@@ -1360,6 +1362,10 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 function line() {
 	return xcd("br");
 }
+
+
+
+
 function setupKeyFilter(name){
 	
 	let eName = "dataReady";
@@ -1383,30 +1389,30 @@ function setupKeyFilter(name){
 	
 	let con = fxcd(name + "-container");
 	{
-		con.appendChild(txcd("Liste over alle "));
+		axcd(con, txcd("Liste over alle "));
 		let tmp = xcd("i");
-		tmp.appendChild(txcd("aktive"));
-		con.appendChild(tmp);
+		axcd(tmp,txcd("aktive"));
+		axcd(con,tmp);
 		
-		con.appendChild(txcd(" bolig-seksjoner av kategori "));
+		axcd(con, txcd(" bolig-seksjoner av kategori "));
 		tmp = xcd("i");
-		tmp.appendChild(txcd("eid"));
-		con.appendChild(tmp);
+		axcd(tmp, txcd("eid"));
+		axcd(con, tmp);
 		
-		con.appendChild(txcd(" eller "));
+		axcd(con, txcd(" eller "));
 		tmp = xcd("i");
-		tmp.appendChild(txcd("Kommunalt foretak - KF"));
-		con.appendChild(tmp);
+		axcd(tmp, txcd("Kommunalt foretak - KF"));
+		axcd(con, tmp);
 		
-		con.appendChild(txcd(":"));
-		con.appendChild(line());
+		axcd(con, txcd(":"));
+		axcd(con, line());
 		{
 			let i = xcd("input");
 			i.type = "file";
 			i.id = name + "-rentables-file";
-			con.appendChild(i);
-			con.appendChild(line());
-			con.appendChild(line());
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
 			i.onchange = function () {
 				if (i.files.length < 1) {
 					dataReady["fileA"] += 1;
@@ -1417,19 +1423,19 @@ function setupKeyFilter(name){
 		}
 	}
 	{
-		con.appendChild(txcd("Liste over "));
+		axcd(con, txcd("Liste over "));
 		let tmp = xcd("b");
-		tmp.appendChild(txcd("alle"));
-		con.appendChild(tmp);
-		con.appendChild(txcd(" nøkler:"));
-		con.appendChild(line());
+		axcd(tmp, txcd("alle"));
+		axcd(con, tmp);
+		axcd(con, txcd(" nøkler:"));
+		axcd(con, line());
 		{
 			let i = xcd("input");
 			i.type = "file";
 			i.id = name + "-file";
-			con.appendChild(i);
-			con.appendChild(line());
-			con.appendChild(line());
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
 			i.onchange = function () {
 				
 				if (i.files.length < 1) {
@@ -1446,30 +1452,30 @@ function setupKeyFilter(name){
 		b.type = "button";
 		b.id = name + "-calc-btn";
 		
-		b.appendChild(txcd("Lag flett"));
-		con.appendChild(b);
-		con.appendChild(txcd(" "));
+		axcd(b, txcd("Lag flett"));
+		axcd(con, b);
+		axcd(con, txcd(" "));
 		
 		b = xcd("button");
 		b.disabled = true;
 		b.type = "button";
 		b.id = name + "-download-btn";
-		b.appendChild(txcd("Last ned CSV"));
+		axcd(b, txcd("Last ned CSV"));
 		
-		con.appendChild(b);
-		con.appendChild(txcd(" "));
+		axcd(con, b);
+		axcd(con, txcd(" "));
 		
 		b = xcd("div");
 		b.classList.add("spinning");
 		b.id = name + "-spinner";
-		b.appendChild(txcd("⚙"));
-		con.appendChild(b);
-		con.appendChild(line());
+		axcd(b, txcd("⚙"));
+		axcd(con, b);
+		axcd(con, line());
 	}
-	con.appendChild(xcd("hr"));
+	axcd(con, xcd("hr"));
 	let t = xcd("table");
 	t.id = name + "-table";
-	con.appendChild(t);
+	axcd(con, t);
 	
 	fxcd(name + "-calc-btn").onclick = function () {
 			t.innerHTML = "";
