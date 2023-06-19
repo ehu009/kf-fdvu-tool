@@ -986,14 +986,16 @@ function beginLoss(calcTable, resultTable) {
 			dateA: 1,
 			dateB: 1
 		};
+		
 	const readyEvent = new Event(eventName);
 	var ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
+					fxcd("download-loss-btn").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 					} else {
-						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] == 0) {
+						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd("loss-btn").disabled = false;
 						} else {
 							fxcd("loss-btn").disabled = true;
@@ -1007,14 +1009,14 @@ function beginLoss(calcTable, resultTable) {
 		if (fxcd("date-to").value == "") {
 			ready["dateB"] = 1;
 		} else {
-		ready["dateB"] -= 1;
+		ready["dateB"] = 0;
 		}
 	};
 	fxcd("date-from").onchange = function () {
 		if (fxcd("date-from").value == "") {
 		ready["dateA"] = 1;	
 		} else {
-		ready["dateA"] -= 1;
+		ready["dateA"] = 0;
 		}
 	};
 	actives.onchange = function () {
@@ -1269,8 +1271,9 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 					fxcd("download-calc-btn").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
+						fxcd("calc-btn").disabled = false;
 					} else {
-						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] == 0) {
+						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd("calc-btn").disabled = false;
 						} else {
 							fxcd("calc-btn").disabled = true;
@@ -1289,14 +1292,14 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 		if (fxcd("date-to").value == "") {
 			ready["dateB"] = 1;
 		} else {
-		ready["dateB"] -= 1;
+		ready["dateB"] = 0;
 		}
 	};
 	fxcd("date-from").onchange = function () {
 		if (fxcd("date-from").value == "") {
-		ready["dateA"] = 1;	
+		ready["dateA"] = 1;
 		} else {
-		ready["dateA"] -= 1;
+		ready["dateA"] = 0;
 		}
 	};
 	actives.onchange = function () {
@@ -1446,14 +1449,11 @@ function setupKeyFilter(name){
 			axcd(con, line());
 			axcd(con, line());
 			i.onchange = function () {
-				
 				if (i.files.length < 1) {
 					dataReady["fileB"] += 1;
-					console.log("empty");
 				} else {
 					dataReady["fileB"] -= 1;
 				}
-				console.log(i.files)
 			}
 		}
 	}
