@@ -655,9 +655,7 @@ function writeEndResult(array, containerId) {
 	cell = xcd("td");
 	axcd(cell, txcd(active));
 	axcd(row, cell);
-	cell = xcd("td");/*
-	cell.appendChild(txcd(active/4));
-	row.appendChild(cell);*/
+	cell = xcd("td");
 	axcd(fxcd(containerId), row);
 }
 
@@ -777,10 +775,9 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 	} else if (occupant == "Passiv") {
 		pas += duration;
 		pasLoss += cost;
-	} //else {
+	}
 		vac -= duration;
 		vacLoss -= cost;
-	//}
 	return [vac, vacLoss, rep, repLoss, pas, pasLoss];
 }
 
@@ -1136,7 +1133,7 @@ function beginLoss(calcTable, resultTable) {
 				var totals = [0, 0, 0, 0, 0, 0, 0];
 				arrayAddition(j, totals);
 				
-				rows.push(j)//, f, m, a)
+				rows.push(j);
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
 					axcd(table, newRow(row, ""));
