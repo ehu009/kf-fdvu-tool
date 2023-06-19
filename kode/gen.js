@@ -1325,47 +1325,166 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 	f2.readAsText(contracts.files[0]);
 	
 }
-
-function beginKeys(calcTable, resultTable, downloadButtonId, spinnerId) {
-	let spinner = fxcd(spinnerId);
-	spinner.style.visibility = "visible";
-	let eventName = "dataReady";
-	let ready = semaphore(eventName);
+function line() {
+	return xcd("br");
+}
+function setupKeyFilter(name){
 	
-	var actives = fxcd('active-file');
-	var activeList = null;
-	var keys = fxcd('key-file');
-	var keysMap = null;
-	
-	
-	document.addEventListener(eventName, () => {
-			var A = activeList;
-			var B = keysMap;
-			
-			let c = drawKeys(A, B, calcTable);
-			let btn = fxcd(downloadButtonId);
-			btn.disabled = false;
-			btn.onclick = function () {
-				downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
-			};
-			
-			spinner.style.visibility = "hidden";
+	let eName = "dataReady";
+	var dataReadyTarget = {
+			fileA: 1,
+			fileB: 1
+		};
+	const dataReadyEvent = new Event(eName);
+	var dataReady = new Proxy(dataReadyTarget, {
+			set: function (target, key, value) {
+					target[key] = value;
+					if (target["fileA"] <= 0 && target["fileB"] <= 0) {
+						document.dispatchEvent(dataReadyEvent);
+					}
+					return true;
+				}
 		});
+	document.addEventListener(eName, () => {
+		fxcd(name + "-calc-btn").disabled = false;
+	});
 	
-	var f1 = new FileReader();
-	f1.onload = function(){
-			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
-			ready["count"] -= 1;
+	let con = fxcd(name + "-container");
+	{
+		con.appendChild(txcd("Liste over alle "));
+		let tmp = xcd("i");
+		tmp.appendChild(txcd("aktive"));
+		con.appendChild(tmp);
+		
+		con.appendChild(txcd(" bolig-seksjoner av kategori "));
+		tmp = xcd("i");
+		tmp.appendChild(txcd("eid"));
+		con.appendChild(tmp);
+		
+		con.appendChild(txcd(" eller "));
+		tmp = xcd("i");
+		tmp.appendChild(txcd("Kommunalt foretak - KF"));
+		con.appendChild(tmp);
+		
+		con.appendChild(txcd(":"));
+		con.appendChild(line());
+		{
+			let i = xcd("input");
+			i.type = "file";
+			i.id = name + "-rentables-file";
+			con.appendChild(i);
+			con.appendChild(line());
+			con.appendChild(line());
+			i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileA"] += 1;
+				} else {
+					dataReady["fileA"] -= 1;
+				}
+			}
 		}
-	f1.readAsText(actives.files[0]);
+	}
+	{
+		con.appendChild(txcd("Liste over "));
+		let tmp = xcd("b");
+		tmp.appendChild(txcd("alle"));
+		con.appendChild(tmp);
+		con.appendChild(txcd(" nøkler:"));
+		con.appendChild(line());
+		{
+			let i = xcd("input");
+			i.type = "file";
+			i.id = name + "-file";
+			con.appendChild(i);
+			con.appendChild(line());
+			con.appendChild(line());
+			i.onchange = function () {
+				
+				if (i.files.length < 1) {
+					dataReady["fileB"] += 1;
+				} else {
+					dataReady["fileB"] -= 1;
+				}
+			}
+		}
+	}
+	{
+		let b = xcd("button");
+		b.disabled = true;
+		b.type = "button";
+		b.id = name + "-calc-btn";
+		
+		b.appendChild(txcd("Lag flett"));
+		con.appendChild(b);
+		con.appendChild(txcd(" "));
+		
+		b = xcd("button");
+		b.disabled = true;
+		b.type = "button";
+		b.id = name + "-download-btn";
+		b.appendChild(txcd("Last ned CSV"));
+		
+		con.appendChild(b);
+		con.appendChild(txcd(" "));
+		
+		b = xcd("div");
+		b.classList.add("spinning");
+		b.id = name + "-spinner";
+		b.appendChild(txcd("⚙"));
+		con.appendChild(b);
+		con.appendChild(line());
+	}
+	con.appendChild(xcd("hr"));
+	let t = xcd("table");
+	t.id = name + "-table";
+	con.appendChild(t);
 	
-	var f2 = new FileReader();
-	f2.onload = function(){
-			var arr = CSVToArray(f2.result, ";");
-			var filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
-			keysMap = mapKeys(filtered);
-			ready["count"] -= 1;
+	fxcd(name + "-calc-btn").onclick = function () {
+			t.innerHTML = "";
+			let spinner = fxcd(name + "-spinner");
+			spinner.style.visibility = "visible";
+			
+			let readyEventName = "dataReady";
+			let ready = semaphore(readyEventName);
+			
+			var rentables = fxcd(name + '-rentables-file');
+			var rentablesList = null;
+			var keys = fxcd(name + '-file');
+			var keysMap = null;
+			
+			
+			
+			document.addEventListener(readyEventName, () => {
+					var A = rentablesList;
+					var B = keysMap;
+					
+					let c = drawKeys(A, B, name + "-table");
+					let btn = fxcd(name + "-download-btn");
+					btn.disabled = false;
+					btn.onclick = function () {
+						downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
+					};
+					spinner.style.visibility = "hidden";
+				});
+			
+			var f1 = new FileReader();
+			f1.onload = function(){
+					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
+					ready["count"] -= 1;
+				}
+			f1.readAsText(rentables.files[0]);
+			
+			var f2 = new FileReader();
+			f2.onload = function(){
+					var arr = CSVToArray(f2.result, ";");
+					var filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
+					keysMap = mapKeys(filtered);
+					ready["count"] -= 1;
+				}
+			f2.readAsText(keys.files[0]);
+			
 		}
-	f2.readAsText(keys.files[0]);
+	
+	
 	
 }
