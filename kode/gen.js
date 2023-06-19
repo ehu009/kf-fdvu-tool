@@ -867,10 +867,8 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 		catch(f) {
 			p = 0;
 		}
-		console.log(cutoffLow, cutoffHigh)
 		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
-		console.log(nDays);
 		
 		var j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
@@ -1090,9 +1088,6 @@ function beginLoss(calcTable, resultTable) {
 			
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
-			
-			console.log(activeList);
-			console.log(perSection);
 			
 			let vv = drawSections(activeList, monthly, calcTable, false, nDays);
 			
