@@ -1025,7 +1025,6 @@ function beginLoss(calcTable, resultTable) {
 			dateB: 1
 		};
 	const readyEvent = new Event(eventName);
-	const enableEvent = new Event("calcEnable");
 	var ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
@@ -1033,7 +1032,7 @@ function beginLoss(calcTable, resultTable) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] == 0) {
-							document.dispatchEvent(enableEvent);
+							fxcd("loss-btn").disabled = false;
 						} else {
 							fxcd("loss-btn").disabled = true;
 						}
@@ -1070,10 +1069,6 @@ function beginLoss(calcTable, resultTable) {
 			ready["countA"] += 1;
 		}
 	}
-	document.addEventListener("calcEnable", () => {
-		fxcd("loss-btn").disabled = false;
-	});
-	
 	
 	
 	document.addEventListener(eventName, () => {
@@ -1296,18 +1291,67 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 
 function beginGainCalc(calcTable, resultTable, spinnerId) {
 	let spinner = fxcd(spinnerId);
-	spinner.style.visibility = "visible";
+	
 	
 	let eventName = "dataReady";
-	let ready = semaphore(eventName);
+	var readyTarget = {
+			countA: 2,
+			countB: 2,
+			dateA: 1,
+			dateB: 1
+		};
+	const readyEvent = new Event(eventName);
+	var ready = new Proxy(readyTarget, {
+			set: function (target, key, value) {
+					target[key] = value;
+					fxcd("download-calc-btn").disabled = true;
+					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
+						document.dispatchEvent(readyEvent);
+					} else {
+						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] == 0) {
+							fxcd("calc-btn").disabled = false;
+						} else {
+							fxcd("calc-btn").disabled = true;
+						}
+					}
+					return true;
+				}
+		});
 	
 	var actives = fxcd('active-file');
 	var activeList = null;
 	var contracts = fxcd('all-contract-file');
 	var contractList = null;
 	
+	fxcd("date-to").onchange = function () {
+		if (fxcd("date-to").value == "") {
+			ready["dateB"] = 1;
+		} else {
+		ready["dateB"] -= 1;
+		}
+	};
+	fxcd("date-from").onchange = function () {
+		if (fxcd("date-from").value == "") {
+		ready["dateA"] = 1;	
+		} else {
+		ready["dateA"] -= 1;
+		}
+	};
+	actives.onchange = function () {
+		if (actives.files.length > 0) {
+			ready["countA"] -= 1;
+		} else {
+			ready["countA"] += 1;
+		}
+	}
+	contracts.onchange = function () {
+		if (contracts.files.length > 0) {
+			ready["countA"] -= 1;
+		} else {
+			ready["countA"] += 1;
+		}
+	}
 	document.addEventListener(eventName, () => {
-			
 			var A = activeList;
 			var B = contractList;
 			
@@ -1332,11 +1376,12 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 					};
 			spinner.style.visibility = "hidden";
 		});	
-	
+	fxcd("calc-btn").onclick = function() {
+		spinner.style.visibility = "visible";
 	var f1 = new FileReader();
 	f1.onload = function(){
 			activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]);
-			ready["count"] -= 1;
+			ready["countB"] -= 1;
 		}
 	f1.readAsText(actives.files[0]);
 	
@@ -1351,10 +1396,10 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			var c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 			
 			contractList = c
-			ready["count"] -= 1;
+			ready["countB"] -= 1;
 		}
 	f2.readAsText(contracts.files[0]);
-	
+	};
 }
 function line() {
 	return xcd("br");
