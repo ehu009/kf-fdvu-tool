@@ -386,6 +386,20 @@ function arrayMerge(arr1, arr2, columnName) {
 	return out;
 }
 
+function newRow(content, className) {
+	var r = xcd("tr");
+	for (let i = 0; i < content.length; i += 1) {
+		var c = xcd("td");
+		if (i > 1) {
+			if (className != "") {
+				c.classList.add(className);
+			}
+		}
+		axcd(c, txcd(content[i]));
+		axcd(r, c);
+	}
+	return r;
+}
 
 function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	var table = fxcd(containerId);
@@ -412,20 +426,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	
 	var monthNames = ["Januar", "Februar", "Mars", "April"];
 	
-	function newRow(content, className) {
-		var r = xcd("tr");
-		for (let i = 0; i < content.length; i += 1) {
-			var c = xcd("td");
-			if (i > 1) {
-				if (className != "") {
-					c.classList.add(className);
-				}
-			}
-			axcd(c, txcd(content[i]));
-			axcd(r, c);
-		}
-		return r;
-	}
+	
 	
 	var rows = [];
 	
@@ -1046,19 +1047,18 @@ function beginLoss(calcTable, resultTable) {
 			
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
-			
+			fxcd(calcTable).innerHTML = "";
 			let vv = drawSections(activeList, monthly, calcTable, false, nDays);
 			
 			function fjott (arr, map, containerId) {
 				
-				var table = fxcd(containerId);
-				var row;
-				var cell;
-				
-				function newRow(content, className) {
+				function newRow(content, header, className) {
 					var r = xcd("tr");
 					for (let i = 0; i < content.length; i += 1) {
 						var c = xcd("td");
+						if (header == true) {
+							c = xcd("th");
+						}
 						if (i > 1) {
 							if (className != "") {
 								c.classList.add(className);
@@ -1070,6 +1070,14 @@ function beginLoss(calcTable, resultTable) {
 					return r;
 				}
 				
+				var table = fxcd(containerId);
+				table.innerHTML = "";
+				axcd(table, newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"]), true);
+				
+				
+				
+				var row;
+				var cell;
 				var rows = [];
 				var j = [0,0,0,0,0,0,0];
 				function addLine(src, dst) {
@@ -1095,11 +1103,11 @@ function beginLoss(calcTable, resultTable) {
 				rows.push(j);
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					axcd(table, newRow(row, ""));
+					axcd(table, newRow(row, false, ""));
 				}
 			}
 			
-			fjott(activeList, monthly, resultTable);
+			fjott(activeList, monthly, "result-table");
 			
 			for (let r = 1; r < vv.length; r += 1) {
 				let row = vv[r];
@@ -1319,6 +1327,12 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 	document.addEventListener(eventName, () => {
 			var A = activeList;
 			var B = contractList;
+			
+			let table = fxcd(resultTable);
+			table.innerHTML = "";
+			axcd(table, newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"]), true);
+			table = fxcd(calcTable);
+			table.innerHTML = "";
 			
 			A[0][0] = "Fasilitetsnummer";
 			B[0][1] = "Sum inntekter";
