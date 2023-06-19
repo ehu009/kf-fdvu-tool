@@ -1371,21 +1371,26 @@ function setupKeyFilter(name){
 	let eName = "dataReady";
 	var dataReadyTarget = {
 			fileA: 1,
-			fileB: 1
+			fileB: 1,
+			count: 2
 		};
+	
 	const dataReadyEvent = new Event(eName);
 	var dataReady = new Proxy(dataReadyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
 					if (target["fileA"] <= 0 && target["fileB"] <= 0) {
+						fxcd(name + "-calc-btn").disabled = false;
+					} else {
+						fxcd(name + "-calc-btn").disabled = true;
+					}
+					if (target["count"] <= 0) {
+						target["count"] = 0;
 						document.dispatchEvent(dataReadyEvent);
 					}
 					return true;
 				}
 		});
-	document.addEventListener(eName, () => {
-		fxcd(name + "-calc-btn").disabled = false;
-	});
 	
 	let con = fxcd(name + "-container");
 	{
@@ -1440,9 +1445,11 @@ function setupKeyFilter(name){
 				
 				if (i.files.length < 1) {
 					dataReady["fileB"] += 1;
+					console.log("empty");
 				} else {
 					dataReady["fileB"] -= 1;
 				}
+				console.log(i.files)
 			}
 		}
 	}
@@ -1482,9 +1489,6 @@ function setupKeyFilter(name){
 			let spinner = fxcd(name + "-spinner");
 			spinner.style.visibility = "visible";
 			
-			let readyEventName = "dataReady";
-			let ready = semaphore(readyEventName);
-			
 			var rentables = fxcd(name + '-rentables-file');
 			var rentablesList = null;
 			var keys = fxcd(name + '-file');
@@ -1492,7 +1496,7 @@ function setupKeyFilter(name){
 			
 			
 			
-			document.addEventListener(readyEventName, () => {
+			document.addEventListener(eName, () => {
 					var A = rentablesList;
 					var B = keysMap;
 					
@@ -1508,7 +1512,7 @@ function setupKeyFilter(name){
 			var f1 = new FileReader();
 			f1.onload = function(){
 					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
-					ready["count"] -= 1;
+					dataReady["count"] -= 1;
 				}
 			f1.readAsText(rentables.files[0]);
 			
@@ -1517,7 +1521,7 @@ function setupKeyFilter(name){
 					var arr = CSVToArray(f2.result, ";");
 					var filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
 					keysMap = mapKeys(filtered);
-					ready["count"] -= 1;
+					dataReady["count"] -= 1;
 				}
 			f2.readAsText(keys.files[0]);
 			
