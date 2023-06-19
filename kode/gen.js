@@ -962,44 +962,6 @@ function eNumToNNum(n) {
 				return u.replace(".", ",");
 			}
 
-function semaphore(name) {
-	var readyTarget = {
-			count: 2
-		};
-	const readyEvent = new Event(name);
-	var ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
-					target[key] = value;
-					
-					if (target[key] == 0) {
-						document.dispatchEvent(readyEvent);
-					}
-					return true;
-				}
-		});
-	
-	return ready;
-}
-
-function ensureDates(fromId, toId, buttonId) {
-	let from = fxcd(fromId);
-	let to = fxcd(toId);
-	let btn = fxcd(buttonId);
-	from.onchange = function () {
-		if (to.value != "") {
-			btn.disabled = false;
-		} else {
-			btn.disabled = true;
-		}
-	}
-	to.onchange = function () {
-		if (from.value != "") {
-			btn.disabled = false;
-		} else {
-			btn.disabled = true;
-		}
-	}
-}
 
 function dateFun (date) {
 	let arr = date.split("-");
