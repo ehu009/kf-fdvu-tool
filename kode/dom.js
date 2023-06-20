@@ -160,7 +160,7 @@ function spinnerTag(spinnerId) {
 	axcd(b, txcd("⚙"));
 	return b;
 }
-function dateField(id) {
+function dateFieldTag(id) {
 	let i = xcd("input");
 	i.id = id;
 	i.type = "date";
@@ -177,7 +177,7 @@ function lossSumHeader() {
 function gainSumHeader() {
 	return newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"], true, "");
 }
-function defaultButtons(name) {
+function defaultButtonTags(name) {
 	let con = fxcd(name + "-container");
 	let b = buttonTag(name + "-calc-btn", "Lag flett", true);
 	axcd(con, b);

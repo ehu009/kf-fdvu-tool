@@ -792,12 +792,12 @@ function beginLoss(name) {
 		axcd(con, line());
 	
 		axcd(con, txcd("Fra "));
-		axcd(con, dateField(name + "-date-from"));
+		axcd(con, dateFieldTag(name + "-date-from"));
 		axcd(con, txcd(" Inntil "));
-		axcd(con, dateField(name + "-date-to"));
+		axcd(con, dateFieldTag(name + "-date-to"));
 		axcd(con, line());
 	
-		defaultButtons(name);
+		defaultButtonTags(name);
 		axcd(con, line());
 		axcd(con, xcd("hr"));
 	}
@@ -1142,12 +1142,12 @@ function beginGainCalc(name) {
 		axcd(con, line());
 	
 		axcd(con, txcd("Fra "));
-		axcd(con, dateField(name + "-date-from"));
+		axcd(con, dateFieldTag(name + "-date-from"));
 		axcd(con, txcd(" Inntil "));
-		axcd(con, dateField(name + "-date-to"));
+		axcd(con, dateFieldTag(name + "-date-to"));
 		axcd(con, line());
 	
-		defaultButtons(name);
+		defaultButtonTags(name);
 		axcd(con, line());
 		axcd(con, xcd("hr"));
 	}
@@ -1324,7 +1324,7 @@ function setupKeyFilter(name){
 				};
 		}
 	}
-	defaultButtons(name);
+	defaultButtonTags(name);
 	axcd(con, line());
 	axcd(con, xcd("hr"));
 	let t = xcd("table");
