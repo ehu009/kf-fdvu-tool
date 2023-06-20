@@ -967,11 +967,65 @@ function eNumToNNum(n) {
 	return u.replace(".", ",");
 }
 
-
 function dateFun (date) {
 	let arr = date.split("-");
 	return arr.reverse().join(".");
 }
+
+
+
+function line() {
+	return xcd("br");
+}
+
+function rentablesText(containerId) {
+	let con = fxcd(containerId);
+	axcd(con, txcd("Liste over alle "));
+	let tmp = xcd("i");
+	axcd(tmp,txcd("aktive"));
+	axcd(con,tmp);
+	
+	axcd(con, txcd(" bolig-seksjoner av kategori "));
+	tmp = xcd("i");
+	axcd(tmp, txcd("eid"));
+	axcd(con, tmp);
+	
+	axcd(con, txcd(" eller "));
+	tmp = xcd("i");
+	axcd(tmp, txcd("Kommunalt foretak - KF"));
+	axcd(con, tmp);
+}
+function fileInputTag(id) {
+	let i = xcd("input");
+	i.type = "file";
+	i.id = id;
+	return i;
+}
+function keysText(containerId) {
+	let con = fxcd(containerId);
+	axcd(con, txcd("Liste over "));
+	let tmp = xcd("b");
+	axcd(tmp, txcd("alle"));
+	axcd(con, tmp);
+	axcd(con, txcd(" nøkler:"));
+}
+function buttonTag(buttonId, txt, disabled) {
+	let b = xcd("button");
+	b.disabled = disabled;
+	b.type = "button";
+	b.id = name + buttonId;
+	axcd(b, txcd(txt));
+	return b;
+}
+function spinnerTag(spinnerId) {
+	let b = xcd("div");
+	b.classList.add("spinning");
+	b.id = spinnerId;
+	axcd(b, txcd("⚙"));
+	return b;
+}
+
+
 
 function beginLoss(calcTable, resultTable) {
 	let spinner = fxcd("loss-spinner");
@@ -1353,12 +1407,6 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			f2.readAsText(contracts.files[0]);
 		};
 }
-function line() {
-	return xcd("br");
-}
-
-
-
 
 function setupKeyFilter(name){
 	
@@ -1388,27 +1436,11 @@ function setupKeyFilter(name){
 	
 	let con = fxcd(name + "-container");
 	{
-		axcd(con, txcd("Liste over alle "));
-		let tmp = xcd("i");
-		axcd(tmp,txcd("aktive"));
-		axcd(con,tmp);
-		
-		axcd(con, txcd(" bolig-seksjoner av kategori "));
-		tmp = xcd("i");
-		axcd(tmp, txcd("eid"));
-		axcd(con, tmp);
-		
-		axcd(con, txcd(" eller "));
-		tmp = xcd("i");
-		axcd(tmp, txcd("Kommunalt foretak - KF"));
-		axcd(con, tmp);
-		
+		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
 		axcd(con, line());
 		{
-			let i = xcd("input");
-			i.type = "file";
-			i.id = name + "-rentables-file";
+			let i = fileInputTag(name + "-rentables-file");
 			axcd(con, i);
 			axcd(con, line());
 			axcd(con, line());
@@ -1422,16 +1454,11 @@ function setupKeyFilter(name){
 		}
 	}
 	{
-		axcd(con, txcd("Liste over "));
-		let tmp = xcd("b");
-		axcd(tmp, txcd("alle"));
-		axcd(con, tmp);
-		axcd(con, txcd(" nøkler:"));
+		keysText(name + "-container");
+		axcd(con, txcd(":"));
 		axcd(con, line());
 		{
-			let i = xcd("input");
-			i.type = "file";
-			i.id = name + "-file";
+			let i = fileInputTag(name + "-file");
 			axcd(con, i);
 			axcd(con, line());
 			axcd(con, line());
@@ -1445,28 +1472,15 @@ function setupKeyFilter(name){
 		}
 	}
 	{
-		let b = xcd("button");
-		b.disabled = true;
-		b.type = "button";
-		b.id = name + "-calc-btn";
-		
-		axcd(b, txcd("Lag flett"));
+		let b = buttonTag(name + "-calc-btn", "Lag flett", true);
 		axcd(con, b);
 		axcd(con, txcd(" "));
 		
-		b = xcd("button");
-		b.disabled = true;
-		b.type = "button";
-		b.id = name + "-download-btn";
-		axcd(b, txcd("Last ned CSV"));
-		
+		b = buttonTag(name + "-download-btn", "Last ned CSV", true);
 		axcd(con, b);
 		axcd(con, txcd(" "));
 		
-		b = xcd("div");
-		b.classList.add("spinning");
-		b.id = name + "-spinner";
-		axcd(b, txcd("⚙"));
+		b = spinnerTag(name + "-spinner");
 		axcd(con, b);
 		axcd(con, line());
 	}
@@ -1484,8 +1498,6 @@ function setupKeyFilter(name){
 			var rentablesList = null;
 			var keys = fxcd(name + '-file');
 			var keysMap = null;
-			
-			
 			
 			document.addEventListener(eName, () => {
 					var A = rentablesList;
@@ -1517,7 +1529,4 @@ function setupKeyFilter(name){
 			f2.readAsText(keys.files[0]);
 			
 		}
-	
-	
-	
 }
