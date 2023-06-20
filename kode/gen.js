@@ -57,6 +57,24 @@ function downloadCSV(csvContent, fileName) {
 }
 
 
+function dateFun (date) {
+	let arr = date.split("-");
+	return arr.reverse().join(".");
+}
+function stringToNumber(s) {
+	return parseInt(s.replace(",", "."));
+}
+function dateParse(s) {
+	var arr = s.split(".");
+	return new Date(arr.reverse());
+}
+function arrayAddition(src, dst) {
+	for (let c = 0; c < src.length; c += 1) {
+		dst[c] += src[c];
+	}
+}
+
+
 function axcd(p, e) {
 	p.appendChild(e);
 }
@@ -582,11 +600,6 @@ function drawKeys(arr, map, dst) {
 	return out;
 }
 
-
-function stringToNumber(s) {
-	return parseInt(s.replace(",", "."));
-}
-
 function writeEndResult(array, containerId) {
 
 	var boliger = 0;
@@ -604,14 +617,10 @@ function writeEndResult(array, containerId) {
 			active += array[row][2];
 		}
 	}
-	axcd(fxcd(containerId), row = newRow([boliger, passive, active], false)););
+	axcd(fxcd(containerId), newRow([boliger, passive, active], false));
 }
 
 
-function dateParse(s) {
-	var arr = s.split(".");
-	return new Date(arr.reverse());
-}
 
 
 
@@ -676,13 +685,6 @@ function mapContracts(arr, occupantIdx, beginIdx, endIdx, priceIdx, numberIdx, t
 	}
 	return m;
 }
-
-function arrayAddition(src, dst) {
-	for (let c = 0; c < src.length; c += 1) {
-		dst[c] += src[c];
-	}
-}
-
 
 function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays) {
 	
@@ -908,11 +910,6 @@ function totalResultCalc(months, header) {
 function eNumToNNum(n) {
 	let u = String(n);
 	return u.replace(".", ",");
-}
-
-function dateFun (date) {
-	let arr = date.split("-");
-	return arr.reverse().join(".");
 }
 
 
