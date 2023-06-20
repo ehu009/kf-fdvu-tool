@@ -15,7 +15,7 @@
 }
 </style>
 <script>
-var urls = ["./inntekter.html", "./vakanse.html", "./nøkler.html", "./kolonne-filter.html"];
+var urls = ["inntekter", "vakanse", "nøkler", "kolonne-filter"];
 
 function a(parent, element) {
 	parent.appendChild(element);
@@ -36,7 +36,7 @@ function n(url, active) {
 }
 function setup(id) {
 	for (let i = 0; i < urls.length; i += 1) {
-		a(document.getElementById(id), n(urls[i], i == 0));
+		a(document.getElementById(id), n("./kode/" + urls[i] + ".html", i == 0));
 	}
 }
 </script>
