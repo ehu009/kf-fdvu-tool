@@ -4,56 +4,8 @@
 <link rel="stylesheet" href="./kode/style.css"/>
 </head>
 
-<body onload="beginLoss('calc-table', 'result-table')">
+<body onload="beginLoss('loss')">
 	<h2>Vakanse og tap</h2>
-	<div id="loss-container" class="cont">
-		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
-		<input type="file" id="active-file">
-		<br/><br/>
-		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
-		<input type="file" id="all-contract-file">
-		<br/><br/>
-	
-		Velg tidsspenn:<br>
-		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
-		<br/>
-		
-		<button disabled id="loss-btn" type="button">Lag flett</button>&nbsp;
-		<button type="button" disabled id="download-loss-btn">Last ned CSV</button>&nbsp;<div class="spinning" id="loss-spinner">⚙</div>
-	<hr/>
-		Tap for vakanse og vedlikehold beregnes separat.<br/>
- 		Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris.<br/>
-		I vedlikehold medregnes kontrakter der leietaker heter en av følgende:
-		<ul>
-			<li>Driftsadministrasjonen</li>
-			<li>Driftsavdelingen</li>
-			<li>Tromsø kommune v/Byggforvaltningen</li>
-			<li>Drift Leide Boliger</li>
-			<li>Stiftelsen Kommunale Boliger</li>
-		</ul>
-		
-		Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer.<br/>
-		Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter.
-		<table id="result-table">
-			<tr>
-				<th>Sum - dager vakant</th>
-				<th>Sum - vakansetap</th>
-				<th>Sum - dager hos drift</th>
-				<th>Sum - tap pga drift</th>
-				<th>Sum - dager passiv</th>
-				<th>Sum - passiv kostnad</th>
-				
-				<th>Sum - Vakanse + Drift</th>
-			</tr>
-		</table>
-	
-	<hr/>
-	
-		<b>
-		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
-		Oransje markering er brukt når en seksjon <span class="double">har overlappende kontrakter</span>.</b>
-		
-		<table id="calc-table"></table>
-	</div>
+	<div id="loss-container" class="cont"></div>
 </body>
 </html>

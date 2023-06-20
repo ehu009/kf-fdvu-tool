@@ -4,39 +4,8 @@
 <link rel="stylesheet" href="./kode/style.css"/>
 </head>
 
-<body onload="beginGainCalc('calc-table', 'result-table', 'gain-spinner');">
+<body onload="beginGainCalc('gains');">
 	<h2>Inntekter</h2>
-	<div id="gains-container" class="cont">
-		Liste over alle <i>aktive</i> bolig-seksjoner av kategori <i>eid</i> eller <i>Kommunalt foretak - KF</i> <s>(inkl. Grønnegt. 103 og Ørretholmen)</s>: <a href="https://fdvu.net/FmEntityCollection/list">(lenke)</a><br/>
-		<input type="file" id="active-file">
-		<br/><br/>
-		Liste over <b>alle</b> utleiekontrakter: <a href="https://fdvu.net/RentalContract/list">(lenke)</a><br/>
-		<input type="file" id="all-contract-file">
-		<br/><br/>
-		Velg tidsspenn:<br>
-		Fra <input id="date-from" type="date"></input> Inntil <input id="date-to" type="date"></input><br/>
-		<br/>
-		<button id="calc-btn" type="button" disabled>Lag flett</button>&nbsp;
-		<button type="button" disabled id="download-calc-btn">Last ned CSV</button>&nbsp;<div class="spinning" id="gain-spinner">⚙</div>
-		<hr/>
-	
-		<table id="result-table">
-			<tr>
-				<th>Sum av ikke-passive boliger</th>
-				<th>Sum av passive boliger</th>
-				<th>Totalsum - inntekter</th>
-			</tr>
-		</table>
-	
-	<hr/>
-	
-		<b>
-		Rød markering er brukt når <span class="danger">kontrakt mangler pris</span> i Facilit.<br>
-		Gul markering er brukt når <span class="missing">bolig har vært vakant hele perioden</span>.<br>
-		<span class="passive">Passiv kontrakt og Driftskontrakt</span> er markert i grønt.<br>
-		</b>
-		<br/><br/>
-		<table id="calc-table"></table>
-	</div>
+	<div id="gains-container" class="cont"></div>
 </body>
 </html>

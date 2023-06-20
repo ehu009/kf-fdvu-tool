@@ -179,7 +179,24 @@ function populateCheckboxes(containerId, nameList, defaults) {
 		createCheckbox(containerId, c);
 	}
 }
-
+function radioButtonTag(id, name, value, checked)
+{
+	let i = xcd("input");
+	i.type = "radio";
+	i.id = id;
+	i.name = name;
+	i.value = value;
+	if (checked == true) {
+		i.checked = checked;
+	}
+	return i;
+}
+function labelTag(target, txt) {
+	let l = xcd("label");
+	l.for = target;
+	axcd(l, txcd(txt));
+	return l;
+}
 function setupColumnFilter(name) {
 	let c = fxcd(name + "-container");
 	{
@@ -191,54 +208,27 @@ function setupColumnFilter(name) {
 	}
 	{	
 		let f = xcd("form");
-		
-		let i = xcd("input");
-		i.type = "radio";
-		i.id = name + "-remove";
-		i.name = name + "-option";
-		i.value = "remove";
-		i.checked = true;
-		
-		let l = xcd("label");
-		l.for = name + "-remove";
-		axcd(l, txcd("Filtrer bort"));
-		axcd(f, i);
+		let l = labelTag("remove-option", "Filtrer bort");
+		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
 		axcd(f, l);
 		axcd(f, xcd("br"));
 		l.onclick = function () {
-				toggleCheckbox(name + "-remove");
+				toggleCheckbox("remove-option");
 			};
 		
-		i = xcd("input");
-		i.type = "radio";
-		i.id = name + "-keep";
-		i.name = name + "-option";
-		i.value = "keep";
-		
-		l = xcd("label");
-		l.for = name + "-keep";
-		axcd(l, txcd("Behold"));
-		axcd(f, i);
+		l = labelTag("keep-option", "Behold");
+		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
 		axcd(f, l);
 		axcd(f, xcd("br"));
 		l.onclick = function () {
-				toggleCheckbox(name + "-keep");
+				toggleCheckbox("keep-option");
 			};
 		axcd(c, f);
 	}
 	{
-		function btn(idSuffix, txt) {
-			let b = xcd("button");
-			b.type = "button";
-			b.disabled = true;
-			b.id = name + idSuffix;
-			axcd(b, txcd(txt));
-			return b;
-		}
-		
-		axcd(c, btn("-all-btn", "Velg alle"));
+		axcd(c, buttonTag(name + "-all-btn", "Velg alle", true));
 		axcd(c, txcd(' '))
-		axcd(c, btn("-none-btn", "Velg ingen"));
+		axcd(c, buttonTag(name + "-none-btn", "Velg ingen", true));
 	}
 	{
 		let e = xcd("div");
@@ -246,19 +236,10 @@ function setupColumnFilter(name) {
 		axcd(c, e);
 		axcd(c, xcd("br"));
 		
-		e = xcd("button");
-		e.id = name + "-download";
-		e.type="button";
-		e.disabled = true;
-		axcd(e, txcd("Last ned CSV"));
-		axcd(c, e);
+		axcd(c, buttonTag(name + "-download", "Last ned CSV", true));
 		axcd(c, txcd(" "));
 		
-		e = xcd("div");
-		e.id = name + "-spinner";
-		e.classList.add("spinning");
-		axcd(e, txcd("⚙"));
-		axcd(c, e);
+		axcd(c, spinnerTag(name + "-spinner"));
 	}
 	
 	axcd(document.body, c);
@@ -298,7 +279,7 @@ function setupColumnFilter(name) {
 					r.onload = function(){
 							let arr = CSVToArray(r.result, ";");
 							let wanted = [];
-							var checkFn = function (value) {return (value == fxcd(name + "-keep").checked)};
+							var checkFn = function (value) {return (value == fxcd("keep-option").checked)};
 							for (let e of mapCheckboxes(name + "-field").entries()) {
 								if (checkFn(e[1]) == true) {
 									wanted.push(e[0]);
@@ -977,7 +958,22 @@ function dateFun (date) {
 function line() {
 	return xcd("br");
 }
-
+function keysText(containerId) {
+	let con = fxcd(containerId);
+	axcd(con, txcd("Liste over "));
+	let tmp = xcd("b");
+	axcd(tmp, txcd("alle"));
+	axcd(con, tmp);
+	axcd(con, txcd(" nøkler:"));
+}
+function contractsText(containerId) {
+	let con = fxcd(containerId);
+	axcd(con, txcd("Liste over "));
+	let b = xcd("b");
+	axcd(b, txcd("alle"));
+	axcd(con, b);
+	axcd(con, txcd(" utleiekontrakter"));
+}
 function rentablesText(containerId) {
 	let con = fxcd(containerId);
 	axcd(con, txcd("Liste over alle "));
@@ -1001,14 +997,6 @@ function fileInputTag(id) {
 	i.id = id;
 	return i;
 }
-function keysText(containerId) {
-	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over "));
-	let tmp = xcd("b");
-	axcd(tmp, txcd("alle"));
-	axcd(con, tmp);
-	axcd(con, txcd(" nøkler:"));
-}
 function buttonTag(buttonId, txt, disabled) {
 	let b = xcd("button");
 	b.disabled = disabled;
@@ -1024,19 +1012,66 @@ function spinnerTag(spinnerId) {
 	axcd(b, txcd("⚙"));
 	return b;
 }
-
-
-
-function beginLoss(calcTable, resultTable) {
-	let spinner = fxcd("loss-spinner");
+function dateField(id) {
+	let i = xcd("input");
+	i.id = id;
+	i.type = "date";
+	return i;
+}
+function listTag(txt) {
+	let l = xcd("ul");
+	axcd(l, txcd(txt));
+	return l;
+}
+function lossSumHeader() {
+	return newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, "");
+}
+function gainSumHeader() {
+	return newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"], true, "");
+}
+function defaultButtons(name) {
+	let con = fxcd(name + "-container");
+	let b = buttonTag(name + "-calc-btn", "Lag flett", true);
+	axcd(con, b);
+	axcd(con, txcd(" "));
 	
-	var actives = fxcd('active-file');
-	var activeList = null;
-	var contracts = fxcd('all-contract-file');
-	var contractMap = null;
+	b = buttonTag(name + "-download-btn", "Last ned CSV", true);
+	axcd(con, b);
+	axcd(con, txcd(" "));
 	
-	var from = fxcd("date-from");
-	var to = fxcd("date-to");
+	b = spinnerTag(name + "-spinner");
+	axcd(con, b);
+}
+
+function spanSandwich (e, txt1, txt2, cls) {
+	axcd(e, txcd(txt1));
+	let s = xcd("span");
+	s.classList.add(cls);
+	axcd(s, txcd(txt2));
+	axcd(e, s);
+	axcd(e, txcd("."));
+	axcd(e, line());
+}
+function lossLegend() {
+	let b = xcd("b");
+	spanSandwich(b, "Gul markering er brukt når ", "bolig har vært vakant hele perioden", "missing");
+	spanSandwich(b, "Oransje markering er brukt når en seksjon ", "har overlappende kontrakter", "double");
+	return b;
+}
+function gainLegend() {
+	let b = xcd("b");
+	spanSandwich(b, "Rød markering er brukt når ", "kontrakt mangler pris", "danger");
+	spanSandwich(b, "Gul markering er brukt når ", "bolig har vært vakant hele perioden", "missing");
+	let s = xcd("span");
+	axcd(s, txcd("Passiv kontrakt og Driftskontrakt"));
+	s.classList.add("passive");
+	axcd(b, s);
+	axcd(b, txcd(" er markert i grønt."));
+	axcd(b, line());
+	return b;
+}
+
+function beginLoss(name) {
 	
 	let eventName = "dataReady";
 	var readyTarget = {
@@ -1050,43 +1085,142 @@ function beginLoss(calcTable, resultTable) {
 	var ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
-					fxcd("download-loss-btn").disabled = true;
+					fxcd(name + "-download-btn").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
-							fxcd("loss-btn").disabled = false;
+							fxcd(name + "-calc-btn").disabled = false;
 						} else {
-							fxcd("loss-btn").disabled = true;
+							fxcd(name + "-calc-btn").disabled = true;
 						}
 					}
 					return true;
 				}
 		});
 	
-	fxcd("date-to").onchange = function () {
-			if (fxcd("date-to").value == "") {
+	let con = fxcd(name + "-container");
+	{
+		rentablesText(name + "-container");
+		axcd(con, txcd(":"));
+		axcd(con, line());
+		{
+			let i = fileInputTag(name + "-rentables-file");
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
+			i.onchange = function () {
+					if (i.files.length < 1) {
+						dataReady["fileA"] += 1;
+					} else {
+						dataReady["fileA"] -= 1;
+					}
+				};
+		}
+	}
+	{
+		contractsText(name + "-container");
+		axcd(con, txcd(":"));
+		axcd(con, line());
+		{
+			let i = fileInputTag(name + "-contracts-file");
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
+			i.onchange = function () {
+					if (i.files.length < 1) {
+						dataReady["fileB"] += 1;
+					} else {
+						dataReady["fileB"] -= 1;
+					}
+				};
+		}
+	}
+	{
+		axcd(con, txcd("Velg tidsspenn:"));
+		axcd(con, line());
+	
+		axcd(con, txcd("Fra "));
+		axcd(con, dateField(name + "-date-from"));
+		axcd(con, txcd(" Inntil "));
+		axcd(con, dateField(name + "-date-to"));
+		axcd(con, line());
+	
+		defaultButtons(name);
+		axcd(con, line());
+		axcd(con, xcd("hr"));
+	}
+	{
+		axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
+		axcd(con, line());
+		
+		axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris."));
+		axcd(con, line());
+		
+		axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av følgende:"));
+		axcd(con, line());
+		
+		let l = xcd("ul");
+		for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Tromsø kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
+			axcd(l, listTag(e));
+		}
+		axcd(con, l);
+		
+		axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
+		axcd(con, line());
+		
+		axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
+	}
+	{
+		let t = xcd("table");
+		t.id = name + "-result-table";
+		axcd(t, lossSumHeader());
+		axcd(con, t);
+		axcd(con, xcd("hr"));
+	}
+	{
+		axcd(con, lossLegend());
+		let t = xcd("table");
+		t.id = name + "-calc-table";
+		axcd(con, t);
+	}
+	
+	
+	let spinner = fxcd(name + "-spinner");
+	
+	var actives = fxcd(name + '-rentables-file');
+	var activeList = null;
+	var contracts = fxcd(name + '-contracts-file');
+	var contractMap = null;
+	
+	var from = fxcd(name + "-date-from");
+	var to = fxcd(name + "-date-to");
+	
+	
+	
+	fxcd(name + "-date-to").onchange = function (evt) {
+			if (evt.target.value == "") {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd("date-from").onchange = function () {
-			if (fxcd("date-from").value == "") {
+	fxcd(name + "-date-from").onchange = function (evt) {
+			if (evt.target.value == "") {
 				ready["dateA"] = 1;	
 			} else {
 				ready["dateA"] = 0;
 			}
 		};
-	actives.onchange = function () {
-			if (actives.files.length > 0) {
+	actives.onchange = function (evt) {
+			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
 				ready["countA"] += 1;
 			}
 		};
-	contracts.onchange = function () {
-			if (contracts.files.length > 0) {
+	contracts.onchange = function (evt) {
+			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
 				ready["countA"] += 1;
@@ -1105,14 +1239,19 @@ function beginLoss(calcTable, resultTable) {
 			
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
-			fxcd(calcTable).innerHTML = "";
-			let vv = drawSections(activeList, monthly, calcTable, false, nDays);
+			fxcd(name + "-calc-table").innerHTML = "";
+			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
+			
+			
+			
+			
+			
 			
 			function fjott (arr, map, containerId) {
 				
 				var table = fxcd(containerId);
 				table.innerHTML = "";
-				axcd(table, newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, ""));
+				axcd(table, lossSumHeader());
 				
 				
 				
@@ -1147,7 +1286,7 @@ function beginLoss(calcTable, resultTable) {
 				}
 			}
 			
-			fjott(activeList, monthly, "result-table");
+			fjott(activeList, monthly, name + "-result-table");
 			
 			for (let r = 1; r < vv.length; r += 1) {
 				let row = vv[r];
@@ -1156,15 +1295,15 @@ function beginLoss(calcTable, resultTable) {
 				}
 			}
 			
-			let btn = fxcd("download-loss-btn");
+			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = function () {
-					downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd("date-from").value + " til " + fxcd("date-to").value + ".csv");
+					downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv");
 				};
 			spinner.style.visibility = "hidden";
 		});
 	
-	fxcd("loss-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
 			var f1 = new FileReader();
 			f1.onload = function(){
@@ -1288,8 +1427,7 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 	
 }
 
-function beginGainCalc(calcTable, resultTable, spinnerId) {
-	let spinner = fxcd(spinnerId);
+function beginGainCalc(name) {
 	
 	
 	let eventName = "dataReady";
@@ -1303,49 +1441,120 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 	var ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
-					fxcd("download-calc-btn").disabled = true;
+					fxcd(name + "-download-btn").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
-						fxcd("calc-btn").disabled = false;
+						fxcd(name + "-calc-btn").disabled = false;
 					} else {
 						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
-							fxcd("calc-btn").disabled = false;
+							fxcd(name + "-calc-btn").disabled = false;
 						} else {
-							fxcd("calc-btn").disabled = true;
+							fxcd(name + "-calc-btn").disabled = true;
 						}
 					}
 					return true;
 				}
 		});
+	let con = fxcd(name + "-container");
+	{
+		rentablesText(name + "-container");
+		axcd(con, txcd(":"));
+		axcd(con, line());
+		{
+			let i = fileInputTag(name + "-rentables-file");
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
+			i.onchange = function () {
+					if (i.files.length < 1) {
+						dataReady["fileA"] += 1;
+					} else {
+						dataReady["fileA"] -= 1;
+					}
+				};
+		}
+	}
+	{
+		contractsText(name + "-container");
+		axcd(con, txcd(":"));
+		axcd(con, line());
+		{
+			let i = fileInputTag(name + "-contracts-file");
+			axcd(con, i);
+			axcd(con, line());
+			axcd(con, line());
+			i.onchange = function () {
+					if (i.files.length < 1) {
+						dataReady["fileB"] += 1;
+					} else {
+						dataReady["fileB"] -= 1;
+					}
+				};
+		}
+	}
+	{
+		axcd(con, txcd("Velg tidsspenn:"));
+		axcd(con, line());
 	
-	var actives = fxcd('active-file');
+		axcd(con, txcd("Fra "));
+		axcd(con, dateField(name + "-date-from"));
+		axcd(con, txcd(" Inntil "));
+		axcd(con, dateField(name + "-date-to"));
+		axcd(con, line());
+	
+		defaultButtons(name);
+		axcd(con, line());
+		axcd(con, xcd("hr"));
+	}
+	{
+		let t = xcd("table");
+		t.id = name + "-result-table";
+		axcd(t, gainSumHeader());
+		axcd(con, t);
+		axcd(con, xcd("hr"));
+	}
+	{
+		axcd(con, gainLegend());
+		axcd(con, line());
+		axcd(con, line());
+		let t = xcd("table");
+		t.id = name + "-calc-table";
+		axcd(con, t);
+	}
+	
+	
+	
+	let spinner = fxcd(name + "-spinner");
+	
+	
+	var actives = fxcd(name + '-rentables-file');
 	var activeList = null;
-	var contracts = fxcd('all-contract-file');
+	var contracts = fxcd(name + '-contracts-file');
 	var contractList = null;
 	
-	fxcd("date-to").onchange = function () {
-			if (fxcd("date-to").value == "") {
+	fxcd(name + "-date-to").onchange = function (evt) {
+			if (evt.target.value == "") {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd("date-from").onchange = function () {
-			if (fxcd("date-from").value == "") {
+	fxcd(name + "-date-from").onchange = function (evt) {
+			if (evt.target.value == "") {
 				ready["dateA"] = 1;
 			} else {
 				ready["dateA"] = 0;
 			}
 		};
-	actives.onchange = function () {
-			if (actives.files.length > 0) {
+	actives.onchange = function (evt) {
+			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
 				ready["countA"] += 1;
 			}
 		};
-	contracts.onchange = function () {
-			if (contracts.files.length > 0) {
+	contracts.onchange = function (evt) {
+			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
 				ready["countA"] += 1;
@@ -1355,18 +1564,18 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			var A = activeList;
 			var B = contractList;
 			
-			let table = fxcd(resultTable);
+			let table = fxcd(name + "-result-table");
 			table.innerHTML = "";
-			axcd(table, newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"], true, ""));
-			table = fxcd(calcTable);
+			axcd(table, gainSumHeader());
+			table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
 			A[0][0] = "Fasilitetsnummer";
 			B[0][1] = "Sum inntekter";
 			var result = arrayMerge(A, B, "Fasilitetsnummer");
 			
-			writeArrayTo(result, calcTable);
-			writeEndResult(result, resultTable);
+			writeArrayTo(result, name + "-calc-table");
+			writeEndResult(result, name + "-result-table");
 			
 			for (let r = 1; r < result.length; r += 1) {
 				let row = result[r];
@@ -1375,14 +1584,14 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 				}
 			}
 			
-			let btn = fxcd("download-calc-btn");
+			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = function () {
-					downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd("date-from").value + " til " + fxcd("date-to").value + ".csv");
+					downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv");
 				};
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd("calc-btn").onclick = function() {
+	fxcd(name + "-calc-btn").onclick = function() {
 			spinner.style.visibility = "visible";
 			var f1 = new FileReader();
 			f1.onload = function(){
@@ -1394,8 +1603,8 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			var f2 = new FileReader();
 			f2.onload = function(){
 					
-					var from = fxcd("date-from").value;
-					var to = fxcd("date-to").value;
+					var from = fxcd(name + "-date-from").value;
+					var to = fxcd(name + "-date-to").value;
 					from = dateFun(from);
 					to = dateFun(to);
 					
@@ -1437,7 +1646,6 @@ function setupKeyFilter(name){
 	let con = fxcd(name + "-container");
 	{
 		rentablesText(name + "-container");
-		axcd(con, txcd(":"));
 		axcd(con, line());
 		{
 			let i = fileInputTag(name + "-rentables-file");
@@ -1471,19 +1679,8 @@ function setupKeyFilter(name){
 				};
 		}
 	}
-	{
-		let b = buttonTag(name + "-calc-btn", "Lag flett", true);
-		axcd(con, b);
-		axcd(con, txcd(" "));
-		
-		b = buttonTag(name + "-download-btn", "Last ned CSV", true);
-		axcd(con, b);
-		axcd(con, txcd(" "));
-		
-		b = spinnerTag(name + "-spinner");
-		axcd(con, b);
-		axcd(con, line());
-	}
+	defaultButtons(name);
+	axcd(con, line());
 	axcd(con, xcd("hr"));
 	let t = xcd("table");
 	t.id = name + "-table";
