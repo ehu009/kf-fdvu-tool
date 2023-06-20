@@ -139,7 +139,7 @@ function setCheckboxValues(containerId, options) {
 }
 
 function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
-	let button = fxcd(buttonId).onclick = function () {
+	fxcd(buttonId).onclick = function () {
 			let m = new Map();
 			for (let e of allOptions) {
 				m.set(e, desired);
@@ -533,30 +533,15 @@ function drawKeys(arr, map, dst) {
 	var row;
 	var cell;
 	
-	row = xcd("tr");
-	cell = xcd("th");
-	axcd(cell, txcd("Seksjon#"));
-	axcd(row, cell);
-	cell = xcd("th");
-	axcd(cell, txcd("Navn"));
-	axcd(row, cell);
-	cell = xcd("th");
-	axcd(cell, txcd("Nøklerinos"));
-	axcd(row, cell);
-	axcd(table, row);
+	axcd(table, newRow(["Seksjon#", "Navn", "Nøkkelnummer"], true));
 	
 	var counter = new Map();
 	let out = [arr[0].concat(["Nøklerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (map.has(arr[r][0] == false)) {
-			row = xcd("tr");
-			cell = xcd("td");
-			axcd(cell, txcd(arr[r][0]));
-			axcd(row, cell);
-			cell = xcd("td");
-			axcd(cell, txcd(arr[r][1]));
-			axcd(row, cell);
+			row = newRow([arr[r][0], arr[r][1]], false);
+			
 			cell = xcd("td");
 			axcd(cell, txcd(""));
 			cell.classList.add("missing");
@@ -574,21 +559,10 @@ function drawKeys(arr, map, dst) {
 					c1 = "";
 					c2 = "";
 				}
-				
 				if (counter.has(l[c]) == false) {
 					counter.set(l[c], true);
 				}
-				
-				row = xcd("tr");
-				cell = xcd("td");
-				axcd(cell, txcd(c1));
-				axcd(row, cell);
-				cell = xcd("td");
-				axcd(cell, txcd(c2));
-				axcd(row, cell);
-				cell = xcd("td");
-				axcd(cell, txcd(l[c]));
-				axcd(row, cell);
+				row = newRow([c1, c2, l[c]], false);
 				axcd(table, row);
 			}
 			out.push(arr[r].concat(l));
@@ -630,19 +604,7 @@ function writeEndResult(array, containerId) {
 			active += array[row][2];
 		}
 	}
-	
-	var row = xcd("tr");
-	var cell = xcd("td");
-	axcd(cell, txcd(boliger));
-	axcd(row, cell);
-	var cell = xcd("td");
-	axcd(cell, txcd(passive));
-	axcd(row, cell);
-	cell = xcd("td");
-	axcd(cell, txcd(active));
-	axcd(row, cell);
-	cell = xcd("td");
-	axcd(fxcd(containerId), row);
+	axcd(fxcd(containerId), row = newRow([boliger, passive, active], false)););
 }
 
 
@@ -1243,17 +1205,11 @@ function beginLoss(name) {
 			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
 			
 			
-			
-			
-			
-			
 			function fjott (arr, map, containerId) {
 				
 				var table = fxcd(containerId);
 				table.innerHTML = "";
 				axcd(table, lossSumHeader());
-				
-				
 				
 				var row;
 				var cell;
