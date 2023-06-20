@@ -386,10 +386,13 @@ function arrayMerge(arr1, arr2, columnName) {
 	return out;
 }
 
-function newRow(content, className) {
+function newRow(content, header, className) {
 	var r = xcd("tr");
 	for (let i = 0; i < content.length; i += 1) {
 		var c = xcd("td");
+		if (header == true) {
+			c = xcd("th");
+		}
 		if (i > 1) {
 			if (className != "") {
 				c.classList.add(className);
@@ -400,6 +403,7 @@ function newRow(content, className) {
 	}
 	return r;
 }
+
 
 function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	var table = fxcd(containerId);
@@ -472,7 +476,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 				cls = "double";
 			}
 		}
-		axcd(table, newRow(row, cls));
+		axcd(table, newRow(row, false, cls));
 	}
 	
 	
@@ -1052,27 +1056,9 @@ function beginLoss(calcTable, resultTable) {
 			
 			function fjott (arr, map, containerId) {
 				
-				function newRow(content, header, className) {
-					var r = xcd("tr");
-					for (let i = 0; i < content.length; i += 1) {
-						var c = xcd("td");
-						if (header == true) {
-							c = xcd("th");
-						}
-						if (i > 1) {
-							if (className != "") {
-								c.classList.add(className);
-							}
-						}
-						axcd(c, txcd(content[i]));
-						axcd(r, c);
-					}
-					return r;
-				}
-				
 				var table = fxcd(containerId);
 				table.innerHTML = "";
-				axcd(table, newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"]), true);
+				axcd(table, newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, ""));
 				
 				
 				
@@ -1174,20 +1160,7 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 				
 				var monthNames = ["Januar", "Februar", "Mars", "April"];
 				
-				function newRow(content, className) {
-					var r = xcd("tr");
-					for (let i = 0; i < content.length; i += 1) {
-						var c = xcd("td");
-						if (i > 1) {
-							if (className != "") {
-								c.classList.add(className);
-							}
-						}
-						axcd(c, txcd(content[i]));
-						axcd(r, c);
-					}
-					return r;
-				}
+				
 				
 				var rows = [];
 				var j = [0,0,0,0,0,0,0];
@@ -1232,10 +1205,10 @@ function beginOldLoss(calcTable, resultTable, spinnerId) {
 				rows.push(j, f, m, a)
 				for (let r = 0; r < rows.length; r += 1) {
 					row = rows[r];
-					axcd(table, newRow(row, ""));
+					axcd(table, newRow(row, false, ""));
 				}
-				axcd(table, newRow(["", "", "", "", "", "", "", ""], ""));
-				axcd(table, newRow(totals), "");
+				axcd(table, newRow(["", "", "", "", "", "", "", ""], false, ""));
+				axcd(table, newRow(totals), false, "");
 			}
 			
 			fjott(activeList, monthly, resultTable)
@@ -1330,7 +1303,7 @@ function beginGainCalc(calcTable, resultTable, spinnerId) {
 			
 			let table = fxcd(resultTable);
 			table.innerHTML = "";
-			axcd(table, newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"]), true);
+			axcd(table, newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"], true, ""));
 			table = fxcd(calcTable);
 			table.innerHTML = "";
 			
