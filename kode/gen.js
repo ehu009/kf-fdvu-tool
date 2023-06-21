@@ -435,9 +435,6 @@ function writeEndResult(array, containerId) {
 
 
 
-
-
-
 function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 	
 	var out = [];
@@ -539,8 +536,8 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 		pas += duration;
 		pasLoss += cost;
 	}
-		vac -= duration;
-		vacLoss -= cost;
+	vac -= duration;
+	vacLoss -= cost;
 	return [vac, vacLoss, rep, repLoss, pas, pasLoss];
 }
 
