@@ -205,8 +205,6 @@ function setupRowFilter(name) {
 				toggleCheckbox("remove-option");
 				radioFn();
 			};
-		
-		
 		l = labelTag("keep-option", "Behold");
 		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
 		axcd(f, l);
@@ -226,7 +224,6 @@ function setupRowFilter(name) {
 		
 		axcd(c, txcd("Konstrast-kolonne: "));
 		
-		
 		s.id = name + "-contrast-column";
 		axcd(s, optionTag("Velg", true, true));
 		axcd(c, s);
@@ -242,41 +239,31 @@ function setupRowFilter(name) {
 			
 			
 		i.onchange = function (evt) {
-			let spinner = fxcd(name + "-spinner");
-			spinner.style.visibility = "visible";
-			/*
-				spinnerFunction(name + "-spinner", function() {
-					*/
-						if (evt.target.files.length >= 1) {
-						/*
-							spinnerFunction(name + "-spinner", function() {
-								*/
-									let r = new FileReader();
-									r.onload = function(){
-											s.innerHTML = "";
-											axcd(s, optionTag("Velg", true, true));
-											let arr = CSVToArray(r.result, ";");
-											for (let e of arr[0]) {
-												if (e == "") {
-													continue;
-												}
-												axcd(s, optionTag(e, false, false));
-											}
-											ready['B'] = 0;
-											contrastCSV = arr;
-											spinner.style.visibility = "hidden";
-										};
-									r.readAsText(evt.target.files[0]);
-									/*
-								});
-								*/
-						} else {
-							ready['B'] = 1;
+				let spinner = fxcd(name + "-spinner");
+				spinner.style.visibility = "visible";
+			
+				if (evt.target.files.length >= 1) {
+					let r = new FileReader();
+					r.onload = function(){
+							s.innerHTML = "";
+							axcd(s, optionTag("Velg", true, true));
+							let arr = CSVToArray(r.result, ";");
+							for (let e of arr[0]) {
+								if (e == "") {
+									continue;
+								}
+								axcd(s, optionTag(e, false, false));
+							}
+							ready['B'] = 0;
+							contrastCSV = arr;
 							spinner.style.visibility = "hidden";
-						}
-						/*
-					});
-					*/
+						};
+					r.readAsText(evt.target.files[0]);
+									
+				} else {
+					ready['B'] = 1;
+					spinner.style.visibility = "hidden";
+				}
 			};
 	}
 	{
@@ -287,44 +274,25 @@ function setupRowFilter(name) {
 	}
 	axcd(document.body, c);
 	
-	
-	
-	
-	
 	let button = fxcd(name + "-download-btn");
 	let file = fxcd(name + "-file");
 	file.onchange = function() {
 		let spinner = fxcd(name + "-spinner");
 		spinner.style.visibility = "visible";
-		/*
-			spinnerFunction(name + "-spinner", function() {
-					button.disabled = true;
-					*/
-					if (file.files.length >= 1) {
-/*					
-					spinnerFunction(name + "-spinner", function() {
-						*/
-								let r = new FileReader();
-								r.onload = function(){
-										let arr = CSVToArray(r.result, ";");
-										ready['A'] = 0;
-										inputCSV = arr;
-										spinner.style.visibility = "hidden";
-									};
-								r.readAsText(file.files[0]);
-								/*
-							});
-							*/
-					} else {
-						ready['A'] = 1;
+			if (file.files.length >= 1) {
+				let r = new FileReader();
+				r.onload = function(){
+						let arr = CSVToArray(r.result, ";");
+						ready['A'] = 0;
+						inputCSV = arr;
 						spinner.style.visibility = "hidden";
-					}
-					
-					/*
-				});
-				*/
+					};
+				r.readAsText(file.files[0]);
+			} else {
+				ready['A'] = 1;
+				spinner.style.visibility = "hidden";
+			}
 		};
-	
 	
 	document.addEventListener(eventName, () => {
 			let spinner = fxcd(name + "-spinner");
@@ -342,29 +310,23 @@ function setupRowFilter(name) {
 				return out;
 			}
 			
-			console.log("keep " + keep);
 			if (keep == false) {
-				
-			let mep = mapArrayByIndex(inputCSV, filterIdx);
-			for (let i = 1; i < contrastCSV.length; i += 1) {
-				let f = contrastCSV[i][filterIdx];	
-				mep.delete(f);
-			}
-			for (let e of mep.entries()) {
-			
-				outputCSV.push(e[1]);
-			}
+				let mep = mapArrayByIndex(inputCSV, filterIdx);
+				for (let i = 1; i < contrastCSV.length; i += 1) {
+					let f = contrastCSV[i][filterIdx];	
+					mep.delete(f);
+				}
+				for (let e of mep.entries()) {
+					outputCSV.push(e[1]);
+				}
 			} else {
 				for (let i = 1; i < contrastCSV.length; i += 1) {
-					for (let j = 1; j < inputCSV.length; j += 1) {
-						
-						
-					if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
-						outputCSV.push(inputCSV[j]);
-					}
+					for (let j = 1; j < inputCSV.length; j += 1) {						
+						if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
+							outputCSV.push(inputCSV[j]);
+						}
 					}
 				}
-				
 			}
 				
 			button.disabled = false;
@@ -373,28 +335,8 @@ function setupRowFilter(name) {
 	
 	
 	button.onclick = function() {
-		/*
-			spinnerFunction(name + "-spinner", function() {
-					let r = new FileReader();
-					*/
-					let fileInput = fxcd(name + "-file");
-					/*
-					r.onload = function(){
-							let arr = CSVToArray(r.result, ";");
-							let wanted = [];
-							
-							var checkFn = function (value) {return (value == fxcd("keep-option").checked)};
-							for (let e of mapCheckboxes(name + "-field").entries()) {
-								if (checkFn(e[1]) == true) {
-									wanted.push(e[0]);
-								}
-							}*/
-							downloadCSV(arrayToCSV(outputCSV,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
-						/*
-						};
-					r.readAsText(fileInput.files[0]);
-				});
-				*/
+			let fileInput = fxcd(name + "-file");
+			downloadCSV(arrayToCSV(outputCSV,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
 		};
 }
 
