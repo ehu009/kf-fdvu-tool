@@ -39,16 +39,30 @@ function CSVToArray( strData, strDelimiter ){
 function arrayToCSV(arr, separator) {
 	let out = "data:text/csv;charset=utf-8,";
 	arr.forEach(function(rowArray) {
-			out += rowArray.join(separator) + "\r\n";
+			let row = [];
+			for(let c = 0; c < rowArray.length; c += 1) {
+				let f = rowArray[c];
+				if ((f == undefined) == false) {
+					if (isNaN(parseFloat(f.replaceAll(",", ".")/2)) == true) {
+						if (f[0] == "-" || f[0] == "=") {
+							f = "'" + rowArray[c] + "'";
+						}
+					}
+					f = encodeURIComponent(f);
+				} else {
+					f = "";
+				}
+				
+				row.push(f);
+			}
+			out += row.join(separator) + "\r\n";
 		});
 	return out;
 }
 
 function downloadCSV(csvContent, fileName) {
-	
-	var encodedUri = encodeURI(csvContent);
 	var link = xcd("a");
-	link.setAttribute("href", encodedUri);
+	link.setAttribute("href", csvContent);
 	link.setAttribute("download", fileName);
 	link.hidden = true;
 	axcd(document.body, link);
