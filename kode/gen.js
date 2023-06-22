@@ -1503,7 +1503,6 @@ function setupKeyFilter(name){
 	}
 	{
 		keysText(name + "-container");
-		axcd(con, txcd(":"));
 		addLine(con);
 		{
 			let i = fileInputTag(name + "-file");
