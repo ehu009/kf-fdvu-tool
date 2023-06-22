@@ -213,6 +213,7 @@ function lossLegend() {
 	let b = xcd("b");
 	spanSandwich(b, "Gul markering er brukt når ", "bolig har vært vakant hele perioden", "missing");
 	spanSandwich(b, "Oransje markering er brukt når en seksjon ", "har overlappende kontrakter", "double");
+	addLine(b);
 	return b;
 }
 function gainLegend() {

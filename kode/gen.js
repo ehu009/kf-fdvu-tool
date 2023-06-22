@@ -991,6 +991,7 @@ function beginLoss(name) {
 		axcd(con, txcd(" Inntil "));
 		axcd(con, dateFieldTag(name + "-date-to"));
 		addLine(con);
+		addLine(con);
 	
 		defaultButtonTags(name);
 		addLine(con);
@@ -1341,6 +1342,7 @@ function beginGainCalc(name) {
 		axcd(con, txcd(" Inntil "));
 		axcd(con, dateFieldTag(name + "-date-to"));
 		addLine(con);
+		addLine(con);
 	
 		defaultButtonTags(name);
 		addLine(con);
@@ -1355,8 +1357,6 @@ function beginGainCalc(name) {
 	}
 	{
 		axcd(con, gainLegend());
-		addLine(con);
-		addLine(con);
 		let t = xcd("table");
 		t.id = name + "-calc-table";
 		axcd(con, t);
