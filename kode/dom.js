@@ -138,7 +138,13 @@ function labelTag(target, txt) {
 	axcd(l, txcd(txt));
 	return l;
 }
-
+function optionTag(txt, selected, disabled) {
+	let t = xcd("option");
+	axcd(t, txcd(txt));
+	t.selected = selected;
+	t.disabled = disabled;
+	return t;
+}
 function fileInputTag(id) {
 	let i = xcd("input");
 	i.type = "file";
