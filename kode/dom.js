@@ -2,6 +2,9 @@
 function line() {
 	return xcd("br");
 }
+function addLine(e) {
+	axcd(e, line());
+}
 function newRow(content, header, className) {
 	var r = xcd("tr");
 	for (let i = 0; i < content.length; i += 1) {
@@ -204,7 +207,7 @@ function spanSandwich (e, txt1, txt2, cls) {
 	axcd(s, txcd(txt2));
 	axcd(e, s);
 	axcd(e, txcd("."));
-	axcd(e, line());
+	addLine(e);
 }
 function lossLegend() {
 	let b = xcd("b");
@@ -221,7 +224,7 @@ function gainLegend() {
 	s.classList.add("passive");
 	axcd(b, s);
 	axcd(b, txcd(" er markert i grønt."));
-	axcd(b, line());
+	addLine(b);
 	return b;
 }
 

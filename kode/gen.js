@@ -220,15 +220,15 @@ function setupRowFilter(name) {
 		let s = xcd("select");
 		{
 		axcd(c, i);
-		axcd(c, line());
+		addLine(c);
 		
 		axcd(c, txcd("Konstrast-kolonne: "));
 		
 		s.id = name + "-contrast-column";
 		axcd(s, optionTag("Velg", true, true));
 		axcd(c, s);
-		axcd(c, line());
-		axcd(c, line());
+		addLine(c);
+		addLine(c);
 		}
 		s.onchange = function () {
 				let spinner = fxcd(name + "-spinner");
@@ -949,12 +949,12 @@ function beginLoss(name) {
 	{
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-rentables-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileA"] += 1;
@@ -967,12 +967,12 @@ function beginLoss(name) {
 	{
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-contracts-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileB"] += 1;
@@ -984,27 +984,27 @@ function beginLoss(name) {
 	}
 	{
 		axcd(con, txcd("Velg tidsspenn:"));
-		axcd(con, line());
+		addLine(con);
 	
 		axcd(con, txcd("Fra "));
 		axcd(con, dateFieldTag(name + "-date-from"));
 		axcd(con, txcd(" Inntil "));
 		axcd(con, dateFieldTag(name + "-date-to"));
-		axcd(con, line());
+		addLine(con);
 	
 		defaultButtonTags(name);
-		axcd(con, line());
+		addLine(con);
 		axcd(con, xcd("hr"));
 	}
 	{
 		axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
-		axcd(con, line());
+		addLine(con);
 		
 		axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris."));
-		axcd(con, line());
+		addLine(con);
 		
 		axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av følgende:"));
-		axcd(con, line());
+		addLine(con);
 		
 		let l = xcd("ul");
 		for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Tromsø kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
@@ -1013,7 +1013,7 @@ function beginLoss(name) {
 		axcd(con, l);
 		
 		axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
-		axcd(con, line());
+		addLine(con);
 		
 		axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
 	}
@@ -1299,12 +1299,12 @@ function beginGainCalc(name) {
 	{
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-rentables-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileA"] += 1;
@@ -1317,12 +1317,12 @@ function beginGainCalc(name) {
 	{
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-contracts-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileB"] += 1;
@@ -1334,16 +1334,16 @@ function beginGainCalc(name) {
 	}
 	{
 		axcd(con, txcd("Velg tidsspenn:"));
-		axcd(con, line());
+		addLine(con);
 	
 		axcd(con, txcd("Fra "));
 		axcd(con, dateFieldTag(name + "-date-from"));
 		axcd(con, txcd(" Inntil "));
 		axcd(con, dateFieldTag(name + "-date-to"));
-		axcd(con, line());
+		addLine(con);
 	
 		defaultButtonTags(name);
-		axcd(con, line());
+		addLine(con);
 		axcd(con, xcd("hr"));
 	}
 	{
@@ -1355,8 +1355,8 @@ function beginGainCalc(name) {
 	}
 	{
 		axcd(con, gainLegend());
-		axcd(con, line());
-		axcd(con, line());
+		addLine(con);
+		addLine(con);
 		let t = xcd("table");
 		t.id = name + "-calc-table";
 		axcd(con, t);
@@ -1486,12 +1486,12 @@ function setupKeyFilter(name){
 	let con = fxcd(name + "-container");
 	{
 		rentablesText(name + "-container");
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-rentables-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileA"] += 1;
@@ -1504,12 +1504,12 @@ function setupKeyFilter(name){
 	{
 		keysText(name + "-container");
 		axcd(con, txcd(":"));
-		axcd(con, line());
+		addLine(con);
 		{
 			let i = fileInputTag(name + "-file");
 			axcd(con, i);
-			axcd(con, line());
-			axcd(con, line());
+			addLine(con);
+			addLine(con);
 			i.onchange = function () {
 					if (i.files.length < 1) {
 						dataReady["fileB"] += 1;
@@ -1520,7 +1520,7 @@ function setupKeyFilter(name){
 		}
 	}
 	defaultButtonTags(name);
-	axcd(con, line());
+	addLine(con);
 	axcd(con, xcd("hr"));
 	let t = xcd("table");
 	t.id = name + "-table";
