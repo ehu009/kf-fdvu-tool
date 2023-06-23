@@ -7,7 +7,7 @@ function stringToNumber(s) {
 	return parseInt(s.replace(",", "."));
 }
 function dateParse(s) {
-	var arr = s.split(".");
+	let arr = s.split(".");
 	return new Date(arr.reverse());
 }
 function arrayAddition(src, dst) {
@@ -123,7 +123,7 @@ function setupColumnFilter(name) {
 					r.onload = function(){
 							let arr = CSVToArray(r.result, ";");
 							let wanted = [];
-							var checkFn = function (value) {return (value == fxcd("keep-option").checked)};
+							let checkFn = function (value) {return (value == fxcd("keep-option").checked)};
 							for (let e of mapCheckboxes(name + "-field").entries()) {
 								if (checkFn(e[1]) == true) {
 									wanted.push(e[0]);
@@ -144,7 +144,7 @@ function setupRowFilter(name) {
 	let outputCSV = null;
 	
 	let eventName = "dataReady";
-	var readyTarget = {
+	let readyTarget = {
 			A: 1,
 			B: 1,
 			C: 1,
@@ -152,7 +152,7 @@ function setupRowFilter(name) {
 		};
 	
 	const readyEvent = new Event(eventName);
-	var ready = new Proxy(readyTarget, {
+	let ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
 					
@@ -293,7 +293,7 @@ function setupRowFilter(name) {
 			let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
 			
 			function mapArrayByIndex(arr, idx) {
-				var out = new Map();
+				let out = new Map();
 				for (let i = 1; i < arr.length; i += 1) {
 					out.set(arr[i][idx], arr[i]);
 				}
@@ -332,7 +332,7 @@ function setupRowFilter(name) {
 
 
 function arrayColFilter(array, wantedList) {
-	var filterIdx = [];
+	let filterIdx = [];
 	for (let col = 0; col < array[0].length; col += 1) {
 		
 		if (wantedList.indexOf(array[0][col]) < 0) {
@@ -341,10 +341,10 @@ function arrayColFilter(array, wantedList) {
 		filterIdx.push(col);
 	}
 	
-	var out = [];
+	let out = [];
 	for (let row = 0; row < array.length; row += 1) {
 		
-		var add = [];
+		let add = [];
 		for (let col = 0; col < filterIdx.length; col += 1) {
 			
 			add.push(array[row][filterIdx[col]]);
@@ -357,15 +357,15 @@ function arrayColFilter(array, wantedList) {
 
 function arrayMerge(arr1, arr2, columnName) {
 	
-	var out = [];
-	var nameIdx1 = arr1[0].indexOf(columnName);
-	var nameIdx2 = arr2[0].indexOf(columnName);
+	let out = [];
+	let nameIdx1 = arr1[0].indexOf(columnName);
+	let nameIdx2 = arr2[0].indexOf(columnName);
 	
-	var head = [];
+	let head = [];
 	for (e of arr1[0]) {
 		head.push(e);
 	}
-	var col;
+	let col;
 	for (col = 0; col < arr2[0].length; col += 1) {
 		if (col == nameIdx2) {
 			continue;
@@ -374,15 +374,15 @@ function arrayMerge(arr1, arr2, columnName) {
 	}
 	out.push(head);
 	
-	var row1;
+	let row1;
 	for (row1 = 1; row1 < arr1.length; row1 += 1) {
-		var a = [];
+		let a = [];
 		for (let col = 0; col < arr1[row1].length; col += 1) {
 			a.push(arr1[row1][col]);
 		}
 		
-		var current = arr1[row1][nameIdx1];
-		var row2;
+		let current = arr1[row1][nameIdx1];
+		let row2;
 		for (row2 = 1; row2 < arr2.length; row2 += 1) {
 			
 			if (arr2[row2][nameIdx2] != current) {
@@ -406,9 +406,9 @@ function arrayMerge(arr1, arr2, columnName) {
 
 
 function drawSections(arr, map, containerId, includeMonthName, nDays) {
-	var table = fxcd(containerId);
-	var row;
-	var cell;
+	let table = fxcd(containerId);
+	let row;
+	let cell;
 	
 	row = xcd("tr");
 	let kk = ["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"];
@@ -416,7 +416,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		kk.unshift("måned");
 	}
 	let head2 = [];
-	var head = arr[0].concat(kk);
+	let head = arr[0].concat(kk);
 	for (let c = 0; c < head.length; c += 1) {
 		if (c == 2) {
 			continue;
@@ -428,14 +428,14 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	}
 	axcd(table, row);
 	
-	var monthNames = ["Januar", "Februar", "Mars", "April"];
-	var rows = [];
+	let monthNames = ["Januar", "Februar", "Mars", "April"];
+	let rows = [];
 	
 	for (let r = 1; r < arr.length; r += 1) {
 		
-		var months = map.get(arr[r][0]);
+		let months = map.get(arr[r][0]);
 		for (let m = 0; m < months.length; m += 1) {
-			var pt = ["", ""];
+			let pt = ["", ""];
 			let cat = months[m];
 			if (map.has(arr[r][0]) == false) {
 				pt = [arr[r][0], ""];
@@ -452,10 +452,10 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		}
 	}
 	for (let r = 0; r < rows.length; r += 1) {
-		var row = rows[r];
+		let row = rows[r];
 		
-		var cls = "missing";
-		var maxAllowed = nDays;
+		let cls = "missing";
+		let maxAllowed = nDays;
 		let idx = 2;
 		if (includeMonthName == true) {
 			idx += 1;
@@ -476,10 +476,10 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 
 function writeArrayTo(array, containerId) {
 	
-	var table = fxcd(containerId);
-	var header = xcd("tr");
+	let table = fxcd(containerId);
+	let header = xcd("tr");
 	for (let c = 0; c < array[0].length; c += 1) {
-		var cell = xcd("th");
+		let cell = xcd("th");
 		axcd(cell, txcd(array[0][c]));
 		axcd(header, cell);
 	}
@@ -487,11 +487,11 @@ function writeArrayTo(array, containerId) {
 	
 	for (let r = 1; r < array.length; r += 1) {
 		
-		var row = xcd("tr");
+		let row = xcd("tr");
 		
 		for (let c = 0; c < array[r].length; c += 1) {
-			var val = array[r][c];
-			var cell = xcd("td");
+			let val = array[r][c];
+			let cell = xcd("td");
 			
 			if (c == 2) {
 				if (val < 0) {
@@ -507,7 +507,7 @@ function writeArrayTo(array, containerId) {
 			axcd(row, cell);
 		}
 		if (array[r].length < 3) {
-			var cell = xcd("td");
+			let cell = xcd("td");
 			cell.classList.add("missing");
 			axcd(row, cell);
 		}
@@ -517,15 +517,15 @@ function writeArrayTo(array, containerId) {
 }
 
 function mapKeys(arr) {
-	var out = new Map();
+	let out = new Map();
 	
 	
 	for (let i = 1; i < arr.length; i += 1) {
-		var row = arr[i];
-		var name = row[1];
+		let row = arr[i];
+		let name = row[1];
 		
 		if (out.has(name)) {
-			var l = out.get(name);
+			let l = out.get(name);
 			if (l.includes(row[0]) == false) {
 				l.push(row[0]);
 			}
@@ -538,13 +538,13 @@ function mapKeys(arr) {
 }
 
 function drawKeys(arr, map, dst) {
-	var table = fxcd(dst);
-	var row;
-	var cell;
+	let table = fxcd(dst);
+	let row;
+	let cell;
 	
 	axcd(table, newRow(["Seksjon#", "Navn", "Nøkkelnummer"], true));
 	
-	var counter = new Map();
+	let counter = new Map();
 	let out = [arr[0].concat(["Nøklerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
@@ -557,13 +557,13 @@ function drawKeys(arr, map, dst) {
 			axcd(row, cell);
 			axcd(table, row);
 		} else {
-			var l = map.get(arr[r][0]);
+			let l = map.get(arr[r][0]);
 			if (l == undefined) {
 				continue;
 			}
 			for (c = 0; c < l.length; c += 1) {
-				var c1 = arr[r][0];
-				var c2 = arr[r][1];
+				let c1 = arr[r][0];
+				let c2 = arr[r][1];
 				if (c > 0) {
 					c1 = "";
 					c2 = "";
@@ -578,8 +578,8 @@ function drawKeys(arr, map, dst) {
 		}
 	}
 	
-	var under = 0;
-	var above = 0;
+	let under = 0;
+	let above = 0;
 	for (let k of counter.keys()) {
 		if (k < "800") {
 			under += 1;
@@ -593,12 +593,12 @@ function drawKeys(arr, map, dst) {
 
 function writeEndResult(array, containerId) {
 
-	var boliger = 0;
-	var active = 0;
-	var passive = 0;
+	let boliger = 0;
+	let active = 0;
+	let passive = 0;
 	
 	for (let row = 1; row < array.length; row += 1) {
-		var v = array[row][2];
+		let v = array[row][2];
 		if (v != null) {
 			if (v >= 0) {
 				boliger += 1;
@@ -614,21 +614,21 @@ function writeEndResult(array, containerId) {
 
 function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 	
-	var out = [];
+	let out = [];
 	out.push(arr[0]);
 	
 	for (let r = 1; r < arr.length; r += 1) {
-		var id = arr[r][idxId];
+		let id = arr[r][idxId];
 		if (id == null || id == "" || id == " ") {
 			continue;
 		}
-		var from = arr[r][idxLow];
+		let from = arr[r][idxLow];
 		if (from != null && from != " " && from != "") {
 			if (dateParse(from) > cutoffHigh) {
 				continue;
 			}
 		}
-		var to = arr[r][idxHigh];
+		let to = arr[r][idxHigh];
 		if (to != null && to != " " && to != "") {
 			if (dateParse(to) < cutoffLow) {
 				continue;
@@ -640,11 +640,11 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 }
 
 function calcDays(begin, stop, cutoffLow, cutoffHigh) {
-	var start = dateParse(begin);
+	let start = dateParse(begin);
 	
-	var end = dateParse(stop);
-	var l = dateParse(cutoffLow);
-	var h = dateParse(cutoffHigh);
+	let end = dateParse(stop);
+	let l = dateParse(cutoffLow);
+	let h = dateParse(cutoffHigh);
 	if (start > h) {
 		return 0;
 	}
@@ -662,9 +662,9 @@ function calcDays(begin, stop, cutoffLow, cutoffHigh) {
 
 function mapContracts(arr, occupantIdx, beginIdx, endIdx, priceIdx, numberIdx, typeIdx) {
 	
-	var m = new Map();
+	let m = new Map();
 	for (let r = 1; r < arr.length; r += 1) {
-		var id = arr[r][numberIdx];
+		let id = arr[r][numberIdx];
 		if (m.has(id) == false) {
 			m.set(id, []);
 		}
@@ -675,17 +675,17 @@ function mapContracts(arr, occupantIdx, beginIdx, endIdx, priceIdx, numberIdx, t
 
 function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays) {
 	
-	var start = contract[beginIdx];
-	var stop = contract[endIdx];
+	let start = contract[beginIdx];
+	let stop = contract[endIdx];
 	if (start == "" || start == " " || start == null || start == undefined) {
 		start = cutoffLow;
 	}
 	if (stop == "" || stop == " " || stop == null || stop == undefined) {
 		stop = cutoffHigh;
 	}
-	var duration = Math.round(calcDays(start, stop, cutoffLow, cutoffHigh));
+	let duration = Math.round(calcDays(start, stop, cutoffLow, cutoffHigh));
 	
-	var monthCost = contract[cPriceIdx];
+	let monthCost = contract[cPriceIdx];
 	if (monthCost == "" || monthCost == " " || monthCost == undefined || monthCost == null) {
 		monthCost = section[sPriceIdx];
 		if (monthCost == "" || monthCost == " " || monthCost == undefined || monthCost == null) {
@@ -697,15 +697,15 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 		monthCost = stringToNumber(contract[cPriceIdx]);
 	}
 	
-	var vac = 0;
-	var vacLoss = 0;
-	var rep = 0;
-	var repLoss = 0;
-	var pas = 0;
-	var pasLoss = 0;
+	let vac = 0;
+	let vacLoss = 0;
+	let rep = 0;
+	let repLoss = 0;
+	let pas = 0;
+	let pasLoss = 0;
 	
-	var cost = Math.ceil(duration * (monthCost/nDays));
-	var occupant = contract[occupantIdx];
+	let cost = Math.ceil(duration * (monthCost/nDays));
+	let occupant = contract[occupantIdx];
 	if (["Driftsadministrasjonen", "Tromsø kommune v/Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"].includes(occupant)) {
 		rep += duration;
 		repLoss += cost;
@@ -720,25 +720,25 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 
 function contractFilter(arr, cutoffLow, cutoffHigh) {
 	
-	var out = [];
+	let out = [];
 	out.push(arr[0]);
 	
-	var cutoffLow = dateParse(cutoffLow);
-	var cutoffHigh = dateParse(cutoffHigh);
+	let cutoffLow = dateParse(cutoffLow);
+	let cutoffHigh = dateParse(cutoffHigh);
 	
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (arr[r][12] == null || arr[r][12] == "" || arr[r][12] == " ") {
 			continue;
 		}
-		var from = arr[r][6];
+		let from = arr[r][6];
 		if (from != null && from != " " && from != "") {
 			if (dateParse(from).getTime() > cutoffHigh.getTime()) {
 				continue;
 			}
 		}
 		
-		var to = arr[r][7];
+		let to = arr[r][7];
 		if (to != null && to != " " && to != "") {
 			if (dateParse(to).getTime() < cutoffLow.getTime()) {
 				continue;
@@ -750,19 +750,19 @@ function contractFilter(arr, cutoffLow, cutoffHigh) {
 }
 
 function contractGainCalc(arr, cutoffLow, cutoffHigh) {
-	var out = [["Fasilitetsnummer", "Sum"]];
-	var map = new Map();
+	let out = [["Fasilitetsnummer", "Sum"]];
+	let map = new Map();
 	
 	for (let r = 1; r < arr.length; r += 1) {
-		var fnr = arr[r][4];
-		var val = stringToNumber(arr[r][3]);
+		let fnr = arr[r][4];
+		let val = stringToNumber(arr[r][3]);
 		if (arr[r][0] == "Passiv" || arr[r][0] == "Driftsadministrasjonen") {
 			val = -1;
 			map.set(fnr, -1);
 		}
 		
-		var from = arr[r][1];
-		var to = arr[r][2];
+		let from = arr[r][1];
+		let to = arr[r][2];
 		if (from == null || from == " " || from == "")
 		{
 			arr[r][1] = cutoffLow;
@@ -772,13 +772,13 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 			arr[r][2] = cutoffHigh;
 		}
 		
-		var days = calcDays(arr[r][1], arr[r][2], cutoffLow, cutoffHigh);
+		let days = calcDays(arr[r][1], arr[r][2], cutoffLow, cutoffHigh);
 		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
 		if (!map.has(fnr)) {
 			map.set(fnr, (days*val/30));
 		} else {
-			var s = map.get(fnr);
+			let s = map.get(fnr);
 			s += (days*val/30);
 			map.set(fnr, s);
 		}
@@ -793,10 +793,10 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 
 function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh) {
 	
-	var out = new Map();
+	let out = new Map();
 	for (let r = 1; r < arr.length; r += 1) {
 		
-		var p;
+		let p;
 		try {
 			p = stringToNumber(arr[r][sPriceIdx]);
 		}
@@ -806,9 +806,9 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
 		
-		var j = [nDays, p, 0, 0, 0, 0];
+		let j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
-			var contracts = map.get(arr[r][nameIdx]);
+			let contracts = map.get(arr[r][nameIdx]);
 			for (let c = 0; c < contracts.length; c += 1) {
 				arrayAddition(timeCalc(arr[r], sPriceIdx, contracts[c], occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays), j);
 			}
@@ -820,10 +820,10 @@ function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, 
 
 
 function monthLossCalc(map) {
-	var out = new Map();
+	let out = new Map();
 	
 	for (let e of map.entries()) {
-		var jT = [0, 0, 0, 0, 0, 0];
+		let jT = [0, 0, 0, 0, 0, 0];
 		arrayAddition(e[1][0], jT);
 		jT.push(jT[1]+jT[3]);
 		out.set(e[0], [jT]);
@@ -835,7 +835,7 @@ function monthLossCalc(map) {
 function beginLoss(name) {
 	
 	let eventName = "dataReady";
-	var readyTarget = {
+	let readyTarget = {
 			countA: 2,
 			countB: 2,
 			dateA: 1,
@@ -843,7 +843,7 @@ function beginLoss(name) {
 		};
 		
 	const readyEvent = new Event(eventName);
-	var ready = new Proxy(readyTarget, {
+	let ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
@@ -925,13 +925,13 @@ function beginLoss(name) {
 	
 	let spinner = fxcd(name + "-spinner");
 	
-	var actives = fxcd(name + '-rentables-file');
-	var activeList = null;
-	var contracts = fxcd(name + '-contracts-file');
-	var contractMap = null;
+	let actives = fxcd(name + '-rentables-file');
+	let activeList = null;
+	let contracts = fxcd(name + '-contracts-file');
+	let contractMap = null;
 	
-	var from = fxcd(name + "-date-from");
-	var to = fxcd(name + "-date-to");
+	let from = fxcd(name + "-date-from");
+	let to = fxcd(name + "-date-to");
 	
 	
 	
@@ -968,11 +968,11 @@ function beginLoss(name) {
 	document.addEventListener(eventName, () => {
 			from = dateFun(from.value);
 			to = dateFun(to.value);
-			var A = activeList;
-			var B = contractMap;
+			let A = activeList;
+			let B = contractMap;
 			
-			var perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, from, to);
-			var monthly = monthLossCalc(perSection);
+			let perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, from, to);
+			let monthly = monthLossCalc(perSection);
 			
 			let nDays = dateParse(to) - dateParse(from);
 			nDays /= Math.round(1000*60*60*24);
@@ -982,14 +982,14 @@ function beginLoss(name) {
 			
 			function fjott (arr, map, containerId) {
 				
-				var table = fxcd(containerId);
+				let table = fxcd(containerId);
 				table.innerHTML = "";
 				axcd(table, lossSumHeader());
 				
-				var row;
-				var cell;
-				var rows = [];
-				var j = [0,0,0,0,0,0,0];
+				let row;
+				let cell;
+				let rows = [];
+				let j = [0,0,0,0,0,0,0];
 				function addLine(src, dst) {
 					if (src[1] >= 0){
 						arrayAddition(src, dst);
@@ -999,15 +999,15 @@ function beginLoss(name) {
 				for (let r = 1; r < arr.length; r += 1) {
 					
 					if (map.has(arr[r][0])) {
-						var months = map.get(arr[r][0]);
+						let months = map.get(arr[r][0]);
 						addLine(months[0], j);
 					} else {
-						var empty = [0,0,0,0,0,0];
+						let empty = [0,0,0,0,0,0];
 						arrayAddition(empty, j);
 					}
 				}
 				
-				var totals = [0, 0, 0, 0, 0, 0, 0];
+				let totals = [0, 0, 0, 0, 0, 0, 0];
 				arrayAddition(j, totals);
 				
 				rows.push(j);
@@ -1036,17 +1036,17 @@ function beginLoss(name) {
 	
 	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
-			var f1 = new FileReader();
+			let f1 = new FileReader();
 			f1.onload = function(){
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
 					ready["countB"] -= 1;
 				};
 			f1.readAsText(actives.files[0]);
 			
-			var f2 = new FileReader();
+			let f2 = new FileReader();
 			f2.onload = function(){
-					var filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
-					var filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
+					let filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
+					let filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
 					ready["countB"] -= 1;
 				};
@@ -1059,14 +1059,14 @@ function beginGainCalc(name) {
 	
 	
 	let eventName = "dataReady";
-	var readyTarget = {
+	let readyTarget = {
 			countA: 2,
 			countB: 2,
 			dateA: 1,
 			dateB: 1
 		};
 	const readyEvent = new Event(eventName);
-	var ready = new Proxy(readyTarget, {
+	let ready = new Proxy(readyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
@@ -1147,10 +1147,10 @@ function beginGainCalc(name) {
 	let spinner = fxcd(name + "-spinner");
 	
 	
-	var actives = fxcd(name + '-rentables-file');
-	var activeList = null;
-	var contracts = fxcd(name + '-contracts-file');
-	var contractList = null;
+	let actives = fxcd(name + '-rentables-file');
+	let activeList = null;
+	let contracts = fxcd(name + '-contracts-file');
+	let contractList = null;
 	
 	fxcd(name + "-date-to").onchange = function (evt) {
 			if (evt.target.value == "") {
@@ -1181,8 +1181,8 @@ function beginGainCalc(name) {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			var A = activeList;
-			var B = contractList;
+			let A = activeList;
+			let B = contractList;
 			
 			let table = fxcd(name + "-result-table");
 			table.innerHTML = "";
@@ -1192,7 +1192,7 @@ function beginGainCalc(name) {
 			
 			A[0][0] = "Fasilitetsnummer";
 			B[0][1] = "Sum inntekter";
-			var result = arrayMerge(A, B, "Fasilitetsnummer");
+			let result = arrayMerge(A, B, "Fasilitetsnummer");
 			
 			writeArrayTo(result, name + "-calc-table");
 			writeEndResult(result, name + "-result-table");
@@ -1213,22 +1213,22 @@ function beginGainCalc(name) {
 		});	
 	fxcd(name + "-calc-btn").onclick = function() {
 			spinner.style.visibility = "visible";
-			var f1 = new FileReader();
+			let f1 = new FileReader();
 			f1.onload = function(){
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]);
 					ready["countB"] -= 1;
 				}
 			f1.readAsText(actives.files[0]);
 			
-			var f2 = new FileReader();
+			let f2 = new FileReader();
 			f2.onload = function(){
 					
-					var from = fxcd(name + "-date-from").value;
-					var to = fxcd(name + "-date-to").value;
+					let from = fxcd(name + "-date-from").value;
+					let to = fxcd(name + "-date-to").value;
 					from = dateFun(from);
 					to = dateFun(to);
 					
-					var c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
+					let c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 					
 					contractList = c;
 					ready["countB"] -= 1;
@@ -1240,14 +1240,14 @@ function beginGainCalc(name) {
 function setupKeyFilter(name){
 	
 	let eName = "dataReady";
-	var dataReadyTarget = {
+	let dataReadyTarget = {
 			fileA: 1,
 			fileB: 1,
 			count: 2
 		};
 	
 	const dataReadyEvent = new Event(eName);
-	var dataReady = new Proxy(dataReadyTarget, {
+	let dataReady = new Proxy(dataReadyTarget, {
 			set: function (target, key, value) {
 					target[key] = value;
 					if (target["fileA"] <= 0 && target["fileB"] <= 0) {
@@ -1306,14 +1306,14 @@ function setupKeyFilter(name){
 			let spinner = fxcd(name + "-spinner");
 			spinner.style.visibility = "visible";
 			
-			var rentables = fxcd(name + '-rentables-file');
-			var rentablesList = null;
-			var keys = fxcd(name + '-file');
-			var keysMap = null;
+			let rentables = fxcd(name + '-rentables-file');
+			let rentablesList = null;
+			let keys = fxcd(name + '-file');
+			let keysMap = null;
 			
 			document.addEventListener(eName, () => {
-					var A = rentablesList;
-					var B = keysMap;
+					let A = rentablesList;
+					let B = keysMap;
 					
 					let c = drawKeys(A, B, name + "-table");
 					let btn = fxcd(name + "-download-btn");
@@ -1324,17 +1324,17 @@ function setupKeyFilter(name){
 					spinner.style.visibility = "hidden";
 				});
 			
-			var f1 = new FileReader();
+			let f1 = new FileReader();
 			f1.onload = function(){
 					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
 					dataReady["count"] -= 1;
 				}
 			f1.readAsText(rentables.files[0]);
 			
-			var f2 = new FileReader();
+			let f2 = new FileReader();
 			f2.onload = function(){
-					var arr = CSVToArray(f2.result, ";");
-					var filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
+					let arr = CSVToArray(f2.result, ";");
+					let filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
 					keysMap = mapKeys(filtered);
 					dataReady["count"] -= 1;
 				}

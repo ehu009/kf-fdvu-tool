@@ -1,7 +1,7 @@
 function CSVToArray( strData, strDelimiter ){
 	
 	strDelimiter = (strDelimiter || ",");
-	var objPattern = new RegExp(
+	let objPattern = new RegExp(
 			(
 				"(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
 				"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
@@ -10,11 +10,11 @@ function CSVToArray( strData, strDelimiter ){
 			"gi"
 			);
 
-	var arrData = [[]];
-	var arrMatches = null;
+	let arrData = [[]];
+	let arrMatches = null;
 
 	while (arrMatches = objPattern.exec( strData )){
-		var strMatchedDelimiter = arrMatches[ 1 ];
+		let strMatchedDelimiter = arrMatches[ 1 ];
 		if (
 			strMatchedDelimiter.length &&
 			strMatchedDelimiter !== strDelimiter
@@ -22,7 +22,7 @@ function CSVToArray( strData, strDelimiter ){
 			arrData.push( [] );
 		}
 
-		var strMatchedValue;
+		let strMatchedValue;
 		if (arrMatches[ 2 ]){
 			strMatchedValue = arrMatches[ 2 ].replace(
 				new RegExp( "\"\"", "g" ),
@@ -61,7 +61,7 @@ function arrayToCSV(arr, separator) {
 }
 
 function downloadCSV(csvContent, fileName) {
-	var link = xcd("a");
+	let link = xcd("a");
 	link.setAttribute("href", csvContent);
 	link.setAttribute("download", fileName);
 	link.hidden = true;

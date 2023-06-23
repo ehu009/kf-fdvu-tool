@@ -6,9 +6,9 @@ function addLine(e) {
 	axcd(e, line());
 }
 function newRow(content, header, className) {
-	var r = xcd("tr");
+	let r = xcd("tr");
 	for (let i = 0; i < content.length; i += 1) {
-		var c = xcd("td");
+		let c = xcd("td");
 		if (header == true) {
 			c = xcd("th");
 		}
