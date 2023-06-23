@@ -1,12 +1,12 @@
 
-function dateFun (date) {
+function dateToFVDUDate (date) {
 	let arr = date.split("-");
 	return arr.reverse().join(".");
 }
 function stringToNumber(s) {
 	return parseInt(s.replace(",", "."));
 }
-function dateParse(s) {
+function parseDate(s) {
 	let arr = s.split(".");
 	return new Date(arr.reverse());
 }
@@ -15,34 +15,10 @@ function arrayAddition(src, dst) {
 		dst[c] += src[c];
 	}
 }
-function eNumToNNum(n) {
+function numToFDVUNum(n) {
 	let u = String(n);
 	return u.replace(".", ",");
 }
-
-
-
-
-function axcd(p, e) {
-	p.appendChild(e);
-}
-function xcd(t) {
-	return document.createElement(t);
-}
-function txcd(t) {
-	return document.createTextNode(t);
-}
-function fxcd(t) {
-	return document.getElementById(t);
-}
-
-function spinnerFunction(spinnerId, func) {
-	let spinner = fxcd(spinnerId);
-	spinner.style.visibility = "visible";
-	func();
-	spinner.style.visibility = "hidden";
-}
-
 
 function setupColumnFilter(name) {
 	let c = fxcd(name + "-container");
@@ -611,13 +587,13 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 		}
 		let from = arr[r][idxLow];
 		if (from != null && from != " " && from != "") {
-			if (dateParse(from) > cutoffHigh) {
+			if (parseDate(from) > cutoffHigh) {
 				continue;
 			}
 		}
 		let to = arr[r][idxHigh];
 		if (to != null && to != " " && to != "") {
-			if (dateParse(to) < cutoffLow) {
+			if (parseDate(to) < cutoffLow) {
 				continue;
 			}
 		}
@@ -627,11 +603,11 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 }
 
 function calcDays(begin, stop, cutoffLow, cutoffHigh) {
-	let start = dateParse(begin);
+	let start = parseDate(begin);
 	
-	let end = dateParse(stop);
-	let l = dateParse(cutoffLow);
-	let h = dateParse(cutoffHigh);
+	let end = parseDate(stop);
+	let l = parseDate(cutoffLow);
+	let h = parseDate(cutoffHigh);
 	if (start > h) {
 		return 0;
 	}
@@ -709,8 +685,8 @@ function contractFilter(arr, cutoffLow, cutoffHigh) {
 	
 	let out = [arr[0]];
 	
-	cutoffLow = dateParse(cutoffLow);
-	cutoffHigh = dateParse(cutoffHigh);
+	cutoffLow = parseDate(cutoffLow);
+	cutoffHigh = parseDate(cutoffHigh);
 	
 	for (let r = 1; r < arr.length; r += 1) {
 		
@@ -719,14 +695,14 @@ function contractFilter(arr, cutoffLow, cutoffHigh) {
 		}
 		let from = arr[r][6];
 		if (from != null && from != " " && from != "") {
-			if (dateParse(from).getTime() > cutoffHigh.getTime()) {
+			if (parseDate(from).getTime() > cutoffHigh.getTime()) {
 				continue;
 			}
 		}
 		
 		let to = arr[r][7];
 		if (to != null && to != " " && to != "") {
-			if (dateParse(to).getTime() < cutoffLow.getTime()) {
+			if (parseDate(to).getTime() < cutoffLow.getTime()) {
 				continue;
 			}
 		}
@@ -787,7 +763,7 @@ function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, e
 		catch(f) {
 			p = 0;
 		}
-		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
+		let nDays = parseDate(cutoffHigh) - parseDate(cutoffLow);
 		nDays /= Math.round(1000*60*60*24);
 		
 		let j = [nDays, p, 0, 0, 0, 0];
@@ -950,13 +926,13 @@ function beginLoss(name) {
 	
 	
 	document.addEventListener(eventName, () => {
-			from = dateFun(from.value);
-			to = dateFun(to.value);
+			from = dateToFVDUDate(from.value);
+			to = dateToFVDUDate(to.value);
 			
 			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to);
 			let monthly = monthLossCalc(perSection);
 			
-			let nDays = dateParse(to) - dateParse(from);
+			let nDays = parseDate(to) - parseDate(from);
 			nDays /= Math.round(1000*60*60*24);
 			fxcd(name + "-calc-table").innerHTML = "";
 			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
@@ -1000,7 +976,7 @@ function beginLoss(name) {
 			for (let r = 1; r < vv.length; r += 1) {
 				let row = vv[r];
 				for (let c = 2; c < row.length; c += 1) {
-					row[c] = eNumToNNum(row[c]);
+					row[c] = numToFDVUNum(row[c]);
 				}
 			}
 			
@@ -1178,7 +1154,7 @@ function beginGainCalc(name) {
 			for (let r = 1; r < result.length; r += 1) {
 				let row = result[r];
 				for (let c = 2; c < row.length; c += 1) {
-					row[c] = eNumToNNum(row[c]);
+					row[c] = numToFDVUNum(row[c]);
 				}
 			}
 			
@@ -1201,8 +1177,8 @@ function beginGainCalc(name) {
 			let f2 = new FileReader();
 			f2.onload = function(){
 					
-					let from = dateFun(fxcd(name + "-date-from").value);
-					let to = dateFun(fxcd(name + "-date-to").value);
+					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
+					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
 					
 					contractList = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 					ready["countB"] -= 1;

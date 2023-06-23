@@ -1,4 +1,19 @@
 
+
+
+function axcd(p, e) {
+	p.appendChild(e);
+}
+function xcd(t) {
+	return document.createElement(t);
+}
+function txcd(t) {
+	return document.createTextNode(t);
+}
+function fxcd(t) {
+	return document.getElementById(t);
+}
+
 function line() {
 	return xcd("br");
 }
@@ -281,4 +296,10 @@ function rentablesText(containerId) {
 	tmp = xcd("i");
 	axcd(tmp, txcd("Kommunalt foretak - KF"));
 	axcd(con, tmp);
+}
+function spinnerFunction(spinnerId, func) {
+	let spinner = fxcd(spinnerId);
+	spinner.style.visibility = "visible";
+	func();
+	spinner.style.visibility = "hidden";
 }
