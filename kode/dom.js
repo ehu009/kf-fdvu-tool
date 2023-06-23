@@ -237,7 +237,7 @@ function keysText(containerId) {
 	axcd(con, tmp);
 	axcd(con, txcd(" nøkler:"));
 }
-function lossText(c){
+function lossText(con){
 	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
 	addLine(con);
 	

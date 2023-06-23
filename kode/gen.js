@@ -44,18 +44,16 @@ function spinnerFunction(spinnerId, func) {
 }
 
 
-
 function setupColumnFilter(name) {
 	let c = fxcd(name + "-container");
 	{
-		let input = xcd("input");
-		input.type = "file";
-		input.id = name + "-file";
-		axcd(c, input);
+		let f = xcd("input");
+		f.type = "file";
+		f.id = name + "-file";
+		axcd(c, f);
 		axcd(c, xcd("br"));
-	}
-	{	
-		let f = xcd("form");
+		
+		f = xcd("form");
 		let l = labelTag("remove-option", "Filtrer bort");
 		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
 		axcd(f, l);
@@ -72,16 +70,14 @@ function setupColumnFilter(name) {
 				toggleCheckbox("keep-option");
 			};
 		axcd(c, f);
-	}
-	{
+		
 		axcd(c, buttonTag(name + "-all-btn", "Velg alle", true));
 		axcd(c, txcd(' '))
 		axcd(c, buttonTag(name + "-none-btn", "Velg ingen", true));
-	}
-	{
-		let e = xcd("div");
-		e.id = name + "-field";
-		axcd(c, e);
+		
+		f = xcd("div");
+		f.id = name + "-field";
+		axcd(c, f);
 		axcd(c, xcd("br"));
 		
 		axcd(c, buttonTag(name + "-download", "Last ned CSV", true));
@@ -182,21 +178,20 @@ function setupRowFilter(name) {
 		});
 	
 	
-		function radioFn() {
-			ready['D'] += 1;
-		}
+	function radioFn() {
+		ready['D'] += 1;
+	}
 		
 	
 	let c = fxcd(name + "-container");
 	{
-		let input = xcd("input");
-		input.type = "file";
-		input.id = name + "-file";
-		axcd(c, input);
+		let f = xcd("input");
+		f.type = "file";
+		f.id = name + "-file";
+		axcd(c, f);
 		axcd(c, xcd("br"));
-	}
-	{	
-		let f = xcd("form");
+		
+		f = xcd("form");
 		let l = labelTag("remove-option", "Filtrer bort");
 		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
 		axcd(f, l);
@@ -214,45 +209,42 @@ function setupRowFilter(name) {
 				radioFn();
 			};
 		axcd(c, f);
-	}
-	{
-		let i = fileInputTag(name + "-contrast-file");
-		let s = xcd("select");
-		{
-		axcd(c, i);
+		
+		f = fileInputTag(name + "-contrast-file");
+		l = xcd("select");
+		
+		axcd(c, f);
 		addLine(c);
 		
 		axcd(c, txcd("Konstrast-kolonne: "));
 		
-		s.id = name + "-contrast-column";
-		axcd(s, optionTag("Velg", true, true));
-		axcd(c, s);
+		l.id = name + "-contrast-column";
+		axcd(l, optionTag("Velg", true, true));
+		axcd(c, l);
 		addLine(c);
 		addLine(c);
-		}
-		s.onchange = function () {
-				let spinner = fxcd(name + "-spinner");
+		
+		let spinner = fxcd(name + "-spinner");
+		l.onchange = function () {
 				spinner.style.visibility = "visible";
 				ready["C"] = 0;
 				spinner.style.visibility = "hidden";
 			};
 			
-			
-		i.onchange = function (evt) {
-				let spinner = fxcd(name + "-spinner");
+		f.onchange = function (evt) {
 				spinner.style.visibility = "visible";
 			
 				if (evt.target.files.length >= 1) {
 					let r = new FileReader();
 					r.onload = function(){
-							s.innerHTML = "";
-							axcd(s, optionTag("Velg", true, true));
+							l.innerHTML = "";
+							axcd(l, optionTag("Velg", true, true));
 							let arr = CSVToArray(r.result, ";");
 							for (let e of arr[0]) {
 								if (e == "") {
 									continue;
 								}
-								axcd(s, optionTag(e, false, false));
+								axcd(l, optionTag(e, false, false));
 							}
 							ready['B'] = 0;
 							contrastCSV = arr;
@@ -265,8 +257,6 @@ function setupRowFilter(name) {
 					spinner.style.visibility = "hidden";
 				}
 			};
-	}
-	{
 		axcd(c, buttonTag(name + "-download-btn", "Last ned CSV", true));
 		axcd(c, txcd(" "));
 		
@@ -439,36 +429,26 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	axcd(table, row);
 	
 	var monthNames = ["Januar", "Februar", "Mars", "April"];
-	
-	
-	
 	var rows = [];
 	
 	for (let r = 1; r < arr.length; r += 1) {
-		if (map.has(arr[r][0])) {
-			var months = map.get(arr[r][0]);
-			for (let m = 0; m < months.length; m += 1) {
-				var pt = ["", ""];
-				if (m == 0) {
-					pt = [arr[r][0], arr[r][1]];
-				}
-				if (includeMonthName == true) {
-					pt.push(monthNames[m]);
-				}
-				rows.push(pt.concat(months[m]));
+		
+		var months = map.get(arr[r][0]);
+		for (let m = 0; m < months.length; m += 1) {
+			var pt = ["", ""];
+			let cat = months[m];
+			if (map.has(arr[r][0]) == false) {
+				pt = [arr[r][0], ""];
+				cat = [0,0,0,0,0,0];
 			}
-		} else {
 			
-			for (let m = 0; m < 4; m += 1) {
-				var pt = [arr[r][0], ""];
-				if (m == 0) {
-					pt = [arr[r][0], arr[r][1]];
-				}
-				if (includeMonthName == true) {
-					pt.push(monthNames[m]);
-				}
-				rows.push(pt.concat([0,0,0,0,0,0]));
+			if (m == 0) {
+				pt = [arr[r][0], arr[r][1]];
 			}
+			if (includeMonthName == true) {
+				pt.push(monthNames[m]);
+			}
+			rows.push(pt.concat(cat));
 		}
 	}
 	for (let r = 0; r < rows.length; r += 1) {
@@ -991,7 +971,7 @@ function beginLoss(name) {
 		addLine(con);
 		axcd(con, xcd("hr"));
 		
-		lossText();
+		lossText(con);
 		
 		i = xcd("table");
 		i.id = name + "-result-table";
