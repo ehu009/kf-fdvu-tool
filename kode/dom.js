@@ -237,6 +237,26 @@ function keysText(containerId) {
 	axcd(con, tmp);
 	axcd(con, txcd(" nøkler:"));
 }
+function lossText(c){
+	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
+	addLine(con);
+	
+	axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris."));
+	addLine(con);
+	
+	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av følgende:"));
+	addLine(con);
+	
+	i = xcd("ul");
+	for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Tromsø kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
+		axcd(i, listTag(e));
+	}
+	axcd(con, i);
+	axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
+	addLine(con);
+	axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
+	
+}
 function contractsText(containerId) {
 	let con = fxcd(containerId);
 	axcd(con, txcd("Liste over "));

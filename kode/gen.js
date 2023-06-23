@@ -915,8 +915,6 @@ function totalResultCalc(months, header) {
 	return t;
 }
 
-
-
 function beginLoss(name) {
 	
 	let eventName = "dataReady";
@@ -950,39 +948,35 @@ function beginLoss(name) {
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-rentables-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileA"] += 1;
-					} else {
-						dataReady["fileA"] -= 1;
-					}
-				};
-		}
-	}
-	{
+		
+		let i = fileInputTag(name + "-rentables-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileA"] += 1;
+				} else {
+					dataReady["fileA"] -= 1;
+				}
+			};
+		
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-contracts-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileB"] += 1;
-					} else {
-						dataReady["fileB"] -= 1;
-					}
-				};
-		}
-	}
-	{
+		
+		i = fileInputTag(name + "-contracts-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileB"] += 1;
+				} else {
+					dataReady["fileB"] -= 1;
+				}
+			};
+		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
 	
@@ -996,40 +990,19 @@ function beginLoss(name) {
 		defaultButtonTags(name);
 		addLine(con);
 		axcd(con, xcd("hr"));
-	}
-	{
-		axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
-		addLine(con);
 		
-		axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris."));
-		addLine(con);
+		lossText();
 		
-		axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av følgende:"));
-		addLine(con);
-		
-		let l = xcd("ul");
-		for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Tromsø kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
-			axcd(l, listTag(e));
-		}
-		axcd(con, l);
-		
-		axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
-		addLine(con);
-		
-		axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
-	}
-	{
-		let t = xcd("table");
-		t.id = name + "-result-table";
-		axcd(t, lossSumHeader());
-		axcd(con, t);
+		i = xcd("table");
+		i.id = name + "-result-table";
+		axcd(i, lossSumHeader());
+		axcd(con, i);
 		axcd(con, xcd("hr"));
-	}
-	{
+		
 		axcd(con, lossLegend());
-		let t = xcd("table");
-		t.id = name + "-calc-table";
-		axcd(con, t);
+		i = xcd("table");
+		i.id = name + "-calc-table";
+		axcd(con, i);
 	}
 	
 	
@@ -1301,39 +1274,34 @@ function beginGainCalc(name) {
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-rentables-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileA"] += 1;
-					} else {
-						dataReady["fileA"] -= 1;
-					}
-				};
-		}
-	}
-	{
+		
+		let i = fileInputTag(name + "-rentables-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileA"] += 1;
+				} else {
+					dataReady["fileA"] -= 1;
+				}
+			};
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-contracts-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileB"] += 1;
-					} else {
-						dataReady["fileB"] -= 1;
-					}
-				};
-		}
-	}
-	{
+		
+		i = fileInputTag(name + "-contracts-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileB"] += 1;
+				} else {
+					dataReady["fileB"] -= 1;
+				}
+			};
+		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
 	
@@ -1347,19 +1315,17 @@ function beginGainCalc(name) {
 		defaultButtonTags(name);
 		addLine(con);
 		axcd(con, xcd("hr"));
-	}
-	{
-		let t = xcd("table");
-		t.id = name + "-result-table";
-		axcd(t, gainSumHeader());
-		axcd(con, t);
+		
+		i = xcd("table");
+		i.id = name + "-result-table";
+		axcd(i, gainSumHeader());
+		axcd(con, i);
 		axcd(con, xcd("hr"));
-	}
-	{
+		
 		axcd(con, gainLegend());
-		let t = xcd("table");
-		t.id = name + "-calc-table";
-		axcd(con, t);
+		i = xcd("table");
+		i.id = name + "-calc-table";
+		axcd(con, i);
 	}
 	
 	
@@ -1487,44 +1453,40 @@ function setupKeyFilter(name){
 	{
 		rentablesText(name + "-container");
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-rentables-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileA"] += 1;
-					} else {
-						dataReady["fileA"] -= 1;
-					}
-				};
-		}
-	}
-	{
+		let i = fileInputTag(name + "-rentables-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileA"] += 1;
+				} else {
+					dataReady["fileA"] -= 1;
+				}
+			};
+
 		keysText(name + "-container");
 		addLine(con);
-		{
-			let i = fileInputTag(name + "-file");
-			axcd(con, i);
-			addLine(con);
-			addLine(con);
-			i.onchange = function () {
-					if (i.files.length < 1) {
-						dataReady["fileB"] += 1;
-					} else {
-						dataReady["fileB"] -= 1;
-					}
-				};
-		}
-	}
-	defaultButtonTags(name);
-	addLine(con);
-	axcd(con, xcd("hr"));
-	let t = xcd("table");
-	t.id = name + "-table";
-	axcd(con, t);
 	
+		i = fileInputTag(name + "-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		i.onchange = function () {
+				if (i.files.length < 1) {
+					dataReady["fileB"] += 1;
+				} else {
+					dataReady["fileB"] -= 1;
+				}
+			};
+		
+		defaultButtonTags(name);
+		addLine(con);
+		axcd(con, xcd("hr"));
+		i = xcd("table");
+		i.id = name + "-table";
+		axcd(con, i);
+	}
 	fxcd(name + "-calc-btn").onclick = function () {
 			t.innerHTML = "";
 			let spinner = fxcd(name + "-spinner");
