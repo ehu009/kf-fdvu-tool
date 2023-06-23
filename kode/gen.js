@@ -123,7 +123,9 @@ function setupColumnFilter(name) {
 					r.onload = function(){
 							let arr = CSVToArray(r.result, ";");
 							let wanted = [];
-							let checkFn = function (value) {return (value == fxcd("keep-option").checked)};
+							function checkFn (value) {
+								return (value == fxcd("keep-option").checked)
+							}
 							for (let e of mapCheckboxes(name + "-field").entries()) {
 								if (checkFn(e[1]) == true) {
 									wanted.push(e[0]);
@@ -289,19 +291,13 @@ function setupRowFilter(name) {
 			spinner.style.visibility = "visible";
 			
 			outputCSV = [inputCSV[0]];
-			let keep = (fxcd("keep-option").checked == true);
+			
 			let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
-			
-			function mapArrayByIndex(arr, idx) {
-				let out = new Map();
-				for (let i = 1; i < arr.length; i += 1) {
-					out.set(arr[i][idx], arr[i]);
-				}
-				return out;
-			}
-			
-			if (keep == false) {
+			if (fxcd("keep-option").checked == false) {
 				let mep = mapArrayByIndex(inputCSV, filterIdx);
+				for (let i = 1; i < arr.length; i += 1) {
+					mep.set(arr[i][filterIdx], arr[i]);
+				}
 				for (let i = 1; i < contrastCSV.length; i += 1) {
 					let f = contrastCSV[i][filterIdx];	
 					mep.delete(f);
@@ -325,8 +321,7 @@ function setupRowFilter(name) {
 	
 	
 	button.onclick = function() {
-			let fileInput = fxcd(name + "-file");
-			downloadCSV(arrayToCSV(outputCSV,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+			downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv"));
 		};
 }
 
@@ -455,12 +450,11 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		let row = rows[r];
 		
 		let cls = "missing";
-		let maxAllowed = nDays;
 		let idx = 2;
 		if (includeMonthName == true) {
 			idx += 1;
 		}
-		if (row[idx] < maxAllowed) {
+		if (row[idx] < nDays) {
 			cls = "";
 			if (row[idx] < 0) {
 				cls = "double";
@@ -468,10 +462,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 		}
 		axcd(table, newRow(row, false, cls));
 	}
-	
-	
 	return [head2].concat(rows);
-	
 }
 
 function writeArrayTo(array, containerId) {
@@ -486,7 +477,6 @@ function writeArrayTo(array, containerId) {
 	axcd(table, header);
 	
 	for (let r = 1; r < array.length; r += 1) {
-		
 		let row = xcd("tr");
 		
 		for (let c = 0; c < array[r].length; c += 1) {
@@ -518,8 +508,6 @@ function writeArrayTo(array, containerId) {
 
 function mapKeys(arr) {
 	let out = new Map();
-	
-	
 	for (let i = 1; i < arr.length; i += 1) {
 		let row = arr[i];
 		let name = row[1];
@@ -533,7 +521,6 @@ function mapKeys(arr) {
 			out.set(name, [row[0]]);
 		}
 	}
-	
 	return out;
 }
 
@@ -720,11 +707,10 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 
 function contractFilter(arr, cutoffLow, cutoffHigh) {
 	
-	let out = [];
-	out.push(arr[0]);
+	let out = [arr[0]];
 	
-	let cutoffLow = dateParse(cutoffLow);
-	let cutoffHigh = dateParse(cutoffHigh);
+	cutoffLow = dateParse(cutoffLow);
+	cutoffHigh = dateParse(cutoffHigh);
 	
 	for (let r = 1; r < arr.length; r += 1) {
 		
@@ -773,8 +759,6 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 		}
 		
 		let days = calcDays(arr[r][1], arr[r][2], cutoffLow, cutoffHigh);
-		let nDays = dateParse(cutoffHigh) - dateParse(cutoffLow);
-		nDays /= Math.round(1000*60*60*24);
 		if (!map.has(fnr)) {
 			map.set(fnr, (days*val/30));
 		} else {
@@ -968,10 +952,8 @@ function beginLoss(name) {
 	document.addEventListener(eventName, () => {
 			from = dateFun(from.value);
 			to = dateFun(to.value);
-			let A = activeList;
-			let B = contractMap;
 			
-			let perSection = contractLossCalc2(A, 0, 2, B, 0, 1, 2, 3, from, to);
+			let perSection = contractLossCalc2(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to);
 			let monthly = monthLossCalc(perSection);
 			
 			let nDays = dateParse(to) - dateParse(from);
@@ -1002,13 +984,9 @@ function beginLoss(name) {
 						let months = map.get(arr[r][0]);
 						addLine(months[0], j);
 					} else {
-						let empty = [0,0,0,0,0,0];
-						arrayAddition(empty, j);
+						arrayAddition([0,0,0,0,0,0], j);
 					}
 				}
-				
-				let totals = [0, 0, 0, 0, 0, 0, 0];
-				arrayAddition(j, totals);
 				
 				rows.push(j);
 				for (let r = 0; r < rows.length; r += 1) {
@@ -1223,14 +1201,10 @@ function beginGainCalc(name) {
 			let f2 = new FileReader();
 			f2.onload = function(){
 					
-					let from = fxcd(name + "-date-from").value;
-					let to = fxcd(name + "-date-to").value;
-					from = dateFun(from);
-					to = dateFun(to);
+					let from = dateFun(fxcd(name + "-date-from").value);
+					let to = dateFun(fxcd(name + "-date-to").value);
 					
-					let c = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
-					
-					contractList = c;
+					contractList = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0]);
@@ -1312,10 +1286,8 @@ function setupKeyFilter(name){
 			let keysMap = null;
 			
 			document.addEventListener(eName, () => {
-					let A = rentablesList;
-					let B = keysMap;
-					
-					let c = drawKeys(A, B, name + "-table");
+				
+					let c = drawKeys(rentablesList, keysMap, name + "-table");
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
 					btn.onclick = function () {
