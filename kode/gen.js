@@ -775,7 +775,7 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 }
 
 
-function contractLossCalc2(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh) {
+function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh) {
 	
 	let out = new Map();
 	for (let r = 1; r < arr.length; r += 1) {
@@ -953,7 +953,7 @@ function beginLoss(name) {
 			from = dateFun(from.value);
 			to = dateFun(to.value);
 			
-			let perSection = contractLossCalc2(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to);
+			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to);
 			let monthly = monthLossCalc(perSection);
 			
 			let nDays = dateParse(to) - dateParse(from);
