@@ -204,36 +204,35 @@ function setupRowFilter(name) {
 		
 		let spinner = fxcd(name + "-spinner");
 		l.onchange = function () {
-				spinner.style.visibility = "visible";
-				ready["C"] = 0;
-				spinner.style.visibility = "hidden";
+				spinnerFunction(name + "-spinner", function() {
+						ready["C"] = 0;
+					});
 			};
 			
 		f.onchange = function (evt) {
-				spinner.style.visibility = "visible";
-			
-				if (evt.target.files.length >= 1) {
-					let r = new FileReader();
-					r.onload = function(){
-							l.innerHTML = "";
-							axcd(l, optionTag("Velg", true, true));
-							let arr = CSVToArray(r.result, ";");
-							for (let e of arr[0]) {
-								if (e == "") {
-									continue;
-								}
-								axcd(l, optionTag(e, false, false));
-							}
-							ready['B'] = 0;
-							contrastCSV = arr;
-							spinner.style.visibility = "hidden";
-						};
-					r.readAsText(evt.target.files[0]);
-									
-				} else {
-					ready['B'] = 1;
-					spinner.style.visibility = "hidden";
-				}
+				spinnerFunction(name + "-spinner", function () {
+						if (evt.target.files.length >= 1) {
+							let r = new FileReader();
+							r.onload = function(){
+									l.innerHTML = "";
+									axcd(l, optionTag("Velg", true, true));
+									let arr = CSVToArray(r.result, ";");
+									for (let e of arr[0]) {
+										if (e == "") {
+											continue;
+										}
+										axcd(l, optionTag(e, false, false));
+									}
+									contrastCSV = arr;
+									ready['B'] = 0;
+								};
+							r.readAsText(evt.target.files[0]);
+											
+						} else {
+							ready['B'] = 1;
+						//	spinner.style.visibility = "hidden";
+						}
+					});
 			};
 		axcd(c, buttonTag(name + "-download-btn", "Last ned CSV", true));
 		axcd(c, txcd(" "));
@@ -245,56 +244,53 @@ function setupRowFilter(name) {
 	let button = fxcd(name + "-download-btn");
 	let file = fxcd(name + "-file");
 	file.onchange = function() {
-		let spinner = fxcd(name + "-spinner");
-		spinner.style.visibility = "visible";
-			if (file.files.length >= 1) {
-				let r = new FileReader();
-				r.onload = function(){
-						let arr = CSVToArray(r.result, ";");
-						ready['A'] = 0;
-						inputCSV = arr;
-						spinner.style.visibility = "hidden";
-					};
-				r.readAsText(file.files[0]);
-			} else {
-				ready['A'] = 1;
-				spinner.style.visibility = "hidden";
-			}
+		spinnerFunction(name + "-spinner", function () {
+				if (file.files.length >= 1) {
+					let r = new FileReader();
+					r.onload = function(){
+							let arr = CSVToArray(r.result, ";");
+							ready['A'] = 0;
+							inputCSV = arr;
+							//spinner.style.visibility = "hidden";
+						};
+					r.readAsText(file.files[0]);
+				} else {
+					ready['A'] = 1;
+					//spinner.style.visibility = "hidden";
+				}
+			});
 		};
 	
 	document.addEventListener(eventName, () => {
-			let spinner = fxcd(name + "-spinner");
-			spinner.style.visibility = "visible";
-			
-			outputCSV = [inputCSV[0]];
-			
-			let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
-			if (fxcd("keep-option").checked == false) {
-				let mep = mapArrayByIndex(inputCSV, filterIdx);
-				for (let i = 1; i < arr.length; i += 1) {
-					mep.set(arr[i][filterIdx], arr[i]);
-				}
-				for (let i = 1; i < contrastCSV.length; i += 1) {
-					let f = contrastCSV[i][filterIdx];	
-					mep.delete(f);
-				}
-				for (let e of mep.entries()) {
-					outputCSV.push(e[1]);
-				}
-			} else {
-				for (let i = 1; i < contrastCSV.length; i += 1) {
-					for (let j = 1; j < inputCSV.length; j += 1) {						
-						if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
-							outputCSV.push(inputCSV[j]);
+			spinnerFunction(name + "-spinner", function () {
+				outputCSV = [inputCSV[0]];
+				
+				let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
+				if (fxcd("keep-option").checked == false) {
+					let mep = new Map();
+					for (let i = 1; i < inputCSV.length; i += 1) {
+						mep.set(inputCSV[i][filterIdx], inputCSV[i]);
+					}
+					for (let i = 1; i < contrastCSV.length; i += 1) {
+						let f = contrastCSV[i][filterIdx];	
+						mep.delete(f);
+					}
+					for (let e of mep.entries()) {
+						outputCSV.push(e[1]);
+					}
+				} else {
+					for (let i = 1; i < contrastCSV.length; i += 1) {
+						for (let j = 1; j < inputCSV.length; j += 1) {						
+							if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
+								outputCSV.push(inputCSV[j]);
+							}
 						}
 					}
 				}
-			}
-				
-			button.disabled = false;
-			spinner.style.visibility = "hidden";
+					
+				button.disabled = false;
+			});
 		});
-	
 	
 	button.onclick = function() {
 			downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv"));
@@ -1096,10 +1092,7 @@ function beginGainCalc(name) {
 		axcd(con, i);
 	}
 	
-	
-	
 	let spinner = fxcd(name + "-spinner");
-	
 	
 	let actives = fxcd(name + '-rentables-file');
 	let activeList = null;
@@ -1221,14 +1214,7 @@ function setupKeyFilter(name){
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileA"] += 1;
-				} else {
-					dataReady["fileA"] -= 1;
-				}
-			};
-
+		
 		keysText(name + "-container");
 		addLine(con);
 	
@@ -1236,13 +1222,6 @@ function setupKeyFilter(name){
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileB"] += 1;
-				} else {
-					dataReady["fileB"] -= 1;
-				}
-			};
 		
 		defaultButtonTags(name);
 		addLine(con);
@@ -1251,6 +1230,22 @@ function setupKeyFilter(name){
 		i.id = name + "-table";
 		axcd(con, i);
 	}
+	
+	fxcd(name + "-rentables-file").onchange = function (evt) {
+			if (evt.target.files.length < 1) {
+				dataReady["fileB"] += 1;
+			} else {
+				dataReady["fileB"] -= 1;
+			}
+		};
+	fxcd(name + "-file").onchange = function (evt) {
+		if (evt.target.files.length < 1) {
+			dataReady["fileA"] += 1;
+		} else {
+			dataReady["fileA"] -= 1;
+		}
+	};
+	
 	fxcd(name + "-calc-btn").onclick = function () {
 			t.innerHTML = "";
 			let spinner = fxcd(name + "-spinner");
