@@ -181,7 +181,7 @@ function spinnerTag(spinnerId) {
 	let b = xcd("div");
 	b.classList.add("spinning");
 	b.id = spinnerId;
-	axcd(b, txcd("⚙"));
+	axcd(b, txcd("\u2699\uFE0F"));
 	return b;
 }
 function dateFieldTag(id) {
@@ -331,14 +331,14 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	a.classList.add("container-fluid", "row");
 	b = col4();
 	carouselButton(b, "#" + id, "prev", btnCls);
-	axcd(b, txcd("‹"));
+	axcd(b, txcd("\u2039"));
 	axcd(a, b);
 	
 	axcd(a, col4());
 	
 	b = col4();
 	carouselButton(b, "#" + id, "next", btnCls);
-	axcd(b, txcd("›"));
+	axcd(b, txcd("\u203A"));
 	axcd(a, b);
 	
 	axcd(parent, a);
