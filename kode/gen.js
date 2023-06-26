@@ -246,7 +246,6 @@ function setupRowFilter() {
 											
 						} else {
 							ready['B'] = 1;
-						//	spinner.style.visibility = "hidden";
 						}
 					});
 			};
@@ -267,12 +266,10 @@ function setupRowFilter() {
 							let arr = CSVToArray(r.result, ";");
 							ready['A'] = 0;
 							inputCSV = arr;
-							//spinner.style.visibility = "hidden";
 						};
 					r.readAsText(file.files[0]);
 				} else {
 					ready['A'] = 1;
-					//spinner.style.visibility = "hidden";
 				}
 			});
 		};
