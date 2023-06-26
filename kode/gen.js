@@ -20,8 +20,18 @@ function numToFDVUNum(n) {
 	return u.replace(".", ",");
 }
 
-function setupColumnFilter(name) {
-	let c = fxcd(name + "-container");
+function setupColumnFilter() {
+	let name = 'col-filter';
+	
+	let c = xcd("h2");
+	axcd(c, txcd("Filtrer kolonner i CSV-dokument"));
+	axcd(document.body, c);
+	
+	c = xcd("div");
+	c.id = name + "-container";
+	c.classList.add("cont");
+	axcd(document.body, c);
+	
 	{
 		let f = xcd("input");
 		f.type = "file";
@@ -115,8 +125,8 @@ function setupColumnFilter(name) {
 }
 
 
-function setupRowFilter(name) {
-	
+function setupRowFilter() {
+	let name = 'keys';
 	let inputCSV = null;
 	let contrastCSV = null;
 	let outputCSV = null;
@@ -159,8 +169,15 @@ function setupRowFilter(name) {
 		ready['D'] += 1;
 	}
 		
+	let c = xcd("h2");
+	axcd(c, txcd("Filtrer rader i CSV-dokument"));
+	axcd(document.body, c);
 	
-	let c = fxcd(name + "-container");
+	c = xcd("div");
+	c.id = name + "-container";
+	c.classList.add("cont");
+	axcd(document.body, c);
+	
 	{
 		let f = xcd("input");
 		f.type = "file";
@@ -787,8 +804,8 @@ function monthLossCalc(map) {
 }
 
 
-function beginLoss(name) {
-	
+function beginLoss() {
+	let name = 'loss';
 	let eventName = "dataReady";
 	let readyTarget = {
 			countA: 2,
@@ -815,7 +832,14 @@ function beginLoss(name) {
 				}
 		});
 	
-	let con = fxcd(name + "-container");
+	let con = xcd("h2");
+	axcd(con, txcd("Vakanse og tap"));
+	axcd(document.body, con);
+	
+	con = xcd("div");
+	con.id = name + "-container";
+	con.classList.add("cont");
+	axcd(document.body, con);
 	{
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
@@ -1004,8 +1028,8 @@ function beginLoss(name) {
 }
 
 
-function beginGainCalc(name) {
-	
+function beginGainCalc() {
+	let name = 'gains';
 	
 	let eventName = "dataReady";
 	let readyTarget = {
@@ -1032,7 +1056,14 @@ function beginGainCalc(name) {
 					return true;
 				}
 		});
-	let con = fxcd(name + "-container");
+	let con = xcd("h2");
+	axcd(con, txcd("Inntekter"));
+	axcd(document.body, con);
+	
+	con = xcd("div");
+	con.id = name + "-container";
+	con.classList.add("cont");
+	axcd(document.body, con);
 	{
 		rentablesText(name + "-container");
 		axcd(con, txcd(":"));
@@ -1179,8 +1210,8 @@ function beginGainCalc(name) {
 		};
 }
 
-function setupKeyFilter(name){
-	
+function setupKeyFilter(){
+	let name = 'keys';
 	let eName = "dataReady";
 	let dataReadyTarget = {
 			fileA: 1,
@@ -1205,7 +1236,14 @@ function setupKeyFilter(name){
 				}
 		});
 	
-	let con = fxcd(name + "-container");
+	let con = xcd("h2");
+	axcd(con, txcd("Nøkler"));
+	axcd(document.body, con);
+	
+	con = xcd("div");
+	con.id = name + "-container";
+	con.classList.add("cont");
+	axcd(document.body, con);
 	{
 		rentablesText(name + "-container");
 		addLine(con);
