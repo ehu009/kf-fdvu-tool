@@ -150,7 +150,6 @@ function setupRowFilter(name) {
 						fxcd(name + "-download-btn").disabled = true;
 						outputCSV = null;
 					}
-					console.log(ready)
 					return true;
 				}
 		});

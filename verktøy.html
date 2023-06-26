@@ -13,7 +13,34 @@
 	width: 100%;
 	height: 100%;
 }
+.rund {
+	border-radius: 50%;
+	/*background-color:green;*/
+	background:transparent;
+	position: fixed;
+	width: 175px;
+	height: 175px;
+	z-index: 7;
+	
+	/*
+	display: inline-block;
+*/
+align-items: center;
+justify-content: center;
+	display: flex;
+	
+}
+.rund>button {
+/*
+position:relative;
+align: middle;
+	vertical-align: middle;
+	
+	display: inline-block*/
+	}
 </style>
+<script src="./kode/fisk.js"></script>
+<script src="./kode/dom.js"></script>
 <script>
 var urls = ["inntekter", "vakanse", "nøkler", "kolonne-filter", "rad-filter"];
 
@@ -42,7 +69,7 @@ function setup(id) {
 </script>
 </head>
 
-<body onload="setup('carousel-inner');">
+<body onload="setup('carousel-inner');begin()">
 <div class="container-fluid row">
 <div class="col-4 knappis" data-bs-target="#karusell" data-bs-slide="prev"  align="right">‹</div>
 <div class="col-4"></div>
