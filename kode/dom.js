@@ -332,6 +332,7 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	b = col4();
 	carouselButton(b, "#" + id, "prev", btnCls);
 	axcd(b, txcd("\u2039"));
+	b.style.textAlign = "right";
 	axcd(a, b);
 	
 	axcd(a, col4());
