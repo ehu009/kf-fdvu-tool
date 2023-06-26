@@ -195,6 +195,17 @@ function listTag(txt) {
 	axcd(l, txcd(txt));
 	return l;
 }
+function iframeTag(url, active) {
+	let d = xcd("div");
+	let i = xcd("iframe");
+	i.src = url;
+	axcd(d, i);
+	d.classList.add("carousel-item");
+	if (active == true) {
+		d.classList.add("active");
+	}
+	return d;
+}
 function lossSumHeader() {
 	return newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, "");
 }
@@ -302,4 +313,50 @@ function spinnerFunction(spinnerId, func) {
 	spinner.style.visibility = "visible";
 	func();
 	spinner.style.visibility = "hidden";
+}
+function col4 () {
+	let k = xcd("div");
+	k.classList.add("col-4");
+	return k;
+}
+function carouselButton(elem, id, ctrl, cls) {
+	elem.classList.add(cls);
+	elem.setAttribute("data-bs-target", id);
+	elem.setAttribute("data-bs-slide", ctrl);
+}
+function iframeCarousel(parent, id, btnCls, interval, path, urls) {
+	let a = xcd("div");
+	let b = null;
+	
+	a.classList.add("container-fluid", "row");
+	b = col4();
+	carouselButton(b, "#" + id, "prev", btnCls);
+	axcd(b, txcd("‹"));
+	axcd(a, b);
+	
+	axcd(a, col4());
+	
+	b = col4();
+	carouselButton(b, "#" + id, "next", btnCls);
+	axcd(b, txcd("›"));
+	axcd(a, b);
+	
+	axcd(parent, a);
+
+
+	a = xcd("div");
+	a.id = id;
+	a.setAttribute("data-bs-ride", "carousel");
+	a.setAttribute("data-bs-interval", interval);
+	a.classList.add("carousel", "slide");
+	
+	b = xcd("div");
+	b.id = "carousel-inner";
+	b.classList.add("carousel-inner");
+	axcd(a, b);
+	
+	for (let i = 0; i < urls.length; i += 1) {
+		axcd(b, iframeTag(path + urls[i] + ".html", i == 0));
+	}
+	axcd(parent, a);
 }

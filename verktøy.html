@@ -16,42 +16,13 @@
 </style>
 <script src="./kode/dom.js"></script>
 <script>
-var urls = ["inntekter", "vakanse", "nøkler", "kolonne-filter", "rad-filter"];
-
-function a(parent, element) {
-	parent.appendChild(element);
-}
-function c(type) {
-	return document.createElement(type);
-}
-function n(url, active) {
-	let d = c("div");
-	let i = c("iframe");
-	i.src = url;
-	a(d, i);
-	d.classList.add("carousel-item");
-	if (active == true) {
-		d.classList.add("active");
-	}
-	return d;
-}
-function setup(id) {
-	for (let i = 0; i < urls.length; i += 1) {
-		a(document.getElementById(id), n("./kode/" + urls[i] + ".html", i == 0));
-	}
+function setup() {
+	const urls = ["inntekter", "vakanse", "nøkler", "kolonne-filter", "rad-filter"];
+	
+	iframeCarousel(document.body, "karusell", "knappis", 1000000000, "./kode/", urls);
 }
 </script>
 </head>
 
-<body onload="setup('carousel-inner');begin()">
-<div class="container-fluid row">
-<div class="col-4 knappis" data-bs-target="#karusell" data-bs-slide="prev"  align="right">‹</div>
-<div class="col-4"></div>
-<div class="col-4 knappis" data-bs-target="#karusell" data-bs-slide="next">›</div>
-</div>
-
-<div id="karusell" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000000000">
-	<div class="carousel-inner" id="carousel-inner"></div>
-</div>
-</body>
+<body onload="setup();"></body>
 </html>
