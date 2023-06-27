@@ -237,20 +237,20 @@ function spanSandwich (e, txt1, txt2, cls) {
 }
 function lossLegend() {
 	let b = xcd("b");
-	spanSandwich(b, "Gul markering er brukt når ", "bolig har vært vakant hele perioden", "missing");
-	spanSandwich(b, "Oransje markering er brukt når en seksjon ", "har overlappende kontrakter", "double");
+	spanSandwich(b, "Gul markering er brukt n\u00E5r ", "bolig har v\u00E6rt vakant hele perioden", "missing");
+	spanSandwich(b, "Oransje markering er brukt n\u00E5r en seksjon ", "har overlappende kontrakter", "double");
 	addLine(b);
 	return b;
 }
 function gainLegend() {
 	let b = xcd("b");
-	spanSandwich(b, "Rød markering er brukt når ", "kontrakt mangler pris", "danger");
-	spanSandwich(b, "Gul markering er brukt når ", "bolig har vært vakant hele perioden", "missing");
+	spanSandwich(b, "R\u00F8d markering er brukt n\u00E5r ", "kontrakt mangler pris", "danger");
+	spanSandwich(b, "Gul markering er brukt n\u00E5r ", "bolig har v\u00E6rt vakant hele perioden", "missing");
 	let s = xcd("span");
 	axcd(s, txcd("Passiv kontrakt og Driftskontrakt"));
 	s.classList.add("passive");
 	axcd(b, s);
-	axcd(b, txcd(" er markert i grønt."));
+	axcd(b, txcd(" er markert i gr\u00F8nt."));
 	addLine(b);
 	return b;
 }
@@ -261,20 +261,20 @@ function keysText(containerId) {
 	let tmp = xcd("b");
 	axcd(tmp, txcd("alle"));
 	axcd(con, tmp);
-	axcd(con, txcd(" nøkler:"));
+	axcd(con, txcd(" n\u00F8kler:"));
 }
 function lossText(con){
 	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
 	addLine(con);
 	
-	axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap være negativt hvis kontraktpris er høyere enn seksjonspris."));
+	axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap v\u00E6re negativt hvis kontraktpris er h\u00F8yere enn seksjonspris."));
 	addLine(con);
 	
-	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av følgende:"));
+	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av f\u00F8lgende:"));
 	addLine(con);
 	
 	i = xcd("ul");
-	for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Tromsø kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
+	for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
 		axcd(i, listTag(e));
 	}
 	axcd(con, i);

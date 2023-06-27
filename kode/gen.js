@@ -393,7 +393,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	row = xcd("tr");
 	let kk = ["dager vakant", "vakansetap", "dager vedlikehold", "vedlikeholdstap", "dager passiv", "passiv kostnad", "vakanse + drift"];
 	if (includeMonthName == true) {
-		kk.unshift("måned");
+		kk.unshift("m\u00E5ned");
 	}
 	let head2 = [];
 	let head = arr[0].concat(kk);
@@ -514,10 +514,10 @@ function drawKeys(arr, map, dst) {
 	let row;
 	let cell;
 	
-	axcd(table, newRow(["Seksjon#", "Navn", "Nøkkelnummer"], true));
+	axcd(table, newRow(["Seksjon#", "Navn", "N\u00F8kkelnummer"], true));
 	
 	let counter = new Map();
-	let out = [arr[0].concat(["Nøklerinos"])];
+	let out = [arr[0].concat(["N\u00F8klerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
 		if (map.has(arr[r][0] == false)) {
@@ -678,7 +678,7 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 	
 	let cost = Math.ceil(duration * (monthCost/nDays));
 	let occupant = contract[occupantIdx];
-	if (["Driftsadministrasjonen", "Tromsø kommune v/Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"].includes(occupant)) {
+	if (["Driftsadministrasjonen", "Troms\u00F8 kommune v/Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"].includes(occupant)) {
 		rep += duration;
 		repLoss += cost;
 	} else if (occupant == "Passiv") {
@@ -1234,7 +1234,7 @@ function setupKeyFilter(){
 		});
 	
 	let con = xcd("h2");
-	axcd(con, txcd("Nøkler"));
+	axcd(con, txcd("N\u00F8kler"));
 	axcd(document.body, con);
 	
 	con = xcd("div");
@@ -1296,7 +1296,7 @@ function setupKeyFilter(){
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
 					btn.onclick = function () {
-							downloadCSV(arrayToCSV(c, ";"), "nøkler.csv");
+							downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv");
 						};
 					spinner.style.visibility = "hidden";
 				});
