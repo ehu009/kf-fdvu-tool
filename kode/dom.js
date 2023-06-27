@@ -191,7 +191,7 @@ function dateFieldTag(id) {
 	return i;
 }
 function listTag(txt) {
-	let l = xcd("ul");
+	let l = xcd("li");
 	axcd(l, txcd(txt));
 	return l;
 }
