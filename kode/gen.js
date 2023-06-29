@@ -768,7 +768,7 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 }
 
 
-function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh) {
+function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays) {
 	
 	let out = new Map();
 	for (let r = 1; r < arr.length; r += 1) {
@@ -780,9 +780,6 @@ function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, e
 		catch(f) {
 			p = 0;
 		}
-		let nDays = parseDate(cutoffHigh) - parseDate(cutoffLow);
-		nDays /= Math.round(1000*60*60*24);
-		
 		let j = [nDays, p, 0, 0, 0, 0];
 		if (map.has(arr[r][nameIdx])) {
 			let contracts = map.get(arr[r][nameIdx]);
@@ -914,9 +911,6 @@ function beginLoss() {
 	let contracts = fxcd(name + '-contracts-file');
 	let contractMap = null;
 	
-	let from = fxcd(name + "-date-from");
-	let to = fxcd(name + "-date-to");
-	
 	
 	
 	fxcd(name + "-date-to").onchange = function (evt) {
@@ -950,14 +944,20 @@ function beginLoss() {
 	
 	
 	document.addEventListener(eventName, () => {
+			
+			let from = fxcd(name + "-date-from");
+			let to = fxcd(name + "-date-to");
+		
+			let nDays = new Date(to.value) - new Date(from.value);
+			nDays /= Math.round(1000*60*60*24);
+			
 			from = dateToFVDUDate(from.value);
 			to = dateToFVDUDate(to.value);
 			
-			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to);
+			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to, nDays);
 			let monthly = monthLossCalc(perSection);
 			
-			let nDays = parseDate(to) - parseDate(from);
-			nDays /= Math.round(1000*60*60*24);
+			
 			fxcd(name + "-calc-table").innerHTML = "";
 			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
 			
@@ -1023,6 +1023,8 @@ function beginLoss() {
 			
 			let f2 = new FileReader();
 			f2.onload = function(){
+					let from = fxcd(name + "-date-from").value;
+					let to = fxcd(name + "-date-to").value;
 					let filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
 					let filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
