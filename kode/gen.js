@@ -10,6 +10,16 @@ function parseDate(s) {
 	let arr = s.split(".");
 	return new Date(arr.reverse());
 }
+function dateWithDefault(value, defaultDate) {
+	let v;
+	try {
+		v = parseDate(value);
+	}
+	catch(err) {
+		return defaultDate;
+	}
+	return v;
+}
 function arrayAddition(src, dst) {
 	for (let c = 0; c < src.length; c += 1) {
 		dst[c] += src[c];
@@ -613,7 +623,6 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 
 function calcDays(begin, stop, cutoffLow, cutoffHigh) {
 	let start = parseDate(begin);
-	
 	let end = parseDate(stop);
 	let l = parseDate(cutoffLow);
 	let h = parseDate(cutoffHigh);
@@ -753,7 +762,6 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 		}
 	}
 	map.forEach(function(v, k) {
-			
 			out.push([k, v]);
 		});
 	return out;
@@ -1357,7 +1365,6 @@ function setupOverlapFilter() {
 	con.classList.add("cont");
 	axcd(document.body, con);
 	{
-		
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -1374,7 +1381,6 @@ function setupOverlapFilter() {
 		i = xcd("table");
 		i.id = name + "-calc-table";
 		axcd(con, i);
-		
 	}
 	
 	let spinner = fxcd(name + "-spinner");
@@ -1391,7 +1397,6 @@ function setupOverlapFilter() {
 		};
 	document.addEventListener(eventName, () => {
 			
-			
 			let table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
@@ -1406,6 +1411,7 @@ function setupOverlapFilter() {
 				}
 				mep.get(pp[12]).push(pp);
 			}
+			
 			let out = [];
 			for (let r of mep.entries()) {
 				let hoink = false;
@@ -1413,50 +1419,21 @@ function setupOverlapFilter() {
 					let c1 = r[1][i];
 					let cNum = c1[0];
 					
-					let lower1;
-					let upper1;
-					{
-					try {
-						lower1 = parseDate(c1[6]);
-					}
-					catch (p) {
-						lower1 = new Date();
-						lower1.setFullYear(1950);
-					}
-					try {
-						upper1 = parseDate(c1[7]);
-					}
-					catch(p) {
-						upper1 = new Date();
-						upper1.setFullYear(2050);
-					}
-					}
+					let oldest = new Date();
+					let newest = new Date();
+					oldest.setFullYear(1950);
+					newest.setFullYear(2050);
+					
+					let lower1 = dateWithDefault(c1[6], oldest);
+					let upper1 = dateWithDefault(c1[7], newest);
 					
 					for (let j = i; j < r[1].length; j += 1) {
 						let c2 = r[1][j];
 						
-						
-						let lower2;
-						let upper2;
-						{
-						try {
-							lower2 = parseDate(c2[6]);
-						}
-						catch(p) {
-							lower2 = new Date();
-							lower2.setFullYear(1950);
-						}
-						try {
-							upper2 = parseDate(c2[7]);
-						}
-						catch(p) {
-							upper2 = new Date();
-							upper2.setFullYear(2050);
-						}
-						}
+						let lower2 = dateWithDefault(c2[6], oldest);
+						let upper2 = dateWithDefault(c2[7], newest);
 						
 						if (upper1 < lower2 || lower1 > upper2) {
-							
 							continue;
 						}
 						hoink = true;
