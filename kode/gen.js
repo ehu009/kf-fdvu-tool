@@ -1,4 +1,6 @@
-
+function millisecondsToDays(n) {
+	return n / Math.round(1000*60*60*24);
+}
 function dateToFVDUDate (date) {
 	let arr = date.split("-");
 	return arr.reverse().join(".");
@@ -638,7 +640,7 @@ function calcDays(begin, stop, cutoffLow, cutoffHigh) {
 	if (end > h) {
 		end = h;
 	}
-	return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+	return millisecondsToDays(end - start);
 }
 
 function mapContracts(arr, occupantIdx, beginIdx, endIdx, priceIdx, numberIdx, typeIdx) {
@@ -948,13 +950,9 @@ function beginLoss() {
 			let from = fxcd(name + "-date-from");
 			let to = fxcd(name + "-date-to");
 		
-			let nDays = new Date(to.value) - new Date(from.value);
-			nDays /= Math.round(1000*60*60*24);
+			let nDays = millisecondsToDays(new Date(to.value) - new Date(from.value));
 			
-			from = dateToFVDUDate(from.value);
-			to = dateToFVDUDate(to.value);
-			
-			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, from, to, nDays);
+			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, dateToFVDUDate(from.value), dateToFVDUDate(to.value), nDays);
 			let monthly = monthLossCalc(perSection);
 			
 			
