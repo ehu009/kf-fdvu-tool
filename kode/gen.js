@@ -1539,7 +1539,6 @@ function setupRentableOverlapFilter() {
 		};
 	document.addEventListener(eventName, () => {
 			
-			
 			let table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
@@ -1584,7 +1583,6 @@ function setupRentableOverlapFilter() {
 					oldest.setFullYear(1950);
 					newest.setFullYear(2050);
 					
-					
 					let lower1 = dateWithDefault(c1[7], oldest);
 					let upper1 = dateWithDefault(c1[8], newest);
 					if (lower1 == upper1) {
@@ -1601,47 +1599,22 @@ function setupRentableOverlapFilter() {
 						if (upper1 <= lower2 || lower1 >= upper2) {
 							continue;
 						}
-						/*
-						if (upper1 == lower2 || lower1 == upper2) {
-							continue;
-						}
-						*/
-						/*
-						console.log(c1);
-						console.log(c2);
-						if (r[0] == "19015632472") {
-						console.log(lower1, lower2)
 						
-						console.log(upper1, upper2)
-						console.log(upper1 < lower2)
-						console.log(lower1 > upper2)
-						}*/
 						occ[i] += 1;
 						occ[j] += 1;
-			//			console.log(c1, c2)
-						break;
 					}
-					
 				}
 				
-				//remove duplicates
 				let row = [];
 				for (let i = 0; i < r[1].length; i += 1) {
 					if (occ[i] > 0) {
 						row.push(r[1][i]);
 					}
 				}
-				
-				
 				out.push(row);
 			}
-			/*
-			console.log(out.length)
-			console.log(out.includes(test[0]))
-			console.log(out.includes(test[1]))
-			*/
 			axcd(table, newRow(["Akt\u00F8r", "Seksjon", "Fra", "Til"], true, ""));
-			//console.log(out[0])
+			
 			for (let e of out) {
 				
 				for (let row = 0; row < e.length; row += 1) {
@@ -1658,9 +1631,6 @@ function setupRentableOverlapFilter() {
 					}
 					axcd(table, newRow(ll, false, ""))
 				}
-				
-				//console.log(ll);
-				
 			}
 			
 			let btn = fxcd(name + "-download-btn");
