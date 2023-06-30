@@ -107,7 +107,7 @@ function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 		};
 }
 
-function createCheckboxSelection (containerId, defaultsMap) {
+function createCheckboxSelection(containerId, defaultsMap) {
 	let i = xcd("select");
 	let c = xcd("option");
 	axcd(c, txcd("velg innstilling"));
@@ -120,7 +120,7 @@ function createCheckboxSelection (containerId, defaultsMap) {
 		axcd(c, txcd(k));
 		axcd(i, c);
 	}
-	i.onchange = function(e) {
+	i.onchange = function (e) {
 			setCheckboxes(containerId, defaultsMap.get(i.value));
 		};
 	
@@ -138,8 +138,7 @@ function populateCheckboxes(containerId, nameList, defaults) {
 		createCheckbox(containerId, c);
 	}
 }
-function radioButtonTag(id, name, value, checked)
-{
+function radioButtonTag(id, name, value, checked) {
 	let i = xcd("input");
 	i.type = "radio";
 	i.id = id;
@@ -226,7 +225,7 @@ function defaultButtonTags(name) {
 	axcd(con, b);
 }
 
-function spanSandwich (e, txt1, txt2, cls) {
+function spanSandwich(e, txt1, txt2, cls) {
 	axcd(e, txcd(txt1));
 	let s = xcd("span");
 	s.classList.add(cls);
@@ -263,7 +262,7 @@ function keysText(containerId) {
 	axcd(con, tmp);
 	axcd(con, txcd(" n\u00F8kler:"));
 }
-function lossText(con){
+function lossText(con) {
 	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
 	addLine(con);
 	
@@ -314,7 +313,7 @@ function spinnerFunction(spinnerId, func) {
 	func();
 	spinner.style.visibility = "hidden";
 }
-function col4 () {
+function col4() {
 	let k = xcd("div");
 	k.classList.add("col-4");
 	return k;

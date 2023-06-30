@@ -4,7 +4,7 @@ const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u0
 function millisecondsToDays(n) {
 	return n / Math.round(1000*60*60*24);
 }
-function dateToFVDUDate (date) {
+function dateToFVDUDate(date) {
 	let arr = date.split("-");
 	return arr.reverse().join(".");
 }
@@ -20,7 +20,7 @@ function dateWithDefault(value, defaultDate) {
 	try {
 		v = parseDate(value);
 	}
-	catch(err) {
+	catch (err) {
 		return defaultDate;
 	}
 	return v;
@@ -73,7 +73,7 @@ function setupColumnFilter() {
 		axcd(c, f);
 		
 		axcd(c, buttonTag(name + "-all-btn", "Velg alle", true));
-		axcd(c, txcd(' '))
+		axcd(c, txcd(' '));
 		axcd(c, buttonTag(name + "-none-btn", "Velg ingen", true));
 		
 		f = xcd("div");
@@ -91,13 +91,13 @@ function setupColumnFilter() {
 	
 	let button = fxcd(name + "-download");
 	let file = fxcd(name + "-file");
-	file.onchange = function() {
-			spinnerFunction(name + "-spinner", function() {
+	file.onchange = function () {
+			spinnerFunction (name + "-spinner", function () {
 					button.disabled = true;
 					if (file.files.length >= 1) {
-						spinnerFunction(name + "-spinner", function() {
+						spinnerFunction (name + "-spinner", function () {
 								let r = new FileReader();
-								r.onload = function(){
+								r.onload = function () {
 										let arr = CSVToArray(r.result, ";");
 										let options = arr[0];
 										populateCheckboxes(name + "-field", options, null);
@@ -117,18 +117,16 @@ function setupColumnFilter() {
 				});
 		};
 	
-	button.onclick = function() {
-			spinnerFunction(name + "-spinner", function() {
+	button.onclick = function () {
+			spinnerFunction (name + "-spinner", function () {
 					let r = new FileReader();
 					let fileInput = fxcd(name + "-file");
-					r.onload = function(){
+					r.onload = function () {
 							let arr = CSVToArray(r.result, ";");
+							
 							let wanted = [];
-							function checkFn (value) {
-								return (value == fxcd("keep-option").checked)
-							}
 							for (let e of mapCheckboxes(name + "-field").entries()) {
-								if (checkFn(e[1]) == true) {
+								if ((e[1] == fxcd("keep-option").checked) == true) {
 									wanted.push(e[0]);
 								}
 							}
@@ -235,16 +233,16 @@ function setupRowFilter() {
 		
 		let spinner = fxcd(name + "-spinner");
 		l.onchange = function () {
-				spinnerFunction(name + "-spinner", function() {
+				spinnerFunction (name + "-spinner", function () {
 						ready["C"] = 0;
 					});
 			};
 			
 		f.onchange = function (evt) {
-				spinnerFunction(name + "-spinner", function () {
+				spinnerFunction (name + "-spinner", function () {
 						if (evt.target.files.length >= 1) {
 							let r = new FileReader();
-							r.onload = function(){
+							r.onload = function () {
 									l.innerHTML = "";
 									axcd(l, optionTag("Velg", true, true));
 									let arr = CSVToArray(r.result, ";");
@@ -273,11 +271,11 @@ function setupRowFilter() {
 	
 	let button = fxcd(name + "-download-btn");
 	let file = fxcd(name + "-file");
-	file.onchange = function() {
-		spinnerFunction(name + "-spinner", function () {
+	file.onchange = function () {
+		spinnerFunction (name + "-spinner", function () {
 				if (file.files.length >= 1) {
 					let r = new FileReader();
-					r.onload = function(){
+					r.onload = function () {
 							let arr = CSVToArray(r.result, ";");
 							ready['A'] = 0;
 							inputCSV = arr;
@@ -290,37 +288,37 @@ function setupRowFilter() {
 		};
 	
 	document.addEventListener(eventName, () => {
-			spinnerFunction(name + "-spinner", function () {
-				outputCSV = [inputCSV[0]];
-				
-				let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
-				if (fxcd("keep-option").checked == false) {
-					let mep = new Map();
-					for (let i = 1; i < inputCSV.length; i += 1) {
-						mep.set(inputCSV[i][filterIdx], inputCSV[i]);
-					}
-					for (let i = 1; i < contrastCSV.length; i += 1) {
-						let f = contrastCSV[i][filterIdx];	
-						mep.delete(f);
-					}
-					for (let e of mep.entries()) {
-						outputCSV.push(e[1]);
-					}
-				} else {
-					for (let i = 1; i < contrastCSV.length; i += 1) {
-						for (let j = 1; j < inputCSV.length; j += 1) {						
-							if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
-								outputCSV.push(inputCSV[j]);
+			spinnerFunction (name + "-spinner", function () {
+					outputCSV = [inputCSV[0]];
+					
+					let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
+					if (fxcd("keep-option").checked == false) {
+						let mep = new Map();
+						for (let i = 1; i < inputCSV.length; i += 1) {
+							mep.set(inputCSV[i][filterIdx], inputCSV[i]);
+						}
+						for (let i = 1; i < contrastCSV.length; i += 1) {
+							let f = contrastCSV[i][filterIdx];	
+							mep.delete(f);
+						}
+						for (let e of mep.entries()) {
+							outputCSV.push(e[1]);
+						}
+					} else {
+						for (let i = 1; i < contrastCSV.length; i += 1) {
+							for (let j = 1; j < inputCSV.length; j += 1) {						
+								if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
+									outputCSV.push(inputCSV[j]);
+								}
 							}
 						}
 					}
-				}
-					
-				button.disabled = false;
-			});
+						
+					button.disabled = false;
+				});
 		});
 	
-	button.onclick = function() {
+	button.onclick = function () {
 			downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv"));
 		};
 }
@@ -341,7 +339,6 @@ function arrayColFilter(array, wantedList) {
 		
 		let add = [];
 		for (let col = 0; col < filterIdx.length; col += 1) {
-			
 			add.push(array[row][filterIdx[col]]);
 		}
 		out.push(add);
@@ -748,12 +745,10 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 		
 		let from = arr[r][1];
 		let to = arr[r][2];
-		if (from == null || from == " " || from == "")
-		{
+		if (from == null || from == " " || from == "") {
 			arr[r][1] = cutoffLow;
 		}
-		if (to == null || to == " " || to == "")
-		{
+		if (to == null || to == " " || to == "") {
 			arr[r][2] = cutoffHigh;
 		}
 		
@@ -766,7 +761,7 @@ function contractGainCalc(arr, cutoffLow, cutoffHigh) {
 			map.set(fnr, s);
 		}
 	}
-	map.forEach(function(v, k) {
+	map.forEach(function (v, k) {
 			out.push([k, v]);
 		});
 	return out;
@@ -782,7 +777,7 @@ function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, e
 		try {
 			p = stringToNumber(arr[r][sPriceIdx]);
 		}
-		catch(f) {
+		catch (f) {
 			p = 0;
 		}
 		let j = [nDays, p, 0, 0, 0, 0];
@@ -829,7 +824,7 @@ function beginLoss() {
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 					} else {
-						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
+						if (target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd(name + "-calc-btn").disabled = false;
 						} else {
 							fxcd(name + "-calc-btn").disabled = true;
@@ -963,7 +958,7 @@ function beginLoss() {
 			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
 			
 			
-			function fjott (arr, map, containerId) {
+			function fjott(arr, map, containerId) {
 				
 				let table = fxcd(containerId);
 				table.innerHTML = "";
@@ -973,6 +968,7 @@ function beginLoss() {
 				let cell;
 				let rows = [];
 				let j = [0,0,0,0,0,0,0];
+				
 				function addLine(src, dst) {
 					if (src[1] >= 0){
 						arrayAddition(src, dst);
@@ -983,7 +979,7 @@ function beginLoss() {
 					
 					if (map.has(arr[r][0])) {
 						let months = map.get(arr[r][0]);
-						addLine(months[0], j);
+						addLine(months[0][1], j);
 					} else {
 						arrayAddition([0,0,0,0,0,0], j);
 					}
@@ -1016,14 +1012,14 @@ function beginLoss() {
 	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = function(){
+			f1.onload = function () {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
 					ready["countB"] -= 1;
 				};
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function(){
+			f2.onload = function () {
 					let from = fxcd(name + "-date-from").value;
 					let to = fxcd(name + "-date-to").value;
 					let filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
@@ -1055,7 +1051,7 @@ function beginGainCalc() {
 						document.dispatchEvent(readyEvent);
 						fxcd(name + "-calc-btn").disabled = false;
 					} else {
-						if( target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
+						if (target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd(name + "-calc-btn").disabled = false;
 						} else {
 							fxcd(name + "-calc-btn").disabled = true;
@@ -1196,17 +1192,17 @@ function beginGainCalc() {
 				};
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function() {
+	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = function(){
+			f1.onload = function () {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]);
 					ready["countB"] -= 1;
 				}
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function(){
+			f2.onload = function () {
 					
 					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
 					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
@@ -1218,7 +1214,7 @@ function beginGainCalc() {
 		};
 }
 
-function setupKeyFilter(){
+function setupKeyFilter() {
 	let name = 'keys';
 	let eName = "dataReady";
 	let dataReadyTarget = {
@@ -1284,12 +1280,12 @@ function setupKeyFilter(){
 			}
 		};
 	fxcd(name + "-file").onchange = function (evt) {
-		if (evt.target.files.length < 1) {
-			dataReady["fileA"] += 1;
-		} else {
-			dataReady["fileA"] -= 1;
-		}
-	};
+			if (evt.target.files.length < 1) {
+				dataReady["fileA"] += 1;
+			} else {
+				dataReady["fileA"] -= 1;
+			}
+		};
 	
 	fxcd(name + "-calc-btn").onclick = function () {
 			t.innerHTML = "";
@@ -1313,14 +1309,14 @@ function setupKeyFilter(){
 				});
 			
 			let f1 = new FileReader();
-			f1.onload = function(){
+			f1.onload = function () {
 					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
 					dataReady["count"] -= 1;
 				}
 			f1.readAsText(rentables.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function(){
+			f2.onload = function () {
 					let arr = CSVToArray(f2.result, ";");
 					let filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
 					keysMap = mapKeys(filtered);
@@ -1355,7 +1351,6 @@ function setupCustomerOverlapFilter() {
 					if (target["countB"] < 1) {
 						document.dispatchEvent(readyEvent);
 					}
-					console.log(target)
 					return true;
 				}
 		});
@@ -1443,7 +1438,7 @@ function setupCustomerOverlapFilter() {
 						out.push(r[0]);
 						break;
 					}
-					if(hoink == true) {
+					if (hoink == true) {
 						break;
 					}
 				}
@@ -1460,10 +1455,10 @@ function setupCustomerOverlapFilter() {
 				};
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function() {
+	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = function(){
+			f2.onload = function () {
 					contractList = CSVToArray(f2.result, ";");
 					ready["countB"] -= 1;
 				}
@@ -1494,7 +1489,6 @@ function setupRentableOverlapFilter() {
 					if (target["countB"] < 1) {
 						document.dispatchEvent(readyEvent);
 					}
-					console.log(target)
 					return true;
 				}
 		});
@@ -1545,16 +1539,11 @@ function setupRentableOverlapFilter() {
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				let pp = contractList[r];
-				if ((pp[13] == undefined) || (pp[13] == "")) {
-					continue;
-				}
-				if ((pp[5] == undefined) || (pp[5] == "")) {
-					continue;
-				}
-				if ((pp[4] == undefined) || (pp[4] == "")) {
-					continue;
-				}
-				if ((pp[3] == undefined) || (pp[3] == "") || (ignoreContracts.includes(pp[2]) == true)) {
+				if ((pp[13] == undefined) || (pp[13] == "")
+						|| (pp[5] == undefined) || (pp[5] == "")
+						|| (pp[4] == undefined) || (pp[4] == "")
+						|| (pp[3] == undefined) || (pp[3] == "")
+						|| (ignoreContracts.includes(pp[2]) == true)) {
 					continue;
 				}
 				if (mep.has(pp[4]) == false) {
@@ -1619,7 +1608,7 @@ function setupRentableOverlapFilter() {
 				
 				for (let row = 0; row < e.length; row += 1) {
 					let r = e[row];
-					let ll = [r[4], r[13], r[7], r[8]]
+					let ll = [r[4], r[13], r[7], r[8]];
 					if (row > 0) {
 						ll[0] = "";
 					}
@@ -1629,7 +1618,7 @@ function setupRentableOverlapFilter() {
 					if (r[8] == undefined) {
 						ll[3] = "-";
 					}
-					axcd(table, newRow(ll, false, ""))
+					axcd(table, newRow(ll, false, ""));
 				}
 			}
 			
@@ -1640,10 +1629,10 @@ function setupRentableOverlapFilter() {
 				};
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function() {
+	fxcd(name + "-calc-btn").onclick = function () {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = function(){
+			f2.onload = function () {
 					contractList = CSVToArray(f2.result, ";");
 					ready["countB"] -= 1;
 				}
