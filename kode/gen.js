@@ -1570,6 +1570,11 @@ function setupRentableOverlapFilter() {
 				if (r[1].length < 2) {
 					continue;
 				}
+				let occ = [];
+				for (let i = 0; i < r[1].length; i += 1) {
+					occ.push(0);
+				}
+				
 				for (let i = 0; i < r[1].length; i += 1) {
 					let c1 = r[1][i];
 					let cNum = c1[0];
@@ -1593,9 +1598,14 @@ function setupRentableOverlapFilter() {
 						if (lower2 == upper2) {
 							continue;
 						}
-						if (upper1 < lower2 || lower1 > upper2) {
+						if (upper1 <= lower2 || lower1 >= upper2) {
 							continue;
 						}
+						/*
+						if (upper1 == lower2 || lower1 == upper2) {
+							continue;
+						}
+						*/
 						/*
 						console.log(c1);
 						console.log(c2);
@@ -1606,16 +1616,24 @@ function setupRentableOverlapFilter() {
 						console.log(upper1 < lower2)
 						console.log(lower1 > upper2)
 						}*/
-						
-						hoink = true;
-						out.push(r[1]);
+						occ[i] += 1;
+						occ[j] += 1;
 			//			console.log(c1, c2)
 						break;
 					}
-					if(hoink == true) {
-						break;
+					
+				}
+				
+				//remove duplicates
+				let row = [];
+				for (let i = 0; i < r[1].length; i += 1) {
+					if (occ[i] > 0) {
+						row.push(r[1][i]);
 					}
 				}
+				
+				
+				out.push(row);
 			}
 			/*
 			console.log(out.length)
@@ -1625,6 +1643,7 @@ function setupRentableOverlapFilter() {
 			axcd(table, newRow(["Akt\u00F8r", "Seksjon", "Fra", "Til"], true, ""));
 			//console.log(out[0])
 			for (let e of out) {
+				
 				for (let row = 0; row < e.length; row += 1) {
 					let r = e[row];
 					let ll = [r[4], r[13], r[7], r[8]]
