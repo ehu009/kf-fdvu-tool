@@ -274,7 +274,7 @@ function lossText(con){
 	addLine(con);
 	
 	i = xcd("ul");
-	for (let e of ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"]) {
+	for (let e of ignoreContracts) {
 		axcd(i, listTag(e));
 	}
 	axcd(con, i);
