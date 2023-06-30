@@ -54,7 +54,7 @@ function createCheckbox(container, name) {
 	{
 		let label = xcd("label");
 		axcd(label, txcd(name));
-		label.onclick = function () {
+		label.onclick = () => {
 				toggleCheckbox(name + "-" + n);
 			};
 		axcd(c, label);
@@ -98,7 +98,7 @@ function setCheckboxValues(containerId, options) {
 }
 
 function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
-	fxcd(buttonId).onclick = function () {
+	fxcd(buttonId).onclick = () => {
 			let m = new Map();
 			for (let e of allOptions) {
 				m.set(e, desired);

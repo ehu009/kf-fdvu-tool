@@ -59,17 +59,13 @@ function setupColumnFilter() {
 		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
 		axcd(f, l);
 		axcd(f, xcd("br"));
-		l.onclick = function () {
-				toggleCheckbox("remove-option");
-			};
+		l.onclick = () => { toggleCheckbox("remove-option"); };
 		
 		l = labelTag("keep-option", "Behold");
 		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
 		axcd(f, l);
 		axcd(f, xcd("br"));
-		l.onclick = function () {
-				toggleCheckbox("keep-option");
-			};
+		l.onclick = () => { toggleCheckbox("keep-option"); };
 		axcd(c, f);
 		
 		axcd(c, buttonTag(name + "-all-btn", "Velg alle", true));
@@ -91,13 +87,13 @@ function setupColumnFilter() {
 	
 	let button = fxcd(name + "-download");
 	let file = fxcd(name + "-file");
-	file.onchange = function () {
-			spinnerFunction (name + "-spinner", function () {
+	file.onchange = () => {
+			spinnerFunction (name + "-spinner", () => {
 					button.disabled = true;
 					if (file.files.length >= 1) {
-						spinnerFunction (name + "-spinner", function () {
+						spinnerFunction (name + "-spinner", () => {
 								let r = new FileReader();
-								r.onload = function () {
+								r.onload = () => {
 										let arr = CSVToArray(r.result, ";");
 										let options = arr[0];
 										populateCheckboxes(name + "-field", options, null);
@@ -117,11 +113,11 @@ function setupColumnFilter() {
 				});
 		};
 	
-	button.onclick = function () {
-			spinnerFunction (name + "-spinner", function () {
+	button.onclick = () => {
+			spinnerFunction (name + "-spinner", () => {
 					let r = new FileReader();
 					let fileInput = fxcd(name + "-file");
-					r.onload = function () {
+					r.onload = () => {
 							let arr = CSVToArray(r.result, ";");
 							
 							let wanted = [];
@@ -203,18 +199,13 @@ function setupRowFilter() {
 		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
 		axcd(f, l);
 		axcd(f, xcd("br"));
-		l.onclick = function () {
-				toggleCheckbox("remove-option");
-				radioFn();
-			};
+		l.onclick = () => { toggleCheckbox("remove-option"); radioFn(); };
+		
 		l = labelTag("keep-option", "Behold");
 		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
 		axcd(f, l);
 		axcd(f, xcd("br"));
-		l.onclick = function () {
-				toggleCheckbox("keep-option");
-				radioFn();
-			};
+		l.onclick = () => { toggleCheckbox("keep-option"); radioFn(); };
 		axcd(c, f);
 		
 		f = fileInputTag(name + "-contrast-file");
@@ -232,17 +223,13 @@ function setupRowFilter() {
 		addLine(c);
 		
 		let spinner = fxcd(name + "-spinner");
-		l.onchange = function () {
-				spinnerFunction (name + "-spinner", function () {
-						ready["C"] = 0;
-					});
-			};
+		l.onchange = () => { spinnerFunction (name + "-spinner", () => { ready["C"] = 0; }); };
 			
 		f.onchange = function (evt) {
-				spinnerFunction (name + "-spinner", function () {
+				spinnerFunction (name + "-spinner", () => {
 						if (evt.target.files.length >= 1) {
 							let r = new FileReader();
-							r.onload = function () {
+							r.onload = () => {
 									l.innerHTML = "";
 									axcd(l, optionTag("Velg", true, true));
 									let arr = CSVToArray(r.result, ";");
@@ -271,11 +258,11 @@ function setupRowFilter() {
 	
 	let button = fxcd(name + "-download-btn");
 	let file = fxcd(name + "-file");
-	file.onchange = function () {
-		spinnerFunction (name + "-spinner", function () {
+	file.onchange = () => {
+		spinnerFunction (name + "-spinner", () => {
 				if (file.files.length >= 1) {
 					let r = new FileReader();
-					r.onload = function () {
+					r.onload = () => {
 							let arr = CSVToArray(r.result, ";");
 							ready['A'] = 0;
 							inputCSV = arr;
@@ -288,7 +275,7 @@ function setupRowFilter() {
 		};
 	
 	document.addEventListener(eventName, () => {
-			spinnerFunction (name + "-spinner", function () {
+			spinnerFunction (name + "-spinner", () => {
 					outputCSV = [inputCSV[0]];
 					
 					let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
@@ -318,9 +305,7 @@ function setupRowFilter() {
 				});
 		});
 	
-	button.onclick = function () {
-			downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv"));
-		};
+	button.onclick = () => { downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv")); };
 }
 
 
@@ -851,13 +836,7 @@ function beginLoss() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileA"] += 1;
-				} else {
-					dataReady["fileA"] -= 1;
-				}
-			};
+		i.onchange = () => { if (i.files.length < 1) { dataReady["fileA"] += 1; } else { dataReady["fileA"] -= 1; } };
 		
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
@@ -867,13 +846,7 @@ function beginLoss() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileB"] += 1;
-				} else {
-					dataReady["fileB"] -= 1;
-				}
-			};
+		i.onchange = () => { if (i.files.length < 1) { dataReady["fileB"] += 1; } else { dataReady["fileB"] -= 1; } };
 		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
@@ -1003,23 +976,20 @@ function beginLoss() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = function () {
-					downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv");
-				};
+			btn.onclick = () => { downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			
 			spinner.style.visibility = "hidden";
 		});
 	
-	fxcd(name + "-calc-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = function () {
-					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]);
-					ready["countB"] -= 1;
-				};
+			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]); ready["countB"] -= 1; };
+			
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function () {
+			f2.onload = () => {
 					let from = fxcd(name + "-date-from").value;
 					let to = fxcd(name + "-date-to").value;
 					let filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
@@ -1077,13 +1047,8 @@ function beginGainCalc() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileA"] += 1;
-				} else {
-					dataReady["fileA"] -= 1;
-				}
-			};
+		i.onchange = () => { if (i.files.length < 1) { dataReady["fileA"] += 1; } else { dataReady["fileA"] -= 1; } };
+		
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -1092,13 +1057,7 @@ function beginGainCalc() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = function () {
-				if (i.files.length < 1) {
-					dataReady["fileB"] += 1;
-				} else {
-					dataReady["fileB"] -= 1;
-				}
-			};
+		i.onchange = () => { if (i.files.length < 1) { dataReady["fileB"] += 1; } else { dataReady["fileB"] -= 1; } };
 		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
@@ -1187,23 +1146,18 @@ function beginGainCalc() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = function () {
-					downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv");
-				};
+			btn.onclick = () => { downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = function () {
-					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]);
-					ready["countB"] -= 1;
-				}
+			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]); ready["countB"] -= 1; }
+			
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function () {
-					
+			f2.onload = () => {
 					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
 					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
 					
@@ -1287,7 +1241,7 @@ function setupKeyFilter() {
 			}
 		};
 	
-	fxcd(name + "-calc-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = () => {
 			t.innerHTML = "";
 			let spinner = fxcd(name + "-spinner");
 			spinner.style.visibility = "visible";
@@ -1302,21 +1256,17 @@ function setupKeyFilter() {
 					let c = drawKeys(rentablesList, keysMap, name + "-table");
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
-					btn.onclick = function () {
-							downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv");
-						};
+					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv"); };
+					
 					spinner.style.visibility = "hidden";
 				});
 			
 			let f1 = new FileReader();
-			f1.onload = function () {
-					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]);
-					dataReady["count"] -= 1;
-				}
+			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]); dataReady["count"] -= 1; }
 			f1.readAsText(rentables.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = function () {
+			f2.onload = () => {
 					let arr = CSVToArray(f2.result, ";");
 					let filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
 					keysMap = mapKeys(filtered);
@@ -1450,18 +1400,14 @@ function setupCustomerOverlapFilter() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = function () {
-					downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv");
-				};
+			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = function () {
-					contractList = CSVToArray(f2.result, ";");
-					ready["countB"] -= 1;
-				}
+			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
+			
 			f2.readAsText(contracts.files[0]);
 		};
 }
@@ -1624,18 +1570,15 @@ function setupRentableOverlapFilter() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = function () {
-					downloadCSV(arrayToCSV(out,";"), "overlappende kontrakter.csv");
-				};
+			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende kontrakter.csv"); };
+			
 			spinner.style.visibility = "hidden";
 		});	
-	fxcd(name + "-calc-btn").onclick = function () {
+	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = function () {
-					contractList = CSVToArray(f2.result, ";");
-					ready["countB"] -= 1;
-				}
+			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
+			
 			f2.readAsText(contracts.files[0]);
 		};
 }
