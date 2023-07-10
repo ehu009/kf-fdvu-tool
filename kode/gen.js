@@ -2,7 +2,7 @@
 const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
 
 function millisecondsToDays(n) {
-	return n / Math.round(1000*60*60*24);
+	return Math.ceil(n / (1000*60*60*24));
 }
 function dateToFVDUDate(date) {
 	let arr = date.split("-");
@@ -686,7 +686,7 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 	return [vac, vacLoss, rep, repLoss, pas, pasLoss];
 }
 
-function contractFilter(arr, cutoffLow, cutoffHigh) {
+function contractFilter(arr, cutoffLow, cutoffHigh, rentableIdx) {
 	
 	let out = [arr[0]];
 	
@@ -695,19 +695,19 @@ function contractFilter(arr, cutoffLow, cutoffHigh) {
 	
 	for (let r = 1; r < arr.length; r += 1) {
 		
-		if (arr[r][12] == null || arr[r][12] == "" || arr[r][12] == " ") {
+		if (arr[r][rentableIdx] == null || arr[r][rentableIdx] == "" || arr[r][rentableIdx] == " ") {
 			continue;
 		}
 		let from = arr[r][6];
 		if (from != null && from != " " && from != "") {
-			if (parseDate(from).getTime() > cutoffHigh.getTime()) {
+			if (parseDate(from) > cutoffHigh) {
 				continue;
 			}
 		}
 		
 		let to = arr[r][7];
 		if (to != null && to != " " && to != "") {
-			if (parseDate(to).getTime() < cutoffLow.getTime()) {
+			if (parseDate(to) < cutoffLow) {
 				continue;
 			}
 		}
@@ -1002,6 +1002,22 @@ function beginLoss() {
 }
 
 
+function ngo(...args) {
+	console.log(...args);
+}
+
+
+function numberOfDaysInMonth(date) {
+	let month = date.getMonth();
+	if (month == 1) {
+		return 28 + ((date.getFullYear() % 4) == 0);
+	}
+	if (month > 6) {
+		month += 1;
+	}
+	return 31 - (month % 2);
+}
+
 function beginGainCalc() {
 	let name = 'gains';
 	
@@ -1124,16 +1140,168 @@ function beginGainCalc() {
 			let A = activeList;
 			let B = contractList;
 			
+			
+			let contractHeader = contractList.shift();
+			
+			// lag hashmap s.a. [seksjonsnummer -> liste over kontrakter]
+			let mep = new Map();
+			{
+				let sIdx = 5;
+				
+				for (let c of contractList) {
+					let sN = c[sIdx];
+					if (sN == null || sN == undefined || sN == "" || sN == " ") {
+						continue;
+					}
+					if (mep.has(sN) == false) {
+						mep.set(sN, [c]);
+					} else {
+						mep.get(sN).push(c)
+					}
+				}
+			}
+			//ngo(mep)
+			
+			// summér til array
+			let calced = [];
+			{
+				let begin = new Date(fxcd(name + "-date-from").value);
+				let end = new Date(fxcd(name + "-date-to").value);
+				
+				let defaultBegin = new Date();
+				defaultBegin.setFullYear(1950);
+				let defaultEnd = new Date();
+				defaultEnd.setFullYear(2090);
+				
+				
+				for (entry of mep.entries()) {
+					
+					let sum = 0;
+					
+					// ngo() = console.log()
+					
+					let addition = [entry[0]];
+					
+					/*
+					{
+						for (e of activeList) {
+							if (e[0] == entry[0]) {
+								ngo(entry[1])
+								addition.push(entry[1][5]);
+							}
+						}
+					}
+					ngo(addition);
+					*/
+					
+					//addition.push(entry[0])
+					
+					// lag sum
+					{
+						for (row of entry[1]) {
+							if (ignoreContracts.includes(row[0]) == true) {
+								continue;
+							}
+							
+							let from = dateWithDefault(row[1], defaultBegin);
+							let to = dateWithDefault(row[2], defaultEnd);
+							if (from > end || to < begin) {
+								continue;
+							}
+							
+							let cPrice = stringToNumber(row[3]);
+							
+							let current;
+							let stop;
+							{
+								let beginDate = begin;
+								if (from > begin) {
+									beginDate = from;
+								}
+								current = new Date(beginDate);
+								
+								let endDate = end;
+								if (to < end) {
+									endDate = to;
+								}
+								stop = new Date(endDate);
+							}
+							
+							while (current < stop) {
+								
+								let next = new Date(current);
+								next.setMonth(next.getMonth() + 1)
+								//next.setDate(monthDays);
+							//	next.setSeconds(1)
+								
+								let limit = next;
+								if (next >= stop) {
+									limit = stop;
+								}
+								let rentDays = millisecondsToDays(limit - current);
+								let dailyCost = cPrice / numberOfDaysInMonth(current);
+								
+								sum += rentDays * dailyCost;
+								/*
+								if (entry[0] == 112616383) {
+									
+									ngo("date1: " + current)
+									ngo("date2: " + next)
+									ngo("date3: " + limit)
+									
+									ngo("monthDays: " + numberOfDaysInMonth(current))
+									ngo("days: " + rentDays);
+									
+								}
+								*/
+								
+								current = new Date(next);
+							}
+							
+							
+						}
+						addition.push(sum);
+					}
+					
+					
+					calced.push(numToFDVUNum(addition));
+				}
+				
+			}
+			
+			ngo(calced);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			let table = fxcd(name + "-result-table");
 			table.innerHTML = "";
 			axcd(table, gainSumHeader());
 			table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
+			
+			//ngo(B);
+			
+			/*
 			A[0][0] = "Fasilitetsnummer";
 			B[0][1] = "Sum inntekter";
+			*/
+			/*
 			let result = arrayMerge(A, B, "Fasilitetsnummer");
+			*/
 			
+			/*
 			writeArrayTo(result, name + "-calc-table");
 			writeEndResult(result, name + "-result-table");
 			
@@ -1143,10 +1311,12 @@ function beginGainCalc() {
 					row[c] = numToFDVUNum(row[c]);
 				}
 			}
-			
+			*/
+			/*
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			*/
 			spinner.style.visibility = "hidden";
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
@@ -1161,7 +1331,8 @@ function beginGainCalc() {
 					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
 					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
 					
-					contractList = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to);
+					//contractList = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to, 13);
+					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]); //, from, to, 13), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0]);
