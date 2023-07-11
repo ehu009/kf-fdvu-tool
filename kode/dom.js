@@ -409,8 +409,8 @@ function gainDOM(name) {
 }
 
 function writeToGainTable(array, tableId) {
-	
 	let table = fxcd(tableId);
+	
 	let header = xcd("tr");
 	for (let c = 0; c < array[0].length; c += 1) {
 		let cell = xcd("th");
@@ -421,32 +421,11 @@ function writeToGainTable(array, tableId) {
 	
 	for (let r = 1; r < array.length; r += 1) {
 		let row = xcd("tr");
-		
 		for (let c = 0; c < array[r].length; c += 1) {
-			let val = array[r][c];
 			let cell = xcd("td");
-			
-			/*
-			if (c == 2) {
-				if (val < 0) {
-					cell.classList.add("passive");
-					val = null;
-				}
-				if (val == 0 || val == null) {
-					cell.classList.add("danger");
-				}
-			}*/
-			
-			axcd(cell, txcd(val));
+			axcd(cell, txcd(array[r][c]));
 			axcd(row, cell);
 		}
-		/*
-		if (array[r].length < 3) {
-			let cell = xcd("td");
-			cell.classList.add("missing");
-			axcd(row, cell);
-		}
-		*/
 		axcd(table, row);
 	}
 }
