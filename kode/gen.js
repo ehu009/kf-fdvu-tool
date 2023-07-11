@@ -1090,13 +1090,6 @@ function beginGainCalc() {
 		axcd(con, xcd("hr"));
 		
 		i = xcd("table");
-		i.id = name + "-result-table";
-		axcd(i, gainSumHeader());
-		axcd(con, i);
-		axcd(con, xcd("hr"));
-		
-		axcd(con, gainLegend());
-		i = xcd("table");
 		i.id = name + "-calc-table";
 		axcd(con, i);
 	}
