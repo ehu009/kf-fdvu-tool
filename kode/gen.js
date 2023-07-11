@@ -447,49 +447,6 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	return [head2].concat(rows);
 }
 
-function writeGain(array, containerId) {
-	
-	let table = fxcd(containerId);
-	let header = xcd("tr");
-	for (let c = 0; c < array[0].length; c += 1) {
-		let cell = xcd("th");
-		axcd(cell, txcd(array[0][c]));
-		axcd(header, cell);
-	}
-	axcd(table, header);
-	
-	for (let r = 1; r < array.length; r += 1) {
-		let row = xcd("tr");
-		
-		for (let c = 0; c < array[r].length; c += 1) {
-			let val = array[r][c];
-			let cell = xcd("td");
-			
-			/*
-			if (c == 2) {
-				if (val < 0) {
-					cell.classList.add("passive");
-					val = null;
-				}
-				if (val == 0 || val == null) {
-					cell.classList.add("danger");
-				}
-			}*/
-			
-			axcd(cell, txcd(val));
-			axcd(row, cell);
-		}
-		/*
-		if (array[r].length < 3) {
-			let cell = xcd("td");
-			cell.classList.add("missing");
-			axcd(row, cell);
-		}
-		*/
-		axcd(table, row);
-	}
-}
-
 function mapKeys(arr) {
 	let out = new Map();
 	for (let i = 1; i < arr.length; i += 1) {
@@ -1048,59 +1005,9 @@ function beginGainCalc() {
 				}
 		});
 	
-	
-	let con = xcd("h2");
-	axcd(con, txcd("Inntekter"));
-	axcd(document.body, con);
-	
-	con = xcd("div");
-	con.id = name + "-container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	{
-		contractsText(name + "-container");
-		axcd(con, txcd(":"));
-		addLine(con);
-		
-		let i = fileInputTag(name + "-contracts-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		
-		axcd(con, txcd("Velg tidsspenn:"));
-		addLine(con);
-	
-		axcd(con, txcd("Fra "));
-		axcd(con, dateFieldTag(name + "-date-from"));
-		axcd(con, txcd(" Inntil "));
-		axcd(con, dateFieldTag(name + "-date-to"));
-		addLine(con);
-		addLine(con);
-	
-		defaultButtonTags(name);
-		addLine(con);
-		axcd(con, xcd("hr"));
-		
-		axcd(con, txcd("Beregning ekskluderer kontrakter der leietaker heter:"));
-		i = xcd("ul");
-		axcd(i, listTag("Passiv"));
-		for (let e of ignoreContracts) {
-			axcd(i, listTag(e));
-		}
-		axcd(con, i);
-		addLine(con);
-		
-		axcd(con, txcd("Delsummer reknes for hver m\u00E5ned i tidsspennet, dvs daglig pris i f.eks januar og februar er forskjellige."));
-		addLine(con);
-		axcd(con, xcd("hr"));
-		
-		i = xcd("table");
-		i.id = name + "-calc-table";
-		axcd(con, i);
-	}
+	gainDOM(name);
 	
 	let spinner = fxcd(name + "-spinner");
-	
 	let contracts = fxcd(name + '-contracts-file');
 	let contractList = null;
 	
@@ -1238,7 +1145,7 @@ function beginGainCalc() {
 			let table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
-			writeGain(calced, name + "-calc-table");
+			writeToGainTable(calced, name + "-calc-table");
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
