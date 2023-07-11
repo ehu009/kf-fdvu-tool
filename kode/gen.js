@@ -1229,7 +1229,7 @@ function beginGainCalc() {
 				for (let r = 1; r < calced.length; r += 1) {
 					let v = calced[r][1];
 					total += v;
-					v = numToFDVUNum(v);
+					calced[r][1] = numToFDVUNum(v);
 				}
 			}
 			
