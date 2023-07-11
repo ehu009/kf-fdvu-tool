@@ -1137,13 +1137,10 @@ function beginGainCalc() {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			let A = activeList;
-			let B = contractList;
 			
+			contractList.shift();
 			
-			let contractHeader = contractList.shift();
-			
-			// lag hashmap s.a. [seksjonsnummer -> liste over kontrakter]
+			// lag hashmap s.a. [fasilitet -> liste over kontrakter]
 			let mep = new Map();
 			{
 				let sIdx = 5;
@@ -1160,7 +1157,6 @@ function beginGainCalc() {
 					}
 				}
 			}
-			//ngo(mep)
 			
 			// summér til array
 			let calced = [];
@@ -1169,32 +1165,13 @@ function beginGainCalc() {
 				let end = new Date(fxcd(name + "-date-to").value);
 				
 				let defaultBegin = new Date();
-				defaultBegin.setFullYear(1950);
 				let defaultEnd = new Date();
+				defaultBegin.setFullYear(1950);
 				defaultEnd.setFullYear(2090);
 				
-				
 				for (entry of mep.entries()) {
-					
 					let sum = 0;
-					
-					// ngo() = console.log()
-					
 					let addition = [entry[0]];
-					
-					/*
-					{
-						for (e of activeList) {
-							if (e[0] == entry[0]) {
-								ngo(entry[1])
-								addition.push(entry[1][5]);
-							}
-						}
-					}
-					ngo(addition);
-					*/
-					
-					//addition.push(entry[0])
 					
 					// lag sum
 					{
@@ -1231,29 +1208,15 @@ function beginGainCalc() {
 								
 								let next = new Date(current);
 								next.setMonth(next.getMonth() + 1)
-								//next.setDate(monthDays);
-							//	next.setSeconds(1)
 								
 								let limit = next;
 								if (next >= stop) {
 									limit = stop;
 								}
+								
 								let rentDays = millisecondsToDays(limit - current);
 								let dailyCost = cPrice / numberOfDaysInMonth(current);
-								
 								sum += rentDays * dailyCost;
-								/*
-								if (entry[0] == 112616383) {
-									
-									ngo("date1: " + current)
-									ngo("date2: " + next)
-									ngo("date3: " + limit)
-									
-									ngo("monthDays: " + numberOfDaysInMonth(current))
-									ngo("days: " + rentDays);
-									
-								}
-								*/
 								
 								current = new Date(next);
 							}
@@ -1262,26 +1225,9 @@ function beginGainCalc() {
 						}
 						addition.push(sum);
 					}
-					
-					
 					calced.push(numToFDVUNum(addition));
 				}
-				
 			}
-			
-			ngo(calced);
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			let table = fxcd(name + "-result-table");
@@ -1291,7 +1237,6 @@ function beginGainCalc() {
 			table.innerHTML = "";
 			
 			
-			//ngo(B);
 			
 			/*
 			A[0][0] = "Fasilitetsnummer";
