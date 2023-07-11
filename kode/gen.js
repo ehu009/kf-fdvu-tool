@@ -1226,10 +1226,10 @@ function beginGainCalc() {
 			// regn total og konvertér til komma-desimaler
 			let total = 0;
 			{
-				for (let r = 1; r < calced.length; r += 1) {
-					let v = calced[r][1];
+				for (let e of calced) {
+					let v = e[1];
 					total += v;
-					calced[r][1] = numToFDVUNum(v);
+					e[1] = numToFDVUNum(v);
 				}
 			}
 			
