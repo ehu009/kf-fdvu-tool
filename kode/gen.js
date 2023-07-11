@@ -1048,14 +1048,6 @@ function beginGainCalc() {
 				}
 		});
 	
-	document.addEventListener('keydown', function(event) {
-    
-    if(event.keyCode == 39) {
-        console.log(ready)
-    }
-});
-	
-	
 	
 	let con = xcd("h2");
 	axcd(con, txcd("Inntekter"));
@@ -1086,6 +1078,19 @@ function beginGainCalc() {
 		addLine(con);
 	
 		defaultButtonTags(name);
+		addLine(con);
+		axcd(con, xcd("hr"));
+		
+		axcd(con, txcd("Beregning ekskluderer kontrakter der leietaker heter:"));
+		i = xcd("ul");
+		axcd(i, listTag("Passiv"));
+		for (let e of ignoreContracts) {
+			axcd(i, listTag(e));
+		}
+		axcd(con, i);
+		addLine(con);
+		
+		axcd(con, txcd("Delsummer reknes for hver m\u00E5ned i tidsspennet, dvs daglig pris i f.eks januar og februar er forskjellige."));
 		addLine(con);
 		axcd(con, xcd("hr"));
 		
