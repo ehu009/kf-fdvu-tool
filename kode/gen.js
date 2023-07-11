@@ -1170,6 +1170,9 @@ function beginGainCalc() {
 							if (ignoreContracts.includes(row[0]) == true) {
 								continue;
 							}
+							if (row[0] == "Passiv") {
+								continue;
+							}
 							
 							let from = dateWithDefault(row[1], defaultBegin);
 							let to = dateWithDefault(row[2], defaultEnd);
