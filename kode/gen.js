@@ -1,19 +1,22 @@
 
 const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
 
+function ngo(...args) {
+	console.log(...args);
+}
+
 function millisecondsToDays(n) {
 	return Math.ceil(n / (1000*60*60*24));
 }
-function dateToFVDUDate(date) {
-	let arr = date.split("-");
-	return arr.reverse().join(".");
-}
-function stringToNumber(s) {
-	return parseInt(s.replace(",", "."));
-}
-function parseDate(s) {
-	let arr = s.split(".");
-	return new Date(arr.reverse());
+function numberOfDaysInMonth(date) {
+	let month = date.getMonth();
+	if (month == 1) {
+		return 28 + ((date.getFullYear() % 4) == 0);
+	}
+	if (month > 6) {
+		month += 1;
+	}
+	return 31 - (month % 2);
 }
 function dateWithDefault(value, defaultDate) {
 	let v;
@@ -25,15 +28,30 @@ function dateWithDefault(value, defaultDate) {
 	}
 	return v;
 }
-function arrayAddition(src, dst) {
-	for (let c = 0; c < src.length; c += 1) {
-		dst[c] += src[c];
-	}
+function parseDate(s) {
+	let arr = s.split(".");
+	return new Date(arr.reverse());
+}
+function dateToFVDUDate(date) {
+	let arr = date.split("-");
+	return arr.reverse().join(".");
+}
+
+function stringToNumber(s) {
+	return parseInt(s.replace(",", "."));
 }
 function numToFDVUNum(n) {
 	let u = String(n);
 	return u.replace(".", ",");
 }
+
+function arrayAddition(src, dst) {
+	for (let c = 0; c < src.length; c += 1) {
+		dst[c] += src[c];
+	}
+}
+
+
 
 function setupColumnFilter() {
 	let name = 'col-filter';
@@ -519,26 +537,6 @@ function drawKeys(arr, map, dst) {
 	return out;
 }
 
-function writeEndResult(array, containerId) {
-
-	let boliger = 0;
-	let active = 0;
-	let passive = 0;
-	
-	for (let row = 1; row < array.length; row += 1) {
-		let v = array[row][2];
-		if (v != null) {
-			if (v >= 0) {
-				boliger += 1;
-			} else {
-				passive += 1;
-			}
-			active += array[row][2];
-		}
-	}
-	axcd(fxcd(containerId), newRow([boliger, passive, active], false));
-}
-
 
 function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 	
@@ -644,73 +642,6 @@ function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, c
 	vacLoss -= cost;
 	return [vac, vacLoss, rep, repLoss, pas, pasLoss];
 }
-
-function contractFilter(arr, cutoffLow, cutoffHigh, rentableIdx) {
-	
-	let out = [arr[0]];
-	
-	cutoffLow = parseDate(cutoffLow);
-	cutoffHigh = parseDate(cutoffHigh);
-	
-	for (let r = 1; r < arr.length; r += 1) {
-		
-		if (arr[r][rentableIdx] == null || arr[r][rentableIdx] == "" || arr[r][rentableIdx] == " ") {
-			continue;
-		}
-		let from = arr[r][6];
-		if (from != null && from != " " && from != "") {
-			if (parseDate(from) > cutoffHigh) {
-				continue;
-			}
-		}
-		
-		let to = arr[r][7];
-		if (to != null && to != " " && to != "") {
-			if (parseDate(to) < cutoffLow) {
-				continue;
-			}
-		}
-		out.push(arr[r]);
-	}
-	return out;
-}
-
-function contractGainCalc(arr, cutoffLow, cutoffHigh) {
-	let out = [["Fasilitetsnummer", "Sum"]];
-	let map = new Map();
-	
-	for (let r = 1; r < arr.length; r += 1) {
-		let fnr = arr[r][4];
-		let val = stringToNumber(arr[r][3]);
-		if (arr[r][0] == "Passiv" || arr[r][0] == "Driftsadministrasjonen") {
-			val = -1;
-			map.set(fnr, -1);
-		}
-		
-		let from = arr[r][1];
-		let to = arr[r][2];
-		if (from == null || from == " " || from == "") {
-			arr[r][1] = cutoffLow;
-		}
-		if (to == null || to == " " || to == "") {
-			arr[r][2] = cutoffHigh;
-		}
-		
-		let days = calcDays(arr[r][1], arr[r][2], cutoffLow, cutoffHigh);
-		if (!map.has(fnr)) {
-			map.set(fnr, (days*val/30));
-		} else {
-			let s = map.get(fnr);
-			s += (days*val/30);
-			map.set(fnr, s);
-		}
-	}
-	map.forEach(function (v, k) {
-			out.push([k, v]);
-		});
-	return out;
-}
-
 
 function contractLossCalc(arr, nameIdx, sPriceIdx, map, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays) {
 	
@@ -961,21 +892,7 @@ function beginLoss() {
 }
 
 
-function ngo(...args) {
-	console.log(...args);
-}
 
-
-function numberOfDaysInMonth(date) {
-	let month = date.getMonth();
-	if (month == 1) {
-		return 28 + ((date.getFullYear() % 4) == 0);
-	}
-	if (month > 6) {
-		month += 1;
-	}
-	return 31 - (month % 2);
-}
 
 function beginGainCalc() {
 	let name = 'gains';
