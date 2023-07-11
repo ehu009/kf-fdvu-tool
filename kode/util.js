@@ -17,14 +17,12 @@ function numberOfDaysInMonth(date) {
 	return 31 - (month % 2);
 }
 function dateWithDefault(value, defaultDate) {
-	let v;
 	try {
-		v = fdvuDateToDate(value);
+		return fdvuDateToDate(value);
 	}
 	catch (err) {
 		return defaultDate;
 	}
-	return v;
 }
 function fdvuDateToDate(s) {
 	let arr = s.split(".");
