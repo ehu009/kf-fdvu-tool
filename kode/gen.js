@@ -447,7 +447,7 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	return [head2].concat(rows);
 }
 
-function writeArrayTo(array, containerId) {
+function writeGain(array, containerId) {
 	
 	let table = fxcd(containerId);
 	let header = xcd("tr");
@@ -465,6 +465,7 @@ function writeArrayTo(array, containerId) {
 			let val = array[r][c];
 			let cell = xcd("td");
 			
+			/*
 			if (c == 2) {
 				if (val < 0) {
 					cell.classList.add("passive");
@@ -473,17 +474,18 @@ function writeArrayTo(array, containerId) {
 				if (val == 0 || val == null) {
 					cell.classList.add("danger");
 				}
-			}
+			}*/
 			
 			axcd(cell, txcd(val));
 			axcd(row, cell);
 		}
+		/*
 		if (array[r].length < 3) {
 			let cell = xcd("td");
 			cell.classList.add("missing");
 			axcd(row, cell);
 		}
-		
+		*/
 		axcd(table, row);
 	}
 }
@@ -1034,9 +1036,9 @@ function beginGainCalc() {
 					fxcd(name + "-download-btn").disabled = true;
 					if (target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
-						fxcd(name + "-calc-btn").disabled = false;
+						//fxcd(name + "-calc-btn").disabled = false;
 					} else {
-						if (target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
+						if (target["countB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd(name + "-calc-btn").disabled = false;
 						} else {
 							fxcd(name + "-calc-btn").disabled = true;
@@ -1045,6 +1047,16 @@ function beginGainCalc() {
 					return true;
 				}
 		});
+	
+	document.addEventListener('keydown', function(event) {
+    
+    if(event.keyCode == 39) {
+        console.log(ready)
+    }
+});
+	
+	
+	
 	let con = xcd("h2");
 	axcd(con, txcd("Inntekter"));
 	axcd(document.body, con);
@@ -1054,7 +1066,7 @@ function beginGainCalc() {
 	con.classList.add("cont");
 	axcd(document.body, con);
 	{
-		rentablesText(name + "-container");
+		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
 		
@@ -1062,7 +1074,6 @@ function beginGainCalc() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = () => { if (i.files.length < 1) { dataReady["fileB"] += 1; } else { dataReady["fileB"] -= 1; } };
 		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
@@ -1111,9 +1122,9 @@ function beginGainCalc() {
 		};
 	contracts.onchange = function (evt) {
 			if (evt.target.files.length > 0) {
-				ready["countA"] -= 1;
+				ready["countB"] -= 1;
 			} else {
-				ready["countA"] += 1;
+				ready["countB"] += 1;
 			}
 		};
 	document.addEventListener(eventName, () => {
@@ -1205,33 +1216,33 @@ function beginGainCalc() {
 						}
 						addition.push(sum);
 					}
-					calced.push(numToFDVUNum(addition));
+					calced.push(addition);
 				}
 			}
 			
-			
-			let table = fxcd(name + "-result-table");
-			table.innerHTML = "";
-			axcd(table, gainSumHeader());
-			table = fxcd(name + "-calc-table");
-			table.innerHTML = "";
-			
-			
-			writeArrayTo(result, name + "-calc-table");
-			writeEndResult(result, name + "-result-table");
-			
-			for (let r = 1; r < result.length; r += 1) {
-				let row = result[r];
-				for (let c = 2; c < row.length; c += 1) {
-					row[c] = numToFDVUNum(row[c]);
+			// regn total og konvertér til komma-desimaler
+			let total = 0;
+			{
+				for (let r = 1; r < calced.length; r += 1) {
+					let v = calced[r][1];
+					total += v;
+					v = numToFDVUNum(v);
 				}
 			}
-			*/
-			/*
+			
+			// legg til header
+			calced.unshift(["Fasilitet", "Sum"]);
+			
+			// tegn
+			let table = fxcd(name + "-calc-table");
+			table.innerHTML = "";
+			
+			writeGain(calced, name + "-calc-table");
+			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(result,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			*/
+			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "inntekter " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			
 			spinner.style.visibility = "hidden";
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
