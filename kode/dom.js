@@ -213,7 +213,7 @@ function gainSumHeader() {
 }
 function defaultButtonTags(name) {
 	let con = fxcd(name + "-container");
-	let b = buttonTag(name + "-calc-btn", "Lag flett", true);
+	let b = buttonTag(name + "-calc-btn", "Beregn", true);
 	axcd(con, b);
 	axcd(con, txcd(" "));
 	
@@ -284,11 +284,7 @@ function lossText(con) {
 }
 function contractsText(containerId) {
 	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over "));
-	let b = xcd("b");
-	axcd(b, txcd("alle"));
-	axcd(con, b);
-	axcd(con, txcd(" utleiekontrakter"));
+	axcd(con, txcd("Liste over utleiekontrakter"));
 }
 function rentablesText(containerId) {
 	let con = fxcd(containerId);
