@@ -1,7 +1,7 @@
 
 const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
 
-function ngo(...args) {
+function xc(...args) {
 	console.log(...args);
 }
 
@@ -21,18 +21,18 @@ function numberOfDaysInMonth(date) {
 function dateWithDefault(value, defaultDate) {
 	let v;
 	try {
-		v = parseDate(value);
+		v = fdvuDateToDate(value);
 	}
 	catch (err) {
 		return defaultDate;
 	}
 	return v;
 }
-function parseDate(s) {
+function fdvuDateToDate(s) {
 	let arr = s.split(".");
 	return new Date(arr.reverse());
 }
-function dateToFVDUDate(date) {
+function dateToFdvuDate(date) {
 	let arr = date.split("-");
 	return arr.reverse().join(".");
 }
@@ -550,13 +550,13 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 		}
 		let from = arr[r][idxLow];
 		if (from != null && from != " " && from != "") {
-			if (parseDate(from) > cutoffHigh) {
+			if (fdvuDateToDate(from) > cutoffHigh) {
 				continue;
 			}
 		}
 		let to = arr[r][idxHigh];
 		if (to != null && to != " " && to != "") {
-			if (parseDate(to) < cutoffLow) {
+			if (fdvuDateToDate(to) < cutoffLow) {
 				continue;
 			}
 		}
@@ -566,10 +566,10 @@ function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
 }
 
 function calcDays(begin, stop, cutoffLow, cutoffHigh) {
-	let start = parseDate(begin);
-	let end = parseDate(stop);
-	let l = parseDate(cutoffLow);
-	let h = parseDate(cutoffHigh);
+	let start = fdvuDateToDate(begin);
+	let end = fdvuDateToDate(stop);
+	let l = fdvuDateToDate(cutoffLow);
+	let h = fdvuDateToDate(cutoffHigh);
 	if (start > h) {
 		return 0;
 	}
@@ -813,7 +813,7 @@ function beginLoss() {
 		
 			let nDays = millisecondsToDays(new Date(to.value) - new Date(from.value));
 			
-			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, dateToFVDUDate(from.value), dateToFVDUDate(to.value), nDays);
+			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, dateToFdvuDate(from.value), dateToFdvuDate(to.value), nDays);
 			let monthly = monthLossCalc(perSection);
 			
 			
@@ -1075,8 +1075,8 @@ function beginGainCalc() {
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
-					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
-					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
+					let from = dateToFdvuDate(fxcd(name + "-date-from").value);
+					let to = dateToFdvuDate(fxcd(name + "-date-to").value);
 					
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]); //, from, to, 13), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]);
 					ready["countB"] -= 1;
