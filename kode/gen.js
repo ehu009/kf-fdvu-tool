@@ -1023,7 +1023,6 @@ function beginGainCalc() {
 	
 	let eventName = "dataReady";
 	let readyTarget = {
-			countA: 2,
 			countB: 2,
 			dateA: 1,
 			dateB: 1
@@ -1033,7 +1032,7 @@ function beginGainCalc() {
 			set: function (target, key, value) {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
-					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
+					if (target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 						fxcd(name + "-calc-btn").disabled = false;
 					} else {
@@ -1059,17 +1058,7 @@ function beginGainCalc() {
 		axcd(con, txcd(":"));
 		addLine(con);
 		
-		let i = fileInputTag(name + "-rentables-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		i.onchange = () => { if (i.files.length < 1) { dataReady["fileA"] += 1; } else { dataReady["fileA"] -= 1; } };
-		
-		contractsText(name + "-container");
-		axcd(con, txcd(":"));
-		addLine(con);
-		
-		i = fileInputTag(name + "-contracts-file");
+		let i = fileInputTag(name + "-contracts-file");
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
@@ -1103,8 +1092,6 @@ function beginGainCalc() {
 	
 	let spinner = fxcd(name + "-spinner");
 	
-	let actives = fxcd(name + '-rentables-file');
-	let activeList = null;
 	let contracts = fxcd(name + '-contracts-file');
 	let contractList = null;
 	
@@ -1120,13 +1107,6 @@ function beginGainCalc() {
 				ready["dateA"] = 1;
 			} else {
 				ready["dateA"] = 0;
-			}
-		};
-	actives.onchange = function (evt) {
-			if (evt.target.files.length > 0) {
-				ready["countA"] -= 1;
-			} else {
-				ready["countA"] += 1;
 			}
 		};
 	contracts.onchange = function (evt) {
@@ -1237,16 +1217,6 @@ function beginGainCalc() {
 			table.innerHTML = "";
 			
 			
-			
-			/*
-			A[0][0] = "Fasilitetsnummer";
-			B[0][1] = "Sum inntekter";
-			*/
-			/*
-			let result = arrayMerge(A, B, "Fasilitetsnummer");
-			*/
-			
-			/*
 			writeArrayTo(result, name + "-calc-table");
 			writeEndResult(result, name + "-result-table");
 			
@@ -1266,17 +1236,12 @@ function beginGainCalc() {
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
-			let f1 = new FileReader();
-			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn"]); ready["countB"] -= 1; }
-			
-			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
 					let from = dateToFVDUDate(fxcd(name + "-date-from").value);
 					let to = dateToFVDUDate(fxcd(name + "-date-to").value);
 					
-					//contractList = contractGainCalc(arrayColFilter(contractFilter(CSVToArray(f2.result, ";"), from, to), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]), from, to, 13);
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]); //, from, to, 13), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]);
 					ready["countB"] -= 1;
 				}
