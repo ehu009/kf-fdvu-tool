@@ -776,7 +776,9 @@ function beginLoss() {
 			
 			contractList.shift();
 			activeList.shift();
-			// lag map s.a. [fasilitet -> kontraktinfo]
+			
+			
+			// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
 			let mep = new Map();
 			{
 				let sIdx = 4;
@@ -965,20 +967,26 @@ function beginGainCalc() {
 			
 			contractList.shift();
 			
-			// lag hashmap s.a. [fasilitet -> liste over kontrakter]
-			let mep = new Map();
+			// lag hashmap s.a. [(fasilitet + nummer) -> liste over kontrakter]
+			let mep = new ListMap();
 			{
+				let nIdx = 4;
 				let sIdx = 5;
-				
 				for (let c of contractList) {
 					let sN = c[sIdx];
+					let fN = c[nIdx];
 					if (sN == null || sN == undefined || sN == "" || sN == " ") {
 						continue;
 					}
-					if (mep.has(sN) == false) {
-						mep.set(sN, [c]);
+					if (fN == null || fN == undefined || fN == "" || fN == " ") {
+						continue;
+					}
+					
+					let key = [sN, fN];
+					if (mep.has(key) == false) {
+						mep.set(key, [c]);
 					} else {
-						mep.get(sN).push(c)
+						mep.get(key).push(c)
 					}
 				}
 			}
@@ -996,7 +1004,7 @@ function beginGainCalc() {
 				
 				for (entry of mep.entries()) {
 					let sum = 0;
-					let addition = [entry[0]];
+					let addition = [entry[0][1], entry[0][0]];
 					
 					// lag sum
 					{
@@ -1068,7 +1076,7 @@ function beginGainCalc() {
 			}
 			
 			// legg til header
-			calced.unshift(["Fasilitet", "Sum"]);
+			calced.unshift(["Fasilitetnummer", "Navn", "Sum"]);
 			
 			// tegn
 			let table = fxcd(name + "-calc-table");
