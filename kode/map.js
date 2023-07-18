@@ -22,6 +22,13 @@ class ListMap {
 	}
 	
 	get() {
+		let out = undefined;
+		for (let e of this.entries()) {
+			if (arrayCompare(key, e[0])) {
+				out = e[1];
+				break;
+		}
+		return out;
 	}
 	
 	entries() {
