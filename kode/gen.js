@@ -415,24 +415,6 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 	return [head2].concat(rows);
 }
 
-function mapKeys(arr) {
-	let out = new Map();
-	for (let i = 1; i < arr.length; i += 1) {
-		let row = arr[i];
-		let name = row[1];
-		
-		if (out.has(name)) {
-			let l = out.get(name);
-			if (l.includes(row[0]) == false) {
-				l.push(row[0]);
-			}
-		} else {
-			out.set(name, [row[0]]);
-		}
-	}
-	return out;
-}
-
 
 
 function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
