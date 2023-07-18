@@ -789,7 +789,6 @@ function beginGainCalc() {
 					fxcd(name + "-download-btn").disabled = true;
 					if (target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
-						//fxcd(name + "-calc-btn").disabled = false;
 					} else {
 						if (target["countB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd(name + "-calc-btn").disabled = false;
@@ -963,7 +962,7 @@ function beginGainCalc() {
 					let from = dateToFdvuDate(fxcd(name + "-date-from").value);
 					let to = dateToFdvuDate(fxcd(name + "-date-to").value);
 					
-					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]); //, from, to, 13), ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker"]);
+					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0]);
