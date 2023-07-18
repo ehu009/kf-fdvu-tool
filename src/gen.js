@@ -644,48 +644,34 @@ function beginLoss() {
 			
 			
 			// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
-			let mep = new Map();
-			{
-				let sIdx = 4;
-				for (let c of contractList) {
-					let sN = c[sIdx];
-					if (sN == null || sN == undefined || sN == "" || sN == " ") {
-						continue;
-					}
-					if (mep.has(sN) == false) {
-						mep.set(sN, [c]);
-					} else {
-						mep.get(sN).push(c)
-					}
-				}
+			let mep = mapContracts(contractList, 4, 5);
 				
-				// legg til seksjonspris
-				for (let e of activeList) {
-					let id = e[1];
+			// legg til seksjonspris
+			for (let e of activeList) {
+				let id = [e[0], e[1]];
+				
+				if (isInvalid(id)) {
+					continue;
+				}
+				xc(id)
+				if (mep.has(id) == false) {
+					mep.set(id, [id, 0,0,0,0,0, e[2]]);
+				} else {
 					
-					if (isInvalid(id)) {
-						continue;
-					}
-					xc(id)
-					if (mep.has(id) == false) {
-						mep.set(id, [id, 0,0,0,0,0, e[2]]);
-					} else {
+					if (id == "112616560 Granittveien 22, H0101 ") {
+						xc("neger")
+					let replace = [];
+					for (let u of mep.get(id)) {
 						
-						if (id == "112616560 Granittveien 22, H0101 ") {
-							xc("neger")
-						let replace = [];
-						for (let u of mep.get(id)) {
-							
-							xc(u)
-							
-							replace.push(u.push(e[2]))
-							
-							
-							//replace.push(u.concat(e));
-						}
-						mep.set(id, replace);
+						xc(u)
+						
+						replace.push(u.push(e[2]))
+						
+						
+						//replace.push(u.concat(e));
 					}
-					}
+					mep.set(id, replace);
+				}
 				}
 			}
 			
@@ -964,8 +950,6 @@ function beginGainCalc() {
 			f2.readAsText(contracts.files[0]);
 		};
 }
-
-
 
 
 function setupCustomerOverlapFilter() {
