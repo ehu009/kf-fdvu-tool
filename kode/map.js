@@ -7,7 +7,14 @@ class ListMap {
 		this.m = new Map();
 	}
 	
-	has() {
+	has(key) {
+		let out = false;
+		for (let e of this.entries()) {
+			if (arrayCompare(key, e[0])) {
+				out = true;
+				break;
+		}
+		return out;
 	}
 	
 	set() {
