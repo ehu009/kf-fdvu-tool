@@ -4,6 +4,7 @@
 class ListMap {
 	
 	constructor() {
+		this.m = new Map();
 	}
 	
 	has() {
@@ -16,6 +17,7 @@ class ListMap {
 	}
 	
 	entries() {
+		return this.m.entries();
 	}
 	
 }
