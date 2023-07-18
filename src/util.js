@@ -41,6 +41,13 @@ function numToFDVUNum(n) {
 	return u.replace(".", ",");
 }
 function isInvalid(val) {
+	if (val == null
+			|| val == undefined
+			|| val == ""
+			|| val == " ") {
+		return true;
+	}
+	return false;
 }
 
 function arrayAddition(src, dst) {
