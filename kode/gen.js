@@ -416,34 +416,6 @@ function drawSections(arr, map, containerId, includeMonthName, nDays) {
 }
 
 
-
-function timeFilter(arr, cutoffLow, cutoffHigh, idxLow, idxHigh, idxId) {
-	
-	let out = [];
-	out.push(arr[0]);
-	
-	for (let r = 1; r < arr.length; r += 1) {
-		let id = arr[r][idxId];
-		if (id == null || id == "" || id == " ") {
-			continue;
-		}
-		let from = arr[r][idxLow];
-		if (from != null && from != " " && from != "") {
-			if (fdvuDateToDate(from) > cutoffHigh) {
-				continue;
-			}
-		}
-		let to = arr[r][idxHigh];
-		if (to != null && to != " " && to != "") {
-			if (fdvuDateToDate(to) < cutoffLow) {
-				continue;
-			}
-		}
-		out.push(arr[r]);
-	}
-	return out;
-}
-
 function calcDays(begin, stop, cutoffLow, cutoffHigh) {
 	let start = fdvuDateToDate(begin);
 	let end = fdvuDateToDate(stop);
@@ -462,19 +434,6 @@ function calcDays(begin, stop, cutoffLow, cutoffHigh) {
 		end = h;
 	}
 	return millisecondsToDays(end - start);
-}
-
-function mapContracts(arr, occupantIdx, beginIdx, endIdx, priceIdx, numberIdx, typeIdx) {
-	
-	let m = new Map();
-	for (let r = 1; r < arr.length; r += 1) {
-		let id = arr[r][numberIdx];
-		if (m.has(id) == false) {
-			m.set(id, []);
-		}
-		m.get(id).push(arr[r]);
-	}
-	return m;
 }
 
 function timeCalc(section, sPriceIdx, contract, occupantIdx, beginIdx, endIdx, cPriceIdx, cutoffLow, cutoffHigh, nDays) {
