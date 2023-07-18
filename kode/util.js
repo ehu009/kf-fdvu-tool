@@ -46,3 +46,13 @@ function arrayAddition(src, dst) {
 		dst[c] += src[c];
 	}
 }
+function arrayCompare(a, b) {
+	let out = (a.length - b.length == 0);
+	for (let i = 0; i < a.length; i += 1) {
+		if (a[i] != b[i]) {
+			out = false;
+			break;
+		}
+	}
+	return out;
+}
