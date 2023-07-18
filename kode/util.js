@@ -56,3 +56,22 @@ function arrayCompare(a, b) {
 	}
 	return out;
 }
+function arrayColFilter(array, wantedList) {
+	let filterIdx = [];
+	for (let col = 0; col < array[0].length; col += 1) {
+		if (wantedList.indexOf(array[0][col]) < 0) {
+			continue;
+		}
+		filterIdx.push(col);
+	}
+	
+	let out = [];
+	for (let row = 0; row < array.length; row += 1) {
+		let add = [];
+		for (let col = 0; col < filterIdx.length; col += 1) {
+			add.push(array[row][filterIdx[col]]);
+		}
+		out.push(add);
+	}
+	return out;
+}
