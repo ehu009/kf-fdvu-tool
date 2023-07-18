@@ -202,7 +202,7 @@ function setupRowFilter() {
 									axcd(l, optionTag("Velg", true, true));
 									let arr = CSVToArray(r.result, ";");
 									for (let e of arr[0]) {
-										if (e == "") {
+										if (isInvalid(e)) {
 											continue;
 										}
 										axcd(l, optionTag(e, false, false));
@@ -597,14 +597,14 @@ function beginLoss() {
 	
 	
 	fxcd(name + "-date-to").onchange = function (evt) {
-			if (evt.target.value == "") {
+			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
 	fxcd(name + "-date-from").onchange = function (evt) {
-			if (evt.target.value == "") {
+			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;	
 			} else {
 				ready["dateA"] = 0;
@@ -663,7 +663,7 @@ function beginLoss() {
 				for (let e of activeList) {
 					let id = e[1];
 					
-					if (id == null || id == undefined || id == "" || id == " ") {
+					if (isInvalid(id)) {
 						continue;
 					}
 					xc(id)
@@ -770,7 +770,24 @@ function beginLoss() {
 		};
 }
 
-
+function mapContracts(arr, numberIdx, nameIdx) {
+	let mep = new ListMap();
+	for (let c of arr) {
+		let name = c[nameIdx];
+		let number = c[numberIdx];
+		if (isInvalid(name) || isInvalid(number)) {
+			continue;
+		}
+		
+		let key = [name, number];
+		if (mep.has(key) == false) {
+			mep.set(key, [c]);
+		} else {
+			mep.get(key).push(c)
+		}
+	}
+	return mep;
+}
 
 
 function beginGainCalc() {
@@ -807,14 +824,14 @@ function beginGainCalc() {
 	let contractList = null;
 	
 	fxcd(name + "-date-to").onchange = function (evt) {
-			if (evt.target.value == "") {
+			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
 	fxcd(name + "-date-from").onchange = function (evt) {
-			if (evt.target.value == "") {
+			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;
 			} else {
 				ready["dateA"] = 0;
@@ -832,28 +849,7 @@ function beginGainCalc() {
 			contractList.shift();
 			
 			// lag hashmap s.a. [(fasilitet + nummer) -> liste over kontrakter]
-			let mep = new ListMap();
-			{
-				let nIdx = 4;
-				let sIdx = 5;
-				for (let c of contractList) {
-					let sN = c[sIdx];
-					let fN = c[nIdx];
-					if (sN == null || sN == undefined || sN == "" || sN == " ") {
-						continue;
-					}
-					if (fN == null || fN == undefined || fN == "" || fN == " ") {
-						continue;
-					}
-					
-					let key = [sN, fN];
-					if (mep.has(key) == false) {
-						mep.set(key, [c]);
-					} else {
-						mep.get(key).push(c)
-					}
-				}
-			}
+			let mep = mapContracts(contractList, 4, 5);
 			
 			// summér til array
 			let calced = [];
@@ -1179,10 +1175,10 @@ function setupRentableOverlapFilter() {
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				let pp = contractList[r];
-				if ((pp[13] == undefined) || (pp[13] == "")
-						|| (pp[5] == undefined) || (pp[5] == "")
-						|| (pp[4] == undefined) || (pp[4] == "")
-						|| (pp[3] == undefined) || (pp[3] == "")
+				if (isInvalid(pp[13])
+						|| isInvalid(pp[5])
+						|| isInvalid(pp[4])
+						|| isInvalid(pp[3])
 						|| (ignoreContracts.includes(pp[2]) == true)) {
 					continue;
 				}

@@ -40,6 +40,8 @@ function numToFDVUNum(n) {
 	let u = String(n);
 	return u.replace(".", ",");
 }
+function isInvalid(val) {
+}
 
 function arrayAddition(src, dst) {
 	for (let c = 0; c < src.length; c += 1) {
