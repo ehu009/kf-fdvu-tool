@@ -17,7 +17,8 @@ class ListMap {
 		return out;
 	}
 	
-	set() {
+	set(key, val) {
+		this.m.set(key, val);
 	}
 	
 	get() {
