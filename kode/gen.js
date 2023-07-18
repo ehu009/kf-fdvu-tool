@@ -692,9 +692,14 @@ function beginLoss() {
 		addLine(con);
 	
 		axcd(con, txcd("Fra "));
-		axcd(con, dateFieldTag(name + "-date-from"));
+		i = dateFieldTag(name + "-date-from")
+		i.value="2023-01-01"
+		
+		axcd(con, i);
 		axcd(con, txcd(" Inntil "));
-		axcd(con, dateFieldTag(name + "-date-to"));
+		i = dateFieldTag(name + "-date-to")
+		i.value="2023-03-01"
+		axcd(con, i);
 		addLine(con);
 		addLine(con);
 	
@@ -722,7 +727,7 @@ function beginLoss() {
 	let actives = fxcd(name + '-rentables-file');
 	let activeList = null;
 	let contracts = fxcd(name + '-contracts-file');
-	let contractMap = null;
+	let contractList = null;
 	
 	
 	
@@ -763,8 +768,67 @@ function beginLoss() {
 		
 			let nDays = millisecondsToDays(new Date(to.value) - new Date(from.value));
 			
+			
+			/*
 			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, dateToFdvuDate(from.value), dateToFdvuDate(to.value), nDays);
 			let monthly = monthLossCalc(perSection);
+			*/
+			
+			contractList.shift();
+			activeList.shift();
+			// lag map s.a. [fasilitet -> kontraktinfo]
+			let mep = new Map();
+			{
+				let sIdx = 4;
+				for (let c of contractList) {
+					let sN = c[sIdx];
+					if (sN == null || sN == undefined || sN == "" || sN == " ") {
+						continue;
+					}
+					if (mep.has(sN) == false) {
+						mep.set(sN, [c]);
+					} else {
+						mep.get(sN).push(c)
+					}
+				}
+				
+				// legg til seksjonspris
+				for (let e of activeList) {
+					let id = e[1];
+					
+					if (id == null || id == undefined || id == "" || id == " ") {
+						continue;
+					}
+					xc(id)
+					if (mep.has(id) == false) {
+						mep.set(id, [id, 0,0,0,0,0, e[2]]);
+					} else {
+						
+						if (id == "112616560 Granittveien 22, H0101 ") {
+							xc("neger")
+						let replace = [];
+						for (let u of mep.get(id)) {
+							
+							xc(u)
+							
+							replace.push(u.push(e[2]))
+							
+							
+							//replace.push(u.concat(e));
+						}
+						mep.set(id, replace);
+					}
+					}
+				}
+			}
+			
+			
+			//xc(mep.get())
+			
+			xc(mep.get("112616560 Granittveien 22, H0101 "))
+			
+			
+			
 			
 			
 			fxcd(name + "-calc-table").innerHTML = "";
@@ -824,7 +888,7 @@ function beginLoss() {
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Sum"]); ready["countB"] -= 1; };
+			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Fasilitet", "Navn", "Sum"]); ready["countB"] -= 1; };
 			
 			f1.readAsText(actives.files[0]);
 			
@@ -832,9 +896,7 @@ function beginLoss() {
 			f2.onload = () => {
 					let from = fxcd(name + "-date-from").value;
 					let to = fxcd(name + "-date-to").value;
-					let filter1 = timeFilter(CSVToArray(f2.result, ";"), new Date(from), new Date(to), 6, 7, 12);
-					let filter2 = arrayColFilter(filter1, ["Fasilitetsnummer", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
-					contractMap =  mapContracts(filter2, 0, 1, 2, 3, 4, 5, from, to);
+					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					ready["countB"] -= 1;
 				};
 			f2.readAsText(contracts.files[0]);
