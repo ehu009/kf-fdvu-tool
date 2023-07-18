@@ -13,6 +13,7 @@ class ListMap {
 			if (arrayCompare(key, e[0])) {
 				out = true;
 				break;
+			}
 		}
 		return out;
 	}
@@ -21,12 +22,13 @@ class ListMap {
 		this.m.set(key, val);
 	}
 	
-	get() {
+	get(key) {
 		let out = undefined;
 		for (let e of this.entries()) {
 			if (arrayCompare(key, e[0])) {
 				out = e[1];
 				break;
+			}
 		}
 		return out;
 	}
