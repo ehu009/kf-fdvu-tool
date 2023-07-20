@@ -645,111 +645,87 @@ function beginLoss() {
 			
 			// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
 			let mep = mapContracts(contractList, 4, 5);
-				
+			
+			
+			xc(mep);
+			let mk = 0;
+			let ok = 0;
+			let pk = 0;
+			
+			let i = 250;
 			// legg til seksjonspris
 			for (let e of activeList) {
-				let id = [e[0], e[1]];
-				
-				if (isInvalid(id)) {
+				let number = e[0]
+				let name = e[1]
+				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
-				xc(id)
+				
+				
+				let id = [number+" "+name, number];
+				
+				
+				
 				if (mep.has(id) == false) {
-					mep.set(id, [id, 0,0,0,0,0, e[2]]);
-				} else {
+					let filler = new Array(5);
+					filler[4] = e[2];
+					if (number == "14140613025") {
+						xc("dobbel neger", id)
+					}
 					
-					if (id == "112616560 Granittveien 22, H0101 ") {
-						xc("neger")
-					let replace = [];
+					if (isInvalid(number)) {
+						xc(e)
+						
+					}
+					let blarf = id.concat(filler);
+					//xc(e)
+					mk += 1;
+					mep.set(id, [blarf]);
+					
+				} else {
+					ok += 1;
+					//xc(mep.get(id))
+					
 					for (let u of mep.get(id)) {
 						
-						xc(u)
-						
-						replace.push(u.push(e[2]))
-						
+						if (Array.isArray(u)) {
+							u.push(e[2])
+						} else {
+							pk += 1;
+							xc(u, mep.get(id));
+						}
 						
 						//replace.push(u.concat(e));
 					}
-					mep.set(id, replace);
-				}
-				}
-			}
-			
-			
-			//xc(mep.get())
-			
-			xc(mep.get("112616560 Granittveien 22, H0101 "))
-			
-			
-			
-			
-			
-			fxcd(name + "-calc-table").innerHTML = "";
-			let vv = drawSections(activeList, monthly, name + "-calc-table", false, nDays);
-			
-			
-			function fjott(arr, map, containerId) {
-				
-				let table = fxcd(containerId);
-				table.innerHTML = "";
-				axcd(table, lossSumHeader());
-				
-				let row;
-				let cell;
-				let rows = [];
-				let j = [0,0,0,0,0,0,0];
-				
-				function addLine(src, dst) {
-					if (src[1] >= 0){
-						arrayAddition(src, dst);
-					}
-				}
-				
-				for (let r = 1; r < arr.length; r += 1) {
 					
-					if (map.has(arr[r][0])) {
-						let months = map.get(arr[r][0]);
-						addLine(months[0][1], j);
-					} else {
-						arrayAddition([0,0,0,0,0,0], j);
-					}
-				}
 				
-				rows.push(j);
-				for (let r = 0; r < rows.length; r += 1) {
-					row = rows[r];
-					axcd(table, newRow(row, false, ""));
 				}
 			}
 			
-			fjott(activeList, monthly, name + "-result-table");
+			xc("ok: " + ok);
+			xc("ikke ok: " + pk)
 			
-			for (let r = 1; r < vv.length; r += 1) {
-				let row = vv[r];
-				for (let c = 2; c < row.length; c += 1) {
-					row[c] = numToFDVUNum(row[c]);
-				}
-			}
+			xc("kill yoursmelf: " + mk)
 			
+			
+			/*
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			
+			*/
 			spinner.style.visibility = "hidden";
 		});
 	
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Fasilitet", "Navn", "Sum"]); ready["countB"] -= 1; };
+			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum"]); ready["countB"] -= 1; };
 			
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
-					let from = fxcd(name + "-date-from").value;
-					let to = fxcd(name + "-date-to").value;
-					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
+					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					ready["countB"] -= 1;
 				};
 			f2.readAsText(contracts.files[0]);
@@ -761,7 +737,7 @@ function mapContracts(arr, numberIdx, nameIdx) {
 	for (let c of arr) {
 		let name = c[nameIdx];
 		let number = c[numberIdx];
-		if (isInvalid(name) || isInvalid(number)) {
+		if (isInvalid(name) && isInvalid(number)) {
 			continue;
 		}
 		
@@ -769,7 +745,8 @@ function mapContracts(arr, numberIdx, nameIdx) {
 		if (mep.has(key) == false) {
 			mep.set(key, [c]);
 		} else {
-			mep.get(key).push(c)
+			let r = mep.get(key)
+			r.push(c)
 		}
 	}
 	return mep;
