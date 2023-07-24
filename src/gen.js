@@ -646,13 +646,6 @@ function beginLoss() {
 			// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
 			let mep = mapContracts(contractList, 4, 5);
 			
-			
-			xc(mep);
-			let mk = 0;
-			let ok = 0;
-			let pk = 0;
-			
-			let i = 250;
 			// legg til seksjonspris
 			for (let e of activeList) {
 				let number = e[0]
@@ -668,19 +661,12 @@ function beginLoss() {
 					let filler = new Array(5);
 					filler[4] = e[2];
 					if (isInvalid(number)) {
-						xc(e)	
+						xc(e)
 					}
-					let blarf = id.concat(filler);
-					//xc(e)
-					mk += 1;
-					mep.set(id, [blarf]);
+					mep.set(id, [id.concat(filler)]);
 					
 				} else {
-					ok += 1;
-					//xc(mep.get(id))
-					
 					if (e[3] == "False") {
-						xc("meowie")
 						mep.delete(id);
 						continue;
 					}
@@ -689,14 +675,9 @@ function beginLoss() {
 						if (Array.isArray(u)) {
 							u.push(e[2])
 						} else {
-							pk += 1;
 							xc(u, mep.get(id));
 						}
-						
-						//replace.push(u.concat(e));
 					}
-					
-				
 				}
 			}
 			
@@ -714,9 +695,6 @@ function beginLoss() {
 				let daysTotal = millisecondsToDays(end - begin);
 				
 				for (entry of mep.entries()) {
-					
-					let sum = 0;
-					
 					let vacant = daysTotal;
 					let vacantLoss = 0;
 					let repair = 0;
@@ -724,7 +702,7 @@ function beginLoss() {
 					
 					let current = begin;
 					let stop = end;
-					xc("hello");
+					
 					while (current < stop) {
 						let next = new Date(current);
 						next.setMonth(next.getMonth() + 1)
@@ -737,11 +715,10 @@ function beginLoss() {
 						if (isInvalid(entry[1][0][7]) == false) {
 							vacantLoss += (millisecondsToDays(limit - current) * stringToNumber(entry[1][0][7])) / numberOfDaysInMonth(current);
 						}
-						xc(stop - current, limit - current, next - limit)
 						current = new Date(limit);
 					}
 					
-					xc("hello again");
+					
 					// lag sum
 					{
 						for (row of entry[1]) {
@@ -811,21 +788,11 @@ function beginLoss() {
 								current = new Date(limit);
 							}
 						}
-						
 					}
 					
-					xc("mhm");
 					calced.push([entry[0][1], entry[0][0], vacant, numToFDVUNum(vacantLoss), repair, numToFDVUNum(repairLoss)]);
 				}
-				
 			}
-			
-			
-			xc("ok: " + ok);
-			xc("ikke ok: " + pk)
-			
-			xc("kill yoursmelf: " + mk)
-			
 			
 			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"])
 			
