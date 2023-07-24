@@ -660,22 +660,15 @@ function beginLoss() {
 				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
-				
-				
 				let id = [number+" "+name, number];
-				
-				
-				
 				if (mep.has(id) == false) {
+					if (e[3] == "False") {
+						continue;
+					}
 					let filler = new Array(5);
 					filler[4] = e[2];
-					if (number == "14140613025") {
-						xc("dobbel neger", id)
-					}
-					
 					if (isInvalid(number)) {
-						xc(e)
-						
+						xc(e)	
 					}
 					let blarf = id.concat(filler);
 					//xc(e)
@@ -686,6 +679,11 @@ function beginLoss() {
 					ok += 1;
 					//xc(mep.get(id))
 					
+					if (e[3] == "False") {
+						xc("meowie")
+						mep.delete(id);
+						continue;
+					}
 					for (let u of mep.get(id)) {
 						
 						if (Array.isArray(u)) {
@@ -702,10 +700,137 @@ function beginLoss() {
 				}
 			}
 			
+			
+			let calced = [];
+			{
+				let begin = new Date(fxcd(name + "-date-from").value);
+				let end = new Date(fxcd(name + "-date-to").value);
+				
+				let defaultBegin = new Date();
+				let defaultEnd = new Date();
+				defaultBegin.setFullYear(1950);
+				defaultEnd.setFullYear(2090);
+				
+				let daysTotal = millisecondsToDays(end - begin);
+				
+				for (entry of mep.entries()) {
+					
+					let sum = 0;
+					
+					let vacant = daysTotal;
+					let vacantLoss = 0;
+					let repair = 0;
+					let repairLoss = 0;
+					
+					let current = begin;
+					let stop = end;
+					xc("hello");
+					while (current < stop) {
+						let next = new Date(current);
+						next.setMonth(next.getMonth() + 1)
+						next.setDate(1)
+						
+						let limit = next;
+						if (next > stop) {
+							limit = stop;
+						}
+						if (isInvalid(entry[1][0][7]) == false) {
+							vacantLoss += (millisecondsToDays(limit - current) * stringToNumber(entry[1][0][7])) / numberOfDaysInMonth(current);
+						}
+						xc(stop - current, limit - current, next - limit)
+						current = new Date(limit);
+					}
+					
+					xc("hello again");
+					// lag sum
+					{
+						for (row of entry[1]) {
+							let rep = false;
+							if (ignoreContracts.includes(row[0]) == true) {
+								rep == true;
+							}
+							
+							if (row[0] == "Passiv") {
+								continue;
+							}
+							
+							let from = dateWithDefault(row[1], defaultBegin);
+							let to = dateWithDefault(row[2], defaultEnd);
+							if (from > end || to < begin) {
+								continue;
+							}
+							
+							let cPrice = 0;
+							let sPrice = 0;
+							{
+								if (isInvalid(row[3]) == false) {
+									cPrice = stringToNumber(row[3]);
+								}
+								if (isInvalid(row[7]) == false) {
+									cPrice = stringToNumber(row[7]);
+								}
+							}
+							
+							{
+								let beginDate = begin;
+								if (from > begin) {
+									beginDate = from;
+								}
+								current = new Date(beginDate);
+								
+								let endDate = end;
+								if (to < end) {
+									endDate = to;
+								}
+								stop = new Date(endDate);
+							}
+							
+							while (current < stop) {
+								
+								let next = new Date(current);
+								next.setMonth(next.getMonth() + 1)
+								next.setDate(1)
+								
+								let limit = next;
+								if (next >= stop) {
+									limit = stop;
+								}
+								let monthDays = numberOfDaysInMonth(current);
+								let rentDays = millisecondsToDays(limit - current);
+								
+								let dailySection = sPrice / monthDays;
+								let dailyContract = cPrice / monthDays;
+								
+								vacant -= rentDays;
+								vacantLoss -= rentDays * dailyContract;
+								if (rep == true) {
+									repair += rentDays;
+									repairLoss += rentDays * dailySection;
+								}
+								
+								current = new Date(limit);
+							}
+						}
+						
+					}
+					
+					xc("mhm");
+					calced.push([entry[0][1], entry[0][0], vacant, numToFDVUNum(vacantLoss), repair, numToFDVUNum(repairLoss)]);
+				}
+				
+			}
+			
+			
 			xc("ok: " + ok);
 			xc("ikke ok: " + pk)
 			
 			xc("kill yoursmelf: " + mk)
+			
+			
+			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"])
+			
+			// tegn
+			writeArrayToTable(calced, name + "-calc-table");
 			
 			
 			/*
@@ -719,8 +844,10 @@ function beginLoss() {
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f1 = new FileReader();
-			f1.onload = () => { activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum"]); ready["countB"] -= 1; };
-			
+			f1.onload = () => {
+					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
+					ready["countB"] -= 1;
+				};
 			f1.readAsText(actives.files[0]);
 			
 			let f2 = new FileReader();
@@ -867,6 +994,7 @@ function beginGainCalc() {
 								
 								let next = new Date(current);
 								next.setMonth(next.getMonth() + 1)
+								next.setDate(1);
 								
 								let limit = next;
 								if (next >= stop) {
@@ -877,7 +1005,7 @@ function beginGainCalc() {
 								let dailyCost = cPrice / numberOfDaysInMonth(current);
 								sum += rentDays * dailyCost;
 								
-								current = new Date(next);
+								current = new Date(limit);
 							}
 							
 							
@@ -902,10 +1030,7 @@ function beginGainCalc() {
 			calced.unshift(["Fasilitetnummer", "Navn", "Sum"]);
 			
 			// tegn
-			let table = fxcd(name + "-calc-table");
-			table.innerHTML = "";
-			
-			writeToGainTable(calced, name + "-calc-table");
+			writeArrayToTable(calced, name + "-calc-table");
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
