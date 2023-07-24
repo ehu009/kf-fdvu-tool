@@ -71,7 +71,7 @@ function setupColumnFilter() {
 										fxcd(name+"-none-btn").disabled = false;
 										button.disabled = false;
 									};
-								r.readAsText(file.files[0]);
+								r.readAsText(file.files[0], "iso-8859-1");
 							});
 					} else {
 						fxcd(name + "-field").innerHTML = "";
@@ -96,7 +96,7 @@ function setupColumnFilter() {
 							}
 							downloadCSV(arrayToCSV(arrayColFilter(arr, wanted),";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
 						};
-					r.readAsText(fileInput.files[0]);
+					r.readAsText(fileInput.files[0], "iso-8859-1");
 				});
 		};
 }
@@ -210,7 +210,7 @@ function setupRowFilter() {
 									contrastCSV = arr;
 									ready['B'] = 0;
 								};
-							r.readAsText(evt.target.files[0]);
+							r.readAsText(evt.target.files[0], "iso-8859-1");
 											
 						} else {
 							ready['B'] = 1;
@@ -235,7 +235,7 @@ function setupRowFilter() {
 							ready['A'] = 0;
 							inputCSV = arr;
 						};
-					r.readAsText(file.files[0]);
+					r.readAsText(file.files[0], "iso-8859-1");
 				} else {
 					ready['A'] = 1;
 				}
@@ -630,34 +630,24 @@ function beginLoss() {
 			
 			let from = fxcd(name + "-date-from");
 			let to = fxcd(name + "-date-to");
-		
-			let nDays = millisecondsToDays(new Date(to.value) - new Date(from.value));
-			
-			
-			/*
-			let perSection = contractLossCalc(activeList, 0, 2, contractMap, 0, 1, 2, 3, dateToFdvuDate(from.value), dateToFdvuDate(to.value), nDays);
-			let monthly = monthLossCalc(perSection);
-			*/
 			
 			contractList.shift();
 			activeList.shift();
-			
 			
 			// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
 			let mep = mapContracts(contractList, 4, 5);
 			
 			// legg til seksjonspris
 			for (let e of activeList) {
+				
 				let number = e[0]
 				let name = e[1]
 				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
 				let id = [number+" "+name, number];
+				
 				if (mep.has(id) == false) {
-					if (e[3] == "False") {
-						continue;
-					}
 					let filler = new Array(5);
 					filler[4] = e[2];
 					if (isInvalid(number)) {
@@ -670,8 +660,8 @@ function beginLoss() {
 						mep.delete(id);
 						continue;
 					}
+					
 					for (let u of mep.get(id)) {
-						
 						if (Array.isArray(u)) {
 							u.push(e[2])
 						} else {
@@ -724,7 +714,7 @@ function beginLoss() {
 						for (row of entry[1]) {
 							let rep = false;
 							if (ignoreContracts.includes(row[0]) == true) {
-								rep == true;
+								rep = true;
 							}
 							
 							if (row[0] == "Passiv") {
@@ -778,11 +768,21 @@ function beginLoss() {
 								let dailySection = sPrice / monthDays;
 								let dailyContract = cPrice / monthDays;
 								
+								
+								if (cPrice != 0) {
+									vacantLoss -= rentDays * dailyContract;
+								} else {
+									vacantLoss -= rentDays * dailySection;
+								}
+								
 								vacant -= rentDays;
-								vacantLoss -= rentDays * dailyContract;
 								if (rep == true) {
 									repair += rentDays;
-									repairLoss += rentDays * dailySection;
+									if (cPrice != 0) {
+										repairLoss += rentDays * dailyContract;
+									} else {
+										repairLoss += rentDays * dailySection;
+									}
 								}
 								
 								current = new Date(limit);
@@ -815,14 +815,14 @@ function beginLoss() {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
 					ready["countB"] -= 1;
 				};
-			f1.readAsText(actives.files[0]);
+			f1.readAsText(actives.files[0], "iso-8859-1");
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					ready["countB"] -= 1;
 				};
-			f2.readAsText(contracts.files[0]);
+			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
 
@@ -1016,7 +1016,7 @@ function beginGainCalc() {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
 					ready["countB"] -= 1;
 				}
-			f2.readAsText(contracts.files[0]);
+			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
 
@@ -1151,7 +1151,7 @@ function setupCustomerOverlapFilter() {
 			let f2 = new FileReader();
 			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
 			
-			f2.readAsText(contracts.files[0]);
+			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
 
@@ -1322,7 +1322,7 @@ function setupRentableOverlapFilter() {
 			let f2 = new FileReader();
 			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
 			
-			f2.readAsText(contracts.files[0]);
+			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
 	
