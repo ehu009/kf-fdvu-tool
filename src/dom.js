@@ -408,9 +408,9 @@ function gainDOM(name) {
 	axcd(con, i);
 }
 
-function writeToGainTable(array, tableId) {
+function writeArrayToTable(array, tableId) {
 	let table = fxcd(tableId);
-	
+	table.innerHTML = "";
 	let header = xcd("tr");
 	for (let c = 0; c < array[0].length; c += 1) {
 		let cell = xcd("th");
