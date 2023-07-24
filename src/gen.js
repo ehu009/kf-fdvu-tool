@@ -630,11 +630,11 @@ function beginLoss() {
 			writeArrayToTable(calced, name + "-calc-table");
 			
 			
-			/*
+			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(vv,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			*/
+			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			
 			spinner.style.visibility = "hidden";
 		});
 	
