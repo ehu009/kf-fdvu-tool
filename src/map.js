@@ -37,4 +37,8 @@ class ListMap {
 		return this.m.entries();
 	}
 	
+	delete(key) {
+		this.m.delete(key);
+	}
+	
 }
