@@ -21,8 +21,7 @@ function numberOfDaysInMonth(date) {
 function dateWithDefault(value, defaultDate) {
 	try {
 		return fdvuDateToDate(value);
-	}
-	catch (err) {
+	} catch {
 		return defaultDate;
 	}
 }
