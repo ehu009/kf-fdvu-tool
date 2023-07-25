@@ -22,7 +22,7 @@ function drawKeys(arr, map, dst) {
 	let row;
 	let cell;
 	
-	axcd(table, newRow(["Seksjon#", "Navn", "N\u00F8kkelnummer"], true));
+	axcd(table, newRow(["Seksjonsnummer", "Aktiv", "N\u00F8kkelnummer"], true));
 	
 	let counter = new Map();
 	let out = [arr[0].concat(["N\u00F8klerinos"])];
@@ -38,7 +38,7 @@ function drawKeys(arr, map, dst) {
 			axcd(table, row);
 		} else {
 			let l = map.get(arr[r][0]);
-			if (l == undefined) {
+			if (isInvalid(l)) {
 				continue;
 			}
 			for (c = 0; c < l.length; c += 1) {
@@ -57,7 +57,7 @@ function drawKeys(arr, map, dst) {
 			out.push(arr[r].concat(l));
 		}
 	}
-	
+	/*
 	let under = 0;
 	let above = 0;
 	for (let k of counter.keys()) {
@@ -68,6 +68,7 @@ function drawKeys(arr, map, dst) {
 		}
 	}
 	console.log("under: " + under + ", over: " + above);
+	*/
 	return out;
 }
 
@@ -152,11 +153,12 @@ function setupKeyFilter() {
 			let rentables = fxcd(name + '-rentables-file');
 			let rentablesList = null;
 			let keys = fxcd(name + '-file');
-			let keysMap = null;
+			let keysList = null;
 			
 			document.addEventListener(eName, () => {
-				
-					let c = drawKeys(rentablesList, keysMap, name + "-table");
+					let mep = mapKeys(filtered);
+					let c = drawKeys(rentablesList, mep, name + "-table");
+					
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
 					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv"); };
@@ -169,12 +171,7 @@ function setupKeyFilter() {
 			f1.readAsText(rentables.files[0]);
 			
 			let f2 = new FileReader();
-			f2.onload = () => {
-					let arr = CSVToArray(f2.result, ";");
-					let filtered = arrayColFilter(arr, ["Nummer", "Seksjonsnr"]);
-					keysMap = mapKeys(filtered);
-					dataReady["count"] -= 1;
-				}
+			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); dataReady["count"] -= 1; }
 			f2.readAsText(keys.files[0]);
 			
 		}
