@@ -83,7 +83,7 @@ function setupKeyFilter() {
 	
 	const dataReadyEvent = new Event(eName);
 	let dataReady = new Proxy(dataReadyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					if (target["fileA"] <= 0 && target["fileB"] <= 0) {
 						fxcd(name + "-calc-btn").disabled = false;
@@ -130,14 +130,14 @@ function setupKeyFilter() {
 		axcd(con, i);
 	}
 	
-	fxcd(name + "-rentables-file").onchange = function (evt) {
+	fxcd(name + "-rentables-file").onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileB"] += 1;
 			} else {
 				dataReady["fileB"] -= 1;
 			}
 		};
-	fxcd(name + "-file").onchange = function (evt) {
+	fxcd(name + "-file").onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileA"] += 1;
 			} else {
@@ -167,11 +167,11 @@ function setupKeyFilter() {
 				});
 			
 			let f1 = new FileReader();
-			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]); dataReady["count"] -= 1; }
+			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Kategori bolig", "Aktiv", "Utleibar"]); dataReady["count"] -= 1; };
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 			
 			let f2 = new FileReader();
-			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); dataReady["count"] -= 1; }
+			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); dataReady["count"] -= 1; };
 			f2.readAsText(keys.files[0], "iso-8859-1");
 			
 		}
