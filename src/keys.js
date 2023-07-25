@@ -136,7 +136,7 @@ function setupKeyFilter() {
 	
 	fxcd(name + "-calc-btn").onclick = () => {
 			let spinner = fxcd(name + "-spinner");
-			spinner.style.visibility = "visible";
+			show(spinner);
 			
 			let rentables = fxcd(name + '-rentables-file');
 			let rentablesList = null;
@@ -151,7 +151,7 @@ function setupKeyFilter() {
 					btn.disabled = false;
 					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv"); };
 					
-					spinner.style.visibility = "hidden";
+					hide(spinner);
 				});
 			
 			let f1 = new FileReader();

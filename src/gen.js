@@ -373,11 +373,11 @@ function beginLoss() {
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			
-			spinner.style.visibility = "hidden";
+			hide(spinner);
 		});
 	
 	fxcd(name + "-calc-btn").onclick = () => {
-			spinner.style.visibility = "visible";
+			show(spinner);
 			let f1 = new FileReader();
 			f1.onload = () => {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
@@ -560,10 +560,10 @@ function beginGainCalc() {
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			
-			spinner.style.visibility = "hidden";
+			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
-			spinner.style.visibility = "visible";
+			show(spinner);
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
@@ -700,10 +700,10 @@ function setupCustomerOverlapFilter() {
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
-			spinner.style.visibility = "hidden";
+			hide(spinner;
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
-			spinner.style.visibility = "visible";
+			show(spinner);
 			let f2 = new FileReader();
 			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; };
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -869,10 +869,10 @@ function setupRentableOverlapFilter() {
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende kontrakter.csv"); };
 			
-			spinner.style.visibility = "hidden";
+			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
-			spinner.style.visibility = "visible";
+			show(spinner);
 			let f2 = new FileReader();
 			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; };
 			

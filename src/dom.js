@@ -14,6 +14,8 @@ function fxcd(t) {
 	return document.getElementById(t);
 }
 
+
+
 function line() {
 	return xcd("br");
 }
@@ -293,11 +295,17 @@ function rentablesText(containerId) {
 	
 	axcd(con, txcd(" bolig-seksjoner"));
 }
+function hide(elem) {
+	elem.visibility = "hidden";
+}
+function show(elem) {
+	elem.visibility = "visible";
+}
 function spinnerFunction(spinnerId, func) {
 	let spinner = fxcd(spinnerId);
-	spinner.style.visibility = "visible";
+	show(spinner);
 	func();
-	spinner.style.visibility = "hidden";
+	hide(spinner);
 }
 function col4() {
 	let k = xcd("div");
