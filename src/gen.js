@@ -118,7 +118,7 @@ function setupRowFilter() {
 	
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					
 					if (fxcd("keep-option").checked == false && fxcd("remove-option").checked == false) {
@@ -193,7 +193,7 @@ function setupRowFilter() {
 		let spinner = fxcd(name + "-spinner");
 		l.onchange = () => { spinnerFunction (name + "-spinner", () => { ready["C"] = 0; }); };
 			
-		f.onchange = function (evt) {
+		f.onchange = (evt) => {
 				spinnerFunction (name + "-spinner", () => {
 						if (evt.target.files.length >= 1) {
 							let r = new FileReader();
@@ -338,7 +338,7 @@ function beginLoss() {
 		
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
@@ -387,13 +387,13 @@ function beginLoss() {
 		addLine(con);
 	
 		axcd(con, txcd("Fra "));
-		i = dateFieldTag(name + "-date-from")
-		i.value="2023-01-01"
+		i = dateFieldTag(name + "-date-from");
+		i.value = "2023-01-01";
 		
 		axcd(con, i);
 		axcd(con, txcd(" Inntil "));
-		i = dateFieldTag(name + "-date-to")
-		i.value="2023-03-01"
+		i = dateFieldTag(name + "-date-to");
+		i.value = "2023-03-01";
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
@@ -406,7 +406,6 @@ function beginLoss() {
 		
 		i = xcd("table");
 		i.id = name + "-sum-table";
-		//axcd(i, lossSumHeader());
 		axcd(con, i);
 		axcd(con, xcd("hr"));
 		
@@ -426,28 +425,28 @@ function beginLoss() {
 	
 	
 	
-	fxcd(name + "-date-to").onchange = function (evt) {
+	fxcd(name + "-date-to").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd(name + "-date-from").onchange = function (evt) {
+	fxcd(name + "-date-from").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;	
 			} else {
 				ready["dateA"] = 0;
 			}
 		};
-	actives.onchange = function (evt) {
+	actives.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
 				ready["countA"] += 1;
 			}
 		};
-	contracts.onchange = function (evt) {
+	contracts.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
 				ready["countA"] -= 1;
 			} else {
@@ -470,8 +469,8 @@ function beginLoss() {
 			// legg til seksjonspris
 			for (let e of activeList) {
 				
-				let number = e[0]
-				let name = e[1]
+				let number = e[0];
+				let name = e[1];
 				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
@@ -481,7 +480,7 @@ function beginLoss() {
 					let filler = new Array(5);
 					filler[4] = e[2];
 					if (isInvalid(number)) {
-						xc(e)
+						xc(e);
 					}
 					mep.set(id, [id.concat(filler)]);
 					
@@ -493,7 +492,7 @@ function beginLoss() {
 					
 					for (let u of mep.get(id)) {
 						if (Array.isArray(u)) {
-							u.push(e[2])
+							u.push(e[2]);
 						} else {
 							xc(u, mep.get(id));
 						}
@@ -525,8 +524,8 @@ function beginLoss() {
 					
 					while (current < stop) {
 						let next = new Date(current);
-						next.setMonth(next.getMonth() + 1)
-						next.setDate(1)
+						next.setMonth(next.getMonth() + 1);
+						next.setDate(1);
 						
 						let limit = next;
 						if (next > stop) {
@@ -585,8 +584,8 @@ function beginLoss() {
 							while (current < stop) {
 								
 								let next = new Date(current);
-								next.setMonth(next.getMonth() + 1)
-								next.setDate(1)
+								next.setMonth(next.getMonth() + 1);
+								next.setDate(1);
 								
 								let limit = next;
 								if (next >= stop) {
@@ -624,7 +623,7 @@ function beginLoss() {
 				}
 			}
 			
-			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"])
+			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"]);
 			
 			let sum = [["Sum vakansetap", "Sum vedlikeholdstap", "Total"]];
 			{
@@ -684,8 +683,8 @@ function mapContracts(arr, numberIdx, nameIdx) {
 		if (mep.has(key) == false) {
 			mep.set(key, [c]);
 		} else {
-			let r = mep.get(key)
-			r.push(c)
+			let r = mep.get(key);
+			r.push(c);
 		}
 	}
 	return mep;
@@ -703,7 +702,7 @@ function beginGainCalc() {
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
 					if (target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
@@ -725,21 +724,21 @@ function beginGainCalc() {
 	let contracts = fxcd(name + '-contracts-file');
 	let contractList = null;
 	
-	fxcd(name + "-date-to").onchange = function (evt) {
+	fxcd(name + "-date-to").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd(name + "-date-from").onchange = function (evt) {
+	fxcd(name + "-date-from").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;
 			} else {
 				ready["dateA"] = 0;
 			}
 		};
-	contracts.onchange = function (evt) {
+	contracts.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
 				ready["countB"] -= 1;
 			} else {
@@ -805,7 +804,7 @@ function beginGainCalc() {
 							while (current < stop) {
 								
 								let next = new Date(current);
-								next.setMonth(next.getMonth() + 1)
+								next.setMonth(next.getMonth() + 1);
 								next.setDate(1);
 								
 								let limit = next;
@@ -871,7 +870,6 @@ function setupCustomerOverlapFilter() {
 	
 	let eventName = "dataReady";
 	let readyTarget = {
-		
 			countB: 1,
 			dateA: 1,
 			dateB: 1,
@@ -879,7 +877,7 @@ function setupCustomerOverlapFilter() {
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
 					if (target['fileB'] < 1) {
@@ -994,8 +992,7 @@ function setupCustomerOverlapFilter() {
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
-			
+			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; };
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
@@ -1005,7 +1002,6 @@ function setupRentableOverlapFilter() {
 	
 	let eventName = "dataReady";
 	let readyTarget = {
-		
 			countB: 1,
 			dateA: 1,
 			dateB: 1,
@@ -1013,7 +1009,7 @@ function setupRentableOverlapFilter() {
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
-			set: function (target, key, value) {
+			set: (target, key, value) => {
 					target[key] = value;
 					fxcd(name + "-download-btn").disabled = true;
 					if (target['fileB'] < 1) {
@@ -1058,7 +1054,7 @@ function setupRentableOverlapFilter() {
 	let contracts = fxcd(name + '-contracts-file');
 	let contractList = null;
 	
-	contracts.onchange = function (evt) {
+	contracts.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
 				ready["fileB"] -= 1;
 			} else {
@@ -1165,7 +1161,7 @@ function setupRentableOverlapFilter() {
 	fxcd(name + "-calc-btn").onclick = () => {
 			spinner.style.visibility = "visible";
 			let f2 = new FileReader();
-			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; }
+			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; };
 			
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
