@@ -57,18 +57,6 @@ function drawKeys(arr, map, dst) {
 			out.push(arr[r].concat(l));
 		}
 	}
-	/*
-	let under = 0;
-	let above = 0;
-	for (let k of counter.keys()) {
-		if (k < "800") {
-			under += 1;
-		} else {
-			above += 1;
-		}
-	}
-	console.log("under: " + under + ", over: " + above);
-	*/
 	return out;
 }
 
