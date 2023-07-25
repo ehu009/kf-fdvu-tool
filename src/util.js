@@ -31,7 +31,7 @@ function fdvuDateToDate(s) {
 	return new Date(arr.reverse());
 }
 function dateToFdvuDate(date) {
-	let arr = date.split("-");
+	const arr = date.split("-");
 	return arr.reverse().join(".");
 }
 

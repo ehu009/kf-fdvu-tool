@@ -3,8 +3,8 @@
 function mapKeys(arr) {
 	let out = new Map();
 	for (let i = 1; i < arr.length; i += 1) {
-		let row = arr[i];
-		let name = row[1];
+		const row = arr[i];
+		const name = row[1];
 		
 		if (out.has(name)) {
 			let l = out.get(name);
@@ -38,7 +38,7 @@ function drawKeys(arr, map, dst) {
 			axcd(row, cell);
 			axcd(table, row);
 		} else {
-			let l = map.get(arr[r][0]);
+			const l = map.get(arr[r][0]);
 			if (isInvalid(l)) {
 				continue;
 			}
@@ -62,8 +62,8 @@ function drawKeys(arr, map, dst) {
 }
 
 function setupKeyFilter() {
-	let name = 'keys';
-	let eName = "dataReady";
+	const name = 'keys';
+	const eName = "dataReady";
 	let dataReadyTarget = {
 			fileA: 1,
 			fileB: 1,
@@ -145,8 +145,8 @@ function setupKeyFilter() {
 			let keysList = null;
 			
 			document.addEventListener(eName, () => {
-					let mep = mapKeys(filtered);
-					let c = drawKeys(rentablesList, mep, name + "-table");
+					const mep = mapKeys(filtered);
+					const c = drawKeys(rentablesList, mep, name + "-table");
 					
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;

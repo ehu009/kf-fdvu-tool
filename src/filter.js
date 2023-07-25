@@ -1,7 +1,7 @@
 "use strict";
 
 function setupColumnFilter() {
-	let name = 'col-filter';
+	const name = 'col-filter';
 	
 	let c = xcd("h2");
 	axcd(c, txcd("Filtrer kolonner i CSV-dokument"));
@@ -60,7 +60,7 @@ function setupColumnFilter() {
 								let r = new FileReader();
 								r.onload = () => {
 										let arr = CSVToArray(r.result, ";");
-										let options = arr[0];
+										const options = arr[0];
 										populateCheckboxes(name + "-field", options, null);
 										allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
 										allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
@@ -100,12 +100,13 @@ function setupColumnFilter() {
 
 
 function setupRowFilter() {
-	let name = 'keys';
+	const name = 'row-filter';
+	
 	let inputCSV = null;
 	let contrastCSV = null;
 	let outputCSV = null;
 	
-	let eventName = "dataReady";
+	const eventName = "dataReady";
 	let readyTarget = {
 			A: 1,
 			B: 1,
@@ -243,14 +244,14 @@ function setupRowFilter() {
 			spinnerFunction (name + "-spinner", () => {
 					outputCSV = [inputCSV[0]];
 					
-					let filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
+					const filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
 					if (fxcd("keep-option").checked == false) {
 						let mep = new Map();
 						for (let i = 1; i < inputCSV.length; i += 1) {
 							mep.set(inputCSV[i][filterIdx], inputCSV[i]);
 						}
 						for (let i = 1; i < contrastCSV.length; i += 1) {
-							let f = contrastCSV[i][filterIdx];	
+							const f = contrastCSV[i][filterIdx];	
 							mep.delete(f);
 						}
 						for (let e of mep.entries()) {

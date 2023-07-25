@@ -6,8 +6,8 @@ const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u0
 function arrayMerge(arr1, arr2, columnName) {
 	
 	let out = [];
-	let nameIdx1 = arr1[0].indexOf(columnName);
-	let nameIdx2 = arr2[0].indexOf(columnName);
+	const nameIdx1 = arr1[0].indexOf(columnName);
+	const nameIdx2 = arr2[0].indexOf(columnName);
 	
 	let head = [];
 	for (e of arr1[0]) {
@@ -29,7 +29,7 @@ function arrayMerge(arr1, arr2, columnName) {
 			a.push(arr1[row1][col]);
 		}
 		
-		let current = arr1[row1][nameIdx1];
+		const current = arr1[row1][nameIdx1];
 		let row2;
 		for (row2 = 1; row2 < arr2.length; row2 += 1) {
 			
@@ -53,8 +53,8 @@ function arrayMerge(arr1, arr2, columnName) {
 
 
 function beginLoss() {
-	let name = 'loss';
-	let eventName = "dataReady";
+	const name = 'loss';
+	const eventName = "dataReady";
 	let readyTarget = {
 			countA: 2,
 			countB: 2,
@@ -195,12 +195,12 @@ function beginLoss() {
 			// legg til seksjonspris
 			for (let e of activeList) {
 				
-				let number = e[0];
-				let name = e[1];
+				const number = e[0];
+				const name = e[1];
 				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
-				let id = [number+" "+name, number];
+				const id = [number+" "+name, number];
 				
 				if (mep.has(id) == false) {
 					let filler = new Array(5);
@@ -229,15 +229,15 @@ function beginLoss() {
 			
 			let calced = [];
 			{
-				let begin = new Date(fxcd(name + "-date-from").value);
-				let end = new Date(fxcd(name + "-date-to").value);
+				const begin = new Date(fxcd(name + "-date-from").value);
+				const end = new Date(fxcd(name + "-date-to").value);
 				
 				let defaultBegin = new Date();
 				let defaultEnd = new Date();
 				defaultBegin.setFullYear(1950);
 				defaultEnd.setFullYear(2090);
 				
-				let daysTotal = millisecondsToDays(end - begin);
+				const daysTotal = millisecondsToDays(end - begin);
 				
 				for (entry of mep.entries()) {
 					let vacant = daysTotal;
@@ -247,6 +247,7 @@ function beginLoss() {
 					
 					let current = begin;
 					let stop = end;
+					
 					
 					while (current < stop) {
 						let next = new Date(current);
@@ -276,8 +277,8 @@ function beginLoss() {
 								continue;
 							}
 							
-							let from = dateWithDefault(row[1], defaultBegin);
-							let to = dateWithDefault(row[2], defaultEnd);
+							const from = dateWithDefault(row[1], defaultBegin);
+							const to = dateWithDefault(row[2], defaultEnd);
 							if (from > end || to < begin) {
 								continue;
 							}
@@ -317,11 +318,11 @@ function beginLoss() {
 								if (next >= stop) {
 									limit = stop;
 								}
-								let monthDays = numberOfDaysInMonth(current);
-								let rentDays = millisecondsToDays(limit - current);
+								const monthDays = numberOfDaysInMonth(current);
+								const rentDays = millisecondsToDays(limit - current);
 								
-								let dailySection = sPrice / monthDays;
-								let dailyContract = cPrice / monthDays;
+								const dailySection = sPrice / monthDays;
+								const dailyContract = cPrice / monthDays;
 								
 								
 								if (cPrice != 0) {
@@ -354,12 +355,11 @@ function beginLoss() {
 			let sum = [["Sum vakansetap", "Sum vedlikeholdstap", "Total"]];
 			{
 				let aggregate = [0, 0, 0];
-				let lines = arrayColFilter(calced, ["Tap pga vakanse", "Tap pga vedlikehold"]);
+				const lines = arrayColFilter(calced, ["Tap pga vakanse", "Tap pga vedlikehold"]);
 				for (let i = 1; i < lines.length; i+= 1) {
-					let vacant = stringToNumber(lines[i][0]);
-					let repair = stringToNumber(lines[i][1]);
-					let total = vacant + repair;
-					arrayAddition([vacant, repair, total], aggregate);
+					const vacant = stringToNumber(lines[i][0]);
+					const repair = stringToNumber(lines[i][1]);
+					arrayAddition([vacant, repair, vacant + repair], aggregate);
 				}
 				for (let n of aggregate) {
 					n = numToFDVUNum(n);
@@ -399,13 +399,13 @@ function beginLoss() {
 function mapContracts(arr, numberIdx, nameIdx) {
 	let mep = new ListMap();
 	for (let c of arr) {
-		let name = c[nameIdx];
-		let number = c[numberIdx];
+		const name = c[nameIdx];
+		const number = c[numberIdx];
 		if (isInvalid(name) && isInvalid(number)) {
 			continue;
 		}
 		
-		let key = [name, number];
+		const key = [name, number];
 		if (mep.has(key) == false) {
 			mep.set(key, [c]);
 		} else {
@@ -418,9 +418,9 @@ function mapContracts(arr, numberIdx, nameIdx) {
 
 
 function beginGainCalc() {
-	let name = 'gains';
+	const name = 'gains';
 	
-	let eventName = "dataReady";
+	const eventName = "dataReady";
 	let readyTarget = {
 			countB: 2,
 			dateA: 1,
@@ -481,8 +481,8 @@ function beginGainCalc() {
 			// summér til array
 			let calced = [];
 			{
-				let begin = new Date(fxcd(name + "-date-from").value);
-				let end = new Date(fxcd(name + "-date-to").value);
+				const begin = new Date(fxcd(name + "-date-from").value);
+				const end = new Date(fxcd(name + "-date-to").value);
 				
 				let defaultBegin = new Date();
 				let defaultEnd = new Date();
@@ -503,13 +503,13 @@ function beginGainCalc() {
 								continue;
 							}
 							
-							let from = dateWithDefault(row[1], defaultBegin);
-							let to = dateWithDefault(row[2], defaultEnd);
+							const from = dateWithDefault(row[1], defaultBegin);
+							const to = dateWithDefault(row[2], defaultEnd);
 							if (from > end || to < begin) {
 								continue;
 							}
 							
-							let cPrice = stringToNumber(row[3]);
+							const cPrice = stringToNumber(row[3]);
 							
 							let current;
 							let stop;
@@ -538,8 +538,8 @@ function beginGainCalc() {
 									limit = stop;
 								}
 								
-								let rentDays = millisecondsToDays(limit - current);
-								let dailyCost = cPrice / numberOfDaysInMonth(current);
+								const rentDays = millisecondsToDays(limit - current);
+								const dailyCost = cPrice / numberOfDaysInMonth(current);
 								sum += rentDays * dailyCost;
 								
 								current = new Date(limit);
@@ -592,9 +592,9 @@ function beginGainCalc() {
 
 
 function setupCustomerOverlapFilter() {
-	let name = 'overlap';
+	const name = 'overlap';
 	
-	let eventName = "dataReady";
+	const eventName = "dataReady";
 	let readyTarget = {
 			countB: 1,
 			dateA: 1,
@@ -676,22 +676,22 @@ function setupCustomerOverlapFilter() {
 			for (let r of mep.entries()) {
 				let hoink = false;
 				for (let i = 0; i < r[1].length; i += 1) {
-					let c1 = r[1][i];
-					let cNum = c1[0];
+					const c1 = r[1][i];
+					const cNum = c1[0];
 					
 					let oldest = new Date();
 					let newest = new Date();
 					oldest.setFullYear(1950);
 					newest.setFullYear(2050);
 					
-					let lower1 = dateWithDefault(c1[7], oldest);
-					let upper1 = dateWithDefault(c1[8], newest);
+					const lower1 = dateWithDefault(c1[7], oldest);
+					const upper1 = dateWithDefault(c1[8], newest);
 					
 					for (let j = i; j < r[1].length; j += 1) {
-						let c2 = r[1][j];
+						const c2 = r[1][j];
 						
-						let lower2 = dateWithDefault(c2[7], oldest);
-						let upper2 = dateWithDefault(c2[8], newest);
+						const lower2 = dateWithDefault(c2[7], oldest);
+						const upper2 = dateWithDefault(c2[8], newest);
 						
 						if (upper1 < lower2 || lower1 > upper2) {
 							continue;
@@ -724,9 +724,9 @@ function setupCustomerOverlapFilter() {
 }
 
 function setupRentableOverlapFilter() {
-	let name = 'overlap';
+	const name = 'overlap';
 	
-	let eventName = "dataReady";
+	const eventName = "dataReady";
 	let readyTarget = {
 			countB: 1,
 			dateA: 1,
@@ -794,7 +794,7 @@ function setupRentableOverlapFilter() {
 			
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
-				let pp = contractList[r];
+				const pp = contractList[r];
 				if (isInvalid(pp[13])
 						|| isInvalid(pp[5])
 						|| isInvalid(pp[4])
@@ -820,24 +820,24 @@ function setupRentableOverlapFilter() {
 				}
 				
 				for (let i = 0; i < r[1].length; i += 1) {
-					let c1 = r[1][i];
-					let cNum = c1[0];
+					const c1 = r[1][i];
+					const cNum = c1[0];
 					
 					let oldest = new Date();
 					let newest = new Date();
 					oldest.setFullYear(1950);
 					newest.setFullYear(2050);
 					
-					let lower1 = dateWithDefault(c1[7], oldest);
-					let upper1 = dateWithDefault(c1[8], newest);
+					const lower1 = dateWithDefault(c1[7], oldest);
+					const upper1 = dateWithDefault(c1[8], newest);
 					if (lower1 == upper1) {
 						continue;
 					}
 					for (let j = i+1; j < r[1].length; j += 1) {
 						let c2 = r[1][j];
 						
-						let lower2 = dateWithDefault(c2[7], oldest);
-						let upper2 = dateWithDefault(c2[8], newest);
+						const lower2 = dateWithDefault(c2[7], oldest);
+						const upper2 = dateWithDefault(c2[8], newest);
 						if (lower2 == upper2) {
 							continue;
 						}
@@ -863,7 +863,7 @@ function setupRentableOverlapFilter() {
 			for (let e of out) {
 				
 				for (let row = 0; row < e.length; row += 1) {
-					let r = e[row];
+					const r = e[row];
 					let ll = [r[4], r[13], r[7], r[8]];
 					if (row > 0) {
 						ll[0] = "";

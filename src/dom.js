@@ -49,7 +49,7 @@ function toggleCheckbox(id) {
 }
 
 function createCheckbox(container, name) {
-	let n = "checkbox";
+	const n = "checkbox";
 	let c = xcd("span");
 	{
 		let label = xcd("label");
@@ -75,9 +75,7 @@ function mapCheckboxes(containerId) {
 		if (n.type == "div") {
 			continue;
 		}
-		let label = n.firstChild.innerHTML;
-		let value = n.lastChild.checked;
-		out.set(label, value);
+		out.set(n.firstChild.innerHTML, n.lastChild.checked);
 	}
 	return out;
 }
@@ -88,7 +86,7 @@ function setCheckboxValues(containerId, options) {
 		if (n.type == "div") {
 			continue;
 		}
-		let label = n.firstChild.innerHTML;
+		const label = n.firstChild.innerHTML;
 		if (options.has(label)) {
 			n.lastChild.checked = options.get(label);
 		} else {
