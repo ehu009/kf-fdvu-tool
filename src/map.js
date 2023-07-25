@@ -1,4 +1,4 @@
-// map.js
+"use strict";
 
 
 class ListMap {

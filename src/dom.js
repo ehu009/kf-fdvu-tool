@@ -1,4 +1,4 @@
-
+"use strict";
 
 
 function axcd(p, e) {
@@ -272,7 +272,7 @@ function lossText(con) {
 	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av f\u00F8lgende:"));
 	addLine(con);
 	
-	i = xcd("ul");
+	let i = xcd("ul");
 	for (let e of ignoreContracts) {
 		axcd(i, listTag(e));
 	}

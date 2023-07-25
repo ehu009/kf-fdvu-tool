@@ -1,3 +1,5 @@
+"use strict";
+
 function CSVToArray( strData, strDelimiter ){
 	
 	strDelimiter = (strDelimiter || ",");

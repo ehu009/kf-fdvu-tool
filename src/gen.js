@@ -1,3 +1,4 @@
+"use strict";
 
 const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
 
@@ -628,7 +629,7 @@ function setupCustomerOverlapFilter() {
 		axcd(con, txcd(":"));
 		addLine(con);
 		
-		i = fileInputTag(name + "-contracts-file");
+		let i = fileInputTag(name + "-contracts-file");
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
@@ -760,7 +761,7 @@ function setupRentableOverlapFilter() {
 		axcd(con, txcd(":"));
 		addLine(con);
 		
-		i = fileInputTag(name + "-contracts-file");
+		let i = fileInputTag(name + "-contracts-file");
 		axcd(con, i);
 		addLine(con);
 		addLine(con);

@@ -1,3 +1,4 @@
+"use strict";
 
 function setupColumnFilter() {
 	let name = 'col-filter';

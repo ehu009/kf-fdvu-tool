@@ -1,3 +1,5 @@
+"use strict";
+
 
 function xc(...args) {
 	console.log(...args);

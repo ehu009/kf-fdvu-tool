@@ -1,3 +1,4 @@
+"use strict";
 
 function mapKeys(arr) {
 	let out = new Map();
