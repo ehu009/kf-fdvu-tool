@@ -85,3 +85,23 @@ function arrayColFilter(array, wantedList) {
 	}
 	return out;
 }
+
+function mapContracts(arr, numberIdx, nameIdx) {
+	let mep = new ListMap();
+	for (let c of arr) {
+		const name = c[nameIdx];
+		const number = c[numberIdx];
+		if (isInvalid(name) && isInvalid(number)) {
+			continue;
+		}
+		
+		const key = [name, number];
+		if (mep.has(key) == false) {
+			mep.set(key, [c]);
+		} else {
+			let r = mep.get(key);
+			r.push(c);
+		}
+	}
+	return mep;
+}
