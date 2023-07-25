@@ -10,7 +10,7 @@ function arrayMerge(arr1, arr2, columnName) {
 	const nameIdx2 = arr2[0].indexOf(columnName);
 	
 	let head = [];
-	for (e of arr1[0]) {
+	for (let e of arr1[0]) {
 		head.push(e);
 	}
 	let col;
@@ -22,16 +22,14 @@ function arrayMerge(arr1, arr2, columnName) {
 	}
 	out.push(head);
 	
-	let row1;
-	for (row1 = 1; row1 < arr1.length; row1 += 1) {
+	for (let row1 = 1; row1 < arr1.length; row1 += 1) {
 		let a = [];
 		for (let col = 0; col < arr1[row1].length; col += 1) {
 			a.push(arr1[row1][col]);
 		}
 		
 		const current = arr1[row1][nameIdx1];
-		let row2;
-		for (row2 = 1; row2 < arr2.length; row2 += 1) {
+		for (let row2 = 1; row2 < arr2.length; row2 += 1) {
 			
 			if (arr2[row2][nameIdx2] != current) {
 				continue;
@@ -239,7 +237,7 @@ function beginLoss() {
 				
 				const daysTotal = millisecondsToDays(end - begin);
 				
-				for (entry of mep.entries()) {
+				for (let entry of mep.entries()) {
 					let vacant = daysTotal;
 					let vacantLoss = 0;
 					let repair = 0;
@@ -267,7 +265,7 @@ function beginLoss() {
 					
 					// lag sum
 					{
-						for (row of entry[1]) {
+						for (let row of entry[1]) {
 							let rep = false;
 							if (ignoreContracts.includes(row[0]) == true) {
 								rep = true;
@@ -489,13 +487,13 @@ function beginGainCalc() {
 				defaultBegin.setFullYear(1950);
 				defaultEnd.setFullYear(2090);
 				
-				for (entry of mep.entries()) {
+				for (let entry of mep.entries()) {
 					let sum = 0;
 					let addition = [entry[0][1], entry[0][0]];
 					
 					// lag sum
 					{
-						for (row of entry[1]) {
+						for (let row of entry[1]) {
 							if (ignoreContracts.includes(row[0]) == true) {
 								continue;
 							}

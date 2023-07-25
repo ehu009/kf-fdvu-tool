@@ -22,7 +22,7 @@ function drawKeys(arr, map, dst) {
 	let table = fxcd(dst);
 	let row;
 	let cell;
-	
+	table.innerHTML = "";
 	axcd(table, newRow(["Seksjonsnummer", "Aktiv", "N\u00F8kkelnummer"], true));
 	
 	let counter = new Map();
@@ -42,7 +42,7 @@ function drawKeys(arr, map, dst) {
 			if (isInvalid(l)) {
 				continue;
 			}
-			for (c = 0; c < l.length; c += 1) {
+			for (let c = 0; c < l.length; c += 1) {
 				let c1 = arr[r][0];
 				let c2 = arr[r][1];
 				if (c > 0) {
@@ -135,7 +135,6 @@ function setupKeyFilter() {
 		};
 	
 	fxcd(name + "-calc-btn").onclick = () => {
-			t.innerHTML = "";
 			let spinner = fxcd(name + "-spinner");
 			spinner.style.visibility = "visible";
 			
@@ -145,7 +144,7 @@ function setupKeyFilter() {
 			let keysList = null;
 			
 			document.addEventListener(eName, () => {
-					const mep = mapKeys(filtered);
+					let mep = mapKeys(keysList);
 					const c = drawKeys(rentablesList, mep, name + "-table");
 					
 					let btn = fxcd(name + "-download-btn");
