@@ -291,16 +291,7 @@ function rentablesText(containerId) {
 	axcd(tmp,txcd("relevante"));
 	axcd(con,tmp);
 	
-	axcd(con, txcd(" bolig-seksjoner"))/* av kategori "));
-	tmp = xcd("i");
-	axcd(tmp, txcd("eid"));
-	axcd(con, tmp);
-	
-	axcd(con, txcd(" eller "));
-	tmp = xcd("i");
-	axcd(tmp, txcd("Kommunalt foretak - KF"));
-	axcd(con, tmp);
-	*/
+	axcd(con, txcd(" bolig-seksjoner"));
 }
 function spinnerFunction(spinnerId, func) {
 	let spinner = fxcd(spinnerId);
