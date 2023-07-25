@@ -626,23 +626,21 @@ function beginLoss() {
 			
 			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"])
 			
-			let sum = [[0, 0, 0]];
+			let sum = [["Sum vakansetap", "Sum vedlikeholdstap", "Total"]];
 			{
+				let aggregate = [0, 0, 0];
 				let lines = arrayColFilter(calced, ["Tap pga vakanse", "Tap pga vedlikehold"]);
 				for (let i = 1; i < lines.length; i+= 1) {
-					let l = lines[i];
-					let vacant = stringToNumber(l[0]);
-					let repair = stringToNumber(l[1]);
+					let vacant = stringToNumber(lines[i][0]);
+					let repair = stringToNumber(lines[i][1]);
 					let total = vacant + repair;
-					arrayAddition([vacant, repair, total], sum[0]);
+					arrayAddition([vacant, repair, total], aggregate);
 				}
-				sum[0][0] = numToFDVUNum(sum[0][0]);
-				sum[0][1] = numToFDVUNum(sum[0][1]);
-				sum[0][2] = numToFDVUNum(sum[0][2]);
+				for (let n of aggregate) {
+					n = numToFDVUNum(n);
+				}
+				sum.push(aggregate);
 			}
-			
-			sum.unshift(["Sum vakansetap", "Sum vedlikeholdstap", "Total"]);
-			
 			
 			// tegn
 			writeArrayToTable(calced, name + "-calc-table");
