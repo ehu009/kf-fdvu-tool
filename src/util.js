@@ -51,6 +51,19 @@ function isInvalid(val) {
 	return false;
 }
 
+function arraySortNumeric(arr, idx) {
+	arr.sort((a, b) => {
+			let aNum = a[idx];
+			let bNum = b[idx];
+			if (isInvalid(aNum)) {
+				aNum = 0;
+			}
+			if (isInvalid(bNum)) {
+				bNum = 0;
+			}
+			return aNum - bNum;
+		});
+}
 function arrayAddition(src, dst) {
 	for (let c = 0; c < src.length; c += 1) {
 		dst[c] += src[c];

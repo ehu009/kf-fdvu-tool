@@ -527,17 +527,7 @@ function beginGainCalc() {
 					}
 					calced.push(addition);
 				}
-				calced.sort((a, b) => {
-						let aNum = a[0];
-						let bNum = b[0];
-						if (isInvalid(aNum)) {
-							aNum = 0;
-						}
-						if (isInvalid(bNum)) {
-							bNum = 0;
-						}
-						return aNum - bNum;
-					});
+				arraySortNumeric(calced, 0);
 			}
 			
 			// regn total og konvertér til komma-desimaler
@@ -700,7 +690,7 @@ function setupCustomerOverlapFilter() {
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
 			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
-			hide(spinner;
+			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
 			show(spinner);
