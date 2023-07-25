@@ -257,7 +257,7 @@ function gainLegend() {
 function keysText(containerId) {
 	let con = fxcd(containerId);
 	axcd(con, txcd("Liste over "));
-	let tmp = xcd("b");
+	let tmp = xcd("i");
 	axcd(tmp, txcd("alle"));
 	axcd(con, tmp);
 	axcd(con, txcd(" n\u00F8kler:"));
@@ -284,16 +284,16 @@ function lossText(con) {
 }
 function contractsText(containerId) {
 	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over utleiekontrakter"));
+	axcd(con, txcd("Liste over alle utleiekontrakter"));
 }
 function rentablesText(containerId) {
 	let con = fxcd(containerId);
 	axcd(con, txcd("Liste over alle "));
 	let tmp = xcd("i");
-	axcd(tmp,txcd("aktive"));
+	axcd(tmp,txcd("relevante"));
 	axcd(con,tmp);
 	
-	axcd(con, txcd(" bolig-seksjoner av kategori "));
+	axcd(con, txcd(" bolig-seksjoner"))/* av kategori "));
 	tmp = xcd("i");
 	axcd(tmp, txcd("eid"));
 	axcd(con, tmp);
@@ -302,6 +302,7 @@ function rentablesText(containerId) {
 	tmp = xcd("i");
 	axcd(tmp, txcd("Kommunalt foretak - KF"));
 	axcd(con, tmp);
+	*/
 }
 function spinnerFunction(spinnerId, func) {
 	let spinner = fxcd(spinnerId);
