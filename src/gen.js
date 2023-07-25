@@ -542,13 +542,22 @@ function beginGainCalc() {
 								
 								current = new Date(limit);
 							}
-							
-							
 						}
 						addition.push(sum);
 					}
 					calced.push(addition);
 				}
+				calced.sort((a, b) => {
+						let aNum = a[0];
+						let bNum = b[0];
+						if (isInvalid(aNum)) {
+							aNum = 0;
+						}
+						if (isInvalid(bNum)) {
+							bNum = 0;
+						}
+						return aNum - bNum;
+					});
 			}
 			
 			// regn total og konvertér til komma-desimaler
