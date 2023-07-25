@@ -405,8 +405,8 @@ function beginLoss() {
 		lossText(con);
 		
 		i = xcd("table");
-		i.id = name + "-result-table";
-		axcd(i, lossSumHeader());
+		i.id = name + "-sum-table";
+		//axcd(i, lossSumHeader());
 		axcd(con, i);
 		axcd(con, xcd("hr"));
 		
@@ -626,10 +626,27 @@ function beginLoss() {
 			
 			calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"])
 			
+			let sum = [[0, 0, 0]];
+			{
+				let lines = arrayColFilter(calced, ["Tap pga vakanse", "Tap pga vedlikehold"]);
+				for (let i = 1; i < lines.length; i+= 1) {
+					let l = lines[i];
+					let vacant = stringToNumber(l[0]);
+					let repair = stringToNumber(l[1]);
+					let total = vacant + repair;
+					arrayAddition([vacant, repair, total], sum[0]);
+				}
+				sum[0][0] = numToFDVUNum(sum[0][0]);
+				sum[0][1] = numToFDVUNum(sum[0][1]);
+				sum[0][2] = numToFDVUNum(sum[0][2]);
+			}
+			
+			sum.unshift(["Sum vakansetap", "Sum vedlikeholdstap", "Total"]);
+			
+			
 			// tegn
 			writeArrayToTable(calced, name + "-calc-table");
-			
-			
+			writeArrayToTable(sum, name + "-sum-table");
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
