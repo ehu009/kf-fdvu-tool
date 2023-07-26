@@ -1,5 +1,7 @@
 "use strict";
 
+const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
+
 
 function xc(...args) {
 	console.log(...args);
