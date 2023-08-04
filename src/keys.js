@@ -111,6 +111,33 @@ function setupKeyFilter() {
 		addLine(con);
 		addLine(con);
 		
+		let t;
+		
+		{
+			t = name+"-radio-all";
+			i = radioButtonTag(t, "key-radio", "key-radio-list-all", true);
+			axcd(con, i);
+			i = labelTag(t, "List alle");
+			axcd(con, i);
+			addLine(con);
+			
+			
+			t = name+"-radio-dupes";
+			i = radioButtonTag(t, "key-radio", "key-radio-list-dupes", false);
+			axcd(con, i);
+			i = labelTag(t, "Finn duplikater");
+			axcd(con, i);
+			addLine(con);
+			
+			t = name+"-radio-inactive";
+			i = radioButtonTag(t, "key-radio", "key-radio-list-inactive", false);
+			axcd(con, i);
+			i = labelTag(t, "Tilh\u00F8rer inaktive boliger");
+			axcd(con, i);
+			addLine(con);
+		}
+		
+		
 		defaultButtonTags(name);
 		addLine(con);
 		axcd(con, xcd("hr"));
