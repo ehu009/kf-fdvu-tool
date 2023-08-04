@@ -190,12 +190,27 @@ function setupKeyFilter() {
 					opt += fxcd(name + "-radio-inactive").checked * 4;
 					
 					
-					const c = drawKeys(rentablesList, mep, name + "-table");
-					
+					let fname = "n\u00F8kler";
+					let c;
+					switch (opt) {
+						
+						case 1:
+						c = drawKeys(rentablesList, mep, name + "-table");
+						break;
+						
+						case 2:
+						fname += " duplikater";
+						
+						break;
+						
+						case 4:
+						fname += " inaktive";
+						
+						break;
+					}
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
-					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), "n\u00F8kler.csv"); };
-					
+					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), fname + ".csv"); };
 					hide(spinner);
 				});
 			
