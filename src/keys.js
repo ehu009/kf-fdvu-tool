@@ -112,7 +112,6 @@ function setupKeyFilter() {
 		addLine(con);
 		
 		let t;
-		
 		{
 			t = name+"-radio-all";
 			i = radioButtonTag(t, "key-radio", "key-radio-list-all", true);
@@ -120,14 +119,21 @@ function setupKeyFilter() {
 			i = labelTag(t, "List alle");
 			axcd(con, i);
 			addLine(con);
-			
+			i.onclick = () => {
+				let r = fxcd(name+"-radio-all");
+				r.checked = true;
+			}
 			
 			t = name+"-radio-dupes";
 			i = radioButtonTag(t, "key-radio", "key-radio-list-dupes", false);
 			axcd(con, i);
-			i = labelTag(t, "Finn duplikater");
+			i = labelTag(t, "Tilh\u00F8rer flere seksjoner");
 			axcd(con, i);
 			addLine(con);
+			i.onclick = () => {
+				let r = fxcd(name+"-radio-dupes");
+				r.checked = true;
+			}
 			
 			t = name+"-radio-inactive";
 			i = radioButtonTag(t, "key-radio", "key-radio-list-inactive", false);
@@ -135,6 +141,10 @@ function setupKeyFilter() {
 			i = labelTag(t, "Tilh\u00F8rer inaktive boliger");
 			axcd(con, i);
 			addLine(con);
+			i.onclick = () => {
+				let r = fxcd(name+"-radio-inactive");
+				r.checked = true;
+			}
 		}
 		
 		
