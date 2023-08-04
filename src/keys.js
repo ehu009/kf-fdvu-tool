@@ -182,6 +182,14 @@ function setupKeyFilter() {
 			
 			document.addEventListener(eName, () => {
 					let mep = mapKeys(keysList);
+					
+					// finn filtreringsmodus
+					let opt = 0; // anta feil
+					opt += fxcd(name + "-radio-all").checked * 1;
+					opt += fxcd(name + "-radio-dupes").checked * 2;
+					opt += fxcd(name + "-radio-inactive").checked * 4;
+					
+					
 					const c = drawKeys(rentablesList, mep, name + "-table");
 					
 					let btn = fxcd(name + "-download-btn");
