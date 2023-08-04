@@ -10,6 +10,9 @@ function mapKeys(arr) {
 			let l = out.get(name);
 			if (l.includes(row[0]) == false) {
 				l.push(row[0]);
+			} else {
+				
+				console.log(row);
 			}
 		} else {
 			out.set(name, [row[0]]);
@@ -23,7 +26,7 @@ function drawKeys(arr, map, dst) {
 	let row;
 	let cell;
 	table.innerHTML = "";
-	axcd(table, newRow(["Seksjonsnummer", "Aktiv", "N\u00F8kkelnummer"], true));
+	axcd(table, newRow(["Seksjonsnummer", "Seksjonsnavn", "N\u00F8kkelnummer"], true));
 	
 	let counter = new Map();
 	let out = [arr[0].concat(["N\u00F8klerinos"])];
@@ -181,7 +184,7 @@ function setupKeyFilter() {
 			let keysList = null;
 			
 			document.addEventListener(eName, () => {
-					let mep = mapKeys(keysList);
+					let mep;
 					
 					// finn filtreringsmodus
 					let opt = 0; // anta feil
@@ -195,6 +198,7 @@ function setupKeyFilter() {
 					switch (opt) {
 						
 						case 1:
+						mep = mapKeys(keysList);
 						c = drawKeys(rentablesList, mep, name + "-table");
 						break;
 						
