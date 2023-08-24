@@ -296,10 +296,10 @@ function rentablesText(containerId) {
 	axcd(con, txcd(" bolig-seksjoner"));
 }
 function hide(elem) {
-	elem.visibility = "hidden";
+	elem.style.visibility = "hidden";
 }
 function show(elem) {
-	elem.visibility = "visible";
+	elem.style.visibility = "visible";
 }
 function spinnerFunction(spinnerId, func) {
 	let spinner = fxcd(spinnerId);

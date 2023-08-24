@@ -36,10 +36,14 @@ let ready = new Proxy(readyTarget, {
 
 
 function begin() {
+	
 	fxcd("filter").onclick = () => {
 			
-			
-			
+			{	// a spinner
+				let s = spinnerTag("spinner");
+				axcd(fxcd("result"), s);
+				show(s);
+			}
 			
 			let rentables = null;
 			let contracts = null;
@@ -72,7 +76,6 @@ function begin() {
 			
 			
 			document.addEventListener(eventName, () => {
-					
 					
 					/*
 						map seksjonsnummer -> løpenumre
@@ -149,9 +152,20 @@ function begin() {
 					
 					
 					/*
+						tillat nedlasting
+					*/
+					let btn = fxcd("download");
+					btn.disabled = false;
+					btn.onclick = () => {
+							downloadCSV(arrayToCSV(filteredInvoices,";"), "fakturalinjer - filtrert.csv");
+						};
+						
+					
+					/*
 						tegn
 					*/
 					let con = fxcd("result");
+					con.innerHTML = "";
 					filteredInvoices.forEach((invoice) => {
 							let p = xcd("p");
 							let out = [invoice[5], invoice[6], invoice[8]];
@@ -162,24 +176,7 @@ function begin() {
 							axcd(p, txcd(out[2]));
 							p.style.border = "1px solid black";
 							axcd(result, p);
-						});
-					
-					
-					/*
-						tillat nedlasting
-					*/
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-			});
-			
-			
-	};
+					});
+				});	
+		};
 }
