@@ -1,0 +1,52 @@
+<html>
+<head>
+<script type="text/javascript" src="../src/merger.js"></script>
+<script type="text/javascript" src="../src/csv.js"></script>
+<script type="text/javascript" src="../src/dom.js"></script>
+<script type="text/javascript" src="../src/util.js"></script>
+<script type="text/javascript" src="../src/map.js"></script>
+<link rel="stylesheet" href="../src/style.css"/>
+</head>
+
+<body onload="begin()">
+<div align="right">
+<p>
+sammenføyer CSV-filer med samme type innhold
+</p>
+
+<p>
+<select id="number-select">
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+</select>
+</p>
+
+
+<div id="field">
+<p>
+Fil 1:&nbsp;<input type="file" id="file1">
+</p>
+
+<p>
+Fil 2:&nbsp;<input type="file" id="file2">
+</p>
+
+</div>
+
+<p>
+<button type="button" id="merge">kjør</button>
+<button type="button" id="download" disabled="disabled">last ned CSV</button>
+</p>
+</div>
+
+<div id="result"></div>
+
+</body>
+</html>
