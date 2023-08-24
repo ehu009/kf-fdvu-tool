@@ -32,7 +32,7 @@ function drawKeys(arr, map, dst) {
 	let out = [arr[0].concat(["N\u00F8klerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
-		if (map.has(arr[r][0] == false)) {
+		if (map.has(arr[r][0]) == false) {
 			row = newRow([arr[r][0], arr[r][1]], false);
 			
 			cell = xcd("td");
