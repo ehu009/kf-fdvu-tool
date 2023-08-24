@@ -26,8 +26,12 @@ let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
 				fxcd("download").disabled = true;
-				if (target["countA"] < 2 && target["countB"] < 2 && target["countC"] < 2) {
+				if (target["countA"] < 1 && target["countB"] < 1 && target["countC"] < 1) {
 					document.dispatchEvent(readyEvent);
+				} else if (target["countA"] < 2 && target["countB"] < 2 && target["countC"] < 2) {
+					fxcd("filter").disabled = false;
+				} else {
+					fxcd("filter").disabled = true;
 				}
 				return true;
 			}
@@ -37,6 +41,36 @@ let ready = new Proxy(readyTarget, {
 
 function begin() {
 	
+	let rentables = null;
+	let contracts = null;
+	let invoices = null;
+	
+	fxcd("filter").disabled = true;
+	
+	fxcd("rentables").onchange = (evt) => {
+			if (evt.target.files.length == 0) {
+				ready["countA"] = 2;
+			} else {
+				ready["countA"] -= 1;
+			}
+		};
+	fxcd("contracts").onchange = (evt) => {
+			if (evt.target.files.length == 0) {
+				ready["countB"] = 2;
+			} else {
+				ready["countB"] -= 1;
+			}
+		};
+	fxcd("invoices").onchange = (evt) => {
+			if (evt.target.files.length == 0) {
+				ready["countC"] = 2;
+			} else {
+				ready["countC"] -= 1;
+			}
+		};
+	
+	
+	
 	fxcd("filter").onclick = () => {
 			
 			{	// a spinner
@@ -45,14 +79,14 @@ function begin() {
 				show(s);
 			}
 			
-			let rentables = null;
-			let contracts = null;
-			let invoices = null;
-			
 			{
 				let f1 = new FileReader();
 				let f2 = new FileReader();
 				let f3 = new FileReader();
+				
+				rentables = null;
+				contracts = null;
+				invoices = null;
 				
 				f1.onload = () => {
 						rentables = CSVToArray(f1.result, ";");
