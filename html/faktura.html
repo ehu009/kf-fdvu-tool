@@ -8,27 +8,29 @@
 <link rel="stylesheet" href="../src/style.css"/>
 </head>
 
-<body>
+<body onload="begin()">
+<div align="right">
 <p>
 filtrerer fakturalinjer basert på seksjon
 </p>
 
 <p>
-seksjon:&nbsp;<input type="file" id="rentables">
+ønskede seksjoner:&nbsp;<input type="file" id="rentables">
 </p>
 
 <p>
-kontrakter:&nbsp;<input type="file" id="contracts">
+alle kontrakter:&nbsp;<input type="file" id="contracts">
 </p>
 
 <p>
-fakturalinjer:&nbsp;<input type="file" id="invoices">
+gjeldende fakturalinjer:&nbsp;<input type="file" id="invoices">
 </p>
 
 <p>
 <button type="button" id="filter">filtrer</button>
-<button type="button" id="download">last ned CSV</button>
+<button type="button" id="download" disabled="disabled">last ned CSV</button>
 </p>
+</div>
 
 <div id="result"></div>
 
