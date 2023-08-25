@@ -92,6 +92,8 @@ function begin() {
 					}
 					xc(out)
 					
+					hide(fxcd("spinner"));
+					
 					/*
 						tillat nedlasting
 					*/
