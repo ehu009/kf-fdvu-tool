@@ -43,7 +43,6 @@ function begin() {
 				});
 			
 			let csvs = [];
-			let q = 0;
 			{
 				for (let i = 1; i <= n; i += 1) {
 					
@@ -72,7 +71,6 @@ function begin() {
 						f.readAsText(fxcd("file"+i).files[0], "iso-8859-1");
 					}
 					catch (e) {
-						q += 1
 						ready["count"] -=1;
 					}
 				}
