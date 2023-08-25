@@ -51,10 +51,8 @@ function begin() {
 						let f = new FileReader();
 						f.onload = () => {
 								let c = CSVToArray(f.result, ";");
-								xc(c)
 								for (let j = c.length - 1; j >= 0; j -= 1) {
 									if (c[j].length == 1 || c[j].length == 0) {
-										xc(c.splice(j,1))
 									} else {
 										let empty = c[j].length;
 										for (let k = 0; k < c[j].length; k += 1) {
@@ -82,15 +80,11 @@ function begin() {
 			
 			document.addEventListener(eventName, () => {
 					let out = csvs[0]
-					xc(q)
 					
-					xc(out)
 					for (let i = 1; i < csvs.length; i += 1) {
 						csvs[i].shift()
-						xc(csvs[i])
 						out = out.concat(csvs[i]);
 					}
-					xc(out)
 					
 					hide(fxcd("spinner"));
 					
