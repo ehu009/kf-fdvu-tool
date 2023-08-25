@@ -73,12 +73,6 @@ function begin() {
 	
 	fxcd("filter").onclick = () => {
 			
-			{	// a spinner
-				let s = spinnerTag("spinner");
-				axcd(fxcd("result"), s);
-				show(s);
-			}
-			
 			{
 				let f1 = new FileReader();
 				let f2 = new FileReader();

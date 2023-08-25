@@ -9,27 +9,34 @@
 </head>
 
 <body onload="begin()">
-<div align="right">
-<p>
-filtrerer fakturalinjer basert på seksjon
-</p>
 
-<p>
-ønskede seksjoner:&nbsp;<input type="file" id="rentables">
-</p>
+<h2>
+Filtrer fakturalinjer basert på seksjon
+</h2>
+<div class="cont">
 
-<p>
-alle kontrakter:&nbsp;<input type="file" id="contracts">
-</p>
-
-<p>
-gjeldende fakturalinjer:&nbsp;<input type="file" id="invoices">
-</p>
-
-<p>
+Liste over ønskede seksjoner:
+<br/>
+<input type="file" id="rentables">
+<br/>
+Liste over alle kontrakter:
+<br/>
+<input type="file" id="contracts">
+<br/>
+Liste over gjeldende fakturalinjer:
+<br/>
+<input type="file" id="invoices">
+<br/>
+<br/>
 <button type="button" id="filter">filtrer</button>
-<button type="button" id="download" disabled="disabled">last ned CSV</button>
-</p>
+&nbsp;
+<button type="button" id="download" disabled="disabled">Last ned CSV</button>
+&nbsp;
+<div class="spinning" id="spinner">
+⚙️
+</div>
+
+
 </div>
 
 <div id="result"></div>

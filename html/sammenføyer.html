@@ -9,12 +9,12 @@
 </head>
 
 <body onload="begin()">
-<div align="right">
-<p>
-sammenføyer CSV-filer med samme type innhold
-</p>
 
-<p>
+<h2>
+Sammenslå CSV-filer med samme type innhold
+</h2>
+<div class="cont">
+
 Antall filer:
 <select id="number-select">
 <option value="2">2</option>
@@ -27,24 +27,34 @@ Antall filer:
 <option value="9">9</option>
 <option value="10">10</option>
 </select>
-</p>
+<br/>
 
 
 <div id="field">
 <p>
-Fil 1:&nbsp;<input type="file" id="file1">
+Fil 1:
+<br/>
+<input type="file" id="file1">
 </p>
 
 <p>
-Fil 2:&nbsp;<input type="file" id="file2">
+Fil 2:
+<br/>
+<input type="file" id="file2">
 </p>
 
 </div>
 
-<p>
-<button type="button" id="merge">kjør</button>
-<button type="button" id="download" disabled="disabled">last ned CSV</button>
-</p>
+<br/>
+<br/>
+
+<button type="button" id="merge">Sammenslå</button>
+&nbsp;
+<button type="button" id="download" disabled="disabled">Last ned CSV</button>
+&nbsp;
+<div class="spinning" id="spinner">
+⚙️
+</div>
 </div>
 
 <div id="result"></div>

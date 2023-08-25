@@ -12,6 +12,7 @@ function begin() {
 		for (let i = 1; i <= n; i += 1) {
 			let line = xcd("p");
 			axcd(line, txcd("Fil "+i+": "));
+			addLine(line);
 			axcd(line, fileInputTag("file"+i));
 			axcd(s, line)
 		}
@@ -19,13 +20,6 @@ function begin() {
 	
 	
 	fxcd("merge").onclick = () => {
-			
-			{	// a spinner
-				let s = spinnerTag("spinner");
-				axcd(fxcd("result"), s);
-				show(s);
-			}
-			
 			
 			let n = parseInt(fxcd("number-select").value);
 			const eventName = "dataReady";
@@ -35,6 +29,7 @@ function begin() {
 			let ready = new Proxy(readyTarget, {
 					set: (target, key, value) => {
 							target[key] = value;
+							
 							if (target[key] == 0) {
 								document.dispatchEvent(readyEvent);
 							}
