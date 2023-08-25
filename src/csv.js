@@ -64,6 +64,24 @@ function arrayToCSV(arr, separator) {
 	return out;
 }
 
+function CSVRemoveBlanks(csv) {
+	for (let j = csv.length - 1; j >= 0; j -= 1) {
+		if (csv[j].length == 1 || csv[j].length == 0) {
+			csv.splice(j,1)
+		} else {
+			let empty = csv[j].length;
+			for (let k = 0; k < csv[j].length; k += 1) {
+				if (isInvalid(csv[j][k])) {
+					empty -= 1;
+				}
+			}
+			if (empty == 0) {
+				csv.splice(j,1)
+			}
+		}
+	}
+}
+
 function downloadCSV(csvContent, fileName) {
 	let link = xcd("a");
 	link.setAttribute("href", csvContent);

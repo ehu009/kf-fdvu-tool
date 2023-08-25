@@ -50,22 +50,7 @@ function begin() {
 						let f = new FileReader();
 						f.onload = () => {
 								let c = CSVToArray(f.result, ";");
-								for (let j = c.length - 1; j >= 0; j -= 1) {
-									if (c[j].length == 1 || c[j].length == 0) {
-										c.splice(j,1)
-									} else {
-										let empty = c[j].length;
-										for (let k = 0; k < c[j].length; k += 1) {
-											if (isInvalid(c[j][k])) {
-												empty -= 1;
-											}
-										}
-										if (empty == 0) {
-											c.splice(j,1)
-										}
-									}
-								}
-								
+								CSVRemoveBlanks(c);
 								csvs.push(c)
 								ready["count"] -=1;
 							};
