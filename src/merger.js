@@ -52,6 +52,7 @@ function begin() {
 								let c = CSVToArray(f.result, ";");
 								for (let j = c.length - 1; j >= 0; j -= 1) {
 									if (c[j].length == 1 || c[j].length == 0) {
+										c.splice(j,1)
 									} else {
 										let empty = c[j].length;
 										for (let k = 0; k < c[j].length; k += 1) {
