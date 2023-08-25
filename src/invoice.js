@@ -92,20 +92,18 @@ function begin() {
 						rentables = CSVToArray(f1.result, ";");
 						ready["countA"] -=1;
 					};
-				f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
-				
 				f2.onload = () => {
 						contracts = CSVToArray(f2.result, ";");
 						ready["countB"] -= 1;
 					};
-				f2.readAsText(fxcd("contracts").files[0], "iso-8859-1");
-				
 				f3.onload = () => {
 						invoices = CSVToArray(f3.result, ";");
 						ready["countC"] -= 1;
 					};
-				f3.readAsText(fxcd("invoices").files[0], "iso-8859-1");
 				
+				f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
+				f2.readAsText(fxcd("contracts").files[0], "iso-8859-1");
+				f3.readAsText(fxcd("invoices").files[0], "iso-8859-1");
 			}
 			
 			
@@ -210,7 +208,7 @@ function begin() {
 							axcd(p, txcd(out[2]));
 							p.style.border = "1px solid black";
 							axcd(result, p);
-					});
+						});
 				});	
 		};
 }
