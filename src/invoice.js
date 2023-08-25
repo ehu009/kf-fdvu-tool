@@ -1,19 +1,5 @@
 "use strict";
 
-/*
-	seksjonsnummer i seksjon -> 0
-	seksjonsnummer i kontrakter -> 13
-	løpenummer i kontrakter -> 0
-	løpenummer i fakturalinjer -> 5
-	
-*/
-
-
-function fxcd(t) {
-	return document.getElementById(t);
-}
-
-
 const eventName = "dataReady";
 let readyTarget = {
 		countA: 2,
@@ -157,7 +143,7 @@ function begin() {
 							if (isInvalid(current)) {
 								return false;
 							}
-							current = current.trim()
+							current = current.trim();
 							
 							for (let i = 0; i < filteredContracts.length; i += 1) {
 								
@@ -165,7 +151,7 @@ function begin() {
 								if (isInvalid(contractId)) {
 									continue;
 								}
-								contractId = contractId.trim()
+								contractId = contractId.trim();
 								
 								if (contractId == current) {
 									return true;
