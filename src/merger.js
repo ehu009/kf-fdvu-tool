@@ -1,13 +1,6 @@
 "use strict";
 
 
-function fxcd(t) {
-	return document.getElementById(t);
-}
-
-
-
-
 function begin() {
 	
 	fxcd("number-select").onchange = (evt) => {
