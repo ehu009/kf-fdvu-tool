@@ -140,7 +140,7 @@ function begin() {
 					/*
 						velg kun fakturalinjer med løpenummer i filtrerte kontrakter
 					*/
-					invoices.shift();
+					let header = invoices.shift();
 					let filteredInvoices = invoices.filter((invoice) => {
 							let current = invoice[5];
 							if (isInvalid(current)) {
@@ -164,7 +164,7 @@ function begin() {
 							return false;
 							
 						});
-					
+					invoices.unshift(header);
 					
 					/*
 						tillat nedlasting
