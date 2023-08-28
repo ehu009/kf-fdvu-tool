@@ -70,14 +70,17 @@ function begin() {
 				
 				f1.onload = () => {
 						rentables = CSVToArray(f1.result, ";");
+						CSVRemoveBlanks(rentables);
 						ready["countA"] -=1;
 					};
 				f2.onload = () => {
 						contracts = CSVToArray(f2.result, ";");
+						CSVRemoveBlanks(contracts);
 						ready["countB"] -= 1;
 					};
 				f3.onload = () => {
 						invoices = CSVToArray(f3.result, ";");
+						CSVRemoveBlanks(invoices);
 						ready["countC"] -= 1;
 					};
 				

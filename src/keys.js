@@ -219,11 +219,11 @@ function setupKeyFilter() {
 				});
 			
 			let f1 = new FileReader();
-			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Aktiv", "Utleibar", "Eierform"]); dataReady["count"] -= 1; };
+			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Aktiv", "Utleibar", "Eierform"]);CSVRemoveBlanks(rentablesList); dataReady["count"] -= 1; };
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 			
 			let f2 = new FileReader();
-			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); dataReady["count"] -= 1; };
+			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"])); CSVRemoveBlanks(keysList); dataReady["count"] -= 1; };
 			f2.readAsText(keys.files[0], "iso-8859-1");
 			
 		}

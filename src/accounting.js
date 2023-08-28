@@ -379,6 +379,7 @@ function beginLoss() {
 			let f1 = new FileReader();
 			f1.onload = () => {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
+					CSVRemoveBlanks(activeList);
 					ready["countB"] -= 1;
 				};
 			f1.readAsText(actives.files[0], "iso-8859-1");
@@ -386,6 +387,7 @@ function beginLoss() {
 			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
+					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				};
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -559,6 +561,7 @@ function beginGainCalc() {
 					let to = dateToFdvuDate(fxcd(name + "-date-to").value);
 					
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
+					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0], "iso-8859-1");
