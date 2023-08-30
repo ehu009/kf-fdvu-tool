@@ -84,12 +84,12 @@ function CSVRemoveBlanks(csv) {
 	}
 }
 
-function downloadCSV(csvContent, fileName) {
-	let link = xcd("a");
-	link.setAttribute("href", csvContent);
-	link.setAttribute("download", fileName);
-	link.hidden = true;
-	axcd(document.body, link);
-
-	link.click();
+function downloadCSV(csvContent, defaultName, separator) {
+	let fname = prompt("Oppgi filnavn for lagring", defaultName);
+	if (fname != null) {
+		fname = fname.replace(".csv", "");
+		let link = downloadLink(arrayToCSV(csvContent, separator), fname + ".csv");
+		axcd(document.body, link);
+		link.click();
+	}
 }

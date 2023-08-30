@@ -205,6 +205,18 @@ function iframeTag(url, active) {
 	}
 	return d;
 }
+function downloadLink(content, fileName) {
+	let link = xcd("a");
+	link.setAttribute("href", content);
+	link.setAttribute("download", fileName);
+	link.hidden = true;
+	return link;
+}
+function downloadButton(button, content, defaultName) {
+	button.onclick = () => {
+			downloadCSV(content, defaultName, ";");
+		};
+}
 function lossSumHeader() {
 	return newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, "");
 }
