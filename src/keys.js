@@ -214,7 +214,8 @@ function setupKeyFilter() {
 					}
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
-					btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), fname + ".csv"); };
+					downloadButton(btn, c, fname);
+					//btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), fname + ".csv"); };
 					hide(spinner);
 				});
 			

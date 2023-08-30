@@ -171,9 +171,12 @@ function begin() {
 					*/
 					let btn = fxcd("download");
 					btn.disabled = false;
+					downloadButton(btn, filteredInvoices, "fakturalinjer - filtrert");
+					/*
 					btn.onclick = () => {
 							downloadCSV(arrayToCSV(filteredInvoices,";"), "fakturalinjer - filtrert.csv");
 						};
+						*/
 						
 					
 					/*

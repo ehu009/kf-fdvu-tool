@@ -74,10 +74,12 @@ function begin() {
 					*/
 					let btn = fxcd("download");
 					btn.disabled = false;
+					downloadButton(btn, out, "csv - sammenføyd");
+					/*
 					btn.onclick = () => {
 							downloadCSV(arrayToCSV(out,";"), "csv - sammenføyd.csv");
 						};
-						
+						*/
 				});
 		};
 }

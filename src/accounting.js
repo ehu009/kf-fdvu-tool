@@ -369,7 +369,9 @@ function beginLoss() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			downloadButton(btn, calced, "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value);
+			
+			//btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			
 			hide(spinner);
 		});

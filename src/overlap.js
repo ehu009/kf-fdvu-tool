@@ -121,7 +121,8 @@ function setupCustomerOverlapFilter() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
+			downloadButton(btn, out, "overlappende aktører");
+			//btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
 			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
@@ -142,6 +143,7 @@ function setupRentableOverlapFilter() {
 			dateB: 1,
 			fileB: 1
 		};
+		
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
@@ -289,7 +291,8 @@ function setupRentableOverlapFilter() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende kontrakter.csv"); };
+			downloadButton(btn, out, "overlappende kontrakter");
+			//btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende kontrakter.csv"); };
 			
 			hide(spinner);
 		});	
