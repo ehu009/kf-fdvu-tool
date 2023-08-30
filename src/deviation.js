@@ -3,7 +3,7 @@
 const eventName = "dataReady";
 let readyTarget = {
 		countA: 2,
-		countB: 2,
+	/*	countB: 2,*/
 		countC: 2
 	};
 
@@ -12,9 +12,9 @@ let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
 				fxcd("download").disabled = true;
-				if (target["countA"] < 1 && target["countB"] < 1 && target["countC"] < 1) {
+				if (target["countA"] < 1 && /* target["countB"] < 1 && */ target["countC"] < 1) {
 					document.dispatchEvent(readyEvent);
-				} else if (target["countA"] < 2 && target["countB"] < 2 && target["countC"] < 2) {
+				} else if (target["countA"] < 2 && /* target["countB"] < 2 && */ target["countC"] < 2) {
 					fxcd("filter").disabled = false;
 				} else {
 					fxcd("filter").disabled = true;
@@ -28,7 +28,7 @@ let ready = new Proxy(readyTarget, {
 function begin() {
 	
 	let rentables = null;
-	let buildings = null;
+	/*let buildings = null;*/
 	let deviations = null;
 	
 	fxcd("filter").disabled = true;
@@ -40,6 +40,7 @@ function begin() {
 				ready["countA"] -= 1;
 			}
 		};
+		/*
 	fxcd("buildings").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
 				ready["countB"] = 2;
@@ -47,6 +48,7 @@ function begin() {
 				ready["countB"] -= 1;
 			}
 		};
+		*/
 	fxcd("deviations").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
 				ready["countC"] = 2;
@@ -58,14 +60,18 @@ function begin() {
 	
 	
 	fxcd("filter").onclick = () => {
-			
+			let spinner = fxcd("spinner");
+			show(spinner);
 			{
 				let f1 = new FileReader();
-				let f2 = new FileReader();
+				/*
+				let f2 = new FileReader();*/
 				let f3 = new FileReader();
 				
 				rentables = null;
+				/*
 				buildings = null;
+				*/
 				deviations = null;
 				
 				f1.onload = () => {
@@ -73,11 +79,13 @@ function begin() {
 						CSVRemoveBlanks(rentables);
 						ready["countA"] -=1;
 					};
+					/*
 				f2.onload = () => {
 						buildings = CSVToArray(f2.result, ";");
 						CSVRemoveBlanks(buildings);
 						ready["countB"] -= 1;
 					};
+					*/
 				f3.onload = () => {
 						deviations = CSVToArray(f3.result, ";");
 						CSVRemoveBlanks(deviations);
@@ -85,14 +93,33 @@ function begin() {
 					};
 				
 				f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
+				/*
 				f2.readAsText(fxcd("buildings").files[0], "iso-8859-1");
+				*/
 				f3.readAsText(fxcd("deviations").files[0], "iso-8859-1");
 			}
 			
 			
 			document.addEventListener(eventName, () => {
-					let output = [];
 					
+					/*
+						finn alle relevante bygninger
+					*/
+					let propertyMap = new Map();
+					//rentables.shift();
+					rentables.forEach((row)  => {
+							let key = row[6];
+							if (propertyMap.has(key) == false) {
+								propertyMap.set(key, 0);
+							}
+						});
+					
+					/*
+						filtrer avvik etter bygninger
+					*/
+					let filteredDeviantions = deviations.filter((row) => {
+							return propertyMap.has(row[10]);
+						});
 					
 					/*
 						tillat nedlasting
@@ -100,26 +127,26 @@ function begin() {
 					let btn = fxcd("download");
 					btn.disabled = false;
 					btn.onclick = () => {
-							downloadCSV(arrayToCSV(output,";"), "avvik - filtrert.csv");
+							downloadCSV(arrayToCSV(filteredDeviantions,";"), "avvik - filtrert.csv");
 						};
-						
 					
 					/*
 						tegn
 					*/
 					let con = fxcd("result");
 					con.innerHTML = "";
-					output.forEach((deviation) => {
+					filteredDeviantions.forEach((deviation) => {
 							let p = xcd("p");
-							let out = [deviation[5], deviation[6], deviation[8]];
+							let out = [deviation[0], deviation[10], deviation[8], deviation[1]];
 							axcd(p, txcd(out[0]));
 							addLine(p);
-							axcd(p, txcd(out[1]));
+							axcd(p, txcd(out[1] + ":  " + out[2]));
 							addLine(p);
-							axcd(p, txcd(out[2]));
+							axcd(p, txcd(out[3]));
 							p.style.border = "1px solid black";
 							axcd(con, p);
 						});
+					hide(spinner);
 				});	
 		};
 }
