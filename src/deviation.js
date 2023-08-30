@@ -89,7 +89,7 @@ function begin() {
 					/*
 						filtrer avvik etter bygninger
 					*/
-					let filteredDeviantions = deviations.filter((row) => {
+					let filteredDeviations = deviations.filter((row) => {
 							return propertyMap.has(row[10]);
 						});
 					
@@ -99,7 +99,7 @@ function begin() {
 					let btn = fxcd("download");
 					btn.disabled = false;
 					btn.onclick = () => {
-							downloadCSV(arrayToCSV(filteredDeviantions,";"), "avvik - filtrert.csv");
+							downloadCSV(arrayToCSV(filteredDeviations,";"), "avvik - filtrert.csv");
 						};
 					
 					/*
@@ -107,7 +107,7 @@ function begin() {
 					*/
 					let con = fxcd("result");
 					con.innerHTML = "";
-					filteredDeviantions.forEach((deviation) => {
+					filteredDeviations.forEach((deviation) => {
 							let p = xcd("p");
 							let out = [deviation[0], deviation[10], deviation[8], deviation[1]];
 							axcd(p, txcd(out[0]));
