@@ -99,7 +99,10 @@ function begin() {
 					let btn = fxcd("download");
 					btn.disabled = false;
 					btn.onclick = () => {
-							downloadCSV(arrayToCSV(filteredDeviations,";"), "avvik - filtrert.csv");
+						let fname = prompt("Oppgi filnavn for lagring", "avvik - filtrert");
+							if (fname != null) {
+								downloadCSV(arrayToCSV(filteredDeviations,";"), fname + ".csv");
+							}
 						};
 					
 					/*
