@@ -1,0 +1,45 @@
+<html>
+<head>
+<script type="text/javascript" src="../src/deviation.js"></script>
+<script type="text/javascript" src="../src/csv.js"></script>
+<script type="text/javascript" src="../src/dom.js"></script>
+<script type="text/javascript" src="../src/util.js"></script>
+<script type="text/javascript" src="../src/map.js"></script>
+<link rel="stylesheet" href="../src/style.css"/>
+</head>
+
+<body onload="begin()">
+
+<h2>
+Filtrer fakturalinjer basert på seksjon
+</h2>
+<div class="cont">
+
+Liste over ønskede seksjoner:
+<br/>
+<input type="file" id="rentables">
+<br/>
+Liste over alle bygninger:
+<br/>
+<input type="file" id="contracts">
+<br/>
+Liste over uavsluttede avvik:
+<br/>
+<input type="file" id="invoices">
+<br/>
+<br/>
+<button type="button" id="filter">Filtrer</button>
+&nbsp;
+<button type="button" id="download" disabled="disabled">Last ned CSV</button>
+&nbsp;
+<div class="spinning" id="spinner">
+⚙️
+</div>
+
+
+</div>
+
+<div id="result"></div>
+
+</body>
+</html>
