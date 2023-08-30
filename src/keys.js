@@ -91,7 +91,7 @@ function setupKeyFilter() {
 		});
 	
 	let con = xcd("h2");
-	axcd(con, txcd("N\u00F8kler"));
+	axcd(con, txcd("Filtrer n\u00F8kler basert p\u00E5 seksjon"));
 	axcd(document.body, con);
 	
 	con = xcd("div");
@@ -113,7 +113,7 @@ function setupKeyFilter() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		
+		/*
 		let t;
 		{
 			t = name+"-radio-all";
@@ -148,7 +148,7 @@ function setupKeyFilter() {
 				let r = fxcd(name+"-radio-inactive");
 				r.checked = true;
 			}
-		}
+		}*/
 		
 		
 		defaultButtonTags(name);
@@ -194,6 +194,7 @@ function setupKeyFilter() {
 					
 					
 					let fname = "n\u00F8kler";
+					/*
 					let c;
 					switch (opt) {
 						
@@ -211,7 +212,7 @@ function setupKeyFilter() {
 						fname += " inaktive";
 						
 						break;
-					}
+					}*/
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
 					downloadButton(btn, c, fname);
@@ -224,7 +225,7 @@ function setupKeyFilter() {
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 			
 			let f2 = new FileReader();
-			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"])); CSVRemoveBlanks(keysList); dataReady["count"] -= 1; };
+			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); CSVRemoveBlanks(keysList); dataReady["count"] -= 1; };
 			f2.readAsText(keys.files[0], "iso-8859-1");
 			
 		}
