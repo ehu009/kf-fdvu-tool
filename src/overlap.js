@@ -1,5 +1,14 @@
 "use strict";
 
+let ignoreContractsAddition = ["Omsorgstjenesten S\u00F8r\u00F8ya",
+		"Enhet for psykisk helse og rus, avdeling Ankeret v/Heidi H\u00F8ie",
+		"Enhet for psykisk helse og rus, avdeling Bølgen",
+		"Stiftelsen Kommunale Boliger",
+		"Flyktningtjenesten Privatinnleide",
+		"Tildelingskontoret"
+	];
+
+
 function setupCustomerOverlapFilter() {
 	const name = 'overlap';
 	
@@ -148,7 +157,6 @@ function setupCustomerOverlapFilter() {
 	
 }
 
-
 function setupRentableOverlapFilter() {
 	const name = 'overlap';
 	
@@ -196,7 +204,7 @@ function setupRentableOverlapFilter() {
 		axcd(con, txcd("Ignorerer kontrakter der leietaker heter en av f\u00F8lgende:"));
 		
 		i = xcd("ul");
-		for (let e of ignoreContracts) {
+		for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
 			axcd(i, listTag(e));
 		}
 		axcd(con, i);
@@ -236,7 +244,7 @@ function setupRentableOverlapFilter() {
 						|| isInvalid(pp[5]) //	reskontronummer
 						|| isInvalid(pp[4]) //	leietakernummer
 						|| isInvalid(pp[3]) //	leietakernavn
-						|| (ignoreContracts.includes(pp[2]) == true)) {
+						|| (ignoreContracts.concat(ignoreContractsAddition).includes(pp[3]) == true)) {
 					continue;
 				}
 				if (mep.has(pp[4]) == false) {
