@@ -69,22 +69,27 @@ function setupCustomerOverlapFilter() {
 			let table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
+			/*
+				map seksjonsnummer -> kontrakter
+			*/
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				let pp = contractList[r];
-				if ((pp[13] == undefined) || (ignoreContracts.includes(pp[3]) == true)) {
+				let key = pp[13];
+				if (isInvalid(key)) {
 					continue;
 				}
-				if (mep.has(pp[13]) == false) {
-					mep.set(pp[13], []);
+				if (mep.has(key) == false) {
+					mep.set(key, []);
 				}
-				mep.get(pp[13]).push(pp);
+				mep.get(key).push(pp);
 			}
 			
-			let out = [];
+			
+			let contractMap = new Map();
 			for (let r of mep.entries()) {
-				let hoink = false;
-				for (let i = 0; i < r[1].length; i += 1) {
+				
+				for (let i = 0; i < r[1].length - 1; i += 1) {
 					const c1 = r[1][i];
 					const cNum = c1[0];
 					
@@ -96,7 +101,7 @@ function setupCustomerOverlapFilter() {
 					const lower1 = dateWithDefault(c1[7], oldest);
 					const upper1 = dateWithDefault(c1[8], newest);
 					
-					for (let j = i; j < r[1].length; j += 1) {
+					for (let j = i + 1; j < r[1].length; j += 1) {
 						const c2 = r[1][j];
 						
 						const lower2 = dateWithDefault(c2[7], oldest);
@@ -105,30 +110,42 @@ function setupCustomerOverlapFilter() {
 						if (upper1 < lower2 || lower1 > upper2) {
 							continue;
 						}
-						hoink = true;
-						out.push(r[0]);
-						break;
-					}
-					if (hoink == true) {
+						if (contractMap.has(r[0]) == false) {
+							contractMap.set(r[0], []);
+						}
+						contractMap.get(r[0]).push([c1[0], c1[3], c1[25], c2[0], c2[3], c2[25]]);
 						break;
 					}
 				}
 			}
-
-			for (let e of out) {
-				axcd(table, newRow([e], false, ""));
+			
+			/*
+				tegn og lag array
+			*/
+			let header = ["Fasilitet", "L\u00F8penummer 1", "Leietaker 1", "Status 1", "L\u00F8penummer 2", "Leietaker 2", "Status 2"];
+			let out = [header];
+			axcd(table, newRow(header, true, ""));
+			
+			for (let e of contractMap.entries()) {
+				for (let e2 of e[1]) {
+					let r = [e[0]].concat(e2);
+					out.push(r);
+					axcd(table, newRow(r, false, ""));
+				}
 			}
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			downloadButton(btn, out, "overlappende aktører");
-			//btn.onclick = () => { downloadCSV(arrayToCSV(out,";"), "overlappende aktører.csv"); };
+			downloadButton(btn, out, "overlappende kontrakter");
 			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
 			show(spinner);
 			let f2 = new FileReader();
-			f2.onload = () => { contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1; };
+			f2.onload = () => {
+				contractList = CSVToArray(f2.result, ";"); ready["countB"] -= 1;
+				CSVRemoveBlanks(contractsList);
+			};
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
