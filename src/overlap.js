@@ -316,4 +316,125 @@ function setupContractOverlapFilter() {
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
+
+
+function setupRentableOverlapFilter() {
+	const name = 'overlap';
 	
+	const eventName = "dataReady";
+	let readyTarget = {
+			count: 2,
+		};
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					fxcd(name + "-download-btn").disabled = true;
+					if (target['count'] < 2) {
+						fxcd(name + '-calc-btn').disabled = false;
+						if (target["count"] < 1) {
+							document.dispatchEvent(readyEvent);
+						}
+					}
+					return true;
+				}
+		});
+		
+	let con = xcd("h2");
+	axcd(con, txcd("Seksjoner med samme seksjonsnummer"));
+	axcd(document.body, con);
+	
+	con = xcd("div");
+	con.id = name + "-container";
+	con.classList.add("cont");
+	axcd(document.body, con);
+	{
+		axcd(con, txcd("Liste over alle seksjoner:"));
+		addLine(con);
+		
+		let i = fileInputTag(name + "-rentables-file");
+		axcd(con, i);
+		addLine(con);
+		addLine(con);
+		
+		defaultButtonTags(name);
+		addLine(con);
+		addLine(con);
+		
+		axcd(con, xcd("hr"));
+	
+		i = xcd("table");
+		i.id = name + "-calc-table";
+		axcd(con, i);
+	}
+	
+	let spinner = fxcd(name + "-spinner");
+	
+	let rentables = fxcd(name + '-rentables-file');
+	let rentablesList = null;
+	
+	rentables.onchange = (evt) => {
+			if (evt.target.files.length > 0) {
+				ready["count"] -= 1;
+			} else {
+				ready["count"] += 1;
+			}
+		};
+	document.addEventListener(eventName, () => {
+			
+			let table = fxcd(name + "-calc-table");
+			table.innerHTML = "";
+			
+			/*
+				map leietakernummer -> liste over kontrakter
+			*/
+			let mep = new Map();
+			for (let r = 1; r < rentablesList.length; r += 1) {
+				const pp = rentablesList[r];
+				if (mep.has(pp[0]) == false) {
+					mep.set(pp[0], []);
+				}
+				mep.get(pp[0]).push(pp[1]);
+			}
+			
+			
+			let header = ["Seksjonsnummer", "Seksjonsnavn"];
+			let out = [header];
+			axcd(table, newRow(header, true, ""));
+			
+			for (let e of mep.entries()) {
+				if (e[1].length < 2) {
+					continue;
+				}
+				out.push([e[0]].concat(e[1]));
+				let r = xcd("tr");
+				let d = xcd("td");
+				axcd(d, txcd(e[0]));
+				axcd(r, d);
+				d = xcd("td");
+				for (let r of e[1]) {
+					axcd(d, txcd(r));
+					addLine(d);
+				}
+				axcd(r, d);
+				axcd(table, r);
+			}
+			
+			let btn = fxcd(name + "-download-btn");
+			btn.disabled = false;
+			downloadButton(btn, out, "overlappende seksjoner");
+			
+			hide(spinner);
+		});	
+	fxcd(name + "-calc-btn").onclick = () => {
+			show(spinner);
+			let f2 = new FileReader();
+			f2.onload = () => {
+					rentablesList = CSVToArray(f2.result, ";");
+					CSVRemoveBlanks(rentablesList);
+					ready["count"] -= 1;
+				};
+			
+			f2.readAsText(rentables.files[0], "iso-8859-1");
+		};
+}
