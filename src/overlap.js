@@ -190,6 +190,17 @@ function setupRentableOverlapFilter() {
 		
 		defaultButtonTags(name);
 		addLine(con);
+		addLine(con);
+		
+		axcd(con, txcd("Ignorerer kontrakter der leietaker heter en av f\u00F8lgende:"));
+		
+		i = xcd("ul");
+		for (let e of ignoreContracts) {
+			axcd(i, listTag(e));
+		}
+		axcd(con, i);
+		
+		addLine(con);
 		axcd(con, xcd("hr"));
 	
 		i = xcd("table");
