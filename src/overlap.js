@@ -148,6 +148,7 @@ function setupCustomerOverlapFilter() {
 	
 }
 
+
 function setupRentableOverlapFilter() {
 	const name = 'overlap';
 	
@@ -225,13 +226,16 @@ function setupRentableOverlapFilter() {
 			let table = fxcd(name + "-calc-table");
 			table.innerHTML = "";
 			
+			/*
+				map leietakernummer -> liste over kontrakter
+			*/
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				const pp = contractList[r];
-				if (isInvalid(pp[13])
-						|| isInvalid(pp[5])
-						|| isInvalid(pp[4])
-						|| isInvalid(pp[3])
+				if (isInvalid(pp[13]) 		//	fasilitetsnummer
+						|| isInvalid(pp[5]) //	reskontronummer
+						|| isInvalid(pp[4]) //	leietakernummer
+						|| isInvalid(pp[3]) //	leietakernavn
 						|| (ignoreContracts.includes(pp[2]) == true)) {
 					continue;
 				}
@@ -241,18 +245,10 @@ function setupRentableOverlapFilter() {
 				mep.get(pp[4]).push(pp);
 			}
 			
-			let out = [];
+			let contractMap = new Map();
 			for (let r of mep.entries()) {
-				let hoink = false;
-				if (r[1].length < 2) {
-					continue;
-				}
-				let occ = [];
-				for (let i = 0; i < r[1].length; i += 1) {
-					occ.push(0);
-				}
 				
-				for (let i = 0; i < r[1].length; i += 1) {
+				for (let i = 0; i < r[1].length - 1; i += 1) {
 					const c1 = r[1][i];
 					const cNum = c1[0];
 					
@@ -263,51 +259,34 @@ function setupRentableOverlapFilter() {
 					
 					const lower1 = dateWithDefault(c1[7], oldest);
 					const upper1 = dateWithDefault(c1[8], newest);
-					if (lower1 == upper1) {
-						continue;
-					}
-					for (let j = i+1; j < r[1].length; j += 1) {
-						let c2 = r[1][j];
+					
+					for (let j = i + 1; j < r[1].length; j += 1) {
+						const c2 = r[1][j];
 						
 						const lower2 = dateWithDefault(c2[7], oldest);
 						const upper2 = dateWithDefault(c2[8], newest);
-						if (lower2 == upper2) {
-							continue;
-						}
-						if (upper1 <= lower2 || lower1 >= upper2) {
-							continue;
-						}
 						
-						occ[i] += 1;
-						occ[j] += 1;
+						if (upper1 < lower2 || lower1 > upper2) {
+							continue;
+						}
+						if (contractMap.has(r[0]) == false) {
+							contractMap.set(r[0], []);
+						}
+						contractMap.get(r[0]).push([c1[3], c1[13], c1[25], c2[13], c2[25]]);
+						break;
 					}
 				}
-				
-				let row = [];
-				for (let i = 0; i < r[1].length; i += 1) {
-					if (occ[i] > 0) {
-						row.push(r[1][i]);
-					}
-				}
-				out.push(row);
 			}
-			axcd(table, newRow(["Akt\u00F8r", "Seksjon", "Fra", "Til"], true, ""));
 			
-			for (let e of out) {
-				
-				for (let row = 0; row < e.length; row += 1) {
-					const r = e[row];
-					let ll = [r[4], r[13], r[7], r[8]];
-					if (row > 0) {
-						ll[0] = "";
-					}
-					if (r[7] == undefined) {
-						ll[2] = "-";
-					}
-					if (r[8] == undefined) {
-						ll[3] = "-";
-					}
-					axcd(table, newRow(ll, false, ""));
+			let header = ["Akt\u00F8rnummer", "Aktørnavn", "Fasilitet 1", "Status 1", "Fasilitet 2",  "Status 2"];
+			let out = [header];
+			axcd(table, newRow(header, true, ""));
+			
+			for (let e of contractMap.entries()) {
+				for (let e2 of e[1]) {
+					let r = [e[0]].concat(e2);
+					out.push(r);
+					axcd(table, newRow(r, false, ""));
 				}
 			}
 			
