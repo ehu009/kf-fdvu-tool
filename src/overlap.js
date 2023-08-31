@@ -157,7 +157,7 @@ function setupCustomerOverlapFilter() {
 	
 }
 
-function setupCustomerOverlapFilter() {
+function setupContractOverlapFilter() {
 	const name = 'overlap';
 	
 	const eventName = "dataReady";
