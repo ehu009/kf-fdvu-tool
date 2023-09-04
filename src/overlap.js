@@ -2,7 +2,7 @@
 
 let ignoreContractsAddition = ["Omsorgstjenesten S\u00F8r\u00F8ya",
 		"Enhet for psykisk helse og rus, avdeling Ankeret v/Heidi H\u00F8ie",
-		"Enhet for psykisk helse og rus, avdeling Bølgen",
+		"Enhet for psykisk helse og rus, avdeling B\u00F8lgen",
 		"Stiftelsen Kommunale Boliger",
 		"Flyktningtjenesten Privatinnleide",
 		"Tildelingskontoret"
@@ -183,7 +183,7 @@ function setupContractOverlapFilter() {
 	axcd(con, txcd("Akt\u00F8rer med samtidige kontrakter i flere seksjoner"));
 	axcd(document.body, con);
 	
-	con = xcd("div");
+	con = xcd("div"); 
 	con.id = name + "-container";
 	con.classList.add("cont");
 	axcd(document.body, con);
@@ -286,7 +286,7 @@ function setupContractOverlapFilter() {
 				}
 			}
 			
-			let header = ["Akt\u00F8rnummer", "Aktørnavn", "Fasilitet 1", "Status 1", "Fasilitet 2",  "Status 2"];
+			let header = ["Akt\u00F8rnummer", "Akt\u00F8rnavn", "Fasilitet 1", "Status 1", "Fasilitet 2",  "Status 2"];
 			let out = [header];
 			axcd(table, newRow(header, true, ""));
 			
@@ -386,7 +386,7 @@ function setupRentableOverlapFilter() {
 			table.innerHTML = "";
 			
 			/*
-				map leietakernummer -> liste over kontrakter
+				map seksjonsnummer -> liste over seksjoner
 			*/
 			let mep = new Map();
 			for (let r = 1; r < rentablesList.length; r += 1) {
@@ -398,6 +398,9 @@ function setupRentableOverlapFilter() {
 			}
 			
 			
+			/*
+				tegn og lag array
+			*/
 			let header = ["Seksjonsnummer", "Seksjonsnavn"];
 			let out = [header];
 			axcd(table, newRow(header, true, ""));
