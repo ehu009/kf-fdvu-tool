@@ -27,6 +27,7 @@ const keyIdx = {
 	};
 const contractIdx = {
 		'fasilitetsnummer': 13,
+		'fasilitet': 14,
 		'reskontronummer': 5,
 		'leietakernummer': 4,
 		'leietakernavn': 3,

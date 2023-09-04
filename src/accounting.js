@@ -382,6 +382,7 @@ function beginLoss() {
 			f1.onload = () => {
 					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
 					CSVRemoveBlanks(activeList);
+					xc(activeList[0], activeList[1], activeList[2]);
 					ready["countB"] -= 1;
 				};
 			f1.readAsText(actives.files[0], "iso-8859-1");
@@ -390,6 +391,7 @@ function beginLoss() {
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					CSVRemoveBlanks(contractList);
+					xc(contractList[0], contractList[1], contractList[2]);
 					ready["countB"] -= 1;
 				};
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -455,8 +457,9 @@ function beginGainCalc() {
 			
 			contractList.shift();
 			
+			
 			// lag hashmap s.a. [(fasilitet + nummer) -> liste over kontrakter]
-			let mep = mapContracts(contractList, 4, 5);
+			let mep = mapContracts(contractList, contractIdx['fasilitetsnummer'], contractIdx['fasilitet']);
 			
 			// summér til array
 			let calced = [];
@@ -476,20 +479,20 @@ function beginGainCalc() {
 					// lag sum
 					{
 						for (let row of entry[1]) {
-							if (ignoreContracts.includes(row[0]) == true) {
+							if (ignoreContracts.includes(row[contractIdx['leietaker']]) == true) {
 								continue;
 							}
-							if (row[0] == "Passiv") {
+							if (row[contractIdx['leietaker']] == "Passiv") {
 								continue;
 							}
 							
-							const from = dateWithDefault(row[1], defaultBegin);
-							const to = dateWithDefault(row[2], defaultEnd);
+							const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
+							const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
 							if (from > end || to < begin) {
 								continue;
 							}
 							
-							const cPrice = stringToNumber(row[3]);
+							const cPrice = stringToNumber(row[contractIdx['kontraktsum']]);
 							
 							let current;
 							let stop;
@@ -550,8 +553,11 @@ function beginGainCalc() {
 			
 			let btn = fxcd(name + "-download-btn");
 			btn.disabled = false;
-			btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			
+			downloadButton(btn, calced, "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value);
+			/*
+			btn.onclick = () => {
+				downloadCSV(arrayToCSV(calced,";"), "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
+			*/
 			hide(spinner);
 		});	
 	fxcd(name + "-calc-btn").onclick = () => {
@@ -562,7 +568,9 @@ function beginGainCalc() {
 					let from = dateToFdvuDate(fxcd(name + "-date-from").value);
 					let to = dateToFdvuDate(fxcd(name + "-date-to").value);
 					
-					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
+					//contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
+					contractList = CSVToArray(f2.result, ";");
+					xc(contractList[0], contractList[1], contractList[2]);
 					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}
