@@ -1,24 +1,18 @@
 "use strict";
 
 
-
-
 function mapKeys(arr) {
 	let out = new Map();
 	for (let i = 1; i < arr.length; i += 1) {
 		const row = arr[i];
-		const name = row[rentableIdx['seksjonsnavn']];
-		const key = row[rentableIdx['seksjonsnummer']];
-		if (out.has(name)) {
-			let l = out.get(name);
-			if (l.includes(key) == false) {
-				l.push(key);
-			} else {
-				
-				console.log(row);
-			}
-		} else {
-			out.set(name, [key]);
+		const key = row[keyIdx['seksjonsnummer']];
+		const val = row[keyIdx['hanknummer']];
+		if (out.has(key) == false) {
+			out.set(key, [val]);
+		}
+		let l = out.get(key);
+		if (l.includes(val) == false) {
+			l.push(val);
 		}
 	}
 	return out;
@@ -36,8 +30,9 @@ function drawKeys(arr, map, dst) {
 	let out = [arr[0].concat(["N\u00F8klerinos"])];
 	for (let r = 1; r < arr.length; r += 1) {
 		
-		if (map.has(arr[r][0]) == false) {
-			row = newRow([arr[r][0], arr[r][1]], false);
+		let rentableNumber = arr[r][rentableIdx['seksjonsnummer']];
+		if (map.has(rentableNumber) == false) {
+			row = newRow([rentableNumber, arr[r][rentableIdx['seksjonsnavn']]], false);
 			
 			cell = xcd("td");
 			axcd(cell, txcd(""));
@@ -45,13 +40,13 @@ function drawKeys(arr, map, dst) {
 			axcd(row, cell);
 			axcd(table, row);
 		} else {
-			const l = map.get(arr[r][0]);
+			const l = map.get(rentableNumber);
 			if (isInvalid(l)) {
 				continue;
 			}
 			for (let c = 0; c < l.length; c += 1) {
-				let c1 = arr[r][0];
-				let c2 = arr[r][1];
+				let c1 = rentableNumber;
+				let c2 = arr[r][rentableIdx['seksjonsnavn']];
 				if (c > 0) {
 					c1 = "";
 					c2 = "";
@@ -190,21 +185,24 @@ function setupKeyFilter() {
 			document.addEventListener(eName, () => {
 					let mep;
 					
+					/*
 					// finn filtreringsmodus
 					let opt = 0; // anta feil
 					opt += fxcd(name + "-radio-all").checked * 1;
 					opt += fxcd(name + "-radio-dupes").checked * 2;
 					opt += fxcd(name + "-radio-inactive").checked * 4;
-					
+					*/
 					
 					let fname = "n\u00F8kler";
-					/*
+					
 					let c;
+					/*
 					switch (opt) {
 						
-						case 1:
+						case 1:*/
 						mep = mapKeys(keysList);
 						c = drawKeys(rentablesList, mep, name + "-table");
+						/*
 						break;
 						
 						case 2:
@@ -225,7 +223,7 @@ function setupKeyFilter() {
 			
 			let f1 = new FileReader();
 			f1.onload = () => {
-					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Aktiv", "Utleibar", "Eierform"]);
+					rentablesList = CSVToArray(f1.result, ";");
 					CSVRemoveBlanks(rentablesList);
 					dataReady["count"] -= 1;
 				};
@@ -233,7 +231,7 @@ function setupKeyFilter() {
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
-					keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]);
+					keysList = CSVToArray(f2.result, ";");
 					CSVRemoveBlanks(keysList);
 					dataReady["count"] -= 1;
 				};

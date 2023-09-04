@@ -21,6 +21,10 @@ const rentableIdx = {
 		'seksjonsnavn': 1,
 		'bygningsnavn': 6
 	};
+const keyIdx = {
+		'hanknummer': 0,
+		'seksjonsnummer': 9
+	};
 const contractIdx = {
 		'fasilitetsnummer': 13,
 		'reskontronummer': 5,
