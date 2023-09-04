@@ -193,7 +193,7 @@ function setupKeyFilter() {
 					opt += fxcd(name + "-radio-inactive").checked * 4;
 					*/
 					
-					let fname = "n\u00F8kler";
+					let fname = "n\u00F8kler - filtrert";
 					
 					let c;
 					/*
