@@ -33,7 +33,8 @@ const contractIdx = {
 		'løpenummer': 0,
 		'startdato': 7,
 		'sluttdato': 8,
-		'behandlingsstatus': 25
+		'behandlingsstatus': 25,
+		'kontraktsum': 9
 	};
 const invoiceIdx = {
 		'løpenummer': 5,
