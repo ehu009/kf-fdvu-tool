@@ -90,7 +90,7 @@ function setupCustomerOverlapFilter() {
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				let pp = contractList[r];
-				let key = pp[13];
+				let key = pp[contractIdx['fasilitetsnummer']];
 				if (isInvalid(key)) {
 					continue;
 				}
@@ -106,21 +106,21 @@ function setupCustomerOverlapFilter() {
 				
 				for (let i = 0; i < r[1].length - 1; i += 1) {
 					const c1 = r[1][i];
-					const cNum = c1[0];
+					const cNum = c1[contractIdx['løpenummer']];
 					
 					let oldest = new Date();
 					let newest = new Date();
 					oldest.setFullYear(1950);
 					newest.setFullYear(2050);
 					
-					const lower1 = dateWithDefault(c1[7], oldest);
-					const upper1 = dateWithDefault(c1[8], newest);
+					const lower1 = dateWithDefault(c1[contractIdx['startdato']], oldest);
+					const upper1 = dateWithDefault(c1[contractIdx['sluttdato']], newest);
 					
 					for (let j = i + 1; j < r[1].length; j += 1) {
 						const c2 = r[1][j];
 						
-						const lower2 = dateWithDefault(c2[7], oldest);
-						const upper2 = dateWithDefault(c2[8], newest);
+						const lower2 = dateWithDefault(c2[contractIdx['startdato']], oldest);
+						const upper2 = dateWithDefault(c2[contractIdx['sluttdato']], newest);
 						
 						if (upper1 < lower2 || lower1 > upper2) {
 							continue;
@@ -128,11 +128,19 @@ function setupCustomerOverlapFilter() {
 						if (contractMap.has(r[0]) == false) {
 							contractMap.set(r[0], []);
 						}
-						contractMap.get(r[0]).push([c1[0], c1[3], c1[25], c2[0], c2[3], c2[25]]);
+						contractMap.get(r[0]).push([
+								c1[contractIdx['løpenummer']],
+								c1[contractIdx['leietakernavn']],
+								c1[contractIdx['behandlingsstatus']],
+								c2[contractIdx['løpenummer']],
+								c2[contractIdx['leietakernavn']],
+								c2[contractIdx['behandlingsstatus']]
+							]);
 						break;
 					}
 				}
 			}
+			
 			
 			/*
 				tegn og lag array
@@ -240,39 +248,40 @@ function setupContractOverlapFilter() {
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				const pp = contractList[r];
-				if (isInvalid(pp[13]) 		//	fasilitetsnummer
-						|| isInvalid(pp[5]) //	reskontronummer
-						|| isInvalid(pp[4]) //	leietakernummer
-						|| isInvalid(pp[3]) //	leietakernavn
-						|| (ignoreContracts.concat(ignoreContractsAddition).includes(pp[3]) == true)) {
+				if (isInvalid(pp[contractIdx['fasilitetsnummer']]) 		//	fasilitetsnummer
+						|| isInvalid(pp[contractIdx['reskontronummer']]) //	reskontronummer
+						|| isInvalid(pp[contractIdx['leietakernummer']]) //	leietakernummer
+						|| isInvalid(pp[contractIdx['leietakernavn']]) //	leietakernavn
+						|| (ignoreContracts.concat(ignoreContractsAddition).includes(pp[contractIdx['leietakernavn']]) == true)) {
 					continue;
 				}
-				if (mep.has(pp[4]) == false) {
-					mep.set(pp[4], []);
+				if (mep.has(pp[contractIdx['leietakernummer']]) == false) {
+					mep.set(pp[contractIdx['leietakernummer']], []);
 				}
-				mep.get(pp[4]).push(pp);
+				mep.get(pp[contractIdx['leietakernummer']]).push(pp);
 			}
+			
 			
 			let contractMap = new Map();
 			for (let r of mep.entries()) {
 				
 				for (let i = 0; i < r[1].length - 1; i += 1) {
 					const c1 = r[1][i];
-					const cNum = c1[0];
+					const cNum = c1[contractIdx['løpenummer']];
 					
 					let oldest = new Date();
 					let newest = new Date();
 					oldest.setFullYear(1950);
 					newest.setFullYear(2050);
 					
-					const lower1 = dateWithDefault(c1[7], oldest);
-					const upper1 = dateWithDefault(c1[8], newest);
+					const lower1 = dateWithDefault(c1[contractIdx['startdato']], oldest);
+					const upper1 = dateWithDefault(c1[contractIdx['sluttdato']], newest);
 					
 					for (let j = i + 1; j < r[1].length; j += 1) {
 						const c2 = r[1][j];
 						
-						const lower2 = dateWithDefault(c2[7], oldest);
-						const upper2 = dateWithDefault(c2[8], newest);
+						const lower2 = dateWithDefault(c2[contractIdx['startdato']], oldest);
+						const upper2 = dateWithDefault(c2[contractIdx['sluttdato']], newest);
 						
 						if (upper1 < lower2 || lower1 > upper2) {
 							continue;
@@ -280,7 +289,13 @@ function setupContractOverlapFilter() {
 						if (contractMap.has(r[0]) == false) {
 							contractMap.set(r[0], []);
 						}
-						contractMap.get(r[0]).push([c1[3], c1[13], c1[25], c2[13], c2[25]]);
+						contractMap.get(r[0]).push([
+								c1[contractIdx['leietakernavn']],
+								c1[contractIdx['fasilitetsnummer']],
+								c1[contractIdx['behandlingsstatus']],
+								c2[contractIdx['fasilitetsnummer']],
+								c2[contractIdx['behandlingsstatus']]
+							]);
 						break;
 					}
 				}
@@ -391,10 +406,11 @@ function setupRentableOverlapFilter() {
 			let mep = new Map();
 			for (let r = 1; r < rentablesList.length; r += 1) {
 				const pp = rentablesList[r];
-				if (mep.has(pp[0]) == false) {
-					mep.set(pp[0], []);
+				const idx = rentableIdx['seksjonsnummer'];
+				if (mep.has(pp[idx]) == false) {
+					mep.set(pp[idx], []);
 				}
-				mep.get(pp[0]).push(pp[1]);
+				mep.get(pp[idx]).push(pp[rentableIdx['seksjonsnummer']]);
 			}
 			
 			

@@ -1,25 +1,29 @@
 "use strict";
 
+
+
+
 function mapKeys(arr) {
 	let out = new Map();
 	for (let i = 1; i < arr.length; i += 1) {
 		const row = arr[i];
-		const name = row[1];
-		
+		const name = row[rentableIdx['seksjonsnavn']];
+		const key = row[rentableIdx['seksjonsnummer']];
 		if (out.has(name)) {
 			let l = out.get(name);
-			if (l.includes(row[0]) == false) {
-				l.push(row[0]);
+			if (l.includes(key) == false) {
+				l.push(key);
 			} else {
 				
 				console.log(row);
 			}
 		} else {
-			out.set(name, [row[0]]);
+			out.set(name, [key]);
 		}
 	}
 	return out;
 }
+
 
 function drawKeys(arr, map, dst) {
 	let table = fxcd(dst);
@@ -216,17 +220,24 @@ function setupKeyFilter() {
 					let btn = fxcd(name + "-download-btn");
 					btn.disabled = false;
 					downloadButton(btn, c, fname);
-					//btn.onclick = () => { downloadCSV(arrayToCSV(c, ";"), fname + ".csv"); };
 					hide(spinner);
 				});
 			
 			let f1 = new FileReader();
-			f1.onload = () => { rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Aktiv", "Utleibar", "Eierform"]);CSVRemoveBlanks(rentablesList); dataReady["count"] -= 1; };
+			f1.onload = () => {
+					rentablesList = arrayColFilter(CSVToArray(f1.result, ";"), ["Nummer", "Navn", "Aktiv", "Utleibar", "Eierform"]);
+					CSVRemoveBlanks(rentablesList);
+					dataReady["count"] -= 1;
+				};
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 			
 			let f2 = new FileReader();
-			f2.onload = () => { keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]); CSVRemoveBlanks(keysList); dataReady["count"] -= 1; };
+			f2.onload = () => {
+					keysList = arrayColFilter(CSVToArray(f2.result, ";"), ["Nummer", "Seksjonsnr"]);
+					CSVRemoveBlanks(keysList);
+					dataReady["count"] -= 1;
+				};
 			f2.readAsText(keys.files[0], "iso-8859-1");
 			
-		}
+		};
 }

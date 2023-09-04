@@ -1,6 +1,41 @@
 "use strict";
 
-const ignoreContracts = ["Driftsadministrasjonen", "Driftsavdelingen", "Troms\u00F8 kommune v/ Byggforvaltningen", "Drift Leide Boliger", "Stiftelsen Kommunale Boliger"];
+
+const ignoreContracts = [
+		"Driftsadministrasjonen",
+		"Driftsavdelingen",
+		"Troms\u00F8 kommune v/ Byggforvaltningen",
+		"Drift Leide Boliger",
+		"Stiftelsen Kommunale Boliger"
+	];
+
+
+const deviationIdx = {
+		'bygningsnavn': 10,
+		'avviksnavn': 0,
+		'fasilitet': 8,
+		'avviksmerknad': 1
+	};
+const rentableIdx = {
+		'seksjonsnummer': 0,
+		'seksjonsnavn': 1,
+		'bygningsnavn': 6
+	};
+const contractIdx = {
+		'fasilitetsnummer': 13,
+		'reskontronummer': 5,
+		'leietakernummer': 4,
+		'leietakernavn': 3,
+		'løpenummer': 0,
+		'startdato': 7,
+		'sluttdato': 8,
+		'behandlingsstatus': 25
+	};
+const invoiceIdx = {
+		'løpenummer': 5,
+		'fasilitetsnummer': 6,
+		'fakturatekst': 8
+	};
 
 
 function xc(...args) {

@@ -75,12 +75,13 @@ function begin() {
 			
 			document.addEventListener(eventName, () => {
 					
+					
 					/*
 						finn alle relevante bygninger
 					*/
 					let propertyMap = new Map();
 					rentables.forEach((row)  => {
-							let key = row[6];
+							let key = row[rentableIdx['bygningsnavn']];
 							if (propertyMap.has(key) == false) {
 								propertyMap.set(key, 0);
 							}
@@ -90,7 +91,7 @@ function begin() {
 						filtrer avvik etter bygninger
 					*/
 					let filteredDeviations = deviations.filter((row) => {
-							return propertyMap.has(row[10]);
+							return propertyMap.has(row[deviationIdx['bygningsnavn']]);
 						});
 					
 					/*
@@ -107,7 +108,12 @@ function begin() {
 					con.innerHTML = "";
 					filteredDeviations.forEach((deviation) => {
 							let p = xcd("p");
-							let out = [deviation[0], deviation[10], deviation[8], deviation[1]];
+							let out = [
+									deviation[deviationIdx['avviksnavn']],
+									deviation[deviationIdx['bygningsnavn']],
+									deviation[deviationIdx['fasilitet']],
+									deviation[deviationIdx['avviksmerknad']]
+								];
 							axcd(p, txcd(out[0]));
 							addLine(p);
 							axcd(p, txcd(out[1] + ":  " + out[2]));
@@ -117,6 +123,7 @@ function begin() {
 							axcd(con, p);
 						});
 					hide(spinner);
+					
 				});	
 		};
 }

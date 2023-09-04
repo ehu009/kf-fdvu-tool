@@ -97,8 +97,8 @@ function begin() {
 					*/
 					let contractMap = new Map();
 					{
-						let valIdx = 0;
-						let keyIdx = 13;
+						let valIdx = contractIdx['løpenummer'];
+						let keyIdx = contractIdx['fasilitetsnummer'];
 						for (let i = 1; i < contracts.length; i += 1) {
 							let current = contracts[i][keyIdx];
 							if (isInvalid(current)) {
@@ -113,7 +113,6 @@ function begin() {
 						}
 					}
 					
-					
 					/*
 						velg kun kontrakter som tilhører gjeldende seksjoner
 					*/
@@ -122,7 +121,7 @@ function begin() {
 							
 							for (let i = 1; i < rentables.length; i += 1) {
 								
-								let current = rentables[i][0];
+								let current = rentables[i][rentableIdx['seksjonsnummer']];
 								if (isInvalid(current)) {
 									continue;
 								}
@@ -142,7 +141,7 @@ function begin() {
 					*/
 					let header = invoices.shift();
 					let filteredInvoices = invoices.filter((invoice) => {
-							let current = invoice[5];
+							let current = invoice[invoiceIdx['løpenummer']];
 							if (isInvalid(current)) {
 								return false;
 							}
@@ -150,7 +149,7 @@ function begin() {
 							
 							for (let i = 0; i < filteredContracts.length; i += 1) {
 								
-								let contractId = filteredContracts[i][0];
+								let contractId = filteredContracts[i][contractIdx['løpenummer']];
 								if (isInvalid(contractId)) {
 									continue;
 								}
@@ -186,7 +185,7 @@ function begin() {
 					con.innerHTML = "";
 					filteredInvoices.forEach((invoice) => {
 							let p = xcd("p");
-							let out = [invoice[5], invoice[6], invoice[8]];
+							let out = [invoice[invoiceIdx['løpenummer']], invoice[invoiceIdx['fasilitetsnummer']], invoice[invoiceIdx['fakturatekst']]];
 							axcd(p, txcd(out[0]));
 							addLine(p);
 							axcd(p, txcd(out[1]));
