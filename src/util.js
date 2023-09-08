@@ -19,7 +19,10 @@ const deviationIdx = {
 const rentableIdx = {
 		'seksjonsnummer': 0,
 		'seksjonsnavn': 1,
-		'bygningsnavn': 6
+		'bygningsnavn': 6,
+		'seksjonspris': 16,
+		'aktiv': 21,
+		'utleibar': 22
 	};
 const keyIdx = {
 		'hanknummer': 0,
