@@ -3,6 +3,7 @@
 <script type="text/javascript" src="../src/contractmap.js"></script>
 <script type="text/javascript" src="../src/csv.js"></script>
 <script type="text/javascript" src="../src/dom.js"></script>
+<script type="text/javascript" src="../src/util.js"></script>
 <link rel="stylesheet" href="../src/style.css"/>
 </head>
 
@@ -23,9 +24,9 @@ Liste over alle kontrakter:
 <input type="file" id="contracts">
 <br/>
 <br/>
-<span><input type="checkbox" id="timefilter"></input><label onclick="toggleCheckbox('timefilter');">Velg tidsspenn:</label></span>
+<span><input type="checkbox" id="timefilter"></input><label onclick="fxcd('timefilter').click();//toggleCheckbox('timefilter');">Velg tidsspenn:</label></span>
 <br/>
-Fra <input type="date" id="from" disabled></input> Inntil <input type="date" id="from" disabled></input>
+Fra <input type="date" id="begin" disabled></input> Inntil <input type="date" id="end" disabled></input>
 <br/>
 <br/>
 <button type="button" id="filter" disabled>Filtrer</button>
