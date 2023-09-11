@@ -163,7 +163,8 @@ function begin() {
 							return false;
 							
 						});
-					invoices.unshift(header);
+					filteredInvoices.unshift(header);
+					xc(header)
 					
 					/*
 						tillat nedlasting
