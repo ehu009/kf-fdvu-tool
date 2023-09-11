@@ -15,7 +15,15 @@ function fxcd(t) {
 }
 
 
-
+function unitTestBtn(container) {
+	let b = xcd("button");
+	b.type = "button";
+	b.onclick = testAndAlert();
+	axcd(b, txcd("Kj\u00F8r enhetstest"));
+	axcd(container, b);
+	addLine(container);
+	addLine(container);
+}
 function line() {
 	return xcd("br");
 }
