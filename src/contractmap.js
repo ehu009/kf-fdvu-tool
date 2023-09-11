@@ -12,15 +12,19 @@ const readyEvent = new Event(eventName);
 let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
-				
-				let b = target["bool"];
-				fxcd(name + "download").disabled = true;
-				fxcd("begin").disabled = true;
-				fxcd("end").disabled = true;
-				if (b) {
+				if (key == "bool"){
 					fxcd("begin").disabled = false;
 					fxcd("end").disabled = false;
+					if (value == false) {
+						fxcd("begin").disabled = true;
+						fxcd("end").disabled = true;
+						
+					}
+					
 				}
+				let b = target["bool"];
+				fxcd(name + "download").disabled = true;
+				
 				
 				if (target["countA"] < 1 && target["countB"] < 1) {
 					if (!b
@@ -145,14 +149,18 @@ function begin() {
 			contractList = contractList.filter( (contract) => {
 					//	tidsfilter
 					if (ready["bool"]) {
-						if (end < dateWithDefault(contract[contractIdx['startdato']], defaultBegin)
-								|| begin >= dateWithDefault(contract[contractIdx['sluttdato']], defaultEnd)) {
+						if (dateWithDefault(contract[contractIdx['startdato']], defaultBegin) > end
+								|| dateWithDefault(contract[contractIdx['sluttdato']], defaultEnd) < begin) {
 							return false;
 						}
 					}
 					//	lokasjonsfilter
 					for (let i = 1; i < rentablesList.length; i += 1) {
-						return (contract[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]]);
+						
+						if (contract[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]])
+						{
+							return true;
+						}
 					}
 					return false;
 				});
