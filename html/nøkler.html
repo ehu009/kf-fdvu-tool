@@ -9,4 +9,32 @@
 </head>
 
 <body onload="setupKeyFilter();"></body>
+<h2>Filtrer nøkler basert på seksjon</h2>
+<div class="cont" id="keys-container">
+<button type="button" onclick="testAndAlert();">Kjør enhetstest</button>
+<br/>
+<br/>
+
+Liste over relevante seksjoner:
+<br/>
+<input type="file" id="keys-rentables-file"></input>
+<br/>
+<br/>
+
+Liste over alle nøkler:
+<br/>
+<input type="file" id="keys-file"></input>
+<br/>
+<br/>
+
+<button type="button" id="keys-calc-btn" disabled>Filtrer</button>
+&nbsp;
+<button type="button" id="keys-download-btn" disabled>Last ned CSV</button>
+&nbsp;
+<div class="spinning" id="spinner">⚙️</div>
+<br/>
+
+<hr/>
+<table id="keys-table"></table>
+</div>
 </html>
