@@ -89,6 +89,7 @@ function setupKeyFilter() {
 				}
 		});
 	
+	/*
 	let con = xcd("h2");
 	axcd(con, txcd("Filtrer n\u00F8kler basert p\u00E5 seksjon"));
 	axcd(document.body, con);
@@ -97,7 +98,9 @@ function setupKeyFilter() {
 	con.id = name + "-container";
 	con.classList.add("cont");
 	axcd(document.body, con);
+	
 	{
+		unitTestBtn(con);
 		rentablesText(name + "-container");
 		addLine(con);
 		let i = fileInputTag(name + "-rentables-file");
@@ -147,7 +150,7 @@ function setupKeyFilter() {
 				let r = fxcd(name+"-radio-inactive");
 				r.checked = true;
 			}
-		}*/
+		}
 		
 		
 		defaultButtonTags(name);
@@ -156,7 +159,7 @@ function setupKeyFilter() {
 		i = xcd("table");
 		i.id = name + "-table";
 		axcd(con, i);
-	}
+	}*/
 	
 	fxcd(name + "-rentables-file").onchange = (evt) => {
 			if (evt.target.files.length < 1) {
@@ -238,4 +241,15 @@ function setupKeyFilter() {
 			f2.readAsText(keys.files[0], "iso-8859-1");
 			
 		};
+}
+
+function unitTest() {
+	
+	let wanted = [
+			["Nummer", "Navn", "Systemnr", "Antall nøkler", "Merknad", "Eiendomsnr", "Eiendomsnavn", "Bygningsnr", "Bygningsnavn", "Seksjonsnr", "Seksjonsnavn
+			["546", "Sørslettvegen 3 - H0101 - Mellomdør til Underetasjen", " DXT 557    K2", "2", "SKAL IKKE UTLEVERES LEIETAKER", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
+			["546", "Sørslettvegen 3 - H0101 Reservenøkler ", "", "4", "Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
+			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
+		];
+	
 }
