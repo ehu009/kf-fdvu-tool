@@ -60,13 +60,8 @@ function begin() {
 			}
 			
 			document.addEventListener(eventName, () => {
-					let out = csvs[0];
 					
-					for (let i = 1; i < csvs.length; i += 1) {
-						csvs[i].shift();
-						out = out.concat(csvs[i]);
-					}
-					
+					let out = mergeCSV(csvs);
 					hide(fxcd("spinner"));
 					
 					/*
@@ -82,4 +77,45 @@ function begin() {
 						*/
 				});
 		};
+}
+
+
+function unitTest() {
+	let csvs = [
+			[["nummer", "navn", "sum", "adresse"],
+			["010192", "kjeller", "729", "alta"],
+			["010193", "bod", "729", "alta"],
+			["010194", "stue", "729", "alta"],
+			["010195", "loft", "729", "alta"]],
+			
+			[["nummer", "navn", "sum", "adresse"],
+			["010182", "kjeller", "729", "harstad"],
+			["010183", "bod", "729", "harstad"],
+			["010184", "stue", "729", "harstad"],
+			["010185", "loft", "729", "harstad"]]
+		];
+	let expected = [
+			["nummer", "navn", "sum", "adresse"],
+			["010192", "kjeller", "729", "alta"],
+			["010193", "bod", "729", "alta"],
+			["010194", "stue", "729", "alta"],
+			["010195", "loft", "729", "alta"],
+			
+			["010182", "kjeller", "729", "harstad"],
+			["010183", "bod", "729", "harstad"],
+			["010184", "stue", "729", "harstad"],
+			["010185", "loft", "729", "harstad"]
+		];
+	
+	let p = mergeCSV(csvs);
+	let err = false;
+	for (let i = 0; i < p.length; i+= 1) {
+		for (let c = 0; c < p[i].length; c += 1) {
+			if (p[i][c] != expected[i][c]) {
+				err = true;
+				break;
+			}
+		}
+	}
+	return (err);
 }
