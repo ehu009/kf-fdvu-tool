@@ -164,11 +164,3 @@ function mapContracts(arr, numberIdx, nameIdx) {
 	}
 	return mep;
 }
-
-function testAndAlert() {
-	if (unitTest()) {
-		alert('enhetstest gav feil forventet resultat');
-	} else {
-		alert('enhetstest kjørte problemfritt');
-	}
-}

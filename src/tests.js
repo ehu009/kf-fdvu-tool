@@ -1,5 +1,12 @@
 "use strict";
 
+function testAndAlert() {
+	if (unitTest()) {
+		alert('enhetstest gav feil forventet resultat');
+	} else {
+		alert('enhetstest kjørte problemfritt');
+	}
+}
 
 let invoiceSample = [
 		["År/serienummer", "Faktura", "Nummer", "Leietaker", "Reskontronr", "Løpenummer", "Fasilitet", "Ordrenummer", "Tekst", "Konto", "Varenr", "Lønnsart", "Tilleggsinfo 1", "Fra dato", "Til dato", "Mengde", "Pris", "Sum", "Sum+MVA", "Rabatt", "Regulert den", "Neste regulering", "MVA-pliktig", "Manuell", "Sluttoppgjør"],
