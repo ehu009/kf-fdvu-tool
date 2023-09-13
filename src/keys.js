@@ -63,31 +63,31 @@ function drawKeys(arr, map, dst) {
 	return out;
 }
 
-function setupKeyFilter() {
-	const name = 'keys';
-	const eName = "dataReady";
-	let dataReadyTarget = {
-			fileA: 1,
-			fileB: 1,
-			count: 2
-		};
-	
-	const dataReadyEvent = new Event(eName);
-	let dataReady = new Proxy(dataReadyTarget, {
-			set: (target, key, value) => {
-					target[key] = value;
-					if (target["fileA"] <= 0 && target["fileB"] <= 0) {
-						fxcd(name + "-calc-btn").disabled = false;
-					} else {
-						fxcd(name + "-calc-btn").disabled = true;
-					}
-					if (target["count"] <= 0) {
-						target["count"] = 0;
-						document.dispatchEvent(dataReadyEvent);
-					}
-					return true;
+const eName = "dataReady";
+let dataReadyTarget = {
+		fileA: 1,
+		fileB: 1,
+		count: 2
+	};
+
+const dataReadyEvent = new Event(eName);
+let dataReady = new Proxy(dataReadyTarget, {
+		set: (target, key, value) => {
+				target[key] = value;
+				if (target["fileA"] <= 0 && target["fileB"] <= 0) {
+					fxcd("filter-btn").disabled = false;
+				} else {
+					fxcd("filter-btn").disabled = true;
 				}
-		});
+				if (target["count"] <= 0) {
+					target["count"] = 0;
+					document.dispatchEvent(dataReadyEvent);
+				}
+				return true;
+			}
+	});
+
+function setupKeyFilter() {
 	
 	/*
 	let con = xcd("h2");
@@ -161,14 +161,14 @@ function setupKeyFilter() {
 		axcd(con, i);
 	}*/
 	
-	fxcd(name + "-rentables-file").onchange = (evt) => {
+	fxcd("rentables-file").onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileB"] += 1;
 			} else {
 				dataReady["fileB"] -= 1;
 			}
 		};
-	fxcd(name + "-file").onchange = (evt) => {
+	fxcd("file").onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileA"] += 1;
 			} else {
@@ -176,13 +176,13 @@ function setupKeyFilter() {
 			}
 		};
 	
-	fxcd(name + "-calc-btn").onclick = () => {
-			let spinner = fxcd(name + "-spinner");
+	fxcd("calc-btn").onclick = () => {
+			let spinner = fxcd("spinner");
 			show(spinner);
 			
-			let rentables = fxcd(name + '-rentables-file');
+			let rentables = fxcd('rentables-file');
 			let rentablesList = null;
-			let keys = fxcd(name + '-file');
+			let keys = fxcd('keys-file');
 			let keysList = null;
 			
 			document.addEventListener(eName, () => {
@@ -204,7 +204,7 @@ function setupKeyFilter() {
 						
 						case 1:*/
 						mep = mapKeys(keysList);
-						c = drawKeys(rentablesList, mep, name + "-table");
+						c = drawKeys(rentablesList, mep, "table");
 						/*
 						break;
 						
@@ -218,7 +218,7 @@ function setupKeyFilter() {
 						
 						break;
 					}*/
-					let btn = fxcd(name + "-download-btn");
+					let btn = fxcd("download-btn");
 					btn.disabled = false;
 					downloadButton(btn, c, fname);
 					hide(spinner);
