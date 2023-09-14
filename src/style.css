@@ -40,6 +40,10 @@ tr:nth-child(even) {
 	padding: 4px;
 	display: inline-block;
 }
+#table-container {
+	padding-top: 15px;
+	visibility: hidden;
+}
 
 @keyframes rotation {
 	from {
