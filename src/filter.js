@@ -2,6 +2,7 @@
 
 function setupColumnFilter() {
 	
+	/*
 	let c = xcd("h2");
 	axcd(c, txcd("Filtrer kolonner i CSV-dokument"));
 	axcd(document.body, c);
@@ -10,8 +11,9 @@ function setupColumnFilter() {
 	c.id = "container";
 	c.classList.add("cont");
 	axcd(document.body, c);
-	
+	*/
 	{
+		/*
 		unitTestBtn(c);
 		
 		let f = xcd("input");
@@ -19,7 +21,8 @@ function setupColumnFilter() {
 		f.id = "file";
 		axcd(c, f);
 		axcd(c, xcd("br"));
-		
+		*/
+		/*
 		f = xcd("form");
 		let l = labelTag("remove-option", "Filtrer bort");
 		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
@@ -47,10 +50,11 @@ function setupColumnFilter() {
 		axcd(c, txcd(" "));
 		
 		axcd(c, spinnerTag("spinner"));
+		*/
 	}
-	
+	/*
 	axcd(document.body, c);
-	
+	*/
 	let button = fxcd("download");
 	let file = fxcd("file");
 	file.onchange = () => {
@@ -98,11 +102,12 @@ function setupColumnFilter() {
 				});
 		};
 }
-
+function radioFn(id) {
+	toggleCheckbox(id);
+	ready['D'] += 1;
+}
 
 function setupRowFilter() {
-	const name = 'row-filter';
-	
 	let inputCSV = null;
 	let contrastCSV = null;
 	let outputCSV = null;
@@ -141,10 +146,8 @@ function setupRowFilter() {
 		});
 	
 	
-	function radioFn() {
-		ready['D'] += 1;
-	}
-		
+	
+	/*
 	let c = xcd("h2");
 	axcd(c, txcd("Filtrer rader i CSV-dokument"));
 	axcd(document.body, c);
@@ -155,6 +158,8 @@ function setupRowFilter() {
 	axcd(document.body, c);
 	
 	{
+		*/
+		/*
 		unitTestBtn(c);
 		let f = xcd("input");
 		f.type = "file";
@@ -175,7 +180,8 @@ function setupRowFilter() {
 		axcd(f, xcd("br"));
 		l.onclick = () => { toggleCheckbox("keep-option"); radioFn(); };
 		axcd(c, f);
-		
+		*/
+		/*
 		f = fileInputTag("contrast-file");
 		l = xcd("select");
 		
@@ -189,15 +195,16 @@ function setupRowFilter() {
 		axcd(c, l);
 		addLine(c);
 		addLine(c);
-		
+		*/
 		let spinner = fxcd("spinner");
-		l.onchange = () => { spinnerFunction ("spinner", () => { ready["C"] = 0; }); };
+		fxcd("contrast-column").onchange = () => { spinnerFunction ("spinner", () => { ready["C"] = 0; }); };
 			
-		f.onchange = (evt) => {
+		fxcd("contrast-file").onchange = (evt) => {
 				spinnerFunction ("spinner", () => {
 						if (evt.target.files.length >= 1) {
 							let r = new FileReader();
 							r.onload = () => {
+									let l = fxcd("contrast-column");
 									l.innerHTML = "";
 									axcd(l, optionTag("Velg", true, true));
 									let arr = CSVToArray(r.result, ";");
@@ -217,13 +224,17 @@ function setupRowFilter() {
 						}
 					});
 			};
+			/*
 		axcd(c, buttonTag("download", "Last ned CSV", true));
 		axcd(c, txcd(" "));
 		
 		axcd(c, spinnerTag("spinner"));
+		*/
+		/*
 	}
-	axcd(document.body, c);
 	
+	axcd(document.body, c);
+	*/
 	let button = fxcd("download");
 	let file = fxcd("file");
 	file.onchange = () => {
