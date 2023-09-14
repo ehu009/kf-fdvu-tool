@@ -10,7 +10,6 @@ let ignoreContractsAddition = ["Omsorgstjenesten S\u00F8r\u00F8ya",
 
 
 function setupCustomerOverlapFilter() {
-	const name = 'overlap';
 	
 	const eventName = "dataReady";
 	let readyTarget = {
@@ -20,9 +19,9 @@ function setupCustomerOverlapFilter() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd(name + "-download-btn").disabled = true;
+					fxcd("download").disabled = true;
 					if (target['count'] < 2) {
-						fxcd(name + '-calc-btn').disabled = false;
+						fxcd('filter').disabled = false;
 						if (target["count"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
@@ -30,6 +29,8 @@ function setupCustomerOverlapFilter() {
 					return true;
 				}
 		});
+	
+	/*
 	let con = xcd("h2");
 	axcd(con, txcd("Seksjoner med overlappende kontrakter"));
 	axcd(document.body, con);
@@ -39,6 +40,7 @@ function setupCustomerOverlapFilter() {
 	con.classList.add("cont");
 	axcd(document.body, con);
 	{
+		unitTestBtn(con);
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -56,10 +58,10 @@ function setupCustomerOverlapFilter() {
 		i.id = name + "-calc-table";
 		axcd(con, i);
 	}
+	*/
+	let spinner = fxcd("spinner");
 	
-	let spinner = fxcd(name + "-spinner");
-	
-	let contracts = fxcd(name + '-contracts-file');
+	let contracts = fxcd('contracts');
 	let contractList = null;
 	
 	contracts.onchange = function (evt) {
@@ -69,7 +71,7 @@ function setupCustomerOverlapFilter() {
 				ready["count"] += 1;
 			}
 		};
-	fxcd(name + "-calc-btn").onclick = () => {
+	fxcd("filter").onclick = () => {
 			show(spinner);
 			let f2 = new FileReader();
 			f2.onload = () => {
@@ -81,7 +83,7 @@ function setupCustomerOverlapFilter() {
 		};
 		
 	document.addEventListener(eventName, () => {
-			let table = fxcd(name + "-calc-table");
+			let table = fxcd("table");
 			table.innerHTML = "";
 			
 			/*
@@ -157,7 +159,9 @@ function setupCustomerOverlapFilter() {
 				}
 			}
 			
-			let btn = fxcd(name + "-download-btn");
+			show(fxcd("table-container"));
+			
+			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende kontrakter");
 			hide(spinner);
@@ -165,8 +169,11 @@ function setupCustomerOverlapFilter() {
 	
 }
 
+
+
+
 function setupContractOverlapFilter() {
-	const name = 'overlap';
+	
 	
 	const eventName = "dataReady";
 	let readyTarget = {
@@ -176,9 +183,9 @@ function setupContractOverlapFilter() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd(name + "-download-btn").disabled = true;
+					fxcd("download").disabled = true;
 					if (target['count'] < 2) {
-						fxcd(name + '-calc-btn').disabled = false;
+						fxcd('filter').disabled = false;
 						if (target["count"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
@@ -187,6 +194,7 @@ function setupContractOverlapFilter() {
 				}
 		});
 		
+		/*
 	let con = xcd("h2");
 	axcd(con, txcd("Akt\u00F8rer med samtidige kontrakter i flere seksjoner"));
 	axcd(document.body, con);
@@ -195,7 +203,10 @@ function setupContractOverlapFilter() {
 	con.id = name + "-container";
 	con.classList.add("cont");
 	axcd(document.body, con);
+	*/
 	{
+		/*
+		unitTestBtn(con);
 		contractsText(name + "-container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -210,11 +221,12 @@ function setupContractOverlapFilter() {
 		addLine(con);
 		
 		axcd(con, txcd("Ignorerer kontrakter der leietaker heter en av f\u00F8lgende:"));
-		
-		i = xcd("ul");
+		*/
+		let i = fxcd("ignore-list");
 		for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
 			axcd(i, listTag(e));
 		}
+		/*
 		axcd(con, i);
 		
 		addLine(con);
@@ -223,11 +235,12 @@ function setupContractOverlapFilter() {
 		i = xcd("table");
 		i.id = name + "-calc-table";
 		axcd(con, i);
+		*/
 	}
 	
-	let spinner = fxcd(name + "-spinner");
+	let spinner = fxcd("spinner");
 	
-	let contracts = fxcd(name + '-contracts-file');
+	let contracts = fxcd('contracts');
 	let contractList = null;
 	
 	contracts.onchange = (evt) => {
@@ -239,7 +252,7 @@ function setupContractOverlapFilter() {
 		};
 	document.addEventListener(eventName, () => {
 			
-			let table = fxcd(name + "-calc-table");
+			let table = fxcd("table");
 			table.innerHTML = "";
 			
 			/*
@@ -313,13 +326,15 @@ function setupContractOverlapFilter() {
 				}
 			}
 			
-			let btn = fxcd(name + "-download-btn");
+			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende kontrakter");
 			
+			show(fxcd("table-container"));
 			hide(spinner);
-		});	
-	fxcd(name + "-calc-btn").onclick = () => {
+		});
+	
+	fxcd("filter").onclick = () => {
 			show(spinner);
 			let f2 = new FileReader();
 			f2.onload = () => {
@@ -334,7 +349,6 @@ function setupContractOverlapFilter() {
 
 
 function setupRentableOverlapFilter() {
-	const name = 'overlap';
 	
 	const eventName = "dataReady";
 	let readyTarget = {
@@ -344,9 +358,9 @@ function setupRentableOverlapFilter() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd(name + "-download-btn").disabled = true;
+					fxcd("download").disabled = true;
 					if (target['count'] < 2) {
-						fxcd(name + '-calc-btn').disabled = false;
+						fxcd('calc').disabled = false;
 						if (target["count"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
@@ -354,7 +368,7 @@ function setupRentableOverlapFilter() {
 					return true;
 				}
 		});
-		
+		/*
 	let con = xcd("h2");
 	axcd(con, txcd("Seksjoner med samme seksjonsnummer"));
 	axcd(document.body, con);
@@ -363,7 +377,10 @@ function setupRentableOverlapFilter() {
 	con.id = name + "-container";
 	con.classList.add("cont");
 	axcd(document.body, con);
+	*/
 	{
+		/*
+		unitTestBtn(con);
 		axcd(con, txcd("Liste over alle seksjoner:"));
 		addLine(con);
 		
@@ -381,11 +398,12 @@ function setupRentableOverlapFilter() {
 		i = xcd("table");
 		i.id = name + "-calc-table";
 		axcd(con, i);
+		*/
 	}
 	
-	let spinner = fxcd(name + "-spinner");
+	let spinner = fxcd("spinner");
 	
-	let rentables = fxcd(name + '-rentables-file');
+	let rentables = fxcd("rentables");
 	let rentablesList = null;
 	
 	rentables.onchange = (evt) => {
@@ -397,7 +415,7 @@ function setupRentableOverlapFilter() {
 		};
 	document.addEventListener(eventName, () => {
 			
-			let table = fxcd(name + "-calc-table");
+			let table = fxcd("table");
 			table.innerHTML = "";
 			
 			/*
@@ -439,13 +457,15 @@ function setupRentableOverlapFilter() {
 				axcd(table, r);
 			}
 			
-			let btn = fxcd(name + "-download-btn");
+			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende seksjoner");
 			
+			show(fxcd("table-container"));
 			hide(spinner);
-		});	
-	fxcd(name + "-calc-btn").onclick = () => {
+		});
+	
+	fxcd("filter").onclick = () => {
 			show(spinner);
 			let f2 = new FileReader();
 			f2.onload = () => {
