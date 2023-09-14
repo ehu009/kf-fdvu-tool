@@ -1,21 +1,22 @@
 "use strict";
 
 function setupColumnFilter() {
-	const name = 'col-filter';
 	
 	let c = xcd("h2");
 	axcd(c, txcd("Filtrer kolonner i CSV-dokument"));
 	axcd(document.body, c);
 	
 	c = xcd("div");
-	c.id = name + "-container";
+	c.id = "container";
 	c.classList.add("cont");
 	axcd(document.body, c);
 	
 	{
+		unitTestBtn(c);
+		
 		let f = xcd("input");
 		f.type = "file";
-		f.id = name + "-file";
+		f.id = "file";
 		axcd(c, f);
 		axcd(c, xcd("br"));
 		
@@ -33,47 +34,47 @@ function setupColumnFilter() {
 		l.onclick = () => { toggleCheckbox("keep-option"); };
 		axcd(c, f);
 		
-		axcd(c, buttonTag(name + "-all-btn", "Velg alle", true));
+		axcd(c, buttonTag("all-btn", "Velg alle", true));
 		axcd(c, txcd(' '));
-		axcd(c, buttonTag(name + "-none-btn", "Velg ingen", true));
+		axcd(c, buttonTag("none-btn", "Velg ingen", true));
 		
 		f = xcd("div");
-		f.id = name + "-field";
+		f.id = "field";
 		axcd(c, f);
 		axcd(c, xcd("br"));
 		
-		axcd(c, buttonTag(name + "-download", "Last ned CSV", true));
+		axcd(c, buttonTag("download", "Last ned CSV", true));
 		axcd(c, txcd(" "));
 		
-		axcd(c, spinnerTag(name + "-spinner"));
+		axcd(c, spinnerTag("spinner"));
 	}
 	
 	axcd(document.body, c);
 	
-	let button = fxcd(name + "-download");
-	let file = fxcd(name + "-file");
+	let button = fxcd("download");
+	let file = fxcd("file");
 	file.onchange = () => {
-			spinnerFunction (name + "-spinner", () => {
+			spinnerFunction ("spinner", () => {
 					button.disabled = true;
 					if (file.files.length >= 1) {
-						spinnerFunction (name + "-spinner", () => {
+						spinnerFunction ("spinner", () => {
 								let r = new FileReader();
 								r.onload = () => {
 										let arr = CSVToArray(r.result, ";");
 										const options = arr[0];
-										populateCheckboxes(name + "-field", options, null);
-										allOrNoneBtn(name + "-all-btn", name + "-field", true, options);
-										allOrNoneBtn(name + "-none-btn", name + "-field", false, options);
-										fxcd(name+"-all-btn").disabled = false;
-										fxcd(name+"-none-btn").disabled = false;
+										populateCheckboxes("field", options, null);
+										allOrNoneBtn("all-btn", "field", true, options);
+										allOrNoneBtn("none-btn", "field", false, options);
+										fxcd("all-btn").disabled = false;
+										fxcd("none-btn").disabled = false;
 										button.disabled = false;
 									};
 								r.readAsText(file.files[0], "iso-8859-1");
 							});
 					} else {
-						fxcd(name + "-field").innerHTML = "";
-						fxcd(name+"-all-btn").disabled = true;
-						fxcd(name+"-none-btn").disabled = true;
+						fxcd("field").innerHTML = "";
+						fxcd("all-btn").disabled = true;
+						fxcd("none-btn").disabled = true;
 					}
 				});
 		};
@@ -81,7 +82,7 @@ function setupColumnFilter() {
 	button.onclick = () => {
 			spinnerFunction (name + "-spinner", () => {
 					let r = new FileReader();
-					let fileInput = fxcd(name + "-file");
+					let fileInput = fxcd("file");
 					r.onload = () => {
 							let arr = CSVToArray(r.result, ";");
 							
@@ -132,7 +133,7 @@ function setupRowFilter() {
 						if (target['B'] > 0) {
 							contrastCSV = null;
 						}
-						fxcd(name + "-download-btn").disabled = true;
+						fxcd("download").disabled = true;
 						outputCSV = null;
 					}
 					return true;
@@ -149,14 +150,15 @@ function setupRowFilter() {
 	axcd(document.body, c);
 	
 	c = xcd("div");
-	c.id = name + "-container";
+	c.id = "container";
 	c.classList.add("cont");
 	axcd(document.body, c);
 	
 	{
+		unitTestBtn(c);
 		let f = xcd("input");
 		f.type = "file";
-		f.id = name + "-file";
+		f.id = "file";
 		axcd(c, f);
 		axcd(c, xcd("br"));
 		
@@ -174,7 +176,7 @@ function setupRowFilter() {
 		l.onclick = () => { toggleCheckbox("keep-option"); radioFn(); };
 		axcd(c, f);
 		
-		f = fileInputTag(name + "-contrast-file");
+		f = fileInputTag("contrast-file");
 		l = xcd("select");
 		
 		axcd(c, f);
@@ -182,17 +184,17 @@ function setupRowFilter() {
 		
 		axcd(c, txcd("Konstrast-kolonne: "));
 		
-		l.id = name + "-contrast-column";
+		l.id = "contrast-column";
 		axcd(l, optionTag("Velg", true, true));
 		axcd(c, l);
 		addLine(c);
 		addLine(c);
 		
-		let spinner = fxcd(name + "-spinner");
-		l.onchange = () => { spinnerFunction (name + "-spinner", () => { ready["C"] = 0; }); };
+		let spinner = fxcd("spinner");
+		l.onchange = () => { spinnerFunction ("spinner", () => { ready["C"] = 0; }); };
 			
 		f.onchange = (evt) => {
-				spinnerFunction (name + "-spinner", () => {
+				spinnerFunction ("spinner", () => {
 						if (evt.target.files.length >= 1) {
 							let r = new FileReader();
 							r.onload = () => {
@@ -215,17 +217,17 @@ function setupRowFilter() {
 						}
 					});
 			};
-		axcd(c, buttonTag(name + "-download-btn", "Last ned CSV", true));
+		axcd(c, buttonTag("download", "Last ned CSV", true));
 		axcd(c, txcd(" "));
 		
-		axcd(c, spinnerTag(name + "-spinner"));
+		axcd(c, spinnerTag("spinner"));
 	}
 	axcd(document.body, c);
 	
-	let button = fxcd(name + "-download-btn");
-	let file = fxcd(name + "-file");
+	let button = fxcd("download");
+	let file = fxcd("file");
 	file.onchange = () => {
-		spinnerFunction (name + "-spinner", () => {
+		spinnerFunction ("spinner", () => {
 				if (file.files.length >= 1) {
 					let r = new FileReader();
 					r.onload = () => {
@@ -241,10 +243,10 @@ function setupRowFilter() {
 		};
 	
 	document.addEventListener(eventName, () => {
-			spinnerFunction (name + "-spinner", () => {
+			spinnerFunction ("spinner", () => {
 					outputCSV = [inputCSV[0]];
 					
-					const filterIdx = contrastCSV[0].indexOf(fxcd(name + "-contrast-column").value);
+					const filterIdx = contrastCSV[0].indexOf(fxcd("contrast-column").value);
 					if (fxcd("keep-option").checked == false) {
 						let mep = new Map();
 						for (let i = 1; i < inputCSV.length; i += 1) {
@@ -271,5 +273,7 @@ function setupRowFilter() {
 				});
 		});
 	
-	button.onclick = () => { downloadCSV(arrayToCSV(outputCSV,";"), fxcd(name + "-file").files[0].name.replace(".csv", " - filtrert.csv")); };
+	button.onclick = () => {
+			downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
+		};
 }
