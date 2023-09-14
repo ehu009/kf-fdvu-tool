@@ -102,10 +102,7 @@ function setupColumnFilter() {
 				});
 		};
 }
-function radioFn(id) {
-	toggleCheckbox(id);
-	ready['D'] += 1;
-}
+
 
 function setupRowFilter() {
 	let inputCSV = null;
@@ -116,8 +113,7 @@ function setupRowFilter() {
 	let readyTarget = {
 			A: 1,
 			B: 1,
-			C: 1,
-			D: 1
+			C: 1
 		};
 	
 	const readyEvent = new Event(eventName);
@@ -125,11 +121,7 @@ function setupRowFilter() {
 			set: (target, key, value) => {
 					target[key] = value;
 					
-					if (fxcd("keep-option").checked == false && fxcd("remove-option").checked == false) {
-						target['D'] = 0;
-					}
-					
-					if (target['D'] > 0 && (target["A"]  < 1 && target["B"]  < 1 && target["C"] < 1)) {
+					if (target["A"]  < 1 && target["B"]  < 1 && target["C"] < 1) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if (target['A'] > 0) {
@@ -196,8 +188,17 @@ function setupRowFilter() {
 		addLine(c);
 		addLine(c);
 		*/
+		/*
+		fxcd("keep-form").onchange = () => {
+				xc("loff");
+			};*/
+		
 		let spinner = fxcd("spinner");
-		fxcd("contrast-column").onchange = () => { spinnerFunction ("spinner", () => { ready["C"] = 0; }); };
+		fxcd("contrast-column").onchange = () => {
+				spinnerFunction ("spinner", () => {
+						ready["C"] = 0;
+					});
+			};
 			
 		fxcd("contrast-file").onchange = (evt) => {
 				spinnerFunction ("spinner", () => {
