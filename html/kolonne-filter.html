@@ -22,13 +22,13 @@ Filtrer kolonner i CSV-dokument
 <br/>
 <form>
 
-<input type="radio" id="remove-option" value="radio-val" checked></input>
-<label for="remove-option" onclick="toggleCheckbox('remove-option');">
+<input type="radio" id="remove-option" value="radio-val" onclick="toggleCheckbox('keep-option');" checked></input>
+<label for="remove-option"  >
 Filtrer bort
 </label>
 <br/>
-<input type="radio" id="keep-option" value="radio-val"></input>
-<label for="keep-option" onclick="toggleCheckbox('keep-option');">
+<input type="radio" id="keep-option" value="radio-val" onclick="toggleCheckbox('remove-option');"></input>
+<label for="keep-option" >
 Behold
 </label>
 <br/>
