@@ -75,9 +75,9 @@ let dataReady = new Proxy(dataReadyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
 				if (target["fileA"] <= 0 && target["fileB"] <= 0) {
-					fxcd("filter-btn").disabled = false;
+					fxcd("filter").disabled = false;
 				} else {
-					fxcd("filter-btn").disabled = true;
+					fxcd("filter").disabled = true;
 				}
 				if (target["count"] <= 0) {
 					target["count"] = 0;
@@ -86,6 +86,10 @@ let dataReady = new Proxy(dataReadyTarget, {
 				return true;
 			}
 	});
+	
+function filter(rentables, keys) {
+	return drawKeys(rentables, mapKeys(keys), "table");
+}
 
 function setupKeyFilter() {
 	
@@ -161,14 +165,19 @@ function setupKeyFilter() {
 		axcd(con, i);
 	}*/
 	
-	fxcd("rentables-file").onchange = (evt) => {
+	let rentables = fxcd('rentables');
+	let keys = fxcd('keys');
+	let rentablesList = null;
+	let keysList = null;
+	
+	rentables.onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileB"] += 1;
 			} else {
 				dataReady["fileB"] -= 1;
 			}
 		};
-	fxcd("file").onchange = (evt) => {
+	keys.onchange = (evt) => {
 			if (evt.target.files.length < 1) {
 				dataReady["fileA"] += 1;
 			} else {
@@ -176,80 +185,89 @@ function setupKeyFilter() {
 			}
 		};
 	
-	fxcd("calc-btn").onclick = () => {
-			let spinner = fxcd("spinner");
-			show(spinner);
-			
-			let rentables = fxcd('rentables-file');
-			let rentablesList = null;
-			let keys = fxcd('keys-file');
-			let keysList = null;
-			
-			document.addEventListener(eName, () => {
-					let mep;
-					
-					/*
-					// finn filtreringsmodus
-					let opt = 0; // anta feil
-					opt += fxcd(name + "-radio-all").checked * 1;
-					opt += fxcd(name + "-radio-dupes").checked * 2;
-					opt += fxcd(name + "-radio-inactive").checked * 4;
-					*/
-					
-					let fname = "n\u00F8kler - filtrert";
-					
-					let c;
-					/*
-					switch (opt) {
-						
-						case 1:*/
-						mep = mapKeys(keysList);
-						c = drawKeys(rentablesList, mep, "table");
-						/*
-						break;
-						
-						case 2:
-						fname += " duplikater";
-						
-						break;
-						
-						case 4:
-						fname += " inaktive";
-						
-						break;
-					}*/
-					let btn = fxcd("download-btn");
-					btn.disabled = false;
-					downloadButton(btn, c, fname);
-					hide(spinner);
-				});
+	
+	fxcd("filter").onclick = () => {
+			show(fxcd("spinner"));
 			
 			let f1 = new FileReader();
+			let f2 = new FileReader();
+			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
 					CSVRemoveBlanks(rentablesList);
 					dataReady["count"] -= 1;
 				};
-			f1.readAsText(rentables.files[0], "iso-8859-1");
-			
-			let f2 = new FileReader();
 			f2.onload = () => {
 					keysList = CSVToArray(f2.result, ";");
 					CSVRemoveBlanks(keysList);
 					dataReady["count"] -= 1;
 				};
-			f2.readAsText(keys.files[0], "iso-8859-1");
 			
+			f1.readAsText(rentables.files[0], "iso-8859-1");
+			f2.readAsText(keys.files[0], "iso-8859-1");
 		};
+	document.addEventListener(eName, () => {
+			let mep;
+			
+			/*
+			// finn filtreringsmodus
+			let opt = 0; // anta feil
+			opt += fxcd(name + "-radio-all").checked * 1;
+			opt += fxcd(name + "-radio-dupes").checked * 2;
+			opt += fxcd(name + "-radio-inactive").checked * 4;
+			*/
+			
+			let fname = "n\u00F8kler - filtrert";
+			
+			let c;
+			/*
+			switch (opt) {
+				
+				case 1:*/
+				mep = mapKeys(keysList);
+				c = drawKeys(rentablesList, mep, "table");
+				/*
+				break;
+				
+				case 2:
+				fname += " duplikater";
+				
+				break;
+				
+				case 4:
+				fname += " inaktive";
+				
+				break;
+			}*/
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, c, fname);
+			hide(fxcd("spinner"));
+		});
 }
+
+
 
 function unitTest() {
 	
+	let f = filter(rentableSample, keySample);
 	let wanted = [
-			["Nummer", "Navn", "Systemnr", "Antall nøkler", "Merknad", "Eiendomsnr", "Eiendomsnavn", "Bygningsnr", "Bygningsnavn", "Seksjonsnr", "Seksjonsnavn
+			["Nummer", "Navn", "Systemnr", "Antall nøkler", "Merknad", "Eiendomsnr", "Eiendomsnavn", "Bygningsnr", "Bygningsnavn", "Seksjonsnr", "Seksjonsnavn"],
 			["546", "Sørslettvegen 3 - H0101 - Mellomdør til Underetasjen", " DXT 557    K2", "2", "SKAL IKKE UTLEVERES LEIETAKER", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 			["546", "Sørslettvegen 3 - H0101 Reservenøkler ", "", "4", "Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 		];
+	
+	let err = false;
+	let k = 0;
+	for (let i = 0; i < f.length; i+= 1) {
+		for (let c = 0; c < f[i].length; c += 1) {
+			if (f[i][c] != wanted[i][c]) {
+				err = true;
+				break;
+			}
+		}
+	}
+	return err;
 	
 }
