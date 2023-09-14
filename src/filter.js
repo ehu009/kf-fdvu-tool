@@ -277,3 +277,17 @@ function setupRowFilter() {
 			downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 		};
 }
+
+function testRowFilter() {
+	
+	return true;
+}
+function testColFilter() {
+	
+	return true;
+}
+
+function unitTest () {
+	return (testColFilter() | testRowFilter());
+}
+	
