@@ -100,6 +100,37 @@ function fieldEvents() {
 		};	
 }
 
+function filter(contractList, rentablesList) {
+	const begin = new Date(fxcd("begin").value);
+	const end = new Date(fxcd("end").value);			
+	let defaultBegin = new Date();
+	let defaultEnd = new Date();
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(2090);
+	
+	let header = contractList.shift();
+	let out = contractList.filter( (c) => {
+			//	tidsfilter
+			if (ready["bool"]) {
+				if (dateWithDefault(c[contractIdx['startdato']], defaultBegin) > end
+						|| dateWithDefault(c[contractIdx['sluttdato']], defaultEnd) < begin) {
+					return false;
+				}
+			}
+			//	lokasjonsfilter
+			for (let i = 1; i < rentablesList.length; i += 1) {
+				
+				if (c[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]])
+				{
+					return true;
+				}
+			}
+			return false;
+		});
+	out.unshift(header);
+	contractList.unshift(header);
+	return out;
+}
 
 function begin() {
 	
@@ -138,45 +169,50 @@ function begin() {
 		};
 	
 	document.addEventListener(eventName, () => {
-			const begin = new Date(fxcd("begin").value);
-			const end = new Date(fxcd("end").value);			
-			let defaultBegin = new Date();
-			let defaultEnd = new Date();
-			defaultBegin.setFullYear(1950);
-			defaultEnd.setFullYear(2090);
 			
-			let header = contractList.shift();
-			contractList = contractList.filter( (contract) => {
-					//	tidsfilter
-					if (ready["bool"]) {
-						if (dateWithDefault(contract[contractIdx['startdato']], defaultBegin) > end
-								|| dateWithDefault(contract[contractIdx['sluttdato']], defaultEnd) < begin) {
-							return false;
-						}
-					}
-					//	lokasjonsfilter
-					for (let i = 1; i < rentablesList.length; i += 1) {
-						
-						if (contract[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]])
-						{
-							return true;
-						}
-					}
-					return false;
-				});
-			contractList.unshift(header);
+			let out = filter(contractList, rentablesList);
+			
+			
 			
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			
 			let fname = "kontrakter hos seksjoner";
 			if (fxcd("timefilter").checked) {
-				fname += " - " + fxcd("begin").value + " til " + fxcd("end").value;
+				fname += " - fra " + fxcd("begin").value + " til " + fxcd("end").value;
 			}
-			downloadButton(btn, contractList, fname);
+			downloadButton(btn, out, fname);
 			
 			hide(spinner);
 		});	
 	
+}
+
+function unitTest() {
+	
+	let f = filter(contractSample, rentableSample);
+	
+	let wanted = [
+			["Løpenummer", "Overskrift", "Ekstern ID", "Leietaker", "Nummer", "Reskontronr", "Saksbehandler", "Fra", "Til", "Sum", "Kontrakt utgår", "Regulering", "Gjengs regulering", "Fasilitetsnummer", "Fasilitet", "Eiendomsnr", "Eiendomsnavn", "Byggnr", "Byggnavn", "Kontrakttype", "Fakturatype", "Mengde", "Faktura fra", "Fakturareferanse", "E-handel faktura", "Behandlingsstatus", "Sikkerhetstype", "Sikkerhetsbeløp", "Prisperiode", "Faktureringstermin", "Terminstart", "MVA-pliktig", "Merknad", "Seksjonstype"],
+			["K00006331", "Kontrakt for Fredrik Puddingsen", "", "Fredrik Puddingsen", "7106638432", "236249", "", "01.01.2008", "", "9744,44", "31.12.3000", "01.01.2024", "01.01.2025", "24979620030", "24979620030 Sørslettveien 8 H 0201", "1180", "Åsgård", "118006", "Åsgård Sørslettveien 8", "", "Etterskudd Agresso", "", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"],
+			["K00006433", "Kontrakt for Kjell Trell Trafikkuhell", "", "Kjell Trell Trafikkuhell", "21016729768", "236676", "", "01.01.2008", "", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24979620028", "24979620028 Sørslettveien 8 U 0101", "1180", "Åsgård", "118006", "Åsgård Sørslettveien 8", "", "Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"]
+		];
+	
+	let err = false;
+	let k = 0;
+	for (let i = 0; i < f.length; i+= 1) {
+		for (let c = 0; c < f[i].length; c += 1) {
+			let current = f[i][c];
+			let want = wanted[i][c];
+			if (current != want) {
+				err = true;
+				xc(current, want);
+				break;
+			}
+		}
+		if (err) {
+			break;
+		}
+	}
+	return err;
 }
