@@ -609,3 +609,16 @@ function beginGainCalc() {
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
+
+
+function gainTest() {
+	return true;
+}
+
+function lossTest() {
+	return true;
+}
+
+function unitTest() {
+	return gainTest() | lossTest();
+};
