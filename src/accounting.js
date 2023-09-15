@@ -49,7 +49,7 @@ function arrayMerge(arr1, arr2, columnName) {
 
 
 function beginLoss() {
-	const name = 'loss';
+	
 	const eventName = "dataReady";
 	let readyTarget = {
 			countA: 2,
@@ -62,14 +62,14 @@ function beginLoss() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd(name + "-download-btn").disabled = true;
+					fxcd("download").disabled = true;
 					if (target["countA"] < 1 && target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if (target["countA"] < 1 && target["dateA"] < 1 && target["dateB"] < 1) {
-							fxcd(name + "-calc-btn").disabled = false;
+							fxcd("filter").disabled = false;
 						} else {
-							fxcd(name + "-calc-btn").disabled = true;
+							fxcd("filter").disabled = true;
 						}
 					}
 					return true;
@@ -81,80 +81,105 @@ function beginLoss() {
 	axcd(document.body, con);
 	
 	con = xcd("div");
-	con.id = name + "-container";
+	con.id = "container";
 	con.classList.add("cont");
 	axcd(document.body, con);
 	{
-		rentablesText(name + "-container");
+		
+		rentablesText("container");
 		axcd(con, txcd(":"));
 		addLine(con);
 		
-		let i = fileInputTag(name + "-rentables-file");
+		let i = fileInputTag("rentables");
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = () => { if (i.files.length < 1) { dataReady["fileA"] += 1; } else { dataReady["fileA"] -= 1; } };
+		i.onchange = () => {
+				if (i.files.length < 1) {
+					dataReady["fileA"] += 1;
+				} else {
+					dataReady["fileA"] -= 1;
+				}
+			};
 		
-		contractsText(name + "-container");
+		contractsText("container");
 		axcd(con, txcd(":"));
 		addLine(con);
 		
-		i = fileInputTag(name + "-contracts-file");
+		i = fileInputTag("contracts");
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = () => { if (i.files.length < 1) { dataReady["fileB"] += 1; } else { dataReady["fileB"] -= 1; } };
+		i.onchange = () => {
+				if (i.files.length < 1) {
+					dataReady["fileB"] += 1;
+				} else {
+					dataReady["fileB"] -= 1;
+				}
+			};
 		
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
 	
 		axcd(con, txcd("Fra "));
-		i = dateFieldTag(name + "-date-from");
+		i = dateFieldTag("date-from");
 		i.value = "2023-01-01";
 		
 		axcd(con, i);
 		axcd(con, txcd(" Inntil "));
-		i = dateFieldTag(name + "-date-to");
+		i = dateFieldTag("date-to");
 		i.value = "2023-03-01";
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
 	
-		defaultButtonTags(name);
+		i = buttonTag("filter", "Beregn", true);
+		axcd(con, i);
+		axcd(con, txcd(" "));
+		
+		i = buttonTag("download", "Last ned CSV", true);
+		axcd(con, i);
+		axcd(con, txcd(" "));
+		
+		i = spinnerTag("spinner");
+		axcd(con, i);
+		
+		
+		
 		addLine(con);
 		axcd(con, xcd("hr"));
 		
 		lossText(con);
 		
 		i = xcd("table");
-		i.id = name + "-sum-table";
+		i.id = "sum-table";
 		axcd(con, i);
 		axcd(con, xcd("hr"));
 		
 		axcd(con, lossLegend());
 		i = xcd("table");
-		i.id = name + "-calc-table";
+		i.id = "table";
 		axcd(con, i);
 	}
 	
 	
-	let spinner = fxcd(name + "-spinner");
+	let spinner = fxcd("spinner");
 	
-	let actives = fxcd(name + '-rentables-file');
+	let actives = fxcd('rentables');
 	let activeList = null;
-	let contracts = fxcd(name + '-contracts-file');
+	let contracts = fxcd('contracts');
 	let contractList = null;
 	
 	
 	
-	fxcd(name + "-date-to").onchange = (evt) => {
+	fxcd("date-to").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd(name + "-date-from").onchange = (evt) => {
+	fxcd("date-from").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;	
 			} else {
@@ -179,8 +204,8 @@ function beginLoss() {
 	
 	document.addEventListener(eventName, () => {
 			
-			let from = fxcd(name + "-date-from");
-			let to = fxcd(name + "-date-to");
+			let from = fxcd("date-from");
+			let to = fxcd("date-to");
 			
 			contractList.shift();
 			activeList.shift();
@@ -190,9 +215,11 @@ function beginLoss() {
 			
 			// legg til seksjonspris
 			for (let e of activeList) {
-				
-				const number = e[0];
-				const name = e[1];
+				/*
+nummer, navn, sum, aktiv
+*/
+				const number = e[rentableIdx['seksjonsnummer']];
+				const name = e[rentableIdx['seksjonsnavn']];
 				if (isInvalid(name) && isInvalid(number)) {
 					continue;
 				}
@@ -200,21 +227,21 @@ function beginLoss() {
 				
 				if (mep.has(id) == false) {
 					let filler = new Array(5);
-					filler[4] = e[2];
+					filler[4] = e[rentableIdx['seksjonspris']];
 					if (isInvalid(number)) {
 						xc(e);
 					}
 					mep.set(id, [id.concat(filler)]);
 					
 				} else {
-					if (e[3] == "False") {
+					if (e[rentableIdx['aktiv']] == "False" || e[rentableIdx['utleibar']] == "False") {
 						mep.delete(id);
 						continue;
 					}
 					
 					for (let u of mep.get(id)) {
 						if (Array.isArray(u)) {
-							u.push(e[2]);
+							u.push(e[rentableIdx['seksjonspris']]);
 						} else {
 							xc(u, mep.get(id));
 						}
@@ -225,8 +252,8 @@ function beginLoss() {
 			
 			let calced = [];
 			{
-				const begin = new Date(fxcd(name + "-date-from").value);
-				const end = new Date(fxcd(name + "-date-to").value);
+				const begin = new Date(fxcd("date-from").value);
+				const end = new Date(fxcd("date-to").value);
 				
 				let defaultBegin = new Date();
 				let defaultEnd = new Date();
@@ -364,25 +391,25 @@ function beginLoss() {
 			}
 			
 			// tegn
-			writeArrayToTable(calced, name + "-calc-table");
-			writeArrayToTable(sum, name + "-sum-table");
+			writeArrayToTable("table");
+			writeArrayToTable("sum-table");
 			
-			let btn = fxcd(name + "-download-btn");
+			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, calced, "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value);
+			downloadButton(btn, calced, "tap " + fxcd("date-from").value + " til " + fxcd("date-to").value);
 			
 			//btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			
 			hide(spinner);
 		});
 	
-	fxcd(name + "-calc-btn").onclick = () => {
+	fxcd("filter").onclick = () => {
 			show(spinner);
 			let f1 = new FileReader();
 			f1.onload = () => {
-					activeList = arrayColFilter(CSVToArray(f1.result, ";"), ["Navn", "Nummer", "Sum", "Aktiv"]);
+					activeList = CSVToArray(f1.result, ";");
 					CSVRemoveBlanks(activeList);
-					xc(activeList[0], activeList[1], activeList[2]);
+					xc(activeList[0]);
 					ready["countB"] -= 1;
 				};
 			f1.readAsText(actives.files[0], "iso-8859-1");
@@ -391,7 +418,7 @@ function beginLoss() {
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					CSVRemoveBlanks(contractList);
-					xc(contractList[0], contractList[1], contractList[2]);
+					xc(contractList[0]);
 					ready["countB"] -= 1;
 				};
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -399,8 +426,12 @@ function beginLoss() {
 }
 
 
+/*
+leietaker, fra, til, sum, fasilitetsnummer, fasilitet, kontrakttype
+*/
+
+
 function beginGainCalc() {
-	const name = 'gains';
 	
 	const eventName = "dataReady";
 	let readyTarget = {
@@ -412,34 +443,34 @@ function beginGainCalc() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd(name + "-download-btn").disabled = true;
+					fxcd("download").disabled = true;
 					if (target["countB"] < 1 && target["dateA"] == 0 && target["dateB"] == 0) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if (target["countB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
-							fxcd(name + "-calc-btn").disabled = false;
+							fxcd("filter").disabled = false;
 						} else {
-							fxcd(name + "-calc-btn").disabled = true;
+							fxcd("filter").disabled = true;
 						}
 					}
 					return true;
 				}
 		});
 	
-	gainDOM(name);
+	gainDOM();
 	
-	let spinner = fxcd(name + "-spinner");
-	let contracts = fxcd(name + '-contracts-file');
+	let spinner = fxcd("spinner");
+	let contracts = fxcd('contracts');
 	let contractList = null;
 	
-	fxcd(name + "-date-to").onchange = (evt) => {
+	fxcd("date-to").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateB"] = 1;
 			} else {
 				ready["dateB"] = 0;
 			}
 		};
-	fxcd(name + "-date-from").onchange = (evt) => {
+	fxcd("date-from").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready["dateA"] = 1;
 			} else {
@@ -464,8 +495,8 @@ function beginGainCalc() {
 			// summér til array
 			let calced = [];
 			{
-				const begin = new Date(fxcd(name + "-date-from").value);
-				const end = new Date(fxcd(name + "-date-to").value);
+				const begin = new Date(fxcd("date-from").value);
+				const end = new Date(fxcd("date-to").value);
 				
 				let defaultBegin = new Date();
 				let defaultEnd = new Date();
@@ -549,28 +580,29 @@ function beginGainCalc() {
 			calced.unshift(["Fasilitetnummer", "Navn", "Sum"]);
 			
 			// tegn
-			writeArrayToTable(calced, name + "-calc-table");
+			writeArrayToTable(calced, "table");
 			
-			let btn = fxcd(name + "-download-btn");
+			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, calced, "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value);
+			downloadButton(btn, calced, "inntekter - " + fxcd("date-from").value + " til " + fxcd("date-to").value);
 			/*
 			btn.onclick = () => {
 				downloadCSV(arrayToCSV(calced,";"), "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
 			*/
 			hide(spinner);
-		});	
-	fxcd(name + "-calc-btn").onclick = () => {
+		});
+	fxcd("filter").onclick = () => {
 			show(spinner);
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
-					let from = dateToFdvuDate(fxcd(name + "-date-from").value);
-					let to = dateToFdvuDate(fxcd(name + "-date-to").value);
-					
+					/*
+					let from = dateToFdvuDate(fxcd("date-from").value);
+					let to = dateToFdvuDate(fxcd("date-to").value);
+					*/
 					//contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
 					contractList = CSVToArray(f2.result, ";");
-					xc(contractList[0], contractList[1], contractList[2]);
+					//xc(contractList[0], contractList[1], contractList[2]);
 					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}

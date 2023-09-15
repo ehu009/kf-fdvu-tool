@@ -375,21 +375,21 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	axcd(parent, a);
 }
 
-function gainDOM(name) {
+function gainDOM() {
 	let con = xcd("h2");
 	axcd(con, txcd("Inntekter"));
 	axcd(document.body, con);
 
 	con = xcd("div");
-	con.id = name + "-container";
+	con.id = "container";
 	con.classList.add("cont");
 	axcd(document.body, con);
 	
-	contractsText(name + "-container");
+	contractsText("container");
 	axcd(con, txcd(":"));
 	addLine(con);
 	
-	let i = fileInputTag(name + "-contracts-file");
+	let i = fileInputTag("contracts");
 	axcd(con, i);
 	addLine(con);
 	addLine(con);
@@ -398,13 +398,28 @@ function gainDOM(name) {
 	addLine(con);
 
 	axcd(con, txcd("Fra "));
-	axcd(con, dateFieldTag(name + "-date-from"));
+	axcd(con, dateFieldTag("date-from"));
 	axcd(con, txcd(" Inntil "));
-	axcd(con, dateFieldTag(name + "-date-to"));
+	axcd(con, dateFieldTag("date-to"));
 	addLine(con);
 	addLine(con);
 
-	defaultButtonTags(name);
+	
+	i = buttonTag("filter", "Beregn", true);
+	axcd(con, i);
+	axcd(con, txcd(" "));
+	
+	i = buttonTag("download", "Last ned CSV", true);
+	axcd(con, i);
+	axcd(con, txcd(" "));
+	
+	i = spinnerTag("spinner");
+	axcd(con, i);
+	
+	
+	
+	
+	
 	addLine(con);
 	axcd(con, xcd("hr"));
 	
@@ -422,7 +437,7 @@ function gainDOM(name) {
 	axcd(con, xcd("hr"));
 	
 	i = xcd("table");
-	i.id = name + "-calc-table";
+	i.id = name + "table";
 	axcd(con, i);
 }
 
