@@ -283,6 +283,7 @@ function keysText(containerId) {
 	axcd(con, txcd(" n\u00F8kler:"));
 }
 function lossText(con) {
+	/*
 	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
 	addLine(con);
 	
@@ -292,15 +293,17 @@ function lossText(con) {
 	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av f\u00F8lgende:"));
 	addLine(con);
 	
-	let i = xcd("ul");
+	*/
+	let i = fxcd("ignore-list");
 	for (let e of ignoreContracts) {
 		axcd(i, listTag(e));
 	}
+	/*
 	axcd(con, i);
 	axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
 	addLine(con);
 	axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
-	
+	*/
 }
 function contractsText(containerId) {
 	let con = fxcd(containerId);
@@ -376,6 +379,7 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 }
 
 function gainDOM() {
+	/*
 	let con = xcd("h2");
 	axcd(con, txcd("Inntekter"));
 	axcd(document.body, con);
@@ -424,11 +428,13 @@ function gainDOM() {
 	axcd(con, xcd("hr"));
 	
 	axcd(con, txcd("Beregning ekskluderer kontrakter der leietaker heter:"));
-	i = xcd("ul");
-	axcd(i, listTag("Passiv"));
+	*/
+	let l = fxcd("ignore-list");
+	axcd(l, listTag("Passiv"));
 	for (let e of ignoreContracts) {
-		axcd(i, listTag(e));
+		axcd(l, listTag(e));
 	}
+	/*
 	axcd(con, i);
 	addLine(con);
 	
@@ -439,6 +445,7 @@ function gainDOM() {
 	i = xcd("table");
 	i.id = name + "table";
 	axcd(con, i);
+	*/
 }
 
 function writeArrayToTable(array, tableId) {

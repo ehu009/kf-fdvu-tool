@@ -76,6 +76,7 @@ function beginLoss() {
 				}
 		});
 	
+	/*
 	let con = xcd("h2");
 	axcd(con, txcd("Vakanse og tap"));
 	axcd(document.body, con);
@@ -84,8 +85,9 @@ function beginLoss() {
 	con.id = "container";
 	con.classList.add("cont");
 	axcd(document.body, con);
+	*/
 	{
-		
+		/*
 		rentablesText("container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -94,14 +96,15 @@ function beginLoss() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = () => {
-				if (i.files.length < 1) {
+		*/
+		fxcd("rentables").onchange = (evt) => {
+				if (evt.target.files.length < 1) {
 					dataReady["fileA"] += 1;
 				} else {
 					dataReady["fileA"] -= 1;
 				}
 			};
-		
+		/*
 		contractsText("container");
 		axcd(con, txcd(":"));
 		addLine(con);
@@ -110,14 +113,15 @@ function beginLoss() {
 		axcd(con, i);
 		addLine(con);
 		addLine(con);
-		i.onchange = () => {
-				if (i.files.length < 1) {
+		*/
+		fxcd("contracts").onchange = (evt) => {
+				if (evt.target.files.length < 1) {
 					dataReady["fileB"] += 1;
 				} else {
 					dataReady["fileB"] -= 1;
 				}
 			};
-		
+		/*
 		axcd(con, txcd("Velg tidsspenn:"));
 		addLine(con);
 	
@@ -148,9 +152,9 @@ function beginLoss() {
 		
 		addLine(con);
 		axcd(con, xcd("hr"));
-		
+		*/
 		lossText(con);
-		
+		/*
 		i = xcd("table");
 		i.id = "sum-table";
 		axcd(con, i);
@@ -160,6 +164,7 @@ function beginLoss() {
 		i = xcd("table");
 		i.id = "table";
 		axcd(con, i);
+		*/
 	}
 	
 	
