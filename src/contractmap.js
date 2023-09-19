@@ -31,9 +31,6 @@ let ready = new Proxy(readyTarget, {
 							|| (b && target["dateA"] == 0 && target["dateB"] == 0)) {
 						document.dispatchEvent(readyEvent);
 					}
-					// else {
-					//document.dispatchEvent(readyEvent);
-					//}
 				} else {
 					let btn = fxcd("filter");
 					if (target["countA"] < 2 && target["countB"] < 2) {
@@ -41,9 +38,6 @@ let ready = new Proxy(readyTarget, {
 								|| (target["dateA"] < 1 && target["dateB"] < 1)) {
 							btn.disabled = false;
 						}
-					//	else {
-					//		btn.disabled = false;
-					//	}
 					} else {
 						btn.disabled = true;
 					}

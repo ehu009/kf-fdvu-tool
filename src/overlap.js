@@ -30,35 +30,7 @@ function setupCustomerOverlapFilter() {
 				}
 		});
 	
-	/*
-	let con = xcd("h2");
-	axcd(con, txcd("Seksjoner med overlappende kontrakter"));
-	axcd(document.body, con);
 	
-	con = xcd("div");
-	con.id = name + "-container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	{
-		unitTestBtn(con);
-		contractsText(name + "-container");
-		axcd(con, txcd(":"));
-		addLine(con);
-		
-		let i = fileInputTag(name + "-contracts-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		
-		defaultButtonTags(name);
-		addLine(con);
-		axcd(con, xcd("hr"));
-	
-		i = xcd("table");
-		i.id = name + "-calc-table";
-		axcd(con, i);
-	}
-	*/
 	let spinner = fxcd("spinner");
 	
 	let contracts = fxcd('contracts');
@@ -194,48 +166,14 @@ function setupContractOverlapFilter() {
 				}
 		});
 		
-		/*
-	let con = xcd("h2");
-	axcd(con, txcd("Akt\u00F8rer med samtidige kontrakter i flere seksjoner"));
-	axcd(document.body, con);
-	
-	con = xcd("div"); 
-	con.id = name + "-container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	*/
+		
 	{
-		/*
-		unitTestBtn(con);
-		contractsText(name + "-container");
-		axcd(con, txcd(":"));
-		addLine(con);
 		
-		let i = fileInputTag(name + "-contracts-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		
-		defaultButtonTags(name);
-		addLine(con);
-		addLine(con);
-		
-		axcd(con, txcd("Ignorerer kontrakter der leietaker heter en av f\u00F8lgende:"));
-		*/
 		let i = fxcd("ignore-list");
 		for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
 			axcd(i, listTag(e));
 		}
-		/*
-		axcd(con, i);
 		
-		addLine(con);
-		axcd(con, xcd("hr"));
-	
-		i = xcd("table");
-		i.id = name + "-calc-table";
-		axcd(con, i);
-		*/
 	}
 	
 	let spinner = fxcd("spinner");
@@ -368,38 +306,7 @@ function setupRentableOverlapFilter() {
 					return true;
 				}
 		});
-		/*
-	let con = xcd("h2");
-	axcd(con, txcd("Seksjoner med samme seksjonsnummer"));
-	axcd(document.body, con);
 	
-	con = xcd("div");
-	con.id = name + "-container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	*/
-	{
-		/*
-		unitTestBtn(con);
-		axcd(con, txcd("Liste over alle seksjoner:"));
-		addLine(con);
-		
-		let i = fileInputTag(name + "-rentables-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		
-		defaultButtonTags(name);
-		addLine(con);
-		addLine(con);
-		
-		axcd(con, xcd("hr"));
-	
-		i = xcd("table");
-		i.id = name + "-calc-table";
-		axcd(con, i);
-		*/
-	}
 	
 	let spinner = fxcd("spinner");
 	

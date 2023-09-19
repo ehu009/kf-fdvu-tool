@@ -93,32 +93,8 @@ function filter(rentables, keys) {
 
 function setupKeyFilter() {
 	
-	/*
-	let con = xcd("h2");
-	axcd(con, txcd("Filtrer n\u00F8kler basert p\u00E5 seksjon"));
-	axcd(document.body, con);
-	
-	con = xcd("div");
-	con.id = name + "-container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	
 	{
-		unitTestBtn(con);
-		rentablesText(name + "-container");
-		addLine(con);
-		let i = fileInputTag(name + "-rentables-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
 		
-		keysText(name + "-container");
-		addLine(con);
-	
-		i = fileInputTag(name + "-file");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
 		/*
 		let t;
 		{
@@ -155,15 +131,8 @@ function setupKeyFilter() {
 				r.checked = true;
 			}
 		}
-		
-		
-		defaultButtonTags(name);
-		addLine(con);
-		axcd(con, xcd("hr"));
-		i = xcd("table");
-		i.id = name + "-table";
-		axcd(con, i);
-	}*/
+		*/
+	}
 	
 	let rentables = fxcd('rentables');
 	let keys = fxcd('keys');

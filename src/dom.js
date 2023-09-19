@@ -283,17 +283,7 @@ function keysText(containerId) {
 	axcd(con, txcd(" n\u00F8kler:"));
 }
 function lossText(con) {
-	/*
-	axcd(con, txcd("Tap for vakanse og vedlikehold beregnes separat."));
-	addLine(con);
 	
-	axcd(con, txcd("Tap regnes ut fra seksjonspris ved vakanse, og fra kontraktpris ved vedlikehold eller passiv kontrakt - dermed vil tap v\u00E6re negativt hvis kontraktpris er h\u00F8yere enn seksjonspris."));
-	addLine(con);
-	
-	axcd(con, txcd("I vedlikehold medregnes kontrakter der leietaker heter en av f\u00F8lgende:"));
-	addLine(con);
-	
-	*/
 	let i = fxcd("ignore-list");
 	for (let e of ignoreContracts) {
 		axcd(i, listTag(e));
@@ -379,73 +369,12 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 }
 
 function gainDOM() {
-	/*
-	let con = xcd("h2");
-	axcd(con, txcd("Inntekter"));
-	axcd(document.body, con);
-
-	con = xcd("div");
-	con.id = "container";
-	con.classList.add("cont");
-	axcd(document.body, con);
 	
-	contractsText("container");
-	axcd(con, txcd(":"));
-	addLine(con);
-	
-	let i = fileInputTag("contracts");
-	axcd(con, i);
-	addLine(con);
-	addLine(con);
-	
-	axcd(con, txcd("Velg tidsspenn:"));
-	addLine(con);
-
-	axcd(con, txcd("Fra "));
-	axcd(con, dateFieldTag("date-from"));
-	axcd(con, txcd(" Inntil "));
-	axcd(con, dateFieldTag("date-to"));
-	addLine(con);
-	addLine(con);
-
-	
-	i = buttonTag("filter", "Beregn", true);
-	axcd(con, i);
-	axcd(con, txcd(" "));
-	
-	i = buttonTag("download", "Last ned CSV", true);
-	axcd(con, i);
-	axcd(con, txcd(" "));
-	
-	i = spinnerTag("spinner");
-	axcd(con, i);
-	
-	
-	
-	
-	
-	addLine(con);
-	axcd(con, xcd("hr"));
-	
-	axcd(con, txcd("Beregning ekskluderer kontrakter der leietaker heter:"));
-	*/
 	let l = fxcd("ignore-list");
 	axcd(l, listTag("Passiv"));
 	for (let e of ignoreContracts) {
 		axcd(l, listTag(e));
 	}
-	/*
-	axcd(con, i);
-	addLine(con);
-	
-	axcd(con, txcd("Delsummer reknes for hver m\u00E5ned i tidsspennet, dvs daglig pris i f.eks januar og februar er forskjellige."));
-	addLine(con);
-	axcd(con, xcd("hr"));
-	
-	i = xcd("table");
-	i.id = name + "table";
-	axcd(con, i);
-	*/
 }
 
 function writeArrayToTable(array, tableId) {

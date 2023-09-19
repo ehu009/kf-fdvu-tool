@@ -76,27 +76,10 @@ function beginLoss() {
 				}
 		});
 	
-	/*
-	let con = xcd("h2");
-	axcd(con, txcd("Vakanse og tap"));
-	axcd(document.body, con);
 	
-	con = xcd("div");
-	con.id = "container";
-	con.classList.add("cont");
-	axcd(document.body, con);
-	*/
+	
 	{
-		/*
-		rentablesText("container");
-		axcd(con, txcd(":"));
-		addLine(con);
 		
-		let i = fileInputTag("rentables");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		*/
 		fxcd("rentables").onchange = (evt) => {
 				if (evt.target.files.length < 1) {
 					dataReady["fileA"] += 1;
@@ -104,16 +87,7 @@ function beginLoss() {
 					dataReady["fileA"] -= 1;
 				}
 			};
-		/*
-		contractsText("container");
-		axcd(con, txcd(":"));
-		addLine(con);
-		
-		i = fileInputTag("contracts");
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-		*/
+			
 		fxcd("contracts").onchange = (evt) => {
 				if (evt.target.files.length < 1) {
 					dataReady["fileB"] += 1;
@@ -121,50 +95,9 @@ function beginLoss() {
 					dataReady["fileB"] -= 1;
 				}
 			};
-		/*
-		axcd(con, txcd("Velg tidsspenn:"));
-		addLine(con);
-	
-		axcd(con, txcd("Fra "));
-		i = dateFieldTag("date-from");
-		i.value = "2023-01-01";
+			
+		//	lossText(con);
 		
-		axcd(con, i);
-		axcd(con, txcd(" Inntil "));
-		i = dateFieldTag("date-to");
-		i.value = "2023-03-01";
-		axcd(con, i);
-		addLine(con);
-		addLine(con);
-	
-		i = buttonTag("filter", "Beregn", true);
-		axcd(con, i);
-		axcd(con, txcd(" "));
-		
-		i = buttonTag("download", "Last ned CSV", true);
-		axcd(con, i);
-		axcd(con, txcd(" "));
-		
-		i = spinnerTag("spinner");
-		axcd(con, i);
-		
-		
-		
-		addLine(con);
-		axcd(con, xcd("hr"));
-		*/
-		lossText(con);
-		/*
-		i = xcd("table");
-		i.id = "sum-table";
-		axcd(con, i);
-		axcd(con, xcd("hr"));
-		
-		axcd(con, lossLegend());
-		i = xcd("table");
-		i.id = "table";
-		axcd(con, i);
-		*/
 	}
 	
 	
@@ -402,9 +335,6 @@ nummer, navn, sum, aktiv
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, calced, "tap " + fxcd("date-from").value + " til " + fxcd("date-to").value);
-			
-			//btn.onclick = () => { downloadCSV(arrayToCSV(calced,";"), "tap " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			
 			hide(spinner);
 		});
 	
@@ -590,10 +520,6 @@ function beginGainCalc() {
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, calced, "inntekter - " + fxcd("date-from").value + " til " + fxcd("date-to").value);
-			/*
-			btn.onclick = () => {
-				downloadCSV(arrayToCSV(calced,";"), "inntekter - " + fxcd(name + "-date-from").value + " til " + fxcd(name + "-date-to").value + ".csv"); };
-			*/
 			hide(spinner);
 		});
 	fxcd("filter").onclick = () => {
@@ -601,13 +527,7 @@ function beginGainCalc() {
 			
 			let f2 = new FileReader();
 			f2.onload = () => {
-					/*
-					let from = dateToFdvuDate(fxcd("date-from").value);
-					let to = dateToFdvuDate(fxcd("date-to").value);
-					*/
-					//contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker"]);
 					contractList = CSVToArray(f2.result, ";");
-					//xc(contractList[0], contractList[1], contractList[2]);
 					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}

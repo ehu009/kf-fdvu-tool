@@ -2,59 +2,6 @@
 
 function setupColumnFilter() {
 	
-	/*
-	let c = xcd("h2");
-	axcd(c, txcd("Filtrer kolonner i CSV-dokument"));
-	axcd(document.body, c);
-	
-	c = xcd("div");
-	c.id = "container";
-	c.classList.add("cont");
-	axcd(document.body, c);
-	*/
-	{
-		/*
-		unitTestBtn(c);
-		
-		let f = xcd("input");
-		f.type = "file";
-		f.id = "file";
-		axcd(c, f);
-		axcd(c, xcd("br"));
-		*/
-		/*
-		f = xcd("form");
-		let l = labelTag("remove-option", "Filtrer bort");
-		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
-		axcd(f, l);
-		axcd(f, xcd("br"));
-		l.onclick = () => { toggleCheckbox("remove-option"); };
-		
-		l = labelTag("keep-option", "Behold");
-		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
-		axcd(f, l);
-		axcd(f, xcd("br"));
-		l.onclick = () => { toggleCheckbox("keep-option"); };
-		axcd(c, f);
-		
-		axcd(c, buttonTag("all-btn", "Velg alle", true));
-		axcd(c, txcd(' '));
-		axcd(c, buttonTag("none-btn", "Velg ingen", true));
-		
-		f = xcd("div");
-		f.id = "field";
-		axcd(c, f);
-		axcd(c, xcd("br"));
-		
-		axcd(c, buttonTag("download", "Last ned CSV", true));
-		axcd(c, txcd(" "));
-		
-		axcd(c, spinnerTag("spinner"));
-		*/
-	}
-	/*
-	axcd(document.body, c);
-	*/
 	let button = fxcd("download");
 	let file = fxcd("file");
 	file.onchange = () => {
@@ -84,14 +31,14 @@ function setupColumnFilter() {
 		};
 	
 	button.onclick = () => {
-			spinnerFunction (name + "-spinner", () => {
+			spinnerFunction ("spinner", () => {
 					let r = new FileReader();
 					let fileInput = fxcd("file");
 					r.onload = () => {
 							let arr = CSVToArray(r.result, ";");
 							
 							let wanted = [];
-							for (let e of mapCheckboxes(name + "-field").entries()) {
+							for (let e of mapCheckboxes("field").entries()) {
 								if ((e[1] == fxcd("keep-option").checked) == true) {
 									wanted.push(e[0]);
 								}
@@ -137,105 +84,40 @@ function setupRowFilter() {
 				}
 		});
 	
-	
-	
-	/*
-	let c = xcd("h2");
-	axcd(c, txcd("Filtrer rader i CSV-dokument"));
-	axcd(document.body, c);
-	
-	c = xcd("div");
-	c.id = "container";
-	c.classList.add("cont");
-	axcd(document.body, c);
-	
-	{
-		*/
-		/*
-		unitTestBtn(c);
-		let f = xcd("input");
-		f.type = "file";
-		f.id = "file";
-		axcd(c, f);
-		axcd(c, xcd("br"));
 		
-		f = xcd("form");
-		let l = labelTag("remove-option", "Filtrer bort");
-		axcd(f, radioButtonTag("remove-option", "radio-val", "remove", true));
-		axcd(f, l);
-		axcd(f, xcd("br"));
-		l.onclick = () => { toggleCheckbox("remove-option"); radioFn(); };
+	let spinner = fxcd("spinner");
+	fxcd("contrast-column").onchange = () => {
+			spinnerFunction ("spinner", () => {
+					ready["C"] = 0;
+				});
+		};
 		
-		l = labelTag("keep-option", "Behold");
-		axcd(f, radioButtonTag("keep-option", "radio-val", "keep", false));
-		axcd(f, l);
-		axcd(f, xcd("br"));
-		l.onclick = () => { toggleCheckbox("keep-option"); radioFn(); };
-		axcd(c, f);
-		*/
-		/*
-		f = fileInputTag("contrast-file");
-		l = xcd("select");
-		
-		axcd(c, f);
-		addLine(c);
-		
-		axcd(c, txcd("Konstrast-kolonne: "));
-		
-		l.id = "contrast-column";
-		axcd(l, optionTag("Velg", true, true));
-		axcd(c, l);
-		addLine(c);
-		addLine(c);
-		*/
-		/*
-		fxcd("keep-form").onchange = () => {
-				xc("loff");
-			};*/
-		
-		let spinner = fxcd("spinner");
-		fxcd("contrast-column").onchange = () => {
-				spinnerFunction ("spinner", () => {
-						ready["C"] = 0;
-					});
-			};
-			
-		fxcd("contrast-file").onchange = (evt) => {
-				spinnerFunction ("spinner", () => {
-						if (evt.target.files.length >= 1) {
-							let r = new FileReader();
-							r.onload = () => {
-									let l = fxcd("contrast-column");
-									l.innerHTML = "";
-									axcd(l, optionTag("Velg", true, true));
-									let arr = CSVToArray(r.result, ";");
-									for (let e of arr[0]) {
-										if (isInvalid(e)) {
-											continue;
-										}
-										axcd(l, optionTag(e, false, false));
+	fxcd("contrast-file").onchange = (evt) => {
+			spinnerFunction ("spinner", () => {
+					if (evt.target.files.length >= 1) {
+						let r = new FileReader();
+						r.onload = () => {
+								let l = fxcd("contrast-column");
+								l.innerHTML = "";
+								axcd(l, optionTag("Velg", true, true));
+								let arr = CSVToArray(r.result, ";");
+								for (let e of arr[0]) {
+									if (isInvalid(e)) {
+										continue;
 									}
-									contrastCSV = arr;
-									ready['B'] = 0;
-								};
-							r.readAsText(evt.target.files[0], "iso-8859-1");
-											
-						} else {
-							ready['B'] = 1;
-						}
-					});
-			};
-			/*
-		axcd(c, buttonTag("download", "Last ned CSV", true));
-		axcd(c, txcd(" "));
+									axcd(l, optionTag(e, false, false));
+								}
+								contrastCSV = arr;
+								ready['B'] = 0;
+							};
+						r.readAsText(evt.target.files[0], "iso-8859-1");
+										
+					} else {
+						ready['B'] = 1;
+					}
+				});
+		};
 		
-		axcd(c, spinnerTag("spinner"));
-		*/
-		/*
-	}
-	
-	axcd(document.body, c);
-	*/
 	let button = fxcd("download");
 	let file = fxcd("file");
 	file.onchange = () => {

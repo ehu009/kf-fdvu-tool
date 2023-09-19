@@ -173,18 +173,13 @@ function begin() {
 					
 					let contracts = filterContracts(contracts, rentables);
 					let filteredInvoices = filterInvoices(contracts, invoices);
+					
 					/*
 						tillat nedlasting
 					*/
 					let btn = fxcd("download");
 					btn.disabled = false;
 					downloadButton(btn, filteredInvoices, "fakturalinjer - filtrert");
-					/*
-					btn.onclick = () => {
-							downloadCSV(arrayToCSV(filteredInvoices,";"), "fakturalinjer - filtrert.csv");
-						};
-						*/
-						
 					
 					/*
 						tegn
