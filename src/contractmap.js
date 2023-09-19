@@ -148,7 +148,6 @@ function begin() {
 			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
-					CSVRemoveBlanks(rentablesList);
 					ready["countA"] -= 1;
 				}
 			f1.readAsText(rentables.files[0], "iso-8859-1");
@@ -156,7 +155,6 @@ function begin() {
 			
 			f2.onload = () => {
 					contractList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -165,8 +163,6 @@ function begin() {
 	document.addEventListener(eventName, () => {
 			
 			let out = filter(contractList, rentablesList);
-			
-			
 			
 			
 			let btn = fxcd("download");

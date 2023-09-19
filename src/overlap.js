@@ -48,7 +48,6 @@ function setupCustomerOverlapFilter() {
 			let f2 = new FileReader();
 			f2.onload = () => {
 				contractList = CSVToArray(f2.result, ";");
-				CSVRemoveBlanks(contractList);
 				ready["count"] -= 1;
 			};
 			f2.readAsText(contracts.files[0], "iso-8859-1");
@@ -277,7 +276,6 @@ function setupContractOverlapFilter() {
 			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(contractList);
 					ready["count"] -= 1;
 				};
 			
@@ -377,7 +375,6 @@ function setupRentableOverlapFilter() {
 			let f2 = new FileReader();
 			f2.onload = () => {
 					rentablesList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(rentablesList);
 					ready["count"] -= 1;
 				};
 			

@@ -163,7 +163,6 @@ function setupKeyFilter() {
 			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
-					CSVRemoveBlanks(rentablesList);
 					dataReady["count"] -= 1;
 				};
 			f2.onload = () => {

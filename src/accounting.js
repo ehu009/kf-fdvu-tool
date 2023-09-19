@@ -352,7 +352,6 @@ nummer, navn, sum, aktiv
 			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
-					CSVRemoveBlanks(contractList);
 					xc(contractList[0]);
 					ready["countB"] -= 1;
 				};
@@ -528,7 +527,6 @@ function beginGainCalc() {
 			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(contractList);
 					ready["countB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0], "iso-8859-1");

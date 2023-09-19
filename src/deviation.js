@@ -76,12 +76,10 @@ function begin() {
 				
 				f1.onload = () => {
 						rentables = CSVToArray(f1.result, ";");
-						CSVRemoveBlanks(rentables);
 						ready["countA"] -=1;
 					};
 				f2.onload = () => {
 						deviations = CSVToArray(f2.result, ";");
-						CSVRemoveBlanks(deviations);
 						ready["countB"] -= 1;
 					};
 				

@@ -35,7 +35,8 @@ function CSVToArray( strData, strDelimiter ){
 		}
 		arrData[ arrData.length - 1 ].push( strMatchedValue );
 	}
-	return( arrData );
+	CSVRemoveBlanks(arrData);
+	return arrData;
 }
 
 function arrayToCSV(arr, separator) {

@@ -47,7 +47,6 @@ function begin() {
 						let f = new FileReader();
 						f.onload = () => {
 								let c = CSVToArray(f.result, ";");
-								CSVRemoveBlanks(c);
 								csvs.push(c);
 								ready["count"] -=1;
 							};
