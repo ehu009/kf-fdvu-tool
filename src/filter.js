@@ -173,12 +173,100 @@ function setupRowFilter() {
 }
 
 function testRowFilter() {
+	/*
+	let csv = [["col a", "col b", "col c"],
+			["1234", "1235", "1236"], 
+			["1134", "1135", "1136"], 
+			["1580", "1580", "1580"]
+		];
 	
+	let q1 = arrayColFilter(csv, ["col a", "col b"]);
+	let q2 = arrayColFilter(csv, ["col b", "col c"]);
+	
+	let wanted1 = [["col a", "col b"],
+			["1234", "1235"],
+			["1134", "1135"],
+			["1580", "1580"],
+		];
+	let wanted2 = [["col b", "col c"],
+			["1235", "1236"], 
+			["1135", "1136"], 
+			["1580", "1580"]
+		];
+	
+	let err = false;
+	for (let r = 0; r < q1.length; r += 1) {
+		for (let c = 0; c < q1[r].length; c += 1) {
+			if (q1[r][c] != wanted1[r][c]) {
+				err = true;
+				break;
+			}
+		}
+		if (err) {
+			break;
+		}
+	}
+	for (let r = 0; r < q2.length; r += 1) {
+		for (let c = 0; c < q2[r].length; c += 1) {
+			if (q2[r][c] != wanted2[r][c]) {
+				err = true;
+				break;
+			}
+		}
+		if (err) {
+			break;
+		}
+	}
+	return err;
+	*/
 	return true;
 }
 function testColFilter() {
 	
-	return true;
+	let csv = [["col a", "col b", "col c"],
+			["1234", "1235", "1236"], 
+			["1134", "1135", "1136"], 
+			["1580", "1580", "1580"]
+		];
+	
+	let q1 = arrayColFilter(csv, ["col a", "col b"]);
+	let q2 = arrayColFilter(csv, ["col b", "col c"]);
+	
+	let wanted1 = [["col a", "col b"],
+			["1234", "1235"],
+			["1134", "1135"],
+			["1580", "1580"],
+		];
+	let wanted2 = [["col b", "col c"],
+			["1235", "1236"], 
+			["1135", "1136"], 
+			["1580", "1580"]
+		];
+	
+	let err = false;
+	for (let r = 0; r < q1.length; r += 1) {
+		for (let c = 0; c < q1[r].length; c += 1) {
+			if (q1[r][c] != wanted1[r][c]) {
+				err = true;
+				break;
+			}
+		}
+		if (err) {
+			break;
+		}
+	}
+	for (let r = 0; r < q2.length; r += 1) {
+		for (let c = 0; c < q2[r].length; c += 1) {
+			if (q2[r][c] != wanted2[r][c]) {
+				err = true;
+				break;
+			}
+		}
+		if (err) {
+			break;
+		}
+	}
+	return err;
 }
 
 function unitTest () {
