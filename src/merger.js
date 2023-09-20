@@ -88,7 +88,7 @@ function unitTest() {
 			["010182", "kjeller", "729", "harstad"],
 			["010183", "bod", "729", "harstad"],
 			["010184", "stue", "729", "harstad"],
-			["010185", "loft", "729", "harstad"]]
+			["010185", "loft", "729", "harstad"]
 		];
 		
 	let expected = [
