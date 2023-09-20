@@ -235,6 +235,9 @@ function unitTest() {
 				break;
 			}
 		}
+		if (err) {
+			break;
+		}
 	}
 	return err;
 	

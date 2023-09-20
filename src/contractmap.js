@@ -189,14 +189,10 @@ function unitTest() {
 		];
 	
 	let err = false;
-	let k = 0;
 	for (let i = 0; i < f.length; i+= 1) {
 		for (let c = 0; c < f[i].length; c += 1) {
-			let current = f[i][c];
-			let want = wanted[i][c];
-			if (current != want) {
+			if (f[i][c] != wanted[i][c]) {
 				err = true;
-				xc(current, want);
 				break;
 			}
 		}
