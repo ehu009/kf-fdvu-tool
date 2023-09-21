@@ -3,6 +3,24 @@
 
 function begin() {
 	
+	let n = parseInt(fxcd("number-select").value);
+	const eventName = "dataReady";
+	let readyTarget = {
+			count: n
+		};
+	
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					
+					if (target[key] == 0) {
+						document.dispatchEvent(readyEvent);
+					}
+					return true;
+				}
+		});
+	
 	fxcd("number-select").onchange = (evt) => {
 			let s = fxcd("field");
 			s.innerHTML = "";
@@ -16,61 +34,39 @@ function begin() {
 				axcd(line, fileInputTag("file"+i));
 				axcd(s, line);
 			}
-		}
+		};
 	
+	let csvs = [];
 	
 	fxcd("merge").onclick = () => {
-			
-			let n = parseInt(fxcd("number-select").value);
-			const eventName = "dataReady";
-			let readyTarget = {
-					count: n
-				};
-			
-			const readyEvent = new Event(eventName);
-			let ready = new Proxy(readyTarget, {
-					set: (target, key, value) => {
-							target[key] = value;
-							
-							if (target[key] == 0) {
-								document.dispatchEvent(readyEvent);
-							}
-							return true;
-						}
-				});
-			
-			let csvs = [];
-			{
-				for (let i = 1; i <= n; i += 1) {
-					
-					try {
-						let f = new FileReader();
-						f.onload = () => {
-								let c = CSVToArray(f.result, ";");
-								csvs.push(c);
-								ready["count"] -=1;
-							};
-						f.readAsText(fxcd("file"+i).files[0], "iso-8859-1");
-					}
-					catch (e) {
-						ready["count"] -=1;
-					}
+			csvs = [];
+			for (let i = 1; i <= n; i += 1) {
+				
+				try {
+					let f = new FileReader();
+					f.onload = () => {
+							let c = CSVToArray(f.result, ";");
+							csvs.push(c);
+							ready["count"] -=1;
+						};
+					f.readAsText(fxcd("file"+i).files[0], "iso-8859-1");
+				}
+				catch (e) {
+					ready["count"] -=1;
 				}
 			}
-			
-			document.addEventListener(eventName, () => {
-					
-					let out = mergeCSV(csvs);
-					hide(fxcd("spinner"));
-					
-					/*
-						tillat nedlasting
-					*/
-					let btn = fxcd("download");
-					btn.disabled = false;
-					downloadButton(btn, out, "csv - sammenføyd");
-				});
 		};
+		
+	document.addEventListener(eventName, () => {
+			
+			let out = mergeCSV(csvs);
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, out, "csv - sammenføyd");
+			hide(fxcd("spinner"));
+			
+		});
+		
 }
 
 
@@ -103,7 +99,7 @@ function unitTest() {
 			["010185", "loft", "729", "harstad"]
 		];
 	
-	let p = mergeCSV(csvs);
+	let p = mergeCSV([csv1, csv2]);
 	let err = false;
 	for (let i = 0; i < p.length; i+= 1) {
 		for (let c = 0; c < p[i].length; c += 1) {
