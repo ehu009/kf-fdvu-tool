@@ -26,6 +26,7 @@ function begin() {
 			s.innerHTML = "";
 			
 			let n = parseInt(evt.target.value);
+			ready['count'] = n;
 			
 			for (let i = 1; i <= n; i += 1) {
 				let line = xcd("p");

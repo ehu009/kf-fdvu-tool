@@ -23,9 +23,6 @@ let ready = new Proxy(readyTarget, {
 				return true;
 			}
 	});
-function resetTarget() {
-	
-}
 
 function filterContracts(contracts, rentables) {
 	/*
@@ -154,13 +151,14 @@ function begin() {
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			let f1 = new FileReader();
-			let f2 = new FileReader();
-			let f3 = new FileReader();
 			
 			rentables = null;
 			contracts = null;
 			invoices = null;
+			
+			let f1 = new FileReader();
+			let f2 = new FileReader();
+			let f3 = new FileReader();
 			
 			f1.onload = () => {
 					rentables = CSVToArray(f1.result, ";");
@@ -182,9 +180,7 @@ function begin() {
 			
 			
 	document.addEventListener(eventName, () => {
-			
-			let contracts = filterContracts(contracts, rentables);
-			let filteredInvoices = filterInvoices(contracts, invoices);
+			let filteredInvoices = filterInvoices(filterContracts(contracts, rentables), invoices);
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
@@ -192,12 +188,12 @@ function begin() {
 			
 			draw("result", filteredInvoices);
 			hide(spinner);
-		};
+		});
 }
 
 function unitTest() {
 	
-	let wantedInvoices = [
+	let wanted = [
 			["År/serienummer", "Faktura", "Nummer", "Leietaker", "Reskontronr", "Løpenummer", "Fasilitet", "Ordrenummer", "Tekst", "Konto", "Varenr", "Lønnsart", "Tilleggsinfo 1", "Fra dato", "Til dato", "Mengde", "Pris", "Sum", "Sum+MVA", "Rabatt", "Regulert den", "Neste regulering", "MVA-pliktig", "Manuell", "Sluttoppgjør"],
 			["2023014", "Husleie mai 2023", "7106638432", "Fredrik Puddingsen", "236249", "K00006331", "Sørslettveien 8, H 0201", "", "Husleie", "16300", "7200979", "", "", "01.05.2023", "31.05.2023", "1", "9744,44", "9744,44", "9744,44", "", "01.01.2023", "01.01.2024", "False", "False", "False"],
 			["2023001", "Husleie januar 2023", "7106638432", "Fredrik Puddingsen", "236249", "K00006331", "Sørslettveien 8, H 0201", "", "Husleie", "16300", "7200979", "", "", "01.01.2023", "31.01.2023", "1", "9744,44", "9744,44", "9744,44", "", "01.01.2023", "01.01.2024", "False", "False", "False"],

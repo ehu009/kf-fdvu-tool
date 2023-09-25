@@ -241,10 +241,10 @@ function testColFilter() {
 			["1580", "1580"]
 		];
 	
-	if (compareArrays(wanted1, arrayColFilter(csv, ["col a", "col b"])) {
+	if (compareArrays(wanted1, arrayColFilter(csv, ["col a", "col b"]))) {
 		return true;
 	}
-	if (compareArrays(wanted2, arrayColFilter(csv, ["col b", "col c"])) {
+	if (compareArrays(wanted2, arrayColFilter(csv, ["col b", "col c"]))) {
 		return true;
 	}
 	return false;
