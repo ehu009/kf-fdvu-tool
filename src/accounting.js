@@ -340,21 +340,23 @@ nummer, navn, sum, aktiv
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
+			
 			let f1 = new FileReader();
+			let f2 = new FileReader();
+			
 			f1.onload = () => {
 					activeList = CSVToArray(f1.result, ";");
 					CSVRemoveBlanks(activeList);
 					xc(activeList[0]);
 					ready["countB"] -= 1;
 				};
-			f1.readAsText(actives.files[0], "iso-8859-1");
-			
-			let f2 = new FileReader();
 			f2.onload = () => {
 					contractList = arrayColFilter(CSVToArray(f2.result, ";"), ["Fasilitetsnummer", "Fasilitet", "Sum", "Fra", "Til", "Leietaker", "Kontrakttype"]);
 					xc(contractList[0]);
 					ready["countB"] -= 1;
 				};
+			
+			f1.readAsText(actives.files[0], "iso-8859-1");
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }

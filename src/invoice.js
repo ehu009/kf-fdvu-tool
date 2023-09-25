@@ -23,6 +23,9 @@ let ready = new Proxy(readyTarget, {
 				return true;
 			}
 	});
+function resetTarget() {
+	
+}
 
 function filterContracts(contracts, rentables) {
 	/*
@@ -103,14 +106,27 @@ function filterInvoices(contractMap, invoices) {
 	return out;
 }
 
+function draw(container, arr) {
+	let con = fxcd(container);
+	con.innerHTML = "";
+	arr.forEach((invoice) => {
+			let p = xcd("p");
+			let out = [invoice[invoiceIdx['løpenummer']], invoice[invoiceIdx['fasilitetsnummer']], invoice[invoiceIdx['fakturatekst']]];
+			axcd(p, txcd(out[0]));
+			addLine(p);
+			axcd(p, txcd(out[1]));
+			addLine(p);
+			axcd(p, txcd(out[2]));
+			p.style.border = "1px solid black";
+			axcd(result, p);
+		});
+}
 
 function begin() {
 	
 	let rentables = null;
 	let contracts = null;
 	let invoices = null;
-	
-	fxcd("filter").disabled = true;
 	
 	fxcd("rentables").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
@@ -134,74 +150,52 @@ function begin() {
 			}
 		};
 	
-	
+	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {
+			show(spinner);
+			let f1 = new FileReader();
+			let f2 = new FileReader();
+			let f3 = new FileReader();
 			
-			{
-				let f1 = new FileReader();
-				let f2 = new FileReader();
-				let f3 = new FileReader();
-				
-				rentables = null;
-				contracts = null;
-				invoices = null;
-				
-				f1.onload = () => {
-						rentables = CSVToArray(f1.result, ";");
-						ready["countA"] -=1;
-					};
-				f2.onload = () => {
-						contracts = CSVToArray(f2.result, ";");
-						ready["countB"] -= 1;
-					};
-				f3.onload = () => {
-						invoices = CSVToArray(f3.result, ";");
-						ready["countC"] -= 1;
-					};
-				
-				f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
-				f2.readAsText(fxcd("contracts").files[0], "iso-8859-1");
-				f3.readAsText(fxcd("invoices").files[0], "iso-8859-1");
-			}
+			rentables = null;
+			contracts = null;
+			invoices = null;
+			
+			f1.onload = () => {
+					rentables = CSVToArray(f1.result, ";");
+					ready["countA"] -=1;
+				};
+			f2.onload = () => {
+					contracts = CSVToArray(f2.result, ";");
+					ready["countB"] -= 1;
+				};
+			f3.onload = () => {
+					invoices = CSVToArray(f3.result, ";");
+					ready["countC"] -= 1;
+				};
+			
+			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
+			f2.readAsText(fxcd("contracts").files[0], "iso-8859-1");
+			f3.readAsText(fxcd("invoices").files[0], "iso-8859-1");
+		};
 			
 			
-			document.addEventListener(eventName, () => {
-					
-					let contracts = filterContracts(contracts, rentables);
-					let filteredInvoices = filterInvoices(contracts, invoices);
-					
-					/*
-						tillat nedlasting
-					*/
-					let btn = fxcd("download");
-					btn.disabled = false;
-					downloadButton(btn, filteredInvoices, "fakturalinjer - filtrert");
-					
-					/*
-						tegn
-					*/
-					let con = fxcd("result");
-					con.innerHTML = "";
-					filteredInvoices.forEach((invoice) => {
-							let p = xcd("p");
-							let out = [invoice[invoiceIdx['løpenummer']], invoice[invoiceIdx['fasilitetsnummer']], invoice[invoiceIdx['fakturatekst']]];
-							axcd(p, txcd(out[0]));
-							addLine(p);
-							axcd(p, txcd(out[1]));
-							addLine(p);
-							axcd(p, txcd(out[2]));
-							p.style.border = "1px solid black";
-							axcd(result, p);
-						});
-				});	
+	document.addEventListener(eventName, () => {
+			
+			let contracts = filterContracts(contracts, rentables);
+			let filteredInvoices = filterInvoices(contracts, invoices);
+			
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, filteredInvoices, "fakturalinjer - filtrert");
+			
+			draw("result", filteredInvoices);
+			hide(spinner);
 		};
 }
 
 function unitTest() {
-	
-	let filteredContracts = filterContracts(contractSample, rentableSample);
-	let filteredInvoices = filterInvoices(filteredContracts, invoiceSample);
 	
 	let wantedInvoices = [
 			["År/serienummer", "Faktura", "Nummer", "Leietaker", "Reskontronr", "Løpenummer", "Fasilitet", "Ordrenummer", "Tekst", "Konto", "Varenr", "Lønnsart", "Tilleggsinfo 1", "Fra dato", "Til dato", "Mengde", "Pris", "Sum", "Sum+MVA", "Rabatt", "Regulert den", "Neste regulering", "MVA-pliktig", "Manuell", "Sluttoppgjør"],
@@ -211,22 +205,5 @@ function unitTest() {
 			["2023001", "Husleie januar 2023", "21016729768", "Kjell Trell Trafikkuhell", "236676", "K00006433", "Sørslettveien 8, U 0101", "", "Husleie", "16300", "7200979", "", "", "01.02.2023", "28.02.2023", "1", "9739,12", "9739,12", "9739,12", "", "01.01.2023", "01.01.2024", "False", "False", "False"]
 		];
 	
-	
-	
-	let err = false;
-	for (let i = 0; i < filteredInvoices.length; i+= 1) {
-		for (let c = 0; c < filteredInvoices[i].length; c += 1) {
-			if (filteredInvoices[i][c] != wantedInvoices[i][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
-	}
-	return err;
-	
-	
-	
+	return compareArrays(wanted, filterInvoices(filterContracts(contractSample, rentableSample), invoiceSample));
 }

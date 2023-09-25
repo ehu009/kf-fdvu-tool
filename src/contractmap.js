@@ -180,25 +180,11 @@ function begin() {
 
 function unitTest() {
 	
-	let f = filter(contractSample, rentableSample);
-	
 	let wanted = [
 			["Løpenummer", "Overskrift", "Ekstern ID", "Leietaker", "Nummer", "Reskontronr", "Saksbehandler", "Fra", "Til", "Sum", "Kontrakt utgår", "Regulering", "Gjengs regulering", "Fasilitetsnummer", "Fasilitet", "Eiendomsnr", "Eiendomsnavn", "Byggnr", "Byggnavn", "Kontrakttype", "Fakturatype", "Mengde", "Faktura fra", "Fakturareferanse", "E-handel faktura", "Behandlingsstatus", "Sikkerhetstype", "Sikkerhetsbeløp", "Prisperiode", "Faktureringstermin", "Terminstart", "MVA-pliktig", "Merknad", "Seksjonstype"],
 			["K00006331", "Kontrakt for Fredrik Puddingsen", "", "Fredrik Puddingsen", "7106638432", "236249", "", "01.01.2008", "", "9744,44", "31.12.3000", "01.01.2024", "01.01.2025", "24979620030", "24979620030 Sørslettveien 8 H 0201", "1180", "Åsgård", "118006", "Åsgård Sørslettveien 8", "", "Etterskudd Agresso", "", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"],
 			["K00006433", "Kontrakt for Kjell Trell Trafikkuhell", "", "Kjell Trell Trafikkuhell", "21016729768", "236676", "", "01.01.2008", "", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24979620028", "24979620028 Sørslettveien 8 U 0101", "1180", "Åsgård", "118006", "Åsgård Sørslettveien 8", "", "Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"]
 		];
 	
-	let err = false;
-	for (let i = 0; i < f.length; i+= 1) {
-		for (let c = 0; c < f[i].length; c += 1) {
-			if (f[i][c] != wanted[i][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
-	}
-	return err;
+	return compareArrays(filter(contractSample, rentableSample));
 }

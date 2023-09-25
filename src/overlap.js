@@ -43,14 +43,18 @@ function setupCustomerOverlapFilter() {
 				ready["count"] += 1;
 			}
 		};
+	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			let f2 = new FileReader();
-			f2.onload = () => {
-				contractList = CSVToArray(f2.result, ";");
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+				contractList = CSVToArray(f.result, ";");
 				ready["count"] -= 1;
 			};
-			f2.readAsText(contracts.files[0], "iso-8859-1");
+			
+			f.readAsText(contracts.files[0], "iso-8859-1");
 		};
 		
 	document.addEventListener(eventName, () => {
@@ -135,6 +139,7 @@ function setupCustomerOverlapFilter() {
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende kontrakter");
+			
 			hide(spinner);
 		});	
 	
@@ -164,15 +169,10 @@ function setupContractOverlapFilter() {
 					return true;
 				}
 		});
-		
-		
-	{
-		
-		let i = fxcd("ignore-list");
-		for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
-			axcd(i, listTag(e));
-		}
-		
+	
+	let i = fxcd("ignore-list");
+	for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
+		axcd(i, listTag(e));
 	}
 	
 	let spinner = fxcd("spinner");
@@ -273,13 +273,15 @@ function setupContractOverlapFilter() {
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			let f2 = new FileReader();
-			f2.onload = () => {
-					contractList = CSVToArray(f2.result, ";");
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+					contractList = CSVToArray(f.result, ";");
 					ready["count"] -= 1;
 				};
 			
-			f2.readAsText(contracts.files[0], "iso-8859-1");
+			f.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
 
@@ -372,12 +374,14 @@ function setupRentableOverlapFilter() {
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			let f2 = new FileReader();
-			f2.onload = () => {
-					rentablesList = CSVToArray(f2.result, ";");
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+					rentablesList = CSVToArray(f.result, ";");
 					ready["count"] -= 1;
 				};
 			
-			f2.readAsText(rentables.files[0], "iso-8859-1");
+			f.readAsText(rentables.files[0], "iso-8859-1");
 		};
 }

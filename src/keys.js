@@ -154,9 +154,10 @@ function setupKeyFilter() {
 			}
 		};
 	
+	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {
-			show(fxcd("spinner"));
+			show(spinner);
 			
 			let f1 = new FileReader();
 			let f2 = new FileReader();
@@ -210,7 +211,8 @@ function setupKeyFilter() {
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, c, fname);
-			hide(fxcd("spinner"));
+			
+			hide(spinner);
 		});
 }
 
@@ -218,7 +220,6 @@ function setupKeyFilter() {
 
 function unitTest() {
 	
-	let f = filter(rentableSample, keySample);
 	let wanted = [
 			["Nummer", "Navn", "Systemnr", "Antall nøkler", "Merknad", "Eiendomsnr", "Eiendomsnavn", "Bygningsnr", "Bygningsnavn", "Seksjonsnr", "Seksjonsnavn"],
 			["546", "Sørslettvegen 3 - H0101 - Mellomdør til Underetasjen", " DXT 557    K2", "2", "SKAL IKKE UTLEVERES LEIETAKER", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
@@ -226,19 +227,5 @@ function unitTest() {
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 		];
 	
-	let err = false;
-	let k = 0;
-	for (let i = 0; i < f.length; i+= 1) {
-		for (let c = 0; c < f[i].length; c += 1) {
-			if (f[i][c] != wanted[i][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
-	}
-	return err;
-	
+	return compareArrays(wanted, filter(rentableSample, keySample));
 }

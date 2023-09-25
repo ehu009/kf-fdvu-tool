@@ -41,10 +41,10 @@ function filter(deviations, rentables) {
 		});
 }
 
-function draw(result) {
-	let con = fxcd("result");
+function draw(container, arr) {
+	let con = fxcd(container);
 	con.innerHTML = "";
-	result.forEach((d) => {
+	arr.forEach((d) => {
 			let p = xcd("p");
 			let out = [
 					d[deviationIdx['avviksnavn']],
@@ -105,27 +105,23 @@ function begin() {
 			
 			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
 			f2.readAsText(fxcd("deviations").files[0], "iso-8859-1");
-			hide(spinner);
 			
 		};
 		
 	document.addEventListener(eventName, () => {
-			show(spinner);
 			
 			let f = filter(deviations, rentables);
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, f, "avvik - filtrert")
 			
-			draw(f);
+			draw("result", f);
 			hide(spinner);
 			
 		});
 }
 
 function unitTest() {
-	
-	let f = filter(deviationSample, rentableSample);
 	
 	let wanted = [
 			["Navn", "Merknad", "Prioritet", "Tilstandsgrad", "Konsekvensgrad", "Kostnad", "Ansvarlig", "Meldt av", "Fasilitet", "Eiendom", "Bygning", "Opprettet dato", "Registrert", "Utbedret", "Epost sendt", "Fra helpdesk", "Fra kontrollplan", "Fag", "Frekvens", "NS 3451", "NS 3454", "Oppgave", "Planlagt start oppgave", "Budsjett oppgave", "Avvikstype"],
@@ -134,17 +130,5 @@ function unitTest() {
 			["Montering av nye utelys.", "Det er behov for lys ute på nordsiden av bygget. Det blir gangvei for beboer i leilighet i underetasjen på denne siden av bygget. Skift ut de to utelysene som stå på østsiden av bygget + et nytt utelys på nordsiden.", "4", "1 - svake symptomer", "2 - middels store konsekvenser", "", "Geir Frode Olsen", "Finn Løkvoll", "118007 Åsgård Sørslettvegen 3", "1180 Åsgård", "118007 Åsgård Sørslettvegen 3", "15.12.2021", "15.12.2021", "", "", "False", "False", "Elektriske anlegg", "", "2 Bygning", "3 DRIFTSKOSTNADER ", "", "", "0", "Elektriske Anlegg"],
 		];
 	
-	let err = false;
-	for (let i = 0; i < f.length; i+= 1) {
-		for (let c = 0; c < f[i].length; c += 1) {
-			if (f[i][c] != wanted[i][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
-	}
-	return err;
+	return compareArrays(wanted, filter(deviationSample, rentableSample));
 }

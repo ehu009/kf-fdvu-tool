@@ -8,6 +8,23 @@ function testAndAlert() {
 	}
 }
 
+function compareArrays(wanted, gotten) {
+	let err = false;
+	for (let i = 0; i < gotten.length; i+= 1) {
+		let row = gotten[i];
+		let wantedRow = wanted[i];
+		if (row.length != wantedRow.length) {
+			return true;
+		}
+		for (let c = 0; c < row.length; c += 1) {
+			if (row[c] != wantedRow[c]) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 let invoiceSample = [
 		["År/serienummer", "Faktura", "Nummer", "Leietaker", "Reskontronr", "Løpenummer", "Fasilitet", "Ordrenummer", "Tekst", "Konto", "Varenr", "Lønnsart", "Tilleggsinfo 1", "Fra dato", "Til dato", "Mengde", "Pris", "Sum", "Sum+MVA", "Rabatt", "Regulert den", "Neste regulering", "MVA-pliktig", "Manuell", "Sluttoppgjør"],
 		["2023004", "Husleie februar 2023", "5027122363", "Øivind Etternavn", "243042", "K00004833", "Nedre Storvollen 22", "", "Husleie", "16300", "7200973", "", "", "01.03.2023", "31.03.2023", "1", "8712", "8712", "8712", "", "01.11.2021", "", "False", "False", "False"],

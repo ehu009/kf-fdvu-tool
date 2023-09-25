@@ -37,8 +37,10 @@ function begin() {
 		};
 	
 	let csvs = [];
+	let spinner = fxcd("spinner");
 	
 	fxcd("merge").onclick = () => {
+			show(spinner);
 			csvs = [];
 			for (let i = 1; i <= n; i += 1) {
 				
@@ -63,7 +65,7 @@ function begin() {
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "csv - sammenføyd");
-			hide(fxcd("spinner"));
+			hide(spinner);
 			
 		});
 		
@@ -99,18 +101,5 @@ function unitTest() {
 			["010185", "loft", "729", "harstad"]
 		];
 	
-	let p = mergeCSV([csv1, csv2]);
-	let err = false;
-	for (let i = 0; i < p.length; i+= 1) {
-		for (let c = 0; c < p[i].length; c += 1) {
-			if (p[i][c] != expected[i][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
-	}
-	return (err);
+	return compareArrays(expected, mergeCSV([csv1, csv2]));
 }
