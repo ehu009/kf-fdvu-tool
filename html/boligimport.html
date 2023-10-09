@@ -1,0 +1,64 @@
+<html>
+<head>
+<script type="text/javascript" src="../src/csv.js"></script>
+<script type="text/javascript" src="../src/dom.js"></script>
+<script type="text/javascript" src="../src/util.js"></script>
+<script type="text/javascript" src="../src/tests.js"></script>
+<script type="text/javascript" src="../src/kobo.js"></script>
+<link rel="stylesheet" href="../src/style.css"/>
+</head>
+
+<body onload="begin();">
+<h2>
+Generer boligimport til Kobo
+</h2>
+<button type="button" onclick="testAndAlert();">Kjør enhetstest</button>
+<br/>
+<br/>
+
+<div id="container" class="cont">
+
+Liste over ønskede seksjoner:
+<br/>
+<input type="file" id="rentables"></input>
+<br/>
+<br/>
+
+Liste over alle kontrakter:
+<br/>
+<input type="file" id="contracts"></input>
+<br/>
+<br/>
+
+Liste over alle grunneiendommer:
+<br/>
+<input type="file" id="estates"></input>
+<br/>
+<br/>
+
+Liste over alle fasilitetsbeskrivelser:
+<br/>
+<input type="file" id="facilities"></input>
+<br/>
+<br/>
+
+<button id="filter" type="button" disabled>
+Filtrer
+</button>
+&nbsp;
+<button id="download" type="button" disabled>
+Last ned CSV
+</button>
+&nbsp;
+<div class="spinning" id="spinner">⚙️</div>
+<br/>
+<br/>
+<ul id="ignore-list"></ul>
+<br/>
+</div>
+
+<div class="cont" id="table-container">
+<table id="table"></table>
+</div>
+</body>
+</html>
