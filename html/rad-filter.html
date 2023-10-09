@@ -19,7 +19,14 @@ Filtrer rader i CSV-dokument
 <div id="container" class="cont">
 <input type="file" id="file"></input>
 <br/>
-<form id="keep-form">
+ID-kolonne:
+&nbsp;
+<select id="id-column">
+<option selected disabled>Velg</option>
+</select>
+<br/><br/>
+Filter:
+<br/>
 
 <input type="radio" id="remove-option" value="radio-val" onclick="toggleCheckbox('keep-option');" checked></input>
 <label for="remove-option"  >
@@ -31,9 +38,7 @@ Filtrer bort
 Behold
 </label>
 <br/>
-</form>
-Filter:
-&nbsp;
+
 <input type="file" id="contrast-file"></input>
 <br/>
 
