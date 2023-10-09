@@ -163,9 +163,10 @@ function labelTag(target, txt) {
 	axcd(l, txcd(txt));
 	return l;
 }
-function optionTag(txt, selected, disabled) {
+function optionTag(txt, val, selected, disabled) {
 	let t = xcd("option");
 	axcd(t, txcd(txt));
+	t.value = val;
 	t.selected = selected;
 	t.disabled = disabled;
 	return t;
