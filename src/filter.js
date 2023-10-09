@@ -52,6 +52,27 @@ function setupColumnFilter() {
 }
 
 
+function arrayRowFilter(inputCSV, idIdx, filterCSV, filterIdx, keepOpt) {
+	let output = [inputCSV[0]];
+	for (let i = 1; i < inputCSV.length; i += 1) {
+		
+		const a = inputCSV[i][idIdx];
+		let found = false;
+		
+		for (let j = 0; j < filterCSV.length; j += 1) {
+			const b = filterCSV[j][filterIdx];
+			if (a == b) {
+				found = true;
+				break;
+			}
+		}
+		if ((found && keepOpt) || (!found && !keepOpt)) {
+			output.push(a);
+		}
+	}
+	return output;
+}
+
 function setupRowFilter() {
 	let inputCSV = null;
 	let contrastCSV = null;
@@ -61,7 +82,8 @@ function setupRowFilter() {
 	let readyTarget = {
 			A: 1,
 			B: 1,
-			C: 1
+			C: 1,
+			D: 1,
 		};
 	
 	const readyEvent = new Event(eventName);
@@ -69,7 +91,7 @@ function setupRowFilter() {
 			set: (target, key, value) => {
 					target[key] = value;
 					
-					if (target["A"]  < 1 && target["B"]  < 1 && target["C"] < 1) {
+					if (target["A"]  < 1 && target["B"]  < 1 && target["C"] < 1 && target["D"] < 1) {
 						document.dispatchEvent(readyEvent);
 					} else {
 						if (target['A'] > 0) {
@@ -92,7 +114,12 @@ function setupRowFilter() {
 			ready["C"] = 0;
 			hide(spinner);
 		};
-		
+	fxcd("id-column").onchange = () => {
+			show(spinner);
+			ready["D"] = 0;
+			hide(spinner);
+		};	
+	
 	fxcd("contrast-file").onchange = (evt) => {
 			show(spinner);
 			if (evt.target.files.length >= 1) {
@@ -100,13 +127,15 @@ function setupRowFilter() {
 				r.onload = () => {
 						let l = fxcd("contrast-column");
 						l.innerHTML = "";
-						axcd(l, optionTag("Velg", true, true));
+						axcd(l, optionTag("Velg", -1, true, true));
 						let arr = CSVToArray(r.result, ";");
-						for (let e of arr[0]) {
+						
+						for (let i = 0; i < arr[0].length; i += 1) {
+							const e = arr[0][i];
 							if (isInvalid(e)) {
 								continue;
 							}
-							axcd(l, optionTag(e, false, false));
+							axcd(l, optionTag(e, i, false, false));
 						}
 						contrastCSV = arr;
 						ready['B'] = 0;
@@ -127,6 +156,19 @@ function setupRowFilter() {
 				let r = new FileReader();
 				r.onload = () => {
 						let arr = CSVToArray(r.result, ";");
+						
+						let l = fxcd("id-column");
+						l.innerHTML = "";
+						axcd(l, optionTag("Velg", -1, true, true));
+						
+						for (let i = 0; i < arr[0].length; i += 1) {
+							const e = arr[0][i];
+							if (isInvalid(e)) {
+								continue;
+							}
+							axcd(l, optionTag(e, i, false, false));
+						}
+						
 						ready['A'] = 0;
 						inputCSV = arr;
 					};
@@ -139,9 +181,16 @@ function setupRowFilter() {
 	
 	document.addEventListener(eventName, () => {
 			show(spinner);
-			outputCSV = [inputCSV[0]];
 			
-			const filterIdx = contrastCSV[0].indexOf(fxcd("contrast-column").value);
+			const idIdx = parseInt(fxcd("id-column").value);
+			const filterIdx = parseInt(fxcd("contrast-column").value);
+			const keep = fxcd("keep-option").checked;
+			
+			outputCSV = arrayRowFilter(inputCSV, idIdx, contrastCSV, filterIdx, keep);
+			
+			
+			
+			/*
 			if (fxcd("keep-option").checked == false) {
 				let mep = new Map();
 				for (let i = 1; i < inputCSV.length; i += 1) {
@@ -162,7 +211,7 @@ function setupRowFilter() {
 						}
 					}
 				}
-			}
+			}*/
 				
 			button.disabled = false;
 			hide(spinner);
