@@ -174,53 +174,38 @@ function setupRowFilter() {
 }
 
 function testRowFilter() {
-	/*
-	let csv = [["col a", "col b", "col c"],
-			["1234", "1235", "1236"], 
-			["1134", "1135", "1136"], 
-			["1580", "1580", "1580"]
+	
+	const csv = [["fisk", "col a", "col b", "col c"],
+			["7", "1234", "1235", "1236"], 
+			["9", "1134", "1135", "1136"], 
+			["0", "1134", "13", "2136"], 
+			["1", "1134", "35", "1236"], 
+			["2", "1580", "1580", "1580"]
+		];
+	const filter1 = [["fisk", "col a", "col b", "col c"],
+			["9", "1134", "1135", "1136"]
+		];
+	const filter2 = [["fisk", "col a", "col b", "col c"],
+			["1", "1134", "35", "1236"]
 		];
 	
-	let q1 = arrayColFilter(csv, ["col a", "col b"]);
-	let q2 = arrayColFilter(csv, ["col b", "col c"]);
-	
-	let wanted1 = [["col a", "col b"],
-			["1234", "1235"],
-			["1134", "1135"],
-			["1580", "1580"],
+	const wanted1 = [["fisk", "col a", "col b", "col c"],
+			["9", "1134", "1135", "1136"], 
+			["0", "1134", "13", "2136"], 
+			["1", "1134", "35", "1236"]
 		];
-	let wanted2 = [["col b", "col c"],
-			["1235", "1236"], 
-			["1135", "1136"], 
-			["1580", "1580"]
+	const wanted2 = [["fisk", "col a", "col b", "col c"],
+			["7", "1234", "1235", "1236"],
+			["1", "1134", "35", "1236"]
 		];
 	
-	let err = false;
-	for (let r = 0; r < q1.length; r += 1) {
-		for (let c = 0; c < q1[r].length; c += 1) {
-			if (q1[r][c] != wanted1[r][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
+	if (compareArrays(wanted1, arrayRowFilter(csv, filter, "col a", true)) {
+		return true;
 	}
-	for (let r = 0; r < q2.length; r += 1) {
-		for (let c = 0; c < q2[r].length; c += 1) {
-			if (q2[r][c] != wanted2[r][c]) {
-				err = true;
-				break;
-			}
-		}
-		if (err) {
-			break;
-		}
+	if (compareArrays(wanted2, arrayRowFilter(csv, filter, "col c", true)) {
+		return true;
 	}
-	return err;
-	*/
-	return true;
+	return false;
 }
 function testColFilter() {
 	
