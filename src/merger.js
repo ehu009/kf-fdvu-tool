@@ -25,7 +25,7 @@ function begin() {
 			let s = fxcd("field");
 			s.innerHTML = "";
 			
-			let n = parseInt(evt.target.value);
+			n = parseInt(evt.target.value);
 			ready['count'] = n;
 			
 			for (let i = 1; i <= n; i += 1) {
@@ -59,7 +59,6 @@ function begin() {
 				}
 			}
 		};
-		
 	document.addEventListener(eventName, () => {
 			
 			let out = mergeCSV(csvs);
