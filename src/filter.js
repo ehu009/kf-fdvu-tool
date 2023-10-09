@@ -173,6 +173,7 @@ function setupRowFilter() {
 		};
 }
 
+
 function testRowFilter() {
 	
 	const csv = [["fisk", "col a", "col b", "col c"],
@@ -182,11 +183,11 @@ function testRowFilter() {
 			["1", "1134", "35", "1236"], 
 			["2", "1580", "1580", "1580"]
 		];
-	const filter1 = [["fisk", "col a", "col b", "col c"],
-			["9", "1134", "1135", "1136"]
+	const filter1 = [["col a", "col b", "col c"],
+			["1134", "1135", "1136"]
 		];
-	const filter2 = [["fisk", "col a", "col b", "col c"],
-			["1", "1134", "35", "1236"]
+	const filter2 = [["fisk", "col a", "col c"],
+			["1", "1134", "1236"]
 		];
 	
 	const wanted1 = [["fisk", "col a", "col b", "col c"],
@@ -199,10 +200,10 @@ function testRowFilter() {
 			["1", "1134", "35", "1236"]
 		];
 	
-	if (compareArrays(wanted1, arrayRowFilter(csv, filter, "col a", true)) {
+	if (compareArrays(wanted1, arrayRowFilter(csv, 1, filter, 0, true))) {
 		return true;
 	}
-	if (compareArrays(wanted2, arrayRowFilter(csv, filter, "col c", true)) {
+	if (compareArrays(wanted2, arrayRowFilter(csv, 3, filter, 2, true))) {
 		return true;
 	}
 	return false;
