@@ -1,2 +1,2 @@
 
-.\force_encoding.rb %*
+.\src\force_encoding.rb %*
