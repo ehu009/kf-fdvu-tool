@@ -70,8 +70,7 @@ function filterContracts(contracts, rentables) {
 	return filteredContracts;
 }
 
-function filterInvoices(contractMap, invoices) {
-	
+function filterInvoices(contracts, invoices) {
 	/*
 		velg kun fakturalinjer med løpenummer i filtrerte kontrakter
 	*/
@@ -83,7 +82,7 @@ function filterInvoices(contractMap, invoices) {
 			}
 			current = current.trim();
 			
-			for (let i = 1; i < contracts.length; i += 1) {
+			for (let i = 0; i < contracts.length; i += 1) {
 				
 				let contractId = contracts[i][contractIdx['løpenummer']];
 				if (isInvalid(contractId)) {
