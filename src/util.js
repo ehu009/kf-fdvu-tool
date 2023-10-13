@@ -118,14 +118,15 @@ function arrayAddition(src, dst) {
 	}
 }
 function arrayCompare(a, b) {
-	let out = (a.length - b.length == 0);
+	if (a.length - b.length != 0) {
+		return false;
+	}
 	for (let i = 0; i < a.length; i += 1) {
 		if (a[i] != b[i]) {
-			out = false;
-			break;
+			return false;
 		}
 	}
-	return out;
+	return true;
 }
 function arrayColFilter(array, wantedList) {
 	let filterIdx = [];
