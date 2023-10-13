@@ -67,7 +67,40 @@ function begin() {
 				}
 		});
 		
-	
+	let file = fxcd("file");
+	file.onchange = () => {
+			show(spinner);
+			if (file.files.length >= 1) {
+				let r = new FileReader();
+				r.onload = () => {
+						let arr = CSVToArray(r.result, ";");
+						
+						let a = fxcd("begin-column");
+						a.innerHTML = "";
+						axcd(a, optionTag("Velg", -1, true, true));
+						
+						let b = fxcd("end-column");
+						b.innerHTML = "";
+						axcd(b, optionTag("Velg", -1, true, true));
+						
+						for (let i = 0; i < arr[0].length; i += 1) {
+							const e = arr[0][i];
+							if (isInvalid(e)) {
+								continue;
+							}
+							axcd(a, optionTag(e, i, false, false));
+							axcd(b, optionTag(e, i, false, false));
+						}
+						
+						ready['file'] = 0;
+						inputCSV = arr;
+					};
+				r.readAsText(file.files[0], "iso-8859-1");
+			} else {
+				ready['file'] = 1;
+			}
+			hide(spinner);
+		};
 	
 	fxcd("mode-select").onchange = (evt) => {
 			let v = evt.target.value;
