@@ -1,0 +1,54 @@
+<html>
+<head>
+<script type="text/javascript" src="../src/csv.js"></script>
+<script type="text/javascript" src="../src/dom.js"></script>
+<script type="text/javascript" src="../src/util.js"></script>
+<script type="text/javascript" src="../src/tests.js"></script>
+<script type="text/javascript" src="../src/filter.js"></script>
+<link rel="stylesheet" href="../src/style.css"/>
+</head>
+
+<body onload="setupColumnFilter();">
+
+<h2>
+Filtrer kolonner i CSV-dokument
+</h2>
+<button type="button" onclick="testAndAlert();">Kjør enhetstest</button>
+<br/>
+<br/>
+
+<div id="container" class="cont">
+<input type="file" id="file"></input>
+<br/>
+<form id="radio-form">
+
+<input type="radio" id="remove-option" value="radio-val" onclick="toggleCheckbox('keep-option');" checked></input>
+<label for="remove-option"  >
+Filtrer bort
+</label>
+<br/>
+<input type="radio" id="keep-option" value="radio-val" onclick="toggleCheckbox('remove-option');"></input>
+<label for="keep-option" >
+Behold
+</label>
+<br/>
+</form>
+
+<button id="all-btn" disabled>Velg alle</button>
+&nbsp;
+<button id="none-btn" disabled>Velg ingen</button>
+
+<form id="field"></form>
+<br/>
+
+<button id="download" type="button" disabled>
+Last ned CSV
+</button>
+&nbsp;
+<div class="spinning" id="spinner">⚙️</div>
+
+</div>
+
+
+</body>
+</html>
