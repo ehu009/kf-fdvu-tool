@@ -64,11 +64,11 @@ function createCheckbox(container, name) {
 	{
 		let label = xcd("label");
 		axcd(label, txcd(name));
-		label.onclick = () => {
-				toggleCheckbox(name + "-" + n);
-			};
 		axcd(c, label);
 	}
+	c.onclick = () => {
+			toggleCheckbox(name + "-" + n);
+		};
 	{
 		let box = xcd("input");
 		box.type = n;
