@@ -144,6 +144,26 @@ function arrayColFilter(array, wantedList) {
 	}
 	return out;
 }
+function arrayRowFilter(inputCSV, idIdx, filterCSV, filterIdx, keepOpt) {
+	let output = [inputCSV[0]];
+	for (let i = 1; i < inputCSV.length; i += 1) {
+		
+		const a = inputCSV[i][idIdx];
+		let found = false;
+		
+		for (let j = 0; j < filterCSV.length; j += 1) {
+			const b = filterCSV[j][filterIdx];
+			if (a == b) {
+				found = true;
+				break;
+			}
+		}
+		if ((found && keepOpt) || (!found && !keepOpt)) {
+			output.push(inputCSV[i]);
+		}
+	}
+	return output;
+}
 
 function mapContracts(arr, numberIdx, nameIdx) {
 	let mep = new ListMap();
