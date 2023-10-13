@@ -8,12 +8,29 @@ function setupColumnFilter() {
 	
 	let inputCSV = null;
 	
+	const eventName = "dataReady";
+	let readyTarget = {
+			A: 1
+		};
+	
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					if (target["A"]  < 1) {
+						document.dispatchEvent(readyEvent);
+					}
+					return true;
+				}
+		});
+	
+	
 	file.onchange = () => {
 			show(spinner);
 			inputCSV = null;
 			button.disabled = true;
 			if (file.files.length >= 1) {
-				spinnerFunction ("spinner", () => {
+				show(spinner);
 						let r = new FileReader();
 						r.onload = () => {
 								inputCSV = CSVToArray(r.result, ";");
@@ -24,24 +41,51 @@ function setupColumnFilter() {
 								allOrNoneBtn("none-btn", "field", false, options);
 								fxcd("all-btn").disabled = false;
 								fxcd("none-btn").disabled = false;
-								button.disabled = false;
+								ready['A'] -= 1;
 							};
-						r.readAsText(file.files[0], "iso-8859-1");
-					});
-			} else {
-				fxcd("field").innerHTML = "";
-				fxcd("all-btn").disabled = true;
-				fxcd("none-btn").disabled = true;
-			}
-			hide(spinner);
-		};
-	
-	button.onclick = () => {
-			show(spinner);
+							/*
+							show(spinner);
 			let r = new FileReader();
 			let fileInput = fxcd("file");
 			r.onload = () => {
 					
+					
+					xc(out)
+				//	downloadButton(fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"))
+				//	downloadCSV(arrayToCSV(out,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+					
+				};
+			r.readAsText(fileInput.files[0], "iso-8859-1");
+			hide(spinner);
+						*/	
+						r.readAsText(file.files[0], "iso-8859-1");
+						
+					//});
+					hide(spinner)
+					
+			} else {
+				fxcd("field").innerHTML = "";
+				fxcd("all-btn").disabled = true;
+				fxcd("none-btn").disabled = true;
+				ready['A'] += 1;
+			}
+			/*
+			hide(spinner);
+			*/
+		};
+	
+	
+	/**
+	
+								*/
+	/*
+	button.onclick = () => {
+			
+		};*/
+		
+	document.addEventListener(eventName, () => {
+			
+			spinnerFunction("spinner", () => {
 					let wanted = [];
 					for (let e of mapCheckboxes("field").entries()) {
 						if ((e[1] == fxcd("keep-option").checked) == true) {
@@ -49,12 +93,11 @@ function setupColumnFilter() {
 						}
 					}
 					let out = arrayColFilter(inputCSV, wanted)
-					downloadCSV(arrayToCSV(out,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+					button.disabled = false;
+					downloadButton(button, out, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 					
-				};
-			r.readAsText(fileInput.files[0], "iso-8859-1");
-			hide(spinner);
-		};
+			});
+		});
 }
 
 
@@ -195,9 +238,13 @@ function setupRowFilter() {
 			outputCSV = arrayRowFilter(inputCSV, idIdx, contrastCSV, filterIdx, keep);
 			
 			button.disabled = false;
+			downloadButton(button, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"))
+			/*
 			button.onclick = () => {
+				xc(outputCSV)
 				downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 			};
+			*/
 			hide(spinner);
 		});
 }
