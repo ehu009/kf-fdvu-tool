@@ -49,6 +49,41 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 
 function begin() {
 	
+	
+	const eName = "dataReady";
+	let dataReadyTarget = {
+			file: 1,
+			mode: 1
+			
+		};
+
+	const dataReadyEvent = new Event(eName);
+	let dataReady = new Proxy(dataReadyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					
+					
+					return true;
+				}
+		});
+		
+	
+	
+	fxcd("mode-select").onchange = (evt) => {
+			let v = evt.target.value;
+			if (v == "Før" || v == "Etter") {
+				fxcd("end").disabled = true;
+			} else {
+				if (v == "Eksakt") {
+					fxcd("end").disabled = true;
+				} else {
+					fxcd("end").disabled = false;
+				}
+			}
+			dataReady['mode'] -= 1;
+		};
+	
+	
 }
 
 function unitTest() {
