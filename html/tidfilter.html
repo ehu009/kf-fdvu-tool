@@ -23,7 +23,7 @@ Filtrer rader basert på tid
 
 Modus:
 &nbsp;
-<select id="from-column">
+<select id="mode-select">
 <option selected>Før</option>
 <option>Etter</option>
 <option>Mellom</option>
@@ -31,18 +31,22 @@ Modus:
 </select>
 <br/><br/>
 
-Dato 1:
+Dato-kolonne 1:
 &nbsp;
-<select id="from-column">
+<select id="begin-column">
+<option selected disabled>Velg</option>
+</select>
+&nbsp;
+Dato-kolonne 2:
+&nbsp;
+<select id="end-column" disabled>
 <option selected disabled>Velg</option>
 </select>
 <br/><br/>
-Dato 2:
-&nbsp;
-<select id="to-column" disabled>
-<option selected disabled>Velg</option>
-</select>
-<br/><br/>
+Dato 1: <input type="date" id="begin"></input> Dato 2: <input type="date" id="end" disabled></input>
+<br/>
+<br/>
+
 <button type="button" id="filter" disabled>Filtrer</button>
 &nbsp;
 <button id="download" type="button" disabled>
