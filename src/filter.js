@@ -19,8 +19,6 @@ function setupColumnFilter() {
 								inputCSV = CSVToArray(r.result, ";");
 								const options = inputCSV[0];
 								
-								
-								
 								populateCheckboxes("field", options, null);
 								allOrNoneBtn("all-btn", "field", true, options);
 								allOrNoneBtn("none-btn", "field", false, options);
@@ -51,7 +49,6 @@ function setupColumnFilter() {
 						}
 					}
 					let out = arrayColFilter(inputCSV, wanted)
-					//xc(out)
 					downloadCSV(arrayToCSV(out,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
 					
 				};
@@ -197,39 +194,12 @@ function setupRowFilter() {
 			
 			outputCSV = arrayRowFilter(inputCSV, idIdx, contrastCSV, filterIdx, keep);
 			
-			
-			
-			/*
-			if (fxcd("keep-option").checked == false) {
-				let mep = new Map();
-				for (let i = 1; i < inputCSV.length; i += 1) {
-					mep.set(inputCSV[i][filterIdx], inputCSV[i]);
-				}
-				for (let i = 1; i < contrastCSV.length; i += 1) {
-					const f = contrastCSV[i][filterIdx];	
-					mep.delete(f);
-				}
-				for (let e of mep.entries()) {
-					outputCSV.push(e[1]);
-				}
-			} else {
-				for (let i = 1; i < contrastCSV.length; i += 1) {
-					for (let j = 1; j < inputCSV.length; j += 1) {						
-						if (inputCSV[j][filterIdx] == contrastCSV[i][filterIdx]) {
-							outputCSV.push(inputCSV[j]);
-						}
-					}
-				}
-			}*/
-			console.log(outputCSV);
 			button.disabled = false;
 			button.onclick = () => {
 				downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 			};
 			hide(spinner);
 		});
-	
-	
 }
 
 
@@ -267,6 +237,7 @@ function testRowFilter() {
 	}
 	return false;
 }
+
 function testColFilter() {
 	
 	let csv = [["col a", "col b", "col c"],
