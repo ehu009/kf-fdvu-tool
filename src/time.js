@@ -49,26 +49,60 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 
 function begin() {
 	
+	let spinner = fxcd("spinner");
+	let inputCSV = null;
+	let outputCSV = null;
 	
 	const eName = "dataReady";
 	let dataReadyTarget = {
 			file: 1,
-			mode: 1
-			
+			mode: 1,
+			colA: 1, 
+			colB: 1,
+			dateA: 1,
+			dateB: 1
 		};
-
+	
+	document.addEventListener(eName, () => {
+			let b = fxcd("filter");
+			b.disabled = false;
+			b.onclick = () => {
+					show(spinner);
+					xc("helLO");
+					let colA = fxcd("begin-column").value;
+					let colB = fxcd("end-column").value;
+					let dateA = fxcd("begin").value;
+					let dateB = fxcd("end").value;
+					let mode = fxcd("mode-select").value.toLowerCase();
+					
+					outputCSV = filter(inputCSV, colA, colB, mode, dateA, dateB);
+					
+					let d = fxcd("download");
+					d.disabled = false;
+					downloadButton(d, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"))
+					hide(spinner);
+				};
+		});
+	
+	
+	
 	const dataReadyEvent = new Event(eName);
 	let dataReady = new Proxy(dataReadyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					
-					
+					if (dataReady['file'] + dataReady['mode'] + dataReady['colA'] + dataReady['colB'] + dataReady['dateA'] == 0) {
+						let v = fxcd("mode-select").value;
+						if (['Før', 'Etter', 'Eksakt'].includes(v) || (['Mellom', 'Utenfor'].includes(v) && dataReady['dateB'] == 0)) {
+							document.dispatchEvent(dataReadyEvent);
+						}
+					}
 					return true;
 				}
 		});
 		
-	let file = fxcd("file");
-	file.onchange = () => {
+	
+	fxcd("file").onchange = () => {
 			show(spinner);
 			if (file.files.length >= 1) {
 				let r = new FileReader();
@@ -92,14 +126,42 @@ function begin() {
 							axcd(b, optionTag(e, i, false, false));
 						}
 						
-						ready['file'] = 0;
+						a.onchange = () => {
+								dataReady['colA'] = 0;
+							}
+						b.onchange = () => {
+								dataReady['colB'] = 0;
+							}
+						
 						inputCSV = arr;
+						hide(spinner);
+						dataReady['file'] = 0;
 					};
 				r.readAsText(file.files[0], "iso-8859-1");
 			} else {
-				ready['file'] = 1;
+				dataReady['file'] = 1;
+				dataReady['colA'] = 1;
+				dataReady['colB'] = 1;
+				hide(spinner);
 			}
-			hide(spinner);
+			
+		};
+	
+	fxcd("begin").onchange = (evt) => {
+			let v = evt.target.value;
+			if (v == "") {
+				dataReady['dateA'] = 1;
+			} else {
+				dataReady['dateA'] = 0;
+			}
+		};
+	fxcd("end").onchange = (evt) => {
+			let v = evt.target.value;
+			if (v == "") {
+				dataReady['dateB'] = 1;
+			} else {
+				dataReady['dateB'] = 0;
+			}
 		};
 	
 	fxcd("mode-select").onchange = (evt) => {
@@ -115,6 +177,7 @@ function begin() {
 			}
 			dataReady['mode'] -= 1;
 		};
+	
 	
 	
 }
