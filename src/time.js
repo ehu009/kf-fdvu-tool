@@ -10,7 +10,7 @@ function begin() {
 }
 
 function unitTest() {
-	return testExact() || testBefore() || testAfter() || testBetween() || testOutside();
+	return testExact() | testBefore() | testAfter() | testBetween() | testOutside();
 }
 
 function testExact() {
@@ -22,8 +22,9 @@ function testExact() {
 			["2023014", "Husleie mai 2023", "11118047356", "Martin Kattepus", "244909", "K00006444", "Lars Eriksens vei 20, U 0102", "", "Husleie", "16300", "7200979", "", "", 	"01.05.2023", "31.05.2023", "1", "9650,71", "9650,71", "9650,71", "", "01.01.2023", "01.01.2024", "False", "False", "False"]
 		];
 	let date = "2023-05-01";
+	let p = filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null)
 	
-	return arrayCompare(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null));
+	return compareArrays(wanted, p);
 }
 
 function testBefore() {
@@ -38,7 +39,7 @@ function testBefore() {
 		];
 	let date = "2023-04-01";
 	
-	return arrayCompare(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "før", date, null));
+	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "før", date, null));
 }
 
 function testAfter() {
@@ -53,7 +54,7 @@ function testAfter() {
 		];
 	let date = "2023-04-01";
 	
-	return arrayCompare(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "etter", date, null));
+	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "etter", date, null));
 }
 
 function testBetween() {
@@ -67,7 +68,7 @@ function testBetween() {
 	let begin = "2023-02-01";
 	let end = "2023-03-15";
 	
-	return arrayCompare(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "mellom", begin, end));
+	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "mellom", begin, end));
 }
 function testOutside() {
 	let wanted = [
@@ -84,5 +85,5 @@ function testOutside() {
 	let begin = "2023-02-01";
 	let end = "2023-03-15";
 	
-	return arrayCompare(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "utenfor", begin, end));
+	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "utenfor", begin, end));
 }
