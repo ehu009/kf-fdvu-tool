@@ -1,5 +1,10 @@
 "use strict";
 
+
+function filter(idx1, idx2, mode) {
+	
+}
+
 function begin() {
 	
 }
