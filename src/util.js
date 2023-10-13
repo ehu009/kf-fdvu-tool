@@ -43,7 +43,9 @@ const contractIdx = {
 const invoiceIdx = {
 		'løpenummer': 5,
 		'fasilitetsnummer': 6,
-		'fakturatekst': 8
+		'fakturatekst': 8,
+		'fra dato': 13,
+		'til dato': 14
 	};
 
 
