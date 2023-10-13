@@ -8,10 +8,10 @@
 <link rel="stylesheet" href="../src/style.css"/>
 </head>
 
-<body onload="setupColumnFilter();">
+<body onload="begin();">
 
 <h2>
-Filtrer kolonner i CSV-dokument
+Filtrer rader basert på tid
 </h2>
 <button type="button" onclick="testAndAlert();">Kjør enhetstest</button>
 <br/>
@@ -21,6 +21,16 @@ Filtrer kolonner i CSV-dokument
 <input type="file" id="file"></input>
 <br/>
 
+Modus:
+&nbsp;
+<select id="from-column">
+<option selected>Før</option>
+<option>Etter</option>
+<option>Mellom</option>
+<option>Utenfor</option>
+</select>
+<br/><br/>
+
 Fra-kolonne:
 &nbsp;
 <select id="from-column">
@@ -29,7 +39,7 @@ Fra-kolonne:
 <br/><br/>
 Til-kolonne:
 &nbsp;
-<select id="to-column">
+<select id="to-column" disabled>
 <option selected disabled>Velg</option>
 </select>
 <br/><br/>
