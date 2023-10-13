@@ -9,15 +9,14 @@ function testAndAlert() {
 }
 
 function compareArrays(wanted, gotten) {
-	let err = false;
-	for (let i = 0; i < gotten.length; i+= 1) {
-		let row = gotten[i];
-		let wantedRow = wanted[i];
-		if (row.length != wantedRow.length) {
+	for (let i = 0; i < wanted.length; i+= 1) {
+		let row = wanted[i];
+		let gotRow = gotten[i];
+		if (row.length != gotRow.length) {
 			return true;
 		}
 		for (let c = 0; c < row.length; c += 1) {
-			if (row[c] != wantedRow[c]) {
+			if (row[c] != gotRow[c]) {
 				return true;
 			}
 		}
