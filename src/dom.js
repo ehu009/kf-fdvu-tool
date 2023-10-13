@@ -117,6 +117,7 @@ function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 				m.set(e, desired);
 			}
 			setCheckboxValues(containerId, m);
+			fxcd(containerId).dispatchEvent(new Event("change"));
 		};
 }
 
