@@ -5,15 +5,22 @@ function setupColumnFilter() {
 	let button = fxcd("download");
 	let file = fxcd("file");
 	let spinner = fxcd("spinner");
+	
+	let inputCSV = null;
+	
 	file.onchange = () => {
 			show(spinner);
+			inputCSV = null;
 			button.disabled = true;
 			if (file.files.length >= 1) {
 				spinnerFunction ("spinner", () => {
 						let r = new FileReader();
 						r.onload = () => {
-								let arr = CSVToArray(r.result, ";");
-								const options = arr[0];
+								inputCSV = CSVToArray(r.result, ";");
+								const options = inputCSV[0];
+								
+								
+								
 								populateCheckboxes("field", options, null);
 								allOrNoneBtn("all-btn", "field", true, options);
 								allOrNoneBtn("none-btn", "field", false, options);
@@ -36,7 +43,6 @@ function setupColumnFilter() {
 			let r = new FileReader();
 			let fileInput = fxcd("file");
 			r.onload = () => {
-					let arr = CSVToArray(r.result, ";");
 					
 					let wanted = [];
 					for (let e of mapCheckboxes("field").entries()) {
@@ -44,7 +50,10 @@ function setupColumnFilter() {
 							wanted.push(e[0]);
 						}
 					}
-					downloadCSV(arrayToCSV(arrayColFilter(arr, wanted),";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+					let out = arrayColFilter(inputCSV, wanted)
+					//xc(out)
+					downloadCSV(arrayToCSV(out,";"), fileInput.files[0].name.replace(".csv", " - filtrert.csv"));
+					
 				};
 			r.readAsText(fileInput.files[0], "iso-8859-1");
 			hide(spinner);
@@ -67,7 +76,7 @@ function arrayRowFilter(inputCSV, idIdx, filterCSV, filterIdx, keepOpt) {
 			}
 		}
 		if ((found && keepOpt) || (!found && !keepOpt)) {
-			output.push(a);
+			output.push(inputCSV[i]);
 		}
 	}
 	return output;
@@ -212,14 +221,15 @@ function setupRowFilter() {
 					}
 				}
 			}*/
-				
+			console.log(outputCSV);
 			button.disabled = false;
+			button.onclick = () => {
+				downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
+			};
 			hide(spinner);
 		});
 	
-	button.onclick = () => {
-			downloadCSV(arrayToCSV(outputCSV,";"), fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
-		};
+	
 }
 
 
@@ -249,10 +259,10 @@ function testRowFilter() {
 			["1", "1134", "35", "1236"]
 		];
 	
-	if (compareArrays(wanted1, arrayRowFilter(csv, 1, filter, 0, true))) {
+	if (compareArrays(wanted1, arrayRowFilter(csv, 1, filter1, 0, true))) {
 		return true;
 	}
-	if (compareArrays(wanted2, arrayRowFilter(csv, 3, filter, 2, true))) {
+	if (compareArrays(wanted2, arrayRowFilter(csv, 3, filter2, 2, true))) {
 		return true;
 	}
 	return false;
