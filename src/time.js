@@ -68,7 +68,6 @@ function begin() {
 			b.disabled = false;
 			b.onclick = () => {
 					show(spinner);
-					xc("helLO");
 					let colA = fxcd("begin-column").value;
 					let colB = fxcd("end-column").value;
 					let dateA = fxcd("begin").value;
