@@ -3,6 +3,48 @@
 
 function filter(arr, idx1, idx2, mode, date1, date2) {
 	
+	const begin = new Date(date1);
+	begin.setHours(0)
+	
+	let defaultBegin = new Date();
+	let defaultEnd = new Date();
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(2090);
+	
+	let header = arr.shift();
+	let out = arr.filter( (row) => {
+			
+			let dateA = dateWithDefault(row[idx1], defaultBegin)
+			let dateB = dateWithDefault(row[idx2], defaultEnd); 
+			
+			if (mode == "før" || mode == "etter") {
+				return ((mode == "før") & ((dateB < begin) || (dateA < begin))) | ((mode == "etter") & ((begin < dateB) || (begin < dateA)));
+			} else {
+				if (mode == "eksakt") {
+					if ((dateB <= begin) || (dateA >= begin)) {
+						return false;
+					}
+					return true;
+				}
+				
+				const end = new Date(date2);
+				if (mode == "mellom") {
+					if (((end >= dateA) && (end <= dateB)) || ((begin >= dateA) && (begin <= dateB))) {
+						return true;
+					}
+				}
+				if (mode == "utenfor") {
+					if ((dateA > end) || (dateB < begin)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		});
+	out.unshift(header);
+	arr.unshift(header);
+	
+	return out;
 }
 
 function begin() {
@@ -21,10 +63,9 @@ function testExact() {
 			["2023014", "Husleie mai 2023", "7037141563", "Arnt Barnt", "244898", "K00006431", "Sørslettveien 10, H 0202", "", "Husleie", "16300", "7200979", "", "", 	"01.05.2023", "31.05.2023", "1", "9636,86", "9636,86", "9636,86", "", "01.01.2023", "01.01.2024", "False", "False", "False"],
 			["2023014", "Husleie mai 2023", "11118047356", "Martin Kattepus", "244909", "K00006444", "Lars Eriksens vei 20, U 0102", "", "Husleie", "16300", "7200979", "", "", 	"01.05.2023", "31.05.2023", "1", "9650,71", "9650,71", "9650,71", "", "01.01.2023", "01.01.2024", "False", "False", "False"]
 		];
-	let date = "2023-05-01";
-	let p = filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null)
+	let date = "2023-05-15";
 	
-	return compareArrays(wanted, p);
+	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null));
 }
 
 function testBefore() {
