@@ -68,7 +68,7 @@ function createCheckbox(container, name) {
 	}
 	c.onclick = () => {
 			toggleCheckbox(name + "-" + n);
-			fxcd(container).dispatchEvent(new Event('change'))
+			fxcd(container).dispatchEvent(new Event('change'));
 		};
 	
 	{
