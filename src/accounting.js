@@ -1,53 +1,6 @@
 "use strict";
 
 
-function arrayMerge(arr1, arr2, columnName) {
-	
-	let out = [];
-	const nameIdx1 = arr1[0].indexOf(columnName);
-	const nameIdx2 = arr2[0].indexOf(columnName);
-	
-	let head = [];
-	for (let e of arr1[0]) {
-		head.push(e);
-	}
-	let col;
-	for (col = 0; col < arr2[0].length; col += 1) {
-		if (col == nameIdx2) {
-			continue;
-		}
-		head.push(arr2[0][col]);
-	}
-	out.push(head);
-	
-	for (let row1 = 1; row1 < arr1.length; row1 += 1) {
-		let a = [];
-		for (let col = 0; col < arr1[row1].length; col += 1) {
-			a.push(arr1[row1][col]);
-		}
-		
-		const current = arr1[row1][nameIdx1];
-		for (let row2 = 1; row2 < arr2.length; row2 += 1) {
-			
-			if (arr2[row2][nameIdx2] != current) {
-				continue;
-			}
-			for (let col = 0; col < arr2[row2].length; col += 1) {
-				
-				if (col == nameIdx2) {
-					continue;
-				}
-				a.push(arr2[row2][col]);
-			}
-			
-			break;
-		}
-		out.push(a);
-	}
-	return out;
-}
-
-
 function beginLoss() {
 	
 	const eventName = "dataReady";
