@@ -4,7 +4,7 @@
 function filter(arr, idx1, idx2, mode, date1, date2) {
 	
 	const begin = new Date(date1);
-	begin.setHours(0)
+	begin.setHours(0);
 	
 	let defaultBegin = new Date();
 	let defaultEnd = new Date();
@@ -14,7 +14,7 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 	let header = arr.shift();
 	let out = arr.filter( (row) => {
 			
-			let dateA = dateWithDefault(row[idx1], defaultBegin)
+			let dateA = dateWithDefault(row[idx1], defaultBegin);
 			let dateB = dateWithDefault(row[idx2], defaultEnd); 
 			
 			if (mode == "før" || mode == "etter") {
@@ -78,12 +78,10 @@ function begin() {
 					
 					let d = fxcd("download");
 					d.disabled = false;
-					downloadButton(d, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"))
+					downloadButton(d, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 					hide(spinner);
 				};
 		});
-	
-	
 	
 	const dataReadyEvent = new Event(eName);
 	let dataReady = new Proxy(dataReadyTarget, {
@@ -99,7 +97,6 @@ function begin() {
 					return true;
 				}
 		});
-		
 	
 	fxcd("file").onchange = () => {
 			show(spinner);
@@ -109,11 +106,10 @@ function begin() {
 						let arr = CSVToArray(r.result, ";");
 						
 						let a = fxcd("begin-column");
-						a.innerHTML = "";
-						axcd(a, optionTag("Velg", -1, true, true));
-						
 						let b = fxcd("end-column");
+						a.innerHTML = "";
 						b.innerHTML = "";
+						axcd(a, optionTag("Velg", -1, true, true));
 						axcd(b, optionTag("Velg", -1, true, true));
 						
 						for (let i = 0; i < arr[0].length; i += 1) {
@@ -127,10 +123,10 @@ function begin() {
 						
 						a.onchange = () => {
 								dataReady['colA'] = 0;
-							}
+							};
 						b.onchange = () => {
 								dataReady['colB'] = 0;
-							}
+							};
 						
 						inputCSV = arr;
 						hide(spinner);
@@ -143,7 +139,6 @@ function begin() {
 				dataReady['colB'] = 1;
 				hide(spinner);
 			}
-			
 		};
 	
 	fxcd("begin").onchange = (evt) => {
@@ -176,9 +171,6 @@ function begin() {
 			}
 			dataReady['mode'] -= 1;
 		};
-	
-	
-	
 }
 
 function unitTest() {
