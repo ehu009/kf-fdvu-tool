@@ -3,12 +3,13 @@
 
 function mapKeys(arr) {
 	let out = new Map();
-	for (let i = 1; i < arr.length; i += 1) {
+	for (let row in arr) {
 		const row = arr[i];
 		const key = row[keyIdx['seksjonsnummer']];
 		const val = row[keyIdx['hanknummer']];
 		if (out.has(key) == false) {
 			out.set(key, [val]);
+			continue;
 		}
 		let l = out.get(key);
 		if (l.includes(val) == false) {
@@ -88,7 +89,22 @@ let dataReady = new Proxy(dataReadyTarget, {
 	});
 	
 function filter(rentables, keys) {
-	return drawKeys(rentables, mapKeys(keys), "table");
+	
+	let header = keys.shift();
+	keys.unshift(header);
+	
+	let i = 5;
+	let out = keys.filter((key) => {
+			for (let rentable of rentables) {
+				if (rentable[rentableIdx['seksjonsnummer']] == key[keyIdx['seksjonsnummer']]) {
+					return true;
+				}
+			}
+			return false;
+		});
+	out.unshift(header);
+	
+	return out;
 }
 
 function setupKeyFilter() {
@@ -217,7 +233,6 @@ function setupKeyFilter() {
 }
 
 
-
 function unitTest() {
 	
 	let wanted = [
@@ -226,6 +241,7 @@ function unitTest() {
 			["546", "Sørslettvegen 3 - H0101 Reservenøkler ", "", "4", "Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 		];
-	
-	return compareArrays(wanted, filter(rentableSample, keySample));
+	let f = filter(rentableSample, keySample)
+	xc(f)
+	return compareArrays(wanted, f);
 }
