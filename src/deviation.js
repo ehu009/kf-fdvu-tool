@@ -129,5 +129,5 @@ function unitTest() {
 			["Montering av nye utelys.", "Det er behov for lys ute på nordsiden av bygget. Det blir gangvei for beboer i leilighet i underetasjen på denne siden av bygget. Skift ut de to utelysene som stå på østsiden av bygget + et nytt utelys på nordsiden.", "4", "1 - svake symptomer", "2 - middels store konsekvenser", "", "Geir Frode Olsen", "Finn Løkvoll", "118007 Åsgård Sørslettvegen 3", "1180 Åsgård", "118007 Åsgård Sørslettvegen 3", "15.12.2021", "15.12.2021", "", "", "False", "False", "Elektriske anlegg", "", "2 Bygning", "3 DRIFTSKOSTNADER ", "", "", "0", "Elektriske Anlegg"],
 		];
 	
-	return compareArrays(wanted, filter(deviationSample, rentableSample));
+	return compareCSV(wanted, filter(deviationSample, rentableSample));
 }

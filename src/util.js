@@ -117,7 +117,6 @@ function arrayAddition(src, dst) {
 		dst[c] += src[c];
 	}
 }
-/*
 function arrayCompare(a, b) {
 	if (a.length - b.length != 0) {
 		return false;
@@ -129,7 +128,6 @@ function arrayCompare(a, b) {
 	}
 	return true;
 }
-*/
 function arrayColFilter(array, wantedList) {
 	let filterIdx = [];
 	for (let col = 0; col < array[0].length; col += 1) {

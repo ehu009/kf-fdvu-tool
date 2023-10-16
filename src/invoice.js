@@ -200,5 +200,5 @@ function unitTest() {
 			["2023001", "Husleie januar 2023", "21016729768", "Kjell Trell Trafikkuhell", "236676", "K00006433", "Sørslettveien 8, U 0101", "", "Husleie", "16300", "7200979", "", "", "01.02.2023", "28.02.2023", "1", "9739,12", "9739,12", "9739,12", "", "01.01.2023", "01.01.2024", "False", "False", "False"]
 		];
 	
-	return compareArrays(wanted, filterInvoices(filterContracts(contractSample, rentableSample), invoiceSample));
+	return compareCSV(wanted, filterInvoices(filterContracts(contractSample, rentableSample), invoiceSample));
 }

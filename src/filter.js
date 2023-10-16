@@ -227,10 +227,10 @@ function testRowFilter() {
 			["1", "1134", "35", "1236"]
 		];
 	
-	if (compareArrays(wanted1, arrayRowFilter(csv, 1, filter1, 0, true))) {
+	if (compareCSV(wanted1, arrayRowFilter(csv, 1, filter1, 0, true))) {
 		return true;
 	}
-	if (compareArrays(wanted2, arrayRowFilter(csv, 3, filter2, 2, true))) {
+	if (compareCSV(wanted2, arrayRowFilter(csv, 3, filter2, 2, true))) {
 		return true;
 	}
 	return false;
@@ -255,10 +255,10 @@ function testColFilter() {
 			["1580", "1580"]
 		];
 	
-	if (compareArrays(wanted1, arrayColFilter(csv, ["col a", "col b"]))) {
+	if (compareCSV(wanted1, arrayColFilter(csv, ["col a", "col b"]))) {
 		return true;
 	}
-	if (compareArrays(wanted2, arrayColFilter(csv, ["col b", "col c"]))) {
+	if (compareCSV(wanted2, arrayColFilter(csv, ["col b", "col c"]))) {
 		return true;
 	}
 	return false;

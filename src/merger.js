@@ -101,5 +101,5 @@ function unitTest() {
 			["010185", "loft", "729", "harstad"]
 		];
 	
-	return compareArrays(expected, mergeCSV([csv1, csv2]));
+	return compareCSV(expected, mergeCSV([csv1, csv2]));
 }

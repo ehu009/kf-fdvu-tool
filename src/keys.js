@@ -137,5 +137,5 @@ function unitTest() {
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 		];
 		
-	return compareArrays(wanted, filter(rentableSample, keySample));
+	return compareCSV(wanted, filter(rentableSample, keySample));
 }

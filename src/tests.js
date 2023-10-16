@@ -8,7 +8,7 @@ function testAndAlert() {
 	}
 }
 
-function compareArrays(wanted, gotten) {
+function compareCSV(wanted, gotten) {
 	for (let i = 0; i < wanted.length; i+= 1) {
 		let row = wanted[i];
 		let gotRow = gotten[i];

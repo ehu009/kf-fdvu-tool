@@ -187,7 +187,7 @@ function testExact() {
 		];
 	let date = "2023-05-15";
 	
-	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null));
+	return compareCSV(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "eksakt", date, null));
 }
 
 function testBefore() {
@@ -202,7 +202,7 @@ function testBefore() {
 		];
 	let date = "2023-04-01";
 	
-	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "før", date, null));
+	return compareCSV(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "før", date, null));
 }
 
 function testAfter() {
@@ -217,7 +217,7 @@ function testAfter() {
 		];
 	let date = "2023-04-01";
 	
-	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "etter", date, null));
+	return compareCSV(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "etter", date, null));
 }
 
 function testBetween() {
@@ -231,7 +231,7 @@ function testBetween() {
 	let begin = "2023-02-01";
 	let end = "2023-03-15";
 	
-	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "mellom", begin, end));
+	return compareCSV(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "mellom", begin, end));
 }
 function testOutside() {
 	let wanted = [
@@ -248,5 +248,5 @@ function testOutside() {
 	let begin = "2023-02-01";
 	let end = "2023-03-15";
 	
-	return compareArrays(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "utenfor", begin, end));
+	return compareCSV(wanted, filter(invoiceSample, invoiceIdx['fra dato'], invoiceIdx['til dato'], "utenfor", begin, end));
 }
