@@ -119,7 +119,7 @@ function beginLoss() {
 		};
 	fxcd("date-from").onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
-				ready["dateA"] = 1;	
+				ready["dateA"] = 1;
 			} else {
 				ready["dateA"] = 0;
 			}

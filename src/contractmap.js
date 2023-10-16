@@ -12,30 +12,25 @@ const readyEvent = new Event(eventName);
 let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
-				if (key == "bool"){
+				if (key == "bool") {
 					fxcd("begin").disabled = false;
 					fxcd("end").disabled = false;
 					if (value == false) {
 						fxcd("begin").disabled = true;
 						fxcd("end").disabled = true;
-						
 					}
-					
 				}
 				let b = target["bool"];
 				fxcd(name + "download").disabled = true;
 				
-				
 				if (target["countA"] < 1 && target["countB"] < 1) {
-					if (!b
-							|| (b && target["dateA"] == 0 && target["dateB"] == 0)) {
+					if (!b || (b && target["dateA"] == 0 && target["dateB"] == 0)) {
 						document.dispatchEvent(readyEvent);
 					}
 				} else {
 					let btn = fxcd("filter");
 					if (target["countA"] < 2 && target["countB"] < 2) {
-						if (!b 
-								|| (target["dateA"] < 1 && target["dateB"] < 1)) {
+						if (!b || (target["dateA"] < 1 && target["dateB"] < 1)) {
 							btn.disabled = false;
 						}
 					} else {
@@ -91,19 +86,19 @@ function fieldEvents() {
 			} else {
 				ready["countB"] += 1;
 			}
-		};	
+		};
 }
 
 function filter(contractList, rentablesList) {
 	const begin = new Date(fxcd("begin").value);
-	const end = new Date(fxcd("end").value);			
+	const end = new Date(fxcd("end").value);
 	let defaultBegin = new Date();
 	let defaultEnd = new Date();
 	defaultBegin.setFullYear(1950);
 	defaultEnd.setFullYear(2090);
 	
 	let header = contractList.shift();
-	let out = contractList.filter( (c) => {
+	let out = contractList.filter((c) => {
 			//	tidsfilter
 			if (ready["bool"]) {
 				if (dateWithDefault(c[contractIdx['startdato']], defaultBegin) > end
@@ -114,8 +109,7 @@ function filter(contractList, rentablesList) {
 			//	lokasjonsfilter
 			for (let i = 1; i < rentablesList.length; i += 1) {
 				
-				if (c[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]])
-				{
+				if (c[contractIdx["fasilitetsnummer"]] == rentablesList[i][rentableIdx["seksjonsnummer"]]) {
 					return true;
 				}
 			}
@@ -174,7 +168,7 @@ function begin() {
 			downloadButton(btn, out, fname);
 			
 			hide(spinner);
-		});	
+		});
 	
 }
 

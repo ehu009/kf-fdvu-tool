@@ -1,6 +1,6 @@
 "use strict";
 
-function CSVToArray( strData, strDelimiter ){
+function CSVToArray(strData, strDelimiter) {
 	
 	strDelimiter = (strDelimiter || ",");
 	let objPattern = new RegExp(
@@ -10,30 +10,24 @@ function CSVToArray( strData, strDelimiter ){
 				"([^\"\\" + strDelimiter + "\\r\\n]*))"
 			),
 			"gi"
-			);
+		);
 
 	let arrData = [[]];
 	let arrMatches = null;
 
-	while (arrMatches = objPattern.exec( strData )){
-		let strMatchedDelimiter = arrMatches[ 1 ];
-		if (
-			strMatchedDelimiter.length &&
-			strMatchedDelimiter !== strDelimiter
-			){
-			arrData.push( [] );
+	while (arrMatches = objPattern.exec(strData)) {
+		let strMatchedDelimiter = arrMatches[1];
+		if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
+			arrData.push([]);
 		}
 
 		let strMatchedValue;
-		if (arrMatches[ 2 ]){
-			strMatchedValue = arrMatches[ 2 ].replace(
-				new RegExp( "\"\"", "g" ),
-				"\""
-				);
+		if (arrMatches[2]) {
+			strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
 		} else {
-			strMatchedValue = arrMatches[ 3 ];
+			strMatchedValue = arrMatches[3];
 		}
-		arrData[ arrData.length - 1 ].push( strMatchedValue );
+		arrData[arrData.length - 1].push(strMatchedValue);
 	}
 	CSVRemoveBlanks(arrData);
 	return arrData;
@@ -41,9 +35,9 @@ function CSVToArray( strData, strDelimiter ){
 
 function arrayToCSV(arr, separator) {
 	let out = "data:text/csv;charset=utf-8,";
-	arr.forEach(function(rowArray) {
+	arr.forEach(() => (rowArray) {
 			let row = [];
-			for(let c = 0; c < rowArray.length; c += 1) {
+			for (let c = 0; c < rowArray.length; c += 1) {
 				let f = rowArray[c];
 				if ((f == undefined) == false) {
 					if (isNaN(f)) {

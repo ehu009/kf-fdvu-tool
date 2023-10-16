@@ -141,7 +141,7 @@ function setupCustomerOverlapFilter() {
 			downloadButton(btn, out, "overlappende kontrakter");
 			
 			hide(spinner);
-		});	
+		});
 	
 }
 

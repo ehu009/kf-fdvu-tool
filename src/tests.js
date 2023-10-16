@@ -48,7 +48,7 @@ let rentableSample = [
 		["24979620029", "Sørslettveien 8 U 0102", "", "Sørslettveien 8  U 0102  9016 TROMSØ ", "118006 Åsgård Sørslettveien 8", "1180 Åsgård", "118006 Åsgård Sørslettveien 8", "", "Bolig", "", "", "Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)", "Normal", "Ingen korreksjon", "Rus og Psykiatribolig", "58,20", "9691,00", "", "", "", "2", "True", "True", "K00017257", "00000", "Driftsadministrasjonen", "Leid - Driftet"], 
 		["24979620030", "Sørslettveien 8 H 0201", "", "Sørslettveien 8  H 0201  9016 TROMSØ ", "118006 Åsgård Sørslettveien 8", "1180 Åsgård", "118006 Åsgård Sørslettveien 8", "", "Bolig", "", "", "Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)", "Normal", "Ingen korreksjon", "Rus og Psykiatribolig", "58,30", "9696,00", "", "", "", "2", "True", "True", "K00006331", "07106638432", "Fredrik Puddingsen", "Leid - Driftet"], 
 		["24979620031", "Sørslettveien 8 H 0202", "", "Sørslettveien 8  H 0202  9016 TROMSØ ", "118006 Åsgård Sørslettveien 8", "1180 Åsgård", "118006 Åsgård Sørslettveien 8", "", "Bolig", "", "", "Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)", "Normal", "Ingen korreksjon", "Rus og Psykiatribolig", "58,30", "9696,00", "", "", "", "2", "True", "True", "K00007545", "31125545206", "Kari Kanon", "Leid - Driftet"]
-	]; 
+	];
 
 
 let contractSample = [

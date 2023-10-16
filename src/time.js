@@ -15,7 +15,7 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 	let out = arr.filter( (row) => {
 			
 			let dateA = dateWithDefault(row[idx1], defaultBegin);
-			let dateB = dateWithDefault(row[idx2], defaultEnd); 
+			let dateB = dateWithDefault(row[idx2], defaultEnd);
 			
 			if (mode == "før" || mode == "etter") {
 				return ((mode == "før") & ((dateB < begin) || (dateA < begin))) | ((mode == "etter") & ((begin < dateB) || (begin < dateA)));
@@ -57,7 +57,7 @@ function begin() {
 	let dataReadyTarget = {
 			file: 1,
 			mode: 1,
-			colA: 1, 
+			colA: 1,
 			colB: 1,
 			dateA: 1,
 			dateB: 1

@@ -1,69 +1,6 @@
 "use strict";
 
 
-function mapKeys(arr) {
-	let out = new Map();
-	for (let row in arr) {
-		const row = arr[i];
-		const key = row[keyIdx['seksjonsnummer']];
-		const val = row[keyIdx['hanknummer']];
-		if (out.has(key) == false) {
-			out.set(key, [val]);
-			continue;
-		}
-		let l = out.get(key);
-		if (l.includes(val) == false) {
-			l.push(val);
-		}
-	}
-	return out;
-}
-
-
-function drawKeys(arr, map, dst) {
-	let table = fxcd(dst);
-	let row;
-	let cell;
-	table.innerHTML = "";
-	axcd(table, newRow(["Seksjonsnummer", "Seksjonsnavn", "N\u00F8kkelnummer"], true));
-	
-	let counter = new Map();
-	let out = [arr[0].concat(["N\u00F8klerinos"])];
-	for (let r = 1; r < arr.length; r += 1) {
-		
-		let rentableNumber = arr[r][rentableIdx['seksjonsnummer']];
-		if (map.has(rentableNumber) == false) {
-			row = newRow([rentableNumber, arr[r][rentableIdx['seksjonsnavn']]], false);
-			
-			cell = xcd("td");
-			axcd(cell, txcd(""));
-			cell.classList.add("missing");
-			axcd(row, cell);
-			axcd(table, row);
-		} else {
-			const l = map.get(rentableNumber);
-			if (isInvalid(l)) {
-				continue;
-			}
-			for (let c = 0; c < l.length; c += 1) {
-				let c1 = rentableNumber;
-				let c2 = arr[r][rentableIdx['seksjonsnavn']];
-				if (c > 0) {
-					c1 = "";
-					c2 = "";
-				}
-				if (counter.has(l[c]) == false) {
-					counter.set(l[c], true);
-				}
-				row = newRow([c1, c2, l[c]], false);
-				axcd(table, row);
-			}
-			out.push(arr[r].concat(l));
-		}
-	}
-	return out;
-}
-
 const eName = "dataReady";
 let dataReadyTarget = {
 		fileA: 1,
@@ -93,7 +30,6 @@ function filter(rentables, keys) {
 	let header = keys.shift();
 	keys.unshift(header);
 	
-	let i = 5;
 	let out = keys.filter((key) => {
 			for (let rentable of rentables) {
 				if (rentable[rentableIdx['seksjonsnummer']] == key[keyIdx['seksjonsnummer']]) {
@@ -108,47 +44,6 @@ function filter(rentables, keys) {
 }
 
 function setupKeyFilter() {
-	
-	{
-		
-		/*
-		let t;
-		{
-			t = name+"-radio-all";
-			i = radioButtonTag(t, "key-radio", "key-radio-list-all", true);
-			axcd(con, i);
-			i = labelTag(t, "List alle");
-			axcd(con, i);
-			addLine(con);
-			i.onclick = () => {
-				let r = fxcd(name+"-radio-all");
-				r.checked = true;
-			}
-			
-			t = name+"-radio-dupes";
-			i = radioButtonTag(t, "key-radio", "key-radio-list-dupes", false);
-			axcd(con, i);
-			i = labelTag(t, "Tilh\u00F8rer flere seksjoner");
-			axcd(con, i);
-			addLine(con);
-			i.onclick = () => {
-				let r = fxcd(name+"-radio-dupes");
-				r.checked = true;
-			}
-			
-			t = name+"-radio-inactive";
-			i = radioButtonTag(t, "key-radio", "key-radio-list-inactive", false);
-			axcd(con, i);
-			i = labelTag(t, "Tilh\u00F8rer inaktive boliger");
-			axcd(con, i);
-			addLine(con);
-			i.onclick = () => {
-				let r = fxcd(name+"-radio-inactive");
-				r.checked = true;
-			}
-		}
-		*/
-	}
 	
 	let rentables = fxcd('rentables');
 	let keys = fxcd('keys');
@@ -178,13 +73,15 @@ function setupKeyFilter() {
 			let f1 = new FileReader();
 			let f2 = new FileReader();
 			
+			rentablesList = null;
+			keysList = null;
+			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
 					dataReady["count"] -= 1;
 				};
 			f2.onload = () => {
 					keysList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(keysList);
 					dataReady["count"] -= 1;
 				};
 			
@@ -192,7 +89,7 @@ function setupKeyFilter() {
 			f2.readAsText(keys.files[0], "iso-8859-1");
 		};
 	document.addEventListener(eName, () => {
-			let mep;
+			//let mep;
 			
 			/*
 			// finn filtreringsmodus
@@ -202,16 +99,14 @@ function setupKeyFilter() {
 			opt += fxcd(name + "-radio-inactive").checked * 4;
 			*/
 			
-			let fname = "n\u00F8kler - filtrert";
 			
-			let c;
 			/*
 			switch (opt) {
 				
-				case 1:*/
+				case 1:
 				mep = mapKeys(keysList);
 				c = drawKeys(rentablesList, mep, "table");
-				/*
+				
 				break;
 				
 				case 2:
@@ -226,7 +121,7 @@ function setupKeyFilter() {
 			}*/
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, c, fname);
+			downloadButton(btn, filter(rentablesList, keysList), "n\u00F8kler - filtrert");
 			
 			hide(spinner);
 		});
@@ -241,7 +136,6 @@ function unitTest() {
 			["546", "Sørslettvegen 3 - H0101 Reservenøkler ", "", "4", "Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 		];
-	let f = filter(rentableSample, keySample)
-	xc(f)
-	return compareArrays(wanted, f);
+		
+	return compareArrays(wanted, filter(rentableSample, keySample));
 }

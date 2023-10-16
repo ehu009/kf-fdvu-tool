@@ -85,7 +85,7 @@ function createCheckbox(container, name) {
 }
 
 function mapCheckboxes(containerId) {
-	let out = new Map();	
+	let out = new Map();
 	for (let n of fxcd(containerId).childNodes) {
 		if (n.type == "div") {
 			continue;

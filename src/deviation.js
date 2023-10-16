@@ -40,7 +40,7 @@ function filter(deviations, rentables) {
 			return propertyMap.has(row[deviationIdx['bygningsnavn']]);
 		});
 }
-
+/*
 function draw(container, arr) {
 	let con = fxcd(container);
 	con.innerHTML = "";
@@ -61,7 +61,7 @@ function draw(container, arr) {
 			axcd(con, p);
 		});
 }
-
+*/
 function begin() {
 	
 	let rentables = null;
@@ -110,12 +110,11 @@ function begin() {
 		
 	document.addEventListener(eventName, () => {
 			
-			let f = filter(deviations, rentables);
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, f, "avvik - filtrert")
+			downloadButton(btn, filter(deviations, rentables), "avvik - filtrert");
 			
-			draw("result", f);
+			//draw("result", f);
 			hide(spinner);
 			
 		});

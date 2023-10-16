@@ -60,7 +60,7 @@ function setupColumnFilter() {
 						ready['A'] -= 1;
 						
 					};
-				r.readAsText(file.files[0], "iso-8859-1");		
+				r.readAsText(file.files[0], "iso-8859-1");
 			} else {
 				fxcd("field").innerHTML = "";
 				fxcd("all-btn").disabled = true;
@@ -124,7 +124,7 @@ function setupRowFilter() {
 			show(spinner);
 			ready["D"] = 0;
 			hide(spinner);
-		};	
+		};
 	
 	fxcd("contrast-file").onchange = (evt) => {
 			show(spinner);
@@ -195,7 +195,7 @@ function setupRowFilter() {
 			outputCSV = arrayRowFilter(inputCSV, idIdx, contrastCSV, filterIdx, keep);
 			
 			button.disabled = false;
-			downloadButton(button, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"))
+			downloadButton(button, outputCSV, fxcd("file").files[0].name.replace(".csv", " - filtrert.csv"));
 			hide(spinner);
 		});
 }
@@ -204,10 +204,10 @@ function setupRowFilter() {
 function testRowFilter() {
 	
 	const csv = [["fisk", "col a", "col b", "col c"],
-			["7", "1234", "1235", "1236"], 
-			["9", "1134", "1135", "1136"], 
-			["0", "1134", "13", "2136"], 
-			["1", "1134", "35", "1236"], 
+			["7", "1234", "1235", "1236"],
+			["9", "1134", "1135", "1136"],
+			["0", "1134", "13", "2136"],
+			["1", "1134", "35", "1236"],
 			["2", "1580", "1580", "1580"]
 		];
 	const filter1 = [["col a", "col b", "col c"],
@@ -218,8 +218,8 @@ function testRowFilter() {
 		];
 	
 	const wanted1 = [["fisk", "col a", "col b", "col c"],
-			["9", "1134", "1135", "1136"], 
-			["0", "1134", "13", "2136"], 
+			["9", "1134", "1135", "1136"],
+			["0", "1134", "13", "2136"],
 			["1", "1134", "35", "1236"]
 		];
 	const wanted2 = [["fisk", "col a", "col b", "col c"],
@@ -239,8 +239,8 @@ function testRowFilter() {
 function testColFilter() {
 	
 	let csv = [["col a", "col b", "col c"],
-			["1234", "1235", "1236"], 
-			["1134", "1135", "1136"], 
+			["1234", "1235", "1236"],
+			["1134", "1135", "1136"],
 			["1580", "1580", "1580"]
 		];
 	
@@ -250,8 +250,8 @@ function testColFilter() {
 			["1580", "1580"],
 		];
 	let wanted2 = [["col b", "col c"],
-			["1235", "1236"], 
-			["1135", "1136"], 
+			["1235", "1236"],
+			["1135", "1136"],
 			["1580", "1580"]
 		];
 	
