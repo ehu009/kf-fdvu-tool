@@ -35,7 +35,7 @@ function CSVToArray(strData, strDelimiter) {
 
 function arrayToCSV(arr, separator) {
 	let out = "data:text/csv;charset=utf-8,";
-	arr.forEach(() => (rowArray) {
+	arr.forEach((rowArray) => {
 			let row = [];
 			for (let c = 0; c < rowArray.length; c += 1) {
 				let f = rowArray[c];
