@@ -1,2 +1,1 @@
-
-.\src\force_encoding.rb %*
+%~dp0\src\force_encoding.rb %*
