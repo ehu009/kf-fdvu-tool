@@ -390,7 +390,22 @@ function setupRentableOverlapFilter() {
 
 
 function unitTest() {
-	
+	if (customerOverlapTest()) {
+		xc("customer overlap failed");
+		return;
+	}
+	if (rentableOverlapTest()) {
+		xc("rentable overlap failed");
+		return;
+	}
+	if (contractOverlapTest()) {
+		xc("contract overlap failed");
+		return;
+	}
+	if (customerOverlapTest()) {
+		xc("key overlap failed");
+		return;
+	}
 }
 
 function customerOverlapFilter() {
@@ -422,7 +437,7 @@ function customerOverlapTest() {
 			["K00006433", "Kontrakt for Kjell Trell Trafikkuhell", "", "Kjell Trell Trafikkuhell", "21016729768", "236676", "", "01.01.2012", "", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24979620037", "24979620037 Fjørslettveien 8 U 0101", "1180", "Åsgård", "118006", "Åsgård Fjørslettveien 8", "", "Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"],
 		];
 	
-	return true;
+	return compareCSV(customerOverlapFilter(sample), wanted);
 }
 function rentableOverlapTest() {
 	let sample = [
@@ -441,7 +456,7 @@ function rentableOverlapTest() {
 			["24979620028", "Lars Eriksens veg 17, H0201", "Leilighetsnr. 56. Felles trapperom. Brannslange, i gang utenfor boenhet. Vaskemaskin montert på kjøkken. Utvendig postkasse merket med leilighetsnr. Stor bod i kjeller merket med leilighetsnr. Kodelås på ytterdør og egen nøkkel til leilighet. Mulighet for parkering gjennom Tromsø Parkering.", "Lars Eriksens veg 17, H0201  9016 TROMSØ ", "117702 Lars Eriksens veg 17", "1177 Lars Eriksens veg", "117702 Lars Eriksens veg 17", "Tromsøya sør", "Bolig", "Ukrainabolig", "", "Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)", "Normal", "Ingen korreksjon", "Flyktningebolig", "32,00", "9900,00", "", "01.11.2022", "", "2", "True", "True", "K00017044", "08030383509", "Julius Kaviartuben", "Leid", ]
 		];
 	
-	return true;
+	return compareCSV(rentableOverlapFilter(sample), wanted;
 }
 
 
@@ -461,7 +476,7 @@ function contractOverlapTest() {
 			["K00006438", "Kontrakt for Kjell Trell Trafikkuhell", "", "Kjell Trell Trafikkuhell", "21016729768", "236676", "", "01.01.2016", "01.01.2020", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24979620028", "24979620028 Sørslettveien 8 U 0101", "1180", "Åsgård", "118006", "Åsgård Sørslettveien 8", "", "Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"]
 		];
 	
-	return true;
+	return compareCSV(contractOverlapFilter(sample), wanted);
 }
 function keyOverlapTest() {
 	let sample = [
@@ -481,5 +496,5 @@ function keyOverlapTest() {
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"]
 		];
 	
-	return true;
+	return compareCSV(keyOverlapFilter(sample), wanted);
 }
