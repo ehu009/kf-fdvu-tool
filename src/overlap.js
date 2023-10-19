@@ -385,3 +385,21 @@ function setupRentableOverlapFilter() {
 			f.readAsText(rentables.files[0], "iso-8859-1");
 		};
 }
+
+
+function unitTest() {
+	
+}
+
+function customerOverlapTest() {
+	return true;
+}
+function rentableOverlapTest() {
+	return true;
+}
+function contractOverlapTest() {
+	return true;
+}
+function keyOverlapTest() {
+	return true;
+}
