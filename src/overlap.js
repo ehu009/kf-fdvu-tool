@@ -402,7 +402,7 @@ function unitTest() {
 		xc("contract overlap failed");
 		return;
 	}
-	if (customerOverlapTest()) {
+	if (keyOverlapTest()) {
 		xc("key overlap failed");
 		return;
 	}
