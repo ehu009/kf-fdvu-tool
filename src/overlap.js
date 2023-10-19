@@ -407,20 +407,21 @@ function setupKeyOverlapFilter() {
 function unitTest() {
 	if (customerOverlapTest()) {
 		xc("customer overlap failed");
-		return;
+		return true;
 	}
 	if (rentableOverlapTest()) {
 		xc("rentable overlap failed");
-		return;
+		return true;
 	}
 	if (contractOverlapTest()) {
 		xc("contract overlap failed");
-		return;
+		return true;
 	}
 	if (keyOverlapTest()) {
 		xc("key overlap failed");
-		return;
+		return true;
 	}
+	return false;
 }
 
 function customerOverlapTest() {
@@ -441,6 +442,7 @@ function customerOverlapTest() {
 	
 	return compareCSV(customerOverlapFilter(sample), wanted);
 }
+
 function rentableOverlapTest() {
 	let sample = [
 			["Nummer", "Navn", "Merknad", "Adresse", "Fasilitet", "Eiendom", "Bygning", "Region", "Kategori bolig", "Formål", "Status utleie", "Plassering", "Standard", "Korreksjonsfaktorer", "Seksjonstype", "Mengde", "Sum", "Anskaffelsespris", "Anskaffet dato", "SSB nummer", "Antall rom", "Aktiv", "Utleibar", "Løpenummer", "Leietaker nummer", "Leietaker", "Eierform"],
