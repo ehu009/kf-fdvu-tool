@@ -458,7 +458,7 @@ function rentableOverlapTest() {
 			["24979620028", "Lars Eriksens veg 17, H0201", "Leilighetsnr. 56. Felles trapperom. Brannslange, i gang utenfor boenhet. Vaskemaskin montert på kjøkken. Utvendig postkasse merket med leilighetsnr. Stor bod i kjeller merket med leilighetsnr. Kodelås på ytterdør og egen nøkkel til leilighet. Mulighet for parkering gjennom Tromsø Parkering.", "Lars Eriksens veg 17, H0201  9016 TROMSØ ", "117702 Lars Eriksens veg 17", "1177 Lars Eriksens veg", "117702 Lars Eriksens veg 17", "Tromsøya sør", "Bolig", "Ukrainabolig", "", "Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)", "Normal", "Ingen korreksjon", "Flyktningebolig", "32,00", "9900,00", "", "01.11.2022", "", "2", "True", "True", "K00017044", "08030383509", "Julius Kaviartuben", "Leid", ]
 		];
 	
-	return compareCSV(rentableOverlapFilter(sample), wanted;
+	return compareCSV(rentableOverlapFilter(sample), wanted);
 }
 
 
