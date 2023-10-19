@@ -393,7 +393,18 @@ function unitTest() {
 	
 }
 
-
+function customerOverlapFilter() {
+	return [];
+}
+function rentableOverlapFilter() {
+	return [];
+}
+function contractOverlapFilter() {
+	return [];
+}
+function keyOverlapFilter() {
+	return [];
+}
 
 function customerOverlapTest() {
 	let sample = [
