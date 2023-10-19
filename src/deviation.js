@@ -40,28 +40,7 @@ function filter(deviations, rentables) {
 			return propertyMap.has(row[deviationIdx['bygningsnavn']]);
 		});
 }
-/*
-function draw(container, arr) {
-	let con = fxcd(container);
-	con.innerHTML = "";
-	arr.forEach((d) => {
-			let p = xcd("p");
-			let out = [
-					d[deviationIdx['avviksnavn']],
-					d[deviationIdx['bygningsnavn']],
-					d[deviationIdx['fasilitet']],
-					d[deviationIdx['avviksmerknad']]
-				];
-			axcd(p, txcd(out[0]));
-			addLine(p);
-			axcd(p, txcd(out[1] + ":  " + out[2]));
-			addLine(p);
-			axcd(p, txcd(out[3]));
-			p.style.border = "1px solid black";
-			axcd(con, p);
-		});
-}
-*/
+
 function begin() {
 	
 	let rentables = null;
@@ -114,7 +93,6 @@ function begin() {
 			btn.disabled = false;
 			downloadButton(btn, filter(deviations, rentables), "avvik - filtrert");
 			
-			//draw("result", f);
 			hide(spinner);
 			
 		});

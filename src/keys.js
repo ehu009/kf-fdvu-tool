@@ -89,36 +89,7 @@ function setupKeyFilter() {
 			f2.readAsText(keys.files[0], "iso-8859-1");
 		};
 	document.addEventListener(eName, () => {
-			//let mep;
 			
-			/*
-			// finn filtreringsmodus
-			let opt = 0; // anta feil
-			opt += fxcd(name + "-radio-all").checked * 1;
-			opt += fxcd(name + "-radio-dupes").checked * 2;
-			opt += fxcd(name + "-radio-inactive").checked * 4;
-			*/
-			
-			
-			/*
-			switch (opt) {
-				
-				case 1:
-				mep = mapKeys(keysList);
-				c = drawKeys(rentablesList, mep, "table");
-				
-				break;
-				
-				case 2:
-				fname += " duplikater";
-				
-				break;
-				
-				case 4:
-				fname += " inaktive";
-				
-				break;
-			}*/
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, filter(rentablesList, keysList), "n\u00F8kler - filtrert");

@@ -75,8 +75,6 @@ function setupCustomerOverlapFilter() {
 			let table = fxcd("table");
 			table.innerHTML = "";
 			
-			
-			
 			/*
 				map seksjonsnummer -> kontrakter
 			*/
@@ -140,17 +138,13 @@ function setupCustomerOverlapFilter() {
 			*/
 			let header = ["Fasilitet", "L\u00F8penummer 1", "Leietaker 1", "Status 1", "L\u00F8penummer 2", "Leietaker 2", "Status 2"];
 			let out = [header];
-			//axcd(table, newRow(header, true, ""));
 			
 			for (let e of contractMap.entries()) {
 				for (let e2 of e[1]) {
 					let r = [e[0]].concat(e2);
 					out.push(r);
-					//axcd(table, newRow(r, false, ""));
 				}
 			}
-			
-			//show(fxcd("table-container"));
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
@@ -220,33 +214,18 @@ function setupRentableOverlapFilter() {
 			*/
 			let header = ["Seksjonsnummer", "Seksjonsnavn"];
 			let out = [header];
-			//axcd(table, newRow(header, true, ""));
 			
 			for (let e of mep.entries()) {
 				if (e[1].length < 2) {
 					continue;
 				}
 				out.push([e[0]].concat(e[1]));
-				/*
-				let r = xcd("tr");
-				let d = xcd("td");
-				axcd(d, txcd(e[0]));
-				axcd(r, d);
-				d = xcd("td");
-				for (let r of e[1]) {
-					axcd(d, txcd(r));
-					addLine(d);
-				}
-				axcd(r, d);
-				axcd(table, r);
-				*/
 			}
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende seksjoner");
 			
-			//show(fxcd("table-container"));
 			hide(spinner);
 		});
 	
@@ -370,13 +349,11 @@ function setupContractOverlapFilter() {
 			
 			let header = ["Akt\u00F8rnummer", "Akt\u00F8rnavn", "Fasilitet 1", "Status 1", "Fasilitet 2",  "Status 2"];
 			let out = [header];
-			//axcd(table, newRow(header, true, ""));
 			
 			for (let e of contractMap.entries()) {
 				for (let e2 of e[1]) {
 					let r = [e[0]].concat(e2);
 					out.push(r);
-					//axcd(table, newRow(r, false, ""));
 				}
 			}
 			
@@ -384,7 +361,6 @@ function setupContractOverlapFilter() {
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende kontrakter");
 			
-			//show(fxcd("table-container"));
 			hide(spinner);
 		});
 	
