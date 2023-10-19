@@ -400,7 +400,9 @@ function setupContractOverlapFilter() {
 		};
 }
 
-
+function setupKeyOverlapFilter() {
+	
+}
 
 function unitTest() {
 	if (customerOverlapTest()) {
