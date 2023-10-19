@@ -392,14 +392,26 @@ function unitTest() {
 }
 
 function customerOverlapTest() {
+	
+	//	Gategata 8 har to unike adresser
+	
 	return true;
 }
 function rentableOverlapTest() {
+	
+	//	seksjonnummer 42069 har to addresser
+	
 	return true;
 }
 function contractOverlapTest() {
+	
+	//	bjørnar har to kontrakter samtidig
+	
 	return true;
 }
 function keyOverlapTest() {
+	
+	//	nøkkelhank nummer 113 tilhører flere seksjoner
+	
 	return true;
 }
