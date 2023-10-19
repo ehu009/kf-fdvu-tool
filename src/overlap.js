@@ -9,6 +9,20 @@ let ignoreContractsAddition = ["Omsorgstjenesten S\u00F8r\u00F8ya",
 	];
 
 
+function customerOverlapFilter() {
+	return [];
+}
+function rentableOverlapFilter() {
+	return [];
+}
+function contractOverlapFilter() {
+	return [];
+}
+function keyOverlapFilter() {
+	return [];
+}
+
+
 function setupCustomerOverlapFilter() {
 	
 	const eventName = "dataReady";
@@ -148,6 +162,105 @@ function setupCustomerOverlapFilter() {
 }
 
 
+function setupRentableOverlapFilter() {
+	
+	const eventName = "dataReady";
+	let readyTarget = {
+			count: 2,
+		};
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					fxcd("download").disabled = true;
+					if (target['count'] < 2) {
+						fxcd('calc').disabled = false;
+						if (target["count"] < 1) {
+							document.dispatchEvent(readyEvent);
+						}
+					}
+					return true;
+				}
+		});
+	
+	
+	let spinner = fxcd("spinner");
+	
+	let rentables = fxcd("rentables");
+	let rentablesList = null;
+	
+	rentables.onchange = (evt) => {
+			if (evt.target.files.length > 0) {
+				ready["count"] -= 1;
+			} else {
+				ready["count"] += 1;
+			}
+		};
+	document.addEventListener(eventName, () => {
+			
+			let table = fxcd("table");
+			table.innerHTML = "";
+			
+			/*
+				map seksjonsnummer -> liste over seksjoner
+			*/
+			let mep = new Map();
+			for (let r = 1; r < rentablesList.length; r += 1) {
+				const pp = rentablesList[r];
+				const idx = rentableIdx['seksjonsnummer'];
+				if (mep.has(pp[idx]) == false) {
+					mep.set(pp[idx], []);
+				}
+				mep.get(pp[idx]).push(pp[rentableIdx['seksjonsnummer']]);
+			}
+			
+			
+			/*
+				tegn og lag array
+			*/
+			let header = ["Seksjonsnummer", "Seksjonsnavn"];
+			let out = [header];
+			axcd(table, newRow(header, true, ""));
+			
+			for (let e of mep.entries()) {
+				if (e[1].length < 2) {
+					continue;
+				}
+				out.push([e[0]].concat(e[1]));
+				let r = xcd("tr");
+				let d = xcd("td");
+				axcd(d, txcd(e[0]));
+				axcd(r, d);
+				d = xcd("td");
+				for (let r of e[1]) {
+					axcd(d, txcd(r));
+					addLine(d);
+				}
+				axcd(r, d);
+				axcd(table, r);
+			}
+			
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, out, "overlappende seksjoner");
+			
+			show(fxcd("table-container"));
+			hide(spinner);
+		});
+	
+	fxcd("filter").onclick = () => {
+			show(spinner);
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+					rentablesList = CSVToArray(f.result, ";");
+					ready["count"] -= 1;
+				};
+			
+			f.readAsText(rentables.files[0], "iso-8859-1");
+		};
+}
 
 
 function setupContractOverlapFilter() {
@@ -288,106 +401,6 @@ function setupContractOverlapFilter() {
 }
 
 
-function setupRentableOverlapFilter() {
-	
-	const eventName = "dataReady";
-	let readyTarget = {
-			count: 2,
-		};
-	const readyEvent = new Event(eventName);
-	let ready = new Proxy(readyTarget, {
-			set: (target, key, value) => {
-					target[key] = value;
-					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
-						fxcd('calc').disabled = false;
-						if (target["count"] < 1) {
-							document.dispatchEvent(readyEvent);
-						}
-					}
-					return true;
-				}
-		});
-	
-	
-	let spinner = fxcd("spinner");
-	
-	let rentables = fxcd("rentables");
-	let rentablesList = null;
-	
-	rentables.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
-			} else {
-				ready["count"] += 1;
-			}
-		};
-	document.addEventListener(eventName, () => {
-			
-			let table = fxcd("table");
-			table.innerHTML = "";
-			
-			/*
-				map seksjonsnummer -> liste over seksjoner
-			*/
-			let mep = new Map();
-			for (let r = 1; r < rentablesList.length; r += 1) {
-				const pp = rentablesList[r];
-				const idx = rentableIdx['seksjonsnummer'];
-				if (mep.has(pp[idx]) == false) {
-					mep.set(pp[idx], []);
-				}
-				mep.get(pp[idx]).push(pp[rentableIdx['seksjonsnummer']]);
-			}
-			
-			
-			/*
-				tegn og lag array
-			*/
-			let header = ["Seksjonsnummer", "Seksjonsnavn"];
-			let out = [header];
-			axcd(table, newRow(header, true, ""));
-			
-			for (let e of mep.entries()) {
-				if (e[1].length < 2) {
-					continue;
-				}
-				out.push([e[0]].concat(e[1]));
-				let r = xcd("tr");
-				let d = xcd("td");
-				axcd(d, txcd(e[0]));
-				axcd(r, d);
-				d = xcd("td");
-				for (let r of e[1]) {
-					axcd(d, txcd(r));
-					addLine(d);
-				}
-				axcd(r, d);
-				axcd(table, r);
-			}
-			
-			let btn = fxcd("download");
-			btn.disabled = false;
-			downloadButton(btn, out, "overlappende seksjoner");
-			
-			show(fxcd("table-container"));
-			hide(spinner);
-		});
-	
-	fxcd("filter").onclick = () => {
-			show(spinner);
-			
-			let f = new FileReader();
-			
-			f.onload = () => {
-					rentablesList = CSVToArray(f.result, ";");
-					ready["count"] -= 1;
-				};
-			
-			f.readAsText(rentables.files[0], "iso-8859-1");
-		};
-}
-
 
 function unitTest() {
 	if (customerOverlapTest()) {
@@ -406,19 +419,6 @@ function unitTest() {
 		xc("key overlap failed");
 		return;
 	}
-}
-
-function customerOverlapFilter() {
-	return [];
-}
-function rentableOverlapFilter() {
-	return [];
-}
-function contractOverlapFilter() {
-	return [];
-}
-function keyOverlapFilter() {
-	return [];
 }
 
 function customerOverlapTest() {
