@@ -20,6 +20,23 @@ function mapRows(arr, idx) {
 	return m;
 }
 
+
+function temporalOverlap(beginA, endA, beginB, endB) {
+	let q = ((endA >= beginB) & (endA <= endB))
+			| ((beginA >= beginB) & (beginA <= endB))
+			| ((endB >= beginA) & (endB <= endA))
+			| ((beginB >= beginA) & (beginB <= endA));
+	return q;
+}
+
+function overlapHeader(n, firstCol, label) {
+	let head = [firstCol];
+	for (let i = 1; i <= n; i += 1) {
+		head.push(label + " " + i);
+	}
+	return head;
+}
+
 function customerOverlapFilter(arr) {
 	
 	const defaultBegin = new Date();
@@ -62,11 +79,7 @@ function customerOverlapFilter(arr) {
 			}
 		});
 	
-	let head = ["Fasilitet"];
-	for (let i = 1; i <= l; i += 1) {
-		head.push("L\u00F8penummer " + i);
-	}
-	out.unshift(head);
+	out.unshift(overlapHeader(l, "Fasilitet", "L\u00F8penummer"));
 	
 	return out;
 }
@@ -94,21 +107,9 @@ function rentableOverlapFilter(arr) {
 			}
 		});
 	
-	let head = ['Nummer'];
-	for (let i = 1; i <= l; i += 1) {
-		head.push('Navn ' + i);
-	}
-	out.unshift(head);
+	out.unshift(overlapHeader(l, "Nummer", "Navn"));
 	
 	return out;
-}
-
-function temporalOverlap(beginA, endA, beginB, endB) {
-	let q = ((endA >= beginB) & (endA <= endB))
-			| ((beginA >= beginB) & (beginA <= endB))
-			| ((endB >= beginA) & (endB <= endA))
-			| ((beginB >= beginA) & (beginB <= endA));
-	return q;
 }
 function contractOverlapFilter(arr) {
 	
@@ -152,12 +153,7 @@ function contractOverlapFilter(arr) {
 			}
 		});
 	
-	
-	let head = ["Akt\u00F8rnummer"];
-	for (let i = 1; i <= l; i += 1) {
-		head.push("L\u00F8penummer " + i);
-	}
-	out.unshift(head);
+	out.unshift(overlapHeader(l, "Akt\u00F8rnummer", "L\u00F8penummer"));
 	
 	return out;
 }
@@ -185,11 +181,7 @@ function keyOverlapFilter(arr) {
 			}
 		});
 	
-	let head = ['Nummer'];
-	for (let i = 1; i <= l; i += 1) {
-		head.push('Seksjon ' + i);
-	}
-	out.unshift(head);
+	out.unshift(overlapHeader(l, "Nummer", "Seksjon"));
 	
 	return out;
 }
