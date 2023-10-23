@@ -70,8 +70,37 @@ function customerOverlapFilter(arr) {
 	
 	return out;
 }
-function rentableOverlapFilter() {
-	return [];
+function rentableOverlapFilter(arr) {
+		
+	let l = 2;
+	let out = [];
+	mapRows(arr, rentableIdx['seksjonsnummer']).forEach((val, key) => {
+			const k = val.length;
+			if (k >= 2) {
+			
+				let add = [key];
+				let s = new Set();
+				val.forEach((row) => {
+						s.add(row);
+					});
+				
+				if (s.size > l) {
+					l = s.size;
+				}
+				s.forEach((n) => {
+						add.push(n[rentableIdx['seksjonsnavn']]);
+					});
+				out.push(add);
+			}
+		});
+	
+	let head = ['Nummer'];
+	for (let i = 1; i <= l; i += 1) {
+		head.push('Navn ' + i);
+	}
+	out.unshift(head);
+	
+	return out;
 }
 function contractOverlapFilter() {
 	return [];
