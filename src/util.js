@@ -93,7 +93,7 @@ function temporalOverlap(beginA, endA, beginB, endB) {
 }
 
 function stringToNumber(s) {
-	return parseInt(s.replace(",", "."));
+	return parseFloat(s.replace(",", ".").replace(" ", ""));
 }
 function numToFDVUNum(n) {
 	let u = String(n);
