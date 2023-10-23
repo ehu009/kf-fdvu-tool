@@ -18,6 +18,15 @@ function overlapHeader(n, firstCol, label) {
 }
 
 function customerOverlapFilter(arr) {
+	arr = arr.filter((row) => {
+			if (isInvalid(row[contractIdx['leietakernummer']])
+					|| isInvalid(row[contractIdx['leietakernavn']])
+					|| isInvalid(row[contractIdx['fasilitetsnummer']])
+					|| isInvalid(row[contractIdx['løpenummer']])) {
+				return false;
+			}
+			return true;
+		});
 	
 	const defaultBegin = new Date();
 	const defaultEnd = new Date();
@@ -92,7 +101,15 @@ function rentableOverlapFilter(arr) {
 	return out;
 }
 function contractOverlapFilter(arr) {
-	
+	arr = arr.filter((row) => {
+			if (isInvalid(row[contractIdx['leietakernummer']])
+					|| isInvalid(row[contractIdx['leietakernavn']])
+					|| isInvalid(row[contractIdx['fasilitetsnummer']])
+					|| isInvalid(row[contractIdx['løpenummer']])) {
+				return false;
+			}
+			return true;
+		});
 	const defaultBegin = new Date();
 	const defaultEnd = new Date();
 	defaultBegin.setFullYear(1950);
