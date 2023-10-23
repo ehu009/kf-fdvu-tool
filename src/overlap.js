@@ -633,7 +633,7 @@ function contractOverlapTest() {
 		];
 	//	bjørnar har flere kontrakter samtidig
 	let wanted = [
-			["Akt\u00F8rnummer", "L\u00F8penummer 1", "L\u00F8penummer 2"],
+			["Akt\u00F8rnummer", "L\u00F8penummer 1", "L\u00F8penummer 2", "L\u00F8penummer 3", "L\u00F8penummer 4"],
 			["21016729768", "K00006431", "K00006432", "K00006433", "K00006438"],
 			["21016729768", "K00006433", "K00006438"]
 		];
