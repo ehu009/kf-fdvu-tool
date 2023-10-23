@@ -227,6 +227,7 @@ function setupCustomerOverlapFilter() {
 				ready["count"] -= 1;
 			} else {
 				ready["count"] += 1;
+				fxcd("filter").disabled = true;
 			}
 		};
 	
@@ -356,6 +357,7 @@ function setupRentableOverlapFilter() {
 				ready["count"] -= 1;
 			} else {
 				ready["count"] += 1;
+				fxcd("filter").disabled = true;
 			}
 		};
 	document.addEventListener(eventName, () => {
@@ -444,6 +446,7 @@ function setupContractOverlapFilter() {
 				ready["count"] -= 1;
 			} else {
 				ready["count"] += 1;
+				fxcd("filter").disabled = true;
 			}
 		};
 	document.addEventListener(eventName, () => {
@@ -570,6 +573,7 @@ function setupKeyOverlapFilter() {
 				ready["count"] -= 1;
 			} else {
 				ready["count"] += 1;
+				fxcd("filter").disabled = true;
 			}
 		};
 	document.addEventListener(eventName, () => {
