@@ -413,6 +413,7 @@ function setupContractOverlapFilter() {
 		});
 	
 	let i = fxcd("ignore-list");
+	axcd(i, listTag("Passiv"));
 	for (let e of ignoreContracts.concat(ignoreContractsAddition)) {
 		axcd(i, listTag(e));
 	}
@@ -526,6 +527,59 @@ function setupContractOverlapFilter() {
 
 function setupKeyOverlapFilter() {
 	
+	
+	const eventName = "dataReady";
+	let readyTarget = {
+			count: 2,
+		};
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					fxcd("download").disabled = true;
+					if (target['count'] < 2) {
+						fxcd('filter').disabled = false;
+						if (target["count"] < 1) {
+							document.dispatchEvent(readyEvent);
+						}
+					}
+					return true;
+				}
+		});
+	
+	let spinner = fxcd("spinner");
+	
+	let keys = fxcd('keys');
+	let keyList = null;
+	
+	keys.onchange = (evt) => {
+			if (evt.target.files.length > 0) {
+				ready["count"] -= 1;
+			} else {
+				ready["count"] += 1;
+			}
+		};
+	document.addEventListener(eventName, () => {
+			
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, keyOverlapFilter(keyList), "nøkler i flere seksjoner");
+			
+			hide(spinner);
+		});
+	
+	fxcd("filter").onclick = () => {
+			show(spinner);
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+					keyList = CSVToArray(f.result, ";");
+					ready["count"] -= 1;
+				};
+			
+			f.readAsText(keys.files[0], "iso-8859-1");
+		};
 }
 
 function unitTest() {
