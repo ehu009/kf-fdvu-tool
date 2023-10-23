@@ -160,8 +160,37 @@ function contractOverlapFilter(arr) {
 	
 	return out;
 }
-function keyOverlapFilter() {
-	return [];
+function keyOverlapFilter(arr) {
+		
+	let l = 2;
+	let out = [];
+	mapRows(arr, keyIdx['hanknummer']).forEach((val, key) => {
+			const k = val.length;
+			if (k >= 2) {
+				
+				let add = [key];
+				let s = new Set();
+				val.forEach((row) => {
+						s.add(row[keyIdx['seksjonsnummer']]);
+					});
+				
+				if (s.size > l) {
+					l = s.size;
+				}
+				s.forEach((n) => {
+						add.push(n);
+					});
+				out.push(add);
+			}
+		});
+	
+	let head = ['Nummer'];
+	for (let i = 1; i <= l; i += 1) {
+		head.push('Seksjonsnummer ' + i);
+	}
+	out.unshift(head);
+	
+	return out;
 }
 
 
