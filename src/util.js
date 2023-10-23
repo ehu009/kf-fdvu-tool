@@ -21,6 +21,7 @@ const rentableIdx = {
 		'seksjonsnavn': 1,
 		'bygningsnavn': 6,
 		'seksjonspris': 16,
+		'anskaffelsespris': 17,
 		'aktiv': 21,
 		'utleibar': 22
 	};
