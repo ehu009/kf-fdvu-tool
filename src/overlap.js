@@ -47,7 +47,7 @@ function customerOverlapFilter(arr) {
 						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
 						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
 						
-						if (((endA >= beginB) && (endA <= endB)) || ((beginA >= beginB) && (beginA <= endB))) {
+						if (temporalOverlap(beginA, endA, beginB, endB)) {
 							add.push(rowB[contractIdx['løpenummer']]);
 						}
 					}
@@ -102,6 +102,14 @@ function rentableOverlapFilter(arr) {
 	
 	return out;
 }
+
+function temporalOverlap(beginA, endA, beginB, endB) {
+	let q = ((endA >= beginB) & (endA <= endB))
+			| ((beginA >= beginB) & (beginA <= endB))
+			| ((endB >= beginA) & (endB <= endA))
+			| ((beginB >= beginA) & (beginB <= endA));
+	return q;
+}
 function contractOverlapFilter(arr) {
 	
 	const defaultBegin = new Date();
@@ -128,7 +136,7 @@ function contractOverlapFilter(arr) {
 						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
 						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
 						
-						if (((endA >= beginB) && (endA <= endB)) || ((beginA >= beginB) && (beginA <= endB))) {
+						if (temporalOverlap(beginA, endA, beginB, endB)) {
 							add.push(rowB[contractIdx['løpenummer']]);
 						}
 						else {
