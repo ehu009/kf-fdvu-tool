@@ -8,9 +8,67 @@ let ignoreContractsAddition = ["Omsorgstjenesten S\u00F8r\u00F8ya",
 		"Tildelingskontoret"
 	];
 
+function mapRows(arr, idx) {
+	let m = new Map();
+	for (let i = 1; i < arr.length; i += 1) {
+		const key = arr[i][idx];
+		if (m.has(key) == false) {
+			m.set(key, []);
+		}
+		m.get(key).push(arr[i]);
+	}
+	return m;
+}
 
-function customerOverlapFilter() {
-	return [];
+function customerOverlapFilter(arr) {
+	
+	const defaultBegin = new Date();
+	const defaultEnd = new Date();
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(2090);
+	
+	let l = 2;
+	let out = [];
+	mapRows(arr, contractIdx['fasilitetsnummer']).forEach((val, key) => {
+			
+			let k = val.length;
+			if (k >= 2) {
+				
+				for (let i = 0; i < k; i += 1) {
+					const rowA = val[i];
+					
+					const beginA = dateWithDefault(rowA[contractIdx['startdato']], defaultBegin);
+					const endA = dateWithDefault(rowA[contractIdx['sluttdato']], defaultEnd);
+					
+					let add = [key, rowA[contractIdx['løpenummer']]];
+					for (let j = i + 1; j < k; j += 1) {
+						const rowB = val[j];
+						
+						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
+						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
+						
+						if (((endA >= beginB) && (endA <= endB)) || ((beginA >= beginB) && (beginA <= endB))) {
+							add.push(rowB[contractIdx['løpenummer']]);
+						}
+					}
+					let m = add.length - 1;
+					if (m > 1) {
+						out.push(add);
+						if (l < m) {
+							l = m;
+						}
+					}
+				}
+			}
+		});
+	
+	let head = ["Fasilitet"];
+	for (let i = 1; i <= l; i += 1) {
+		head.push("L\u00F8penummer " + i);
+	}
+	out.unshift(head);
+	
+	return out;
 }
 function rentableOverlapFilter() {
 	return [];
