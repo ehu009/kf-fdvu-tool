@@ -102,8 +102,63 @@ function rentableOverlapFilter(arr) {
 	
 	return out;
 }
-function contractOverlapFilter() {
-	return [];
+function contractOverlapFilter(arr) {
+	
+	const defaultBegin = new Date();
+	const defaultEnd = new Date();
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(2090);
+	
+	let l = 2;
+	let out = [];
+	mapRows(arr, contractIdx['leietakernummer']).forEach((val, key) => {
+			const k = val.length;
+			if (k >= 2) {
+				
+				for (let i = 0; i < k; i += 1) {
+					const rowA = val[i];
+					
+					const beginA = dateWithDefault(rowA[contractIdx['startdato']], defaultBegin);
+					const endA = dateWithDefault(rowA[contractIdx['sluttdato']], defaultEnd);
+					
+					let add = [key, rowA[contractIdx['løpenummer']]];
+					for (let j = i + 1; j < k; j += 1) {
+						const rowB = val[j];
+						
+						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
+						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
+						
+						if (((endA >= beginB) && (endA <= endB)) || ((beginA >= beginB) && (beginA <= endB))) {
+							add.push(rowB[contractIdx['løpenummer']]);
+						}
+						else {
+							xc("skipped: " + rowB[contractIdx['løpenummer']])
+							xc(beginA + " - " + endA);
+							xc(beginB + " - " + endB);
+						
+						
+						}
+					}
+					
+					const m = add.length - 1;
+					if (m > 1) {
+						out.push(add);
+						if (l < m) {
+							l = m;
+						}
+					}
+				}
+			}
+		});
+	
+	
+	let head = ["Akt\u00F8rnummer"];
+	for (let i = 1; i <= l; i += 1) {
+		head.push("L\u00F8penummer " + i);
+	}
+	out.unshift(head);
+	
+	return out;
 }
 function keyOverlapFilter() {
 	return [];
