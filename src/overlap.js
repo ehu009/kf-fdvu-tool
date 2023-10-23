@@ -225,12 +225,10 @@ function setupCustomerOverlapFilter() {
 		};
 		
 	document.addEventListener(eventName, () => {
+		/*
 			let table = fxcd("table");
 			table.innerHTML = "";
 			
-			/*
-				map seksjonsnummer -> kontrakter
-			*/
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				let pp = contractList[r];
@@ -286,9 +284,6 @@ function setupCustomerOverlapFilter() {
 			}
 			
 			
-			/*
-				tegn og lag array
-			*/
 			let header = ["Fasilitet", "L\u00F8penummer 1", "Leietaker 1", "Status 1", "L\u00F8penummer 2", "Leietaker 2", "Status 2"];
 			let out = [header];
 			
@@ -299,9 +294,10 @@ function setupCustomerOverlapFilter() {
 				}
 			}
 			
+			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, out, "overlappende kontrakter");
+			downloadButton(btn, customerOverlapFilter(contractList), "overlappende kontrakter");
 			
 			hide(spinner);
 		});
@@ -344,13 +340,10 @@ function setupRentableOverlapFilter() {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			
+			/*
 			let table = fxcd("table");
 			table.innerHTML = "";
 			
-			/*
-				map seksjonsnummer -> liste over seksjoner
-			*/
 			let mep = new Map();
 			for (let r = 1; r < rentablesList.length; r += 1) {
 				const pp = rentablesList[r];
@@ -362,9 +355,6 @@ function setupRentableOverlapFilter() {
 			}
 			
 			
-			/*
-				tegn og lag array
-			*/
 			let header = ["Seksjonsnummer", "Seksjonsnavn"];
 			let out = [header];
 			
@@ -374,10 +364,10 @@ function setupRentableOverlapFilter() {
 				}
 				out.push([e[0]].concat(e[1]));
 			}
-			
+			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, out, "overlappende seksjoner");
+			downloadButton(btn, rentableOverlapFilter(rentablesList), "overlappende seksjoner");
 			
 			hide(spinner);
 		});
@@ -438,13 +428,10 @@ function setupContractOverlapFilter() {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			
+			/*
 			let table = fxcd("table");
 			table.innerHTML = "";
 			
-			/*
-				map leietakernummer -> liste over kontrakter
-			*/
 			let mep = new Map();
 			for (let r = 1; r < contractList.length; r += 1) {
 				const pp = contractList[r];
@@ -510,10 +497,10 @@ function setupContractOverlapFilter() {
 					out.push(r);
 				}
 			}
-			
+			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, out, "overlappende kontrakter");
+			downloadButton(btn, contractOverlapFilter(contractList), "overlappende kontrakter");
 			
 			hide(spinner);
 		});
