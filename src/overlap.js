@@ -170,14 +170,16 @@ function keyOverlapFilter(arr) {
 				val.forEach((row) => {
 						s.add(row[keyIdx['seksjonsnummer']]);
 					});
-				
-				if (s.size > l) {
-					l = s.size;
+				const m = s.size;
+				if (m > 1) {
+					if (m > l) {
+						l = m;
+					}
+					s.forEach((n) => {
+							add.push(n);
+						});
+					out.push(add);
 				}
-				s.forEach((n) => {
-						add.push(n);
-					});
-				out.push(add);
 			}
 		});
 	
@@ -642,5 +644,5 @@ function keyOverlapTest() {
 			["546", "24100610135", "24100610115"]
 		];
 	
-	return compareCSV(keyOverlapFilter(sample), wanted);
+	return compareCSV(wanted, keyOverlapFilter(sample));
 }
