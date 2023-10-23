@@ -138,7 +138,14 @@ function contractOverlapFilter(arr) {
 	return out;
 }
 function keyOverlapFilter(arr) {
-		
+	arr = arr.filter((row) => {
+			if (isInvalid(row[keyIdx['seksjonsnummer']])
+					||	isInvalid(row[keyIdx['hanknummer']])) {
+				return false;
+			}
+			return true;
+		});
+	
 	let l = 2;
 	let out = [];
 	mapRows(arr, keyIdx['hanknummer']).forEach((val, key) => {
@@ -670,7 +677,7 @@ function keyOverlapTest() {
 			["546", "Sørslettvegen 3 - H0101 Ytterdør", "", "4", "Hovedinngang ", "1180", "Åsgård", "118007", "Åsgård Sørslettvegen 3", "24100610115", "Sørslettvegen 3, H0101"],
 			["547", "Vågvegn 21B - Leilighet", "Trioving nye ", "6", "5 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "3094", "Solåsen Boligsameie - Org. 980379558", "309401", "Vågvegen 21 B", "14100616354", "Vågvegen 21 B"],
 			["548", "Post - Vestregata 15, Leilighet 442, H0408", "", "4", "2 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
-			["548", "Vestregata 15, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"]
+			["548", "Vestregata 15, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
 			[" ", "tullenøkkel, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
 			["", "dustenøkkel, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
 		];
