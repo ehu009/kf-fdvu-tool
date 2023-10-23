@@ -83,6 +83,13 @@ function dateToFdvuDate(date) {
 	const arr = date.split("-");
 	return arr.reverse().join(".");
 }
+function temporalOverlap(beginA, endA, beginB, endB) {
+	let q = ((endA >= beginB) & (endA <= endB))
+			| ((beginA >= beginB) & (beginA <= endB))
+			| ((endB >= beginA) & (endB <= endA))
+			| ((beginB >= beginA) & (beginB <= endA));
+	return q;
+}
 
 function stringToNumber(s) {
 	return parseInt(s.replace(",", "."));
@@ -188,4 +195,16 @@ function mapContracts(arr, numberIdx, nameIdx) {
 		}
 	}
 	return mep;
+}
+
+function mapRows(arr, idx) {
+	let m = new Map();
+	for (let i = 1; i < arr.length; i += 1) {
+		const key = arr[i][idx];
+		if (m.has(key) == false) {
+			m.set(key, []);
+		}
+		m.get(key).push(arr[i]);
+	}
+	return m;
 }
