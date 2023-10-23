@@ -671,6 +671,8 @@ function keyOverlapTest() {
 			["547", "Vågvegn 21B - Leilighet", "Trioving nye ", "6", "5 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "3094", "Solåsen Boligsameie - Org. 980379558", "309401", "Vågvegen 21 B", "14100616354", "Vågvegen 21 B"],
 			["548", "Post - Vestregata 15, Leilighet 442, H0408", "", "4", "2 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
 			["548", "Vestregata 15, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"]
+			[" ", "tullenøkkel, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
+			["", "dustenøkkel, Leilighet 442, H0408", "XL72011 K75", "6", "3 i skap 18.04.23 EJH. Oppdater antall ved innlevering", "1073", "Vestregata Heracleum", "107302", "Vestregata 9/15 Heracleum", "114611217", "Vestregata 15, Leilighet 442, H0408"],
 		];
 	//	nøkkelhank nummer 546 tilhører flere seksjoner
 	let wanted = [
