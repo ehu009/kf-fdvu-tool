@@ -28,13 +28,13 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 				}
 				
 				const end = new Date(date2);
-				if (mode == "mellom") {
-					if (((end >= dateA) && (end <= dateB)) || ((begin >= dateA) && (begin <= dateB))) {
+				
+				if (temporalOverlap(begin, end, dateA, dateB)) {
+					if (mode == "mellom") {
 						return true;
 					}
-				}
-				if (mode == "utenfor") {
-					if ((dateA > end) || (dateB < begin)) {
+				} else {
+					if (mode == "utenfor") {
 						return true;
 					}
 				}
