@@ -22,13 +22,11 @@ function customerOverlapFilter(arr) {
 			if (isInvalid(row[contractIdx['leietakernummer']])
 					|| isInvalid(row[contractIdx['leietakernavn']])
 					|| isInvalid(row[contractIdx['fasilitetsnummer']])
-					|| isInvalid(row[contractIdx['løpenummer']])
-					|| ["Passiv"].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']])) {
+					|| isInvalid(row[contractIdx['løpenummer']])) {
 				return false;
 			}
 			return true;
 		});
-	
 	const defaultBegin = new Date();
 	const defaultEnd = new Date();
 	defaultBegin.setFullYear(1950);
@@ -337,7 +335,7 @@ function setupRentableOverlapFilter() {
 					target[key] = value;
 					fxcd("download").disabled = true;
 					if (target['count'] < 2) {
-						fxcd('calc').disabled = false;
+						fxcd('filter').disabled = false;
 						if (target["count"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
