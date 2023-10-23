@@ -4,7 +4,7 @@
 const ignoreContracts = [
 		"Driftsadministrasjonen",
 		"Driftsavdelingen",
-		"Troms\u00F8 kommune v/ Byggforvaltningen",
+		"Troms\u00F8 kommune v/Byggforvaltningen",
 		"Drift Leide Boliger",
 		"Stiftelsen Kommunale Boliger"
 	];
