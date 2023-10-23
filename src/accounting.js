@@ -493,10 +493,31 @@ function gainTest() {
 	return true;
 }
 
+function calcLoss(start, stop, contracts, rentables) {
+	return [[]];
+}
 function lossTest() {
-	return true;
+	
+	const begin = "01.01.2008";
+	const end = "01.02.2008";
+	
+	const contracts = contractSample.concat([
+			["K00006443", "Kontrakt for Driftsadministrasjonen", "", "Driftsadministrasjonen", "1118047541", "239119", "", "10.01.2008", "", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24100610114", "24100610114 Sørslettvegen 3 - Underetasje", "1180", "Åsgård", "118002", "Åsgård Lars Eriksens vei 20", "", "Etterskudd Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"]
+		]);
+	
+	const wanted = [
+			["Seksjonsnummer", "Navn", "Dager vakant", "Vakansetap", "Dager vedlikehold", "Vedlikeholdstap", "Differanse"],
+			["24100610114", "Sørslettvegen 3 - Underetasje", 21, 21*(11247/31), 10, 10*(11247/31), 0],
+			["24100610115", "Sørslettvegen 3, H0101", 31, 8723.2, 0, 0, 0],
+			["24979620028", "Sørslettveien 8 U 0101", 0, 0, 0, 0, 0],
+			["24979620029", "Sørslettveien 8 U 0102", 31, 9691, 0, 0, 0],
+			["24979620030", "Sørslettveien 8 H 0201", 0, 0, 0, 0, 0],
+			["24979620031", "Sørslettveien 8 H 0202", 31, 9696, 0, 0, 5304]
+		];
+	
+	return compareCSV(wanted, calcLoss(begin, end, contracts, rentableSample));
 }
 
 function unitTest() {
-	return gainTest() | lossTest();
+	return lossTest();
 };
