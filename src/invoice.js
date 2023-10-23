@@ -30,25 +30,7 @@ function filterContracts(contracts, rentables) {
 	*/
 	
 	let contractMap = mapRows(contracts, contractIdx['fasilitetsnummer']);
-	/*
-	= new Map();
-	{
-		let valIdx = contractIdx['løpenummer'];
-		let keyIdx = contractIdx['fasilitetsnummer'];
-		for (let i = 1; i < contracts.length; i += 1) {
-			let current = contracts[i][keyIdx];
-			if (isInvalid(current)) {
-				continue;
-			}
-			current = current.trim();
-			if (contractMap.has(current)) {
-				contractMap.get(current).push(contracts[i]);
-			} else {
-				contractMap.set(current, [contracts[i]]);
-			}
-		}
-	}
-	*/
+	
 	/*
 		velg kun kontrakter som tilhører gjeldende seksjoner
 	*/
@@ -104,23 +86,7 @@ function filterInvoices(contracts, invoices) {
 	out.unshift(header);
 	return out;
 }
-/*
-function draw(container, arr) {
-	let con = fxcd(container);
-	con.innerHTML = "";
-	arr.forEach((invoice) => {
-			let p = xcd("p");
-			let out = [invoice[invoiceIdx['løpenummer']], invoice[invoiceIdx['fasilitetsnummer']], invoice[invoiceIdx['fakturatekst']]];
-			axcd(p, txcd(out[0]));
-			addLine(p);
-			axcd(p, txcd(out[1]));
-			addLine(p);
-			axcd(p, txcd(out[2]));
-			p.style.border = "1px solid black";
-			axcd(result, p);
-		});
-}
-*/
+
 function begin() {
 	
 	let rentables = null;

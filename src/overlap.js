@@ -243,76 +243,7 @@ function setupCustomerOverlapFilter() {
 		};
 		
 	document.addEventListener(eventName, () => {
-		/*
-			let table = fxcd("table");
-			table.innerHTML = "";
 			
-			let mep = new Map();
-			for (let r = 1; r < contractList.length; r += 1) {
-				let pp = contractList[r];
-				let key = pp[contractIdx['fasilitetsnummer']];
-				if (isInvalid(key)) {
-					continue;
-				}
-				if (mep.has(key) == false) {
-					mep.set(key, []);
-				}
-				mep.get(key).push(pp);
-			}
-			
-			
-			let contractMap = new Map();
-			for (let r of mep.entries()) {
-				
-				for (let i = 0; i < r[1].length - 1; i += 1) {
-					const c1 = r[1][i];
-					const cNum = c1[contractIdx['løpenummer']];
-					
-					let oldest = new Date();
-					let newest = new Date();
-					oldest.setFullYear(1950);
-					newest.setFullYear(2050);
-					
-					const lower1 = dateWithDefault(c1[contractIdx['startdato']], oldest);
-					const upper1 = dateWithDefault(c1[contractIdx['sluttdato']], newest);
-					
-					for (let j = i + 1; j < r[1].length; j += 1) {
-						const c2 = r[1][j];
-						
-						const lower2 = dateWithDefault(c2[contractIdx['startdato']], oldest);
-						const upper2 = dateWithDefault(c2[contractIdx['sluttdato']], newest);
-						
-						if (upper1 < lower2 || lower1 > upper2) {
-							continue;
-						}
-						if (contractMap.has(r[0]) == false) {
-							contractMap.set(r[0], []);
-						}
-						contractMap.get(r[0]).push([
-								c1[contractIdx['løpenummer']],
-								c1[contractIdx['leietakernavn']],
-								c1[contractIdx['behandlingsstatus']],
-								c2[contractIdx['løpenummer']],
-								c2[contractIdx['leietakernavn']],
-								c2[contractIdx['behandlingsstatus']]
-							]);
-						break;
-					}
-				}
-			}
-			
-			
-			let header = ["Fasilitet", "L\u00F8penummer 1", "Leietaker 1", "Status 1", "L\u00F8penummer 2", "Leietaker 2", "Status 2"];
-			let out = [header];
-			
-			for (let e of contractMap.entries()) {
-				for (let e2 of e[1]) {
-					let r = [e[0]].concat(e2);
-					out.push(r);
-				}
-			}
-			
-			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, customerOverlapFilter(contractList), "overlappende kontrakter");
@@ -359,31 +290,7 @@ function setupRentableOverlapFilter() {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			/*
-			let table = fxcd("table");
-			table.innerHTML = "";
 			
-			let mep = new Map();
-			for (let r = 1; r < rentablesList.length; r += 1) {
-				const pp = rentablesList[r];
-				const idx = rentableIdx['seksjonsnummer'];
-				if (mep.has(pp[idx]) == false) {
-					mep.set(pp[idx], []);
-				}
-				mep.get(pp[idx]).push(pp[rentableIdx['seksjonsnummer']]);
-			}
-			
-			
-			let header = ["Seksjonsnummer", "Seksjonsnavn"];
-			let out = [header];
-			
-			for (let e of mep.entries()) {
-				if (e[1].length < 2) {
-					continue;
-				}
-				out.push([e[0]].concat(e[1]));
-			}
-			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, rentableOverlapFilter(rentablesList), "overlappende seksjoner");
@@ -448,76 +355,7 @@ function setupContractOverlapFilter() {
 			}
 		};
 	document.addEventListener(eventName, () => {
-			/*
-			let table = fxcd("table");
-			table.innerHTML = "";
 			
-			let mep = new Map();
-			for (let r = 1; r < contractList.length; r += 1) {
-				const pp = contractList[r];
-				if (isInvalid(pp[contractIdx['fasilitetsnummer']]) 		//	fasilitetsnummer
-						|| isInvalid(pp[contractIdx['reskontronummer']]) //	reskontronummer
-						|| isInvalid(pp[contractIdx['leietakernummer']]) //	leietakernummer
-						|| isInvalid(pp[contractIdx['leietakernavn']]) //	leietakernavn
-						|| (ignoreContracts.concat(ignoreContractsAddition).includes(pp[contractIdx['leietakernavn']]) == true)) {
-					continue;
-				}
-				if (mep.has(pp[contractIdx['leietakernummer']]) == false) {
-					mep.set(pp[contractIdx['leietakernummer']], []);
-				}
-				mep.get(pp[contractIdx['leietakernummer']]).push(pp);
-			}
-			
-			
-			let contractMap = new Map();
-			for (let r of mep.entries()) {
-				
-				for (let i = 0; i < r[1].length - 1; i += 1) {
-					const c1 = r[1][i];
-					const cNum = c1[contractIdx['løpenummer']];
-					
-					let oldest = new Date();
-					let newest = new Date();
-					oldest.setFullYear(1950);
-					newest.setFullYear(2050);
-					
-					const lower1 = dateWithDefault(c1[contractIdx['startdato']], oldest);
-					const upper1 = dateWithDefault(c1[contractIdx['sluttdato']], newest);
-					
-					for (let j = i + 1; j < r[1].length; j += 1) {
-						const c2 = r[1][j];
-						
-						const lower2 = dateWithDefault(c2[contractIdx['startdato']], oldest);
-						const upper2 = dateWithDefault(c2[contractIdx['sluttdato']], newest);
-						
-						if (upper1 < lower2 || lower1 > upper2) {
-							continue;
-						}
-						if (contractMap.has(r[0]) == false) {
-							contractMap.set(r[0], []);
-						}
-						contractMap.get(r[0]).push([
-								c1[contractIdx['leietakernavn']],
-								c1[contractIdx['fasilitetsnummer']],
-								c1[contractIdx['behandlingsstatus']],
-								c2[contractIdx['fasilitetsnummer']],
-								c2[contractIdx['behandlingsstatus']]
-							]);
-						break;
-					}
-				}
-			}
-			
-			let header = ["Akt\u00F8rnummer", "Akt\u00F8rnavn", "Fasilitet 1", "Status 1", "Fasilitet 2",  "Status 2"];
-			let out = [header];
-			
-			for (let e of contractMap.entries()) {
-				for (let e2 of e[1]) {
-					let r = [e[0]].concat(e2);
-					out.push(r);
-				}
-			}
-			*/
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, contractOverlapFilter(contractList), "overlappende kontrakter");
