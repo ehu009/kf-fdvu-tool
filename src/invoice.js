@@ -28,7 +28,10 @@ function filterContracts(contracts, rentables) {
 	/*
 		map seksjonsnummer -> løpenumre
 	*/
-	let contractMap = new Map();
+	
+	let contractMap = mapRows(contracts, contractIdx['fasilitetsnummer']);
+	/*
+	= new Map();
 	{
 		let valIdx = contractIdx['løpenummer'];
 		let keyIdx = contractIdx['fasilitetsnummer'];
@@ -45,7 +48,7 @@ function filterContracts(contracts, rentables) {
 			}
 		}
 	}
-	
+	*/
 	/*
 		velg kun kontrakter som tilhører gjeldende seksjoner
 	*/
@@ -101,7 +104,7 @@ function filterInvoices(contracts, invoices) {
 	out.unshift(header);
 	return out;
 }
-
+/*
 function draw(container, arr) {
 	let con = fxcd(container);
 	con.innerHTML = "";
@@ -117,7 +120,7 @@ function draw(container, arr) {
 			axcd(result, p);
 		});
 }
-
+*/
 function begin() {
 	
 	let rentables = null;
