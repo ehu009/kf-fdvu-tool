@@ -22,7 +22,8 @@ function customerOverlapFilter(arr) {
 			if (isInvalid(row[contractIdx['leietakernummer']])
 					|| isInvalid(row[contractIdx['leietakernavn']])
 					|| isInvalid(row[contractIdx['fasilitetsnummer']])
-					|| isInvalid(row[contractIdx['løpenummer']])) {
+					|| isInvalid(row[contractIdx['løpenummer']])
+					|| ["Passiv"].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']])) {
 				return false;
 			}
 			return true;
@@ -105,7 +106,8 @@ function contractOverlapFilter(arr) {
 			if (isInvalid(row[contractIdx['leietakernummer']])
 					|| isInvalid(row[contractIdx['leietakernavn']])
 					|| isInvalid(row[contractIdx['fasilitetsnummer']])
-					|| isInvalid(row[contractIdx['løpenummer']])) {
+					|| isInvalid(row[contractIdx['løpenummer']])
+					|| ["Passiv"].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']])) {
 				return false;
 			}
 			return true;
