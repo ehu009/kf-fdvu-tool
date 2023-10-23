@@ -139,13 +139,6 @@ function contractOverlapFilter(arr) {
 						if (temporalOverlap(beginA, endA, beginB, endB)) {
 							add.push(rowB[contractIdx['løpenummer']]);
 						}
-						else {
-							xc("skipped: " + rowB[contractIdx['løpenummer']])
-							xc(beginA + " - " + endA);
-							xc(beginB + " - " + endB);
-						
-						
-						}
 					}
 					
 					const m = add.length - 1;
@@ -194,7 +187,7 @@ function keyOverlapFilter(arr) {
 	
 	let head = ['Nummer'];
 	for (let i = 1; i <= l; i += 1) {
-		head.push('Seksjonsnummer ' + i);
+		head.push('Seksjon ' + i);
 	}
 	out.unshift(head);
 	
@@ -638,10 +631,7 @@ function contractOverlapTest() {
 			["21016729768", "K00006433", "K00006438"]
 		];
 	
-	let p = contractOverlapFilter(sample)
-	xc(wanted);
-	xc(p)
-	return compareCSV(p, wanted);
+	return compareCSV(contractOverlapFilter(sample), wanted);
 }
 
 function keyOverlapTest() {
