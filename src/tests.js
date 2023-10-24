@@ -105,3 +105,19 @@ let deviationSample = [
 		["Montere vaskbar plate.", "Det må monteres vaskbar plate bak komfyr, av hygieniske grunner.", "3", "1 - svake symptomer", "1 - små konsekvenser", "", "Finn Løkvoll", "Finn Løkvoll", "118007 Åsgård Sørslettvegen 3", "1180 Åsgård", "118007 Åsgård Sørslettvegen 3", "24.03.2020", "24.03.2020", "14.05.2021", "", "False", "False", "Bygg Vedlikehold", "", "2 Bygning", "3 DRIFTSKOSTNADER ", "", "", "0", "Bygningsmessig"],
 		["Montering av nye utelys.", "Det er behov for lys ute på nordsiden av bygget. Det blir gangvei for beboer i leilighet i underetasjen på denne siden av bygget. Skift ut de to utelysene som stå på østsiden av bygget + et nytt utelys på nordsiden.", "4", "1 - svake symptomer", "2 - middels store konsekvenser", "", "Geir Frode Olsen", "Finn Løkvoll", "118007 Åsgård Sørslettvegen 3", "1180 Åsgård", "118007 Åsgård Sørslettvegen 3", "15.12.2021", "15.12.2021", "", "", "False", "False", "Elektriske anlegg", "", "2 Bygning", "3 DRIFTSKOSTNADER ", "", "", "0", "Elektriske Anlegg"],
 	 ];
+	 
+let estateSample = [
+		["Nummer", "Navn", "Adresse", "Eiendom", "Merknad", "Hjemmelshaver", "Matrikkelnr", "Parkeringsplasser", "Parkeringsareal", "Plenareal", "Bruksareal (BRA)", "Totalt areal", "Brøytet areal", "Grunneiendomstype", "Eierform", "Kommune", "Region", "Kategori bolig", "Formål", "Status utleie"]
+		["118.1530", "Sørslettvegen 10", "", "1180 Åsgård", "", "", ".118.1530", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["118.1531", "Sørslettvegen 8", "", "1180 Åsgård", "", "", "5401.117.1531", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		["119.26.8.1", "Myrengvegen 13", "", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "1902.119.26.8.0", "", "", "", "", "829,90", "", "", "", "5401 TROMSØ", "Tromsøya nord", "", "", ""],
+		["119.26.8.2", "Myrengvegen 15", "", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "1902.119.26.8.0", "", "", "", "", "829,90", "", "", "", "5401 TROMSØ", "Tromsøya nord", "", "", ""],
+		["119.2631.0.0", "Melkevegen 1", "Strandvegen 71  9007 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "5401.119.2631", "", "", "", "", "603,10", "", "", "", "5401 TROMSØ", "Tromsøya sør", "", "", ""],
+		["119.2631.0.0", "Strandvegen 71", "Strandvegen 71  9007 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "5401.119.2631", "", "", "", "", "603,10", "", "", "", "5401 TROMSØ", "Tromsøya sør", "", "", ""],
+		["119.2783.0.1", "Bjørnøygata 45", "", "G001 Grunneiendommer i Tromsø kommune", "SOLGT! 1991!", "Tromsø Kommune", "5401.119.2783", "", "", "", "", "309,80", "", "", "", "5401 TROMSØ", "Tromsøya sør", "", "", ""],
+		["119.2783.0.2", "Bjørnøygata 45", "", "G001 Grunneiendommer i Tromsø kommune", "SOLGT! 1991!", "Tromsø Kommune", "5401.119.2783", "", "", "", "", "309,80", "", "", "", "5401 TROMSØ", "Tromsøya sør", "", "", ""],
+		["119.2911.0.0", "M Urdals Veg 39", "M Urdals veg 39  9011 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "5401.119.2911", "", "", "", "", "384,30", "", "", "", "5401 TROMSØ", "Tromsøya nord", "", "", ""],
+		["119.2912", "M Urdals veg 41", "M Urdals veg 41  9011 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "5401.119.2912", "", "", "", "", "486,90", "", "", "", "5401 TROMSØ", "", "", "", ""],
+		["119.2955", "Myrengvegen 22", "Myrengvegen 22  9011 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "5401.119.2955", "", "", "", "", "315,60", "", "", "", "5401 TROMSØ", "Tromsøya nord", "", "", ""],
+		["119.2955.0.0", "Myrengvegen 22", "Myrengvegen 22  9011 TROMSØ ", "G001 Grunneiendommer i Tromsø kommune", "", "", "5401.119.2955", "", "", "", "", "315,60", "", "", "", "", "", "", "", ""],
+	];
