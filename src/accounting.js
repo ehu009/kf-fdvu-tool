@@ -72,11 +72,6 @@ function calcLoss(begin, end, contracts, rentables) {
 			if (m.has(key)) {
 				for (let row of m.get(key)) {
 					
-					let rep = false;
-					if (ignoreContracts.includes(row[contractIdx['leietakernavn']]) == true) {
-						rep = true;
-					}
-					
 					const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
 					const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
 					let current;
@@ -108,35 +103,16 @@ function calcLoss(begin, end, contracts, rentables) {
 							limit = stop;
 						}
 						const monthDays = numberOfDaysInMonth(current);
-						const rentDays = millisecondsToDays(limit - current);
-						
 						const dailySection = rentPrice / monthDays;
-						/*
-						const dailyContract = cPrice / monthDays;
 						
-						
-						if (cPrice != 0) {
-							vacancy -= rentDays * dailyContract;
-						} else {
-							*/
-							vacancy -= rentDays * dailySection;
-							/*
-						}
-						*/
+						const rentDays = millisecondsToDays(limit - current);
+						vacancy -= rentDays * dailySection;
 						daysVacant -= rentDays;
-						if (rep == true) {
-							daysRepair += rentDays;
-							/*
-							if (cPrice != 0) {
-								repairLoss += rentDays * dailyContract;
-							} else {
-								*/
-								repair += rentDays * dailySection;
-								/*
-							}
-							*/
-						}
 						
+						if (ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
+							daysRepair += rentDays;
+							repair += rentDays * dailySection;
+						}
 						
 						current = new Date(limit);
 					}
@@ -153,189 +129,6 @@ function calcLoss(begin, end, contracts, rentables) {
 	out.unshift(["Seksjonsnummer", "Navn", "Dager vakant", "Vakansetap", "Dager vedlikehold", "Vedlikeholdstap", "Differanse"]);
 	
 	return out;
-	/*
-	["24100610114", "Sørslettvegen 3 - Underetasje", 21, 21*(11247/31), 10, 10*(11247/31), 0],
-			
-	
-	
-	// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
-	let mep = mapContracts(contractList, 4, 5);
-	
-	// legg til seksjonspris
-	for (let e of activeList) {
-		
-		const number = e[rentableIdx['seksjonsnummer']];
-		const name = e[rentableIdx['seksjonsnavn']];
-		if (isInvalid(name) && isInvalid(number)) {
-			continue;
-		}
-		const id = [number+" "+name, number];
-		
-		if (mep.has(id) == false) {
-			let filler = new Array(5);
-			filler[4] = e[rentableIdx['seksjonspris']];
-			if (isInvalid(number)) {
-				xc(e);
-			}
-			mep.set(id, [id.concat(filler)]);
-			
-		} else {
-			if (e[rentableIdx['aktiv']] == "False" || e[rentableIdx['utleibar']] == "False") {
-				mep.delete(id);
-				continue;
-			}
-			
-			for (let u of mep.get(id)) {
-				if (Array.isArray(u)) {
-					u.push(e[rentableIdx['seksjonspris']]);
-				} else {
-					xc(u, mep.get(id));
-				}
-			}
-		}
-	}
-	*/
-	
-	let calced = [];
-	{
-		
-		let defaultBegin = new Date();
-		let defaultEnd = new Date();
-		defaultBegin.setFullYear(1950);
-		defaultEnd.setFullYear(2090);
-		
-		const daysTotal = millisecondsToDays(end - begin);
-		
-		for (let entry of mep.entries()) {
-			let vacant = daysTotal;
-			let vacantLoss = 0;
-			let repair = 0;
-			let repairLoss = 0;
-			
-			let current = begin;
-			let stop = end;
-			
-			
-			while (current < stop) {
-				let next = new Date(current);
-				next.setMonth(next.getMonth() + 1);
-				next.setDate(1);
-				
-				let limit = next;
-				if (next > stop) {
-					limit = stop;
-				}
-				if (isInvalid(entry[1][0][7]) == false) {
-					vacantLoss += (millisecondsToDays(limit - current) * stringToNumber(entry[1][0][7])) / numberOfDaysInMonth(current);
-				}
-				current = new Date(limit);
-			}
-			
-			
-			// lag sum
-			{
-				for (let row of entry[1]) {
-					let rep = false;
-					if (ignoreContracts.includes(row[0]) == true) {
-						rep = true;
-					}
-					
-					if (row[0] == "Passiv") {
-						continue;
-					}
-					
-					const from = dateWithDefault(row[1], defaultBegin);
-					const to = dateWithDefault(row[2], defaultEnd);
-					if (from > end || to < begin) {
-						continue;
-					}
-					
-					let cPrice = 0;
-					let sPrice = 0;
-					{
-						if (isInvalid(row[3]) == false) {
-							cPrice = stringToNumber(row[3]);
-						}
-						if (isInvalid(row[7]) == false) {
-							cPrice = stringToNumber(row[7]);
-						}
-					}
-					
-					{
-						let beginDate = begin;
-						if (from > begin) {
-							beginDate = from;
-						}
-						current = new Date(beginDate);
-						
-						let endDate = end;
-						if (to < end) {
-							endDate = to;
-						}
-						stop = new Date(endDate);
-					}
-					
-					while (current < stop) {
-						
-						let next = new Date(current);
-						next.setMonth(next.getMonth() + 1);
-						next.setDate(1);
-						
-						let limit = next;
-						if (next >= stop) {
-							limit = stop;
-						}
-						const monthDays = numberOfDaysInMonth(current);
-						const rentDays = millisecondsToDays(limit - current);
-						
-						const dailySection = sPrice / monthDays;
-						const dailyContract = cPrice / monthDays;
-						
-						
-						if (cPrice != 0) {
-							vacantLoss -= rentDays * dailyContract;
-						} else {
-							vacantLoss -= rentDays * dailySection;
-						}
-						
-						vacant -= rentDays;
-						if (rep == true) {
-							repair += rentDays;
-							if (cPrice != 0) {
-								repairLoss += rentDays * dailyContract;
-							} else {
-								repairLoss += rentDays * dailySection;
-							}
-						}
-						
-						current = new Date(limit);
-					}
-				}
-			}
-			
-			calced.push([entry[0][1], entry[0][0], vacant, numToFDVUNum(vacantLoss), repair, numToFDVUNum(repairLoss)]);
-		}
-	}
-	
-	calced.unshift(["Fasilitetsnummer", "Fasilitet", "Dager vakant", "Tap pga vakanse", "Dager vedlikehold", "Tap pga vedlikehold"]);
-	
-	let sum = [["Sum vakansetap", "Sum vedlikeholdstap", "Total"]];
-	{
-		let aggregate = [0, 0, 0];
-		const lines = arrayColFilter(calced, ["Tap pga vakanse", "Tap pga vedlikehold"]);
-		for (let i = 1; i < lines.length; i+= 1) {
-			const vacant = stringToNumber(lines[i][0]);
-			const repair = stringToNumber(lines[i][1]);
-			arrayAddition([vacant, repair, vacant + repair], aggregate);
-		}
-		for (let n of aggregate) {
-			n = numToFDVUNum(n);
-		}
-		sum.push(aggregate);
-	}
-	
-	return [[]];
-	
 }
 
 function beginLoss() {
@@ -653,6 +446,7 @@ nummer, navn, sum, aktiv
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};
 }
+
 
 
 function lossTest() {
