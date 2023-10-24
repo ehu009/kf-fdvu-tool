@@ -467,7 +467,60 @@ function setupKeyOverlapFilter() {
 }
 
 function setupEstateOverlapFilter() {
+	const eventName = "dataReady";
+	let readyTarget = {
+			count: 2,
+		};
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					fxcd("download").disabled = true;
+					if (target['count'] < 2) {
+						fxcd('filter').disabled = false;
+						if (target["count"] < 1) {
+							document.dispatchEvent(readyEvent);
+						}
+					}
+					return true;
+				}
+		});
 	
+	
+	let spinner = fxcd("spinner");
+	
+	let rentables = fxcd("rentables");
+	let rentablesList = null;
+	
+	rentables.onchange = (evt) => {
+			if (evt.target.files.length > 0) {
+				ready["count"] -= 1;
+			} else {
+				ready["count"] += 1;
+				fxcd("filter").disabled = true;
+			}
+		};
+	document.addEventListener(eventName, () => {
+			
+			let btn = fxcd("download");
+			btn.disabled = false;
+			downloadButton(btn, rentableOverlapFilter(rentablesList), "overlappende seksjoner");
+			
+			hide(spinner);
+		});
+	
+	fxcd("filter").onclick = () => {
+			show(spinner);
+			
+			let f = new FileReader();
+			
+			f.onload = () => {
+					rentablesList = CSVToArray(f.result, ";");
+					ready["count"] -= 1;
+				};
+			
+			f.readAsText(rentables.files[0], "iso-8859-1");
+		};
 }
 
 
