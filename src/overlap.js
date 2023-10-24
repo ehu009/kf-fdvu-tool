@@ -192,7 +192,36 @@ function keyOverlapFilter(arr) {
 	return out;
 }
 function estateOverLapFilter(arr) {
-	return [[]];
+	
+	let l = 2;
+	let out = [];
+	
+	let m = mapRows(arr, estateIdx['eiendom']);
+	m.forEach((val, key) => {
+			if (val.length <= 1) {
+				return;
+			}
+			let add = [];
+			val.forEach((row) => {
+					add.push(row[estateIdx['navn']]);
+					add.push(row[estateIdx['nummer']]);
+				});
+			const k = add.length / 2;
+			if (l < k) {
+				l = k;
+			}
+			add.unshift(key);
+			out.push(add);
+		});
+	
+	let header = ["Eiendom"];
+	for (let i = 1; i <= l; i += 1) {
+		header.push("Navn " + i);
+		header.push("Matrikkel# " + i);
+	}
+	out.unshift(header);
+	
+	return out;
 }
 
 function setupCustomerOverlapFilter() {
