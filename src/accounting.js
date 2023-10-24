@@ -2,22 +2,168 @@
 
 
 
-function calcLoss(dateA, dateB, contracts, rentables) {
+function calcLoss(begin, end, contracts, rentables) {
+	const nDays = millisecondsToDays(end - begin);
 	
-	const begin = new Date(dateA);
-	const end = new Date(dateB);
+	const defaultBegin = new Date();
+	const defaultEnd = new Date();
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(2090);
 	
-	contractList.shift();
-	activeList.shift();
+	let filteredRentables;
+	let filteredContracts;
+	
+	{
+		let header = rentables.shift();
+		filteredRentables = rentables.filter((row) => {
+				if ((row[rentableIdx['aktiv']] == "False")
+						|| (row[rentableIdx['utleibar' == "False"]])) {
+					return false;
+				}
+				return true;
+			});
+		rentables.unshift(header);
+		
+		header = contracts.shift();
+		filteredContracts = contracts.filter((row) => {
+				if (isInvalid(row[contractIdx['leietakernavn']])) {
+					return false;
+				}
+				let start = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
+				let stop = dateWithDefault(row[contractIdx['sluttdato']], defaultBegin);
+				
+				return temporalOverlap(begin, end, start, stop);
+			});
+		filteredContracts.unshift(header);
+	}
+	
+	let out = [];
+	let m = mapRows(filteredContracts, contractIdx['fasilitetsnummer']);
+	
+	filteredRentables.forEach((rentable) => {
+			const key = rentable[rentableIdx['seksjonsnummer']];
+			
+			const acqPrice = stringToNumber(rentable[rentableIdx['anskaffelsespris']]);
+			const rentPrice = stringToNumber(rentable[rentableIdx['seksjonspris']]);
+			
+			let vacancy = 0;
+			let daysVacant = nDays;
+			let repair = 0;
+			let daysRepair = 0;
+			let start = new Date(begin);
+			
+			while (start < end) {
+				let next = new Date(start);
+				next.setMonth(next.getMonth() + 1);
+				next.setDate(1);
+				
+				let limit = next;
+				if (next > stop) {
+					limit = stop;
+				}
+				vacancy += (millisecondsToDays(limit - start) * rentPrice) / numberOfDaysInMonth(start);
+				start = new Date(limit);
+			}
+			
+			let diff = acqPrice - rentPrice;
+			if (isNaN(acqPrice)) {
+				diff = 0;
+			}
+			if (m.has(key)) {
+				for (let row of m.get(key)) {
+					
+					let rep = false;
+					if (ignoreContracts.includes(row[contractIdx['leietakernavn']]) == true) {
+						rep = true;
+					}
+					
+					const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
+					const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
+					let current;
+					let stop;
+					{
+						let beginDate = begin;
+						if (from > begin) {
+							beginDate = from;
+						}
+						current = new Date(beginDate);
+						
+						let endDate = end;
+						if (to < end) {
+							endDate = to;
+							endDate.setDate(endDate.getDate()+1);
+						}
+						
+						stop = new Date(endDate);
+					}
+					
+					while (current < stop) {
+						
+						let next = new Date(current);
+						next.setMonth(next.getMonth() + 1);
+						next.setDate(1);
+						
+						let limit = next;
+						if (next > stop) {
+							limit = stop;
+						}
+						const monthDays = numberOfDaysInMonth(current);
+						const rentDays = millisecondsToDays(limit - current);
+						
+						const dailySection = rentPrice / monthDays;
+						/*
+						const dailyContract = cPrice / monthDays;
+						
+						
+						if (cPrice != 0) {
+							vacancy -= rentDays * dailyContract;
+						} else {
+							*/
+							vacancy -= rentDays * dailySection;
+							/*
+						}
+						*/
+						daysVacant -= rentDays;
+						if (rep == true) {
+							daysRepair += rentDays;
+							/*
+							if (cPrice != 0) {
+								repairLoss += rentDays * dailyContract;
+							} else {
+								*/
+								repair += rentDays * dailySection;
+								/*
+							}
+							*/
+						}
+						
+						
+						current = new Date(limit);
+					}
+				}
+			}
+			
+			let add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff]
+			for (let i = 2; i < add.length; i += 1) {
+				add[i] = numToFDVUNum(add[i]);
+			}
+			out.push(add);
+		});
+	
+	out.unshift(["Seksjonsnummer", "Navn", "Dager vakant", "Vakansetap", "Dager vedlikehold", "Vedlikeholdstap", "Differanse"]);
+	
+	return out;
+	/*
+	["24100610114", "Sørslettvegen 3 - Underetasje", 21, 21*(11247/31), 10, 10*(11247/31), 0],
+			
+	
 	
 	// lag map s.a. [(fasilitet + nummer) -> kontraktinfo]
 	let mep = mapContracts(contractList, 4, 5);
 	
 	// legg til seksjonspris
 	for (let e of activeList) {
-		/*
-nummer, navn, sum, aktiv
-*/
+		
 		const number = e[rentableIdx['seksjonsnummer']];
 		const name = e[rentableIdx['seksjonsnavn']];
 		if (isInvalid(name) && isInvalid(number)) {
@@ -48,7 +194,7 @@ nummer, navn, sum, aktiv
 			}
 		}
 	}
-	
+	*/
 	
 	let calced = [];
 	{
@@ -189,6 +335,7 @@ nummer, navn, sum, aktiv
 	}
 	
 	return [[]];
+	
 }
 
 function beginLoss() {
@@ -704,7 +851,7 @@ function lossTest() {
 			["24979620030", "Sørslettveien 8 H 0201", "0", "0", "0", "0", "0"],
 			["24979620031", "Sørslettveien 8 H 0202", "31", "9696", "0", "0", "5304"]
 		];
-	xc(wanted);
+	
 	return compareCSV(wanted, calcLoss(begin, end, contracts, rentableSample));
 }
 
