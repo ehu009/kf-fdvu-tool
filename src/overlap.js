@@ -489,10 +489,10 @@ function setupEstateOverlapFilter() {
 	
 	let spinner = fxcd("spinner");
 	
-	let rentables = fxcd("rentables");
-	let rentablesList = null;
+	let estates = fxcd("estates");
+	let estateList = null;
 	
-	rentables.onchange = (evt) => {
+	estates.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
 				ready["count"] -= 1;
 			} else {
@@ -504,7 +504,7 @@ function setupEstateOverlapFilter() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, rentableOverlapFilter(rentablesList), "overlappende seksjoner");
+			downloadButton(btn, estateOverLapFilter(estateList), "overlappende matrikkelnumre");
 			
 			hide(spinner);
 		});
@@ -515,11 +515,11 @@ function setupEstateOverlapFilter() {
 			let f = new FileReader();
 			
 			f.onload = () => {
-					rentablesList = CSVToArray(f.result, ";");
+					estateList = CSVToArray(f.result, ";");
 					ready["count"] -= 1;
 				};
 			
-			f.readAsText(rentables.files[0], "iso-8859-1");
+			f.readAsText(estates.files[0], "iso-8859-1");
 		};
 }
 
