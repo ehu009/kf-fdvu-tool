@@ -55,6 +55,7 @@ const facilityIdx = {
 	};
 const estateIdx = {
 		'nummer': 0,
+		'navn': 1,
 		'eiendom': 3
 	};
 
