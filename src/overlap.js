@@ -191,7 +191,9 @@ function keyOverlapFilter(arr) {
 	
 	return out;
 }
-
+function estateOverLapFilter(arr) {
+	return [[]];
+}
 
 function setupCustomerOverlapFilter() {
 	
@@ -435,6 +437,11 @@ function setupKeyOverlapFilter() {
 		};
 }
 
+function setupEstateOverlapFilter() {
+	
+}
+
+
 function unitTest() {
 	let q  = false;
 	if (customerOverlapTest()) {
@@ -451,6 +458,10 @@ function unitTest() {
 	}
 	if (keyOverlapTest()) {
 		xc("key overlap failed");
+		q = true;
+	}
+	if (estateOverlapTest()) {
+		xc("estate overlap failed");
 		q = true;
 	}
 	return q;
@@ -535,4 +546,9 @@ function keyOverlapTest() {
 		];
 	
 	return compareCSV(wanted, keyOverlapFilter(sample));
+}
+
+function estateOverlapTest() {
+	
+	return true;
 }
