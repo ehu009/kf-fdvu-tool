@@ -3,13 +3,13 @@
 <link href="./src/bootstrap.min.css" rel="stylesheet">
 <script src="./src/bootstrap.bundle.min.js" ></script>
 <style>
-.knappis {
+.nav-btn {
 	font-size: 57px;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
-.knappis:hover {
+.nav-btn:hover {
 	background-color:#ddd;
 }
 .carousel-item > iframe {
@@ -28,7 +28,7 @@
 function setup() {
 	const urls = ["vakanse", "kontrakter", "avvik", "faktura", "n\u00F8kler", "kontrakt-overlapp", "seksjon-overlapp", "akt\u00F8r-overlapp", "n\u00F8kkel-overlapp", "tidfilter", "rad-filter", "kolonne-filter", "sammenf\u00F8yer", "boligimport"];
 	
-	iframeCarousel(document.body, "karusell", "knappis", 1000000000, "./html/", urls);
+	iframeCarousel(document.body, "karusell", "nav-btn", 1000000000, "./html/", urls);
 }
 </script>
 </head>
