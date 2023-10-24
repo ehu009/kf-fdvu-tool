@@ -107,7 +107,7 @@ let deviationSample = [
 	 ];
 	 
 let estateSample = [
-		["Nummer", "Navn", "Adresse", "Eiendom", "Merknad", "Hjemmelshaver", "Matrikkelnr", "Parkeringsplasser", "Parkeringsareal", "Plenareal", "Bruksareal (BRA)", "Totalt areal", "Brøytet areal", "Grunneiendomstype", "Eierform", "Kommune", "Region", "Kategori bolig", "Formål", "Status utleie"]
+		["Nummer", "Navn", "Adresse", "Eiendom", "Merknad", "Hjemmelshaver", "Matrikkelnr", "Parkeringsplasser", "Parkeringsareal", "Plenareal", "Bruksareal (BRA)", "Totalt areal", "Brøytet areal", "Grunneiendomstype", "Eierform", "Kommune", "Region", "Kategori bolig", "Formål", "Status utleie"],
 		["118.1530", "Sørslettvegen 10", "", "1180 Åsgård", "", "", ".118.1530", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 		["118.1531", "Sørslettvegen 8", "", "1180 Åsgård", "", "", "5401.117.1531", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 		["119.26.8.1", "Myrengvegen 13", "", "G001 Grunneiendommer i Tromsø kommune", "", "Tromsø Kommune", "1902.119.26.8.0", "", "", "", "", "829,90", "", "", "", "5401 TROMSØ", "Tromsøya nord", "", "", ""],
