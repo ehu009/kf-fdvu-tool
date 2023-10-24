@@ -48,6 +48,11 @@ const invoiceIdx = {
 		'fra dato': 13,
 		'til dato': 14
 	};
+const facilityIdx = {
+		'beskrivelse': 0,
+		'merknad': 1,
+		'seksjonsnummer': 4
+	};
 
 
 function xc(...args) {
