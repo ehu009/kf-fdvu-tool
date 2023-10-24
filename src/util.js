@@ -53,6 +53,10 @@ const facilityIdx = {
 		'merknad': 1,
 		'seksjonsnummer': 4
 	};
+const estateIdx = {
+		'nummer': 0,
+		'eiendom': 3
+	};
 
 
 function xc(...args) {
