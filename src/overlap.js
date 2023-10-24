@@ -550,5 +550,11 @@ function keyOverlapTest() {
 
 function estateOverlapTest() {
 	
-	return true;
+	let wanted = [
+			["Navn", "Matrikkel# 1", "Matrikkel# 2"],
+			["Bjørnøygata 45", "119.2783.0.1", "119.2783.0.2"],
+			["Myrengvegen 22", "119.2955", "119.2955.0.0"]
+		];
+	
+	return compareCSV(wanted, estateOverLapFilter(estateSample));
 }
