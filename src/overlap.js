@@ -551,9 +551,9 @@ function keyOverlapTest() {
 function estateOverlapTest() {
 	
 	let wanted = [
-			["Navn", "Matrikkel# 1", "Matrikkel# 2"],
-			["Bjørnøygata 45", "119.2783.0.1", "119.2783.0.2"],
-			["Myrengvegen 22", "119.2955", "119.2955.0.0"]
+			["Eiendom", "Navn 1", "Matrikkel# 1", "Navn 2", "Matrikkel# 2", "Navn 3", "Matrikkel# 3"],
+			["1180 Åsgård", "Sørslettvegen 10", "118.1530", "Sørslettvegen 8", "118.1531"],
+			["G001 Grunneiendommer i Tromsø kommune", "Myrengvegen 13", "119.26.8.1", "Bjørnøygata 45", "119.2783.0.1", "Bjørnøygata 45", "119.2783.0.2"]
 		];
 	
 	return compareCSV(wanted, estateOverLapFilter(estateSample));
