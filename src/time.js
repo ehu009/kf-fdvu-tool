@@ -174,7 +174,30 @@ function begin() {
 }
 
 function unitTest() {
-	return testExact() | testBefore() | testAfter() | testBetween() | testOutside();
+	let q = false;
+	
+	if (testExact()) {
+		xc("exact date failed");
+		q = true;
+	}
+	if (testBefore()) {
+		xc("before date failed");
+		q = true;
+	}
+	if (testAfter()) {
+		xc("after date failed");
+		q = true;
+	}
+	if (testBetween()) {
+		xc("between date failed");
+		q = true;
+	}
+	if (testOutside()) {
+		xc("outside date failed");
+		q = true;
+	}
+	
+	return q;
 }
 
 function testExact() {

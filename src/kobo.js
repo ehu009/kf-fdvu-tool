@@ -4,42 +4,53 @@ function begin() {
 }
 
 function unitTest() {
-	
 	let q = false;
 	
+	if (testEstateConnectivity()) {
+		xc("estate failed");
+		q = true;
+	}
+	if (testContractConnectivity()) {
+		xc("contract failed")
+		q = true;
+	}
+	if (testFacilityConnectivity()) {
+		xc("facility failed");
+		q = true;
+	}
+	if (testAddressParse()) {
+		xc("address failed");
+		q = true;
+	}
+	if (testRoomNumberParse()) {
+		xc("room number failed");
+		q = true;
+	}
 	
-	return true;
+	return q;
 }
 
 function testEstateConnectivity() {
-	const rentable;
-	const estates;
 	
 	return true;
 }
 
 function testContractConnectivity() {
-	const rentable;
-	const contract;
 	
 	return true;
 }
 
 function testFacilityConnectivity() {
-	const rentable;
-	const facilities;
 	
 	return true;
 }
 
 function testAddressParse() {
-	const facilities;
 	
 	return true;
 }
 
 function testRoomNumberParse() {
-	const facility;
 	
 	return true;
 }

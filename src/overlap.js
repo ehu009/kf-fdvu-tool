@@ -436,23 +436,24 @@ function setupKeyOverlapFilter() {
 }
 
 function unitTest() {
+	let q  = false;
 	if (customerOverlapTest()) {
 		xc("customer overlap failed");
-		return true;
+		q = true;
 	}
 	if (rentableOverlapTest()) {
 		xc("rentable overlap failed");
-		return true;
+		q = true;
 	}
 	if (contractOverlapTest()) {
 		xc("contract overlap failed");
-		return true;
+		q = true;
 	}
 	if (keyOverlapTest()) {
 		xc("key overlap failed");
-		return true;
+		q = true;
 	}
-	return false;
+	return q;
 }
 
 function customerOverlapTest() {

@@ -265,6 +265,15 @@ function testColFilter() {
 }
 
 function unitTest () {
-	return (testColFilter() | testRowFilter());
+	let q = false;
+	if (testColFilter()) {
+		xc("column filter failed");
+		q = true;
+	}
+	if (testRowFilter()) {
+		xc("row filter failed");
+		q = true;
+	}
+	return q;
 }
 	
