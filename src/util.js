@@ -220,7 +220,8 @@ function mapRows(arr, idx) {
 	return m;
 }
 
-function fileChangeEvents(ids, keys, readyObj) {
+function fileChangeEvents(ids, readyObj) {
+	const keys = ['fileA', 'fileB', 'fileC', 'fileD', 'fileE', 'fileF', 'fileG', 'fileH'];
 	for (let i = 0; i < ids.length; i += 1) {
 		fxcd(ids[i]).onchange = (evt) => {
 				if (evt.target.files.length == 0) {

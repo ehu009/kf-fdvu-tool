@@ -164,7 +164,7 @@ function beginLoss() {
 	
 	
 	{
-		fileChangeEvents(['rentables', 'contracts'], ['fileA', 'fileB'], ready);
+		fileChangeEvents(['rentables', 'contracts'], ready);
 		
 		let l = fxcd("ignore-list");
 		for (let e of ignoreContracts) {

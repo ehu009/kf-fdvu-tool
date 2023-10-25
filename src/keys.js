@@ -49,7 +49,7 @@ function setupKeyFilter() {
 	let keysList = null;
 	
 	
-	fileChangeEvents(['rentables', 'keys'], ['fileA', 'fileB'], dataReady);
+	fileChangeEvents(['rentables', 'keys'], dataReady);
 	
 	let spinner = fxcd("spinner");
 	

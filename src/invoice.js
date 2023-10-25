@@ -93,7 +93,7 @@ function begin() {
 	let contracts = null;
 	let invoices = null;
 		
-	fileChangeEvents(['rentables', 'contracts', 'invoices'], ['fileA', 'fileB', 'fileC'], ready);
+	fileChangeEvents(['rentables', 'contracts', 'invoices'], ready);
 	
 	let spinner = fxcd("spinner");
 	

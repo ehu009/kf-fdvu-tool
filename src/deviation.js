@@ -46,7 +46,7 @@ function begin() {
 	let rentables = null;
 	let deviations = null;
 	
-	fileChangeEvents(['rentables', 'deviations'], ['fileA', 'fileB'], ready);
+	fileChangeEvents(['rentables', 'deviations'], ready);
 	
 	let spinner = fxcd("spinner");
 	

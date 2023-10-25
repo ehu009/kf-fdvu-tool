@@ -72,7 +72,7 @@ function fieldEvents() {
 		files
 	*/
 	
-	fileChangeEvents(['rentables', 'contracts'], ['fileA', 'fileB'], ready);
+	fileChangeEvents(['rentables', 'contracts'], ready);
 	
 }
 

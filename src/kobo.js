@@ -30,7 +30,7 @@ function begin() {
 				}
 		});
 	
-	fileChangeEvents(['rentables', 'contracts', 'facilities', 'estates'], ['fileA', 'fileB', 'fileC', 'fileD'], ready);
+	fileChangeEvents(['rentables', 'contracts', 'facilities', 'estates'], ready);
 	
 	let inputData = null;
 	let spinner = fxcd('spinner');
