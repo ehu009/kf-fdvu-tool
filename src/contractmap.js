@@ -2,8 +2,8 @@
 
 const eventName = "dataReady";
 let readyTarget = {
-		countA: 2,
-		countB: 2,
+		fileA: 2,
+		fileB: 2,
 		dateA: 1,
 		dateB: 1,
 		bool: false
@@ -23,13 +23,13 @@ let ready = new Proxy(readyTarget, {
 				let b = target["bool"];
 				fxcd(name + "download").disabled = true;
 				
-				if (target["countA"] < 1 && target["countB"] < 1) {
+				if (target["fileA"] < 1 && target["fileB"] < 1) {
 					if (!b || (b && target["dateA"] == 0 && target["dateB"] == 0)) {
 						document.dispatchEvent(readyEvent);
 					}
 				} else {
 					let btn = fxcd("filter");
-					if (target["countA"] < 2 && target["countB"] < 2) {
+					if (target["fileA"] < 2 && target["fileB"] < 2) {
 						if (!b || (target["dateA"] < 1 && target["dateB"] < 1)) {
 							btn.disabled = false;
 						}
@@ -72,7 +72,7 @@ function fieldEvents() {
 		files
 	*/
 	
-	fileChangeEvents(['rentables', 'contracts'], ['countA', 'countB'], ready);
+	fileChangeEvents(['rentables', 'contracts'], ['fileA', 'fileB'], ready);
 	
 }
 
@@ -129,14 +129,14 @@ function begin() {
 			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
-					ready["countA"] -= 1;
+					ready["fileA"] -= 1;
 				}
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 				
 			
 			f2.onload = () => {
 					contractList = CSVToArray(f2.result, ";");
-					ready["countB"] -= 1;
+					ready["fileB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0], "iso-8859-1");
 		};

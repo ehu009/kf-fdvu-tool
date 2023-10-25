@@ -3,9 +3,9 @@
 
 const eventName = "dataReady";
 let readyTarget = {
-		countA: 2,
-		countB: 2,
-		countC: 2
+		fileA: 2,
+		fileB: 2,
+		fileC: 2
 	};
 
 const readyEvent = new Event(eventName);
@@ -13,9 +13,9 @@ let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
 				fxcd("download").disabled = true;
-				if (target["countA"] < 1 && target["countB"] < 1 && target["countC"] < 1) {
+				if (target["fileA"] < 1 && target["fileB"] < 1 && target["fileC"] < 1) {
 					document.dispatchEvent(readyEvent);
-				} else if (target["countA"] < 2 && target["countB"] < 2 && target["countC"] < 2) {
+				} else if (target["fileA"] < 2 && target["fileB"] < 2 && target["fileC"] < 2) {
 					fxcd("filter").disabled = false;
 				} else {
 					fxcd("filter").disabled = true;
@@ -93,7 +93,7 @@ function begin() {
 	let contracts = null;
 	let invoices = null;
 		
-	fileChangeEvents(['rentables', 'contracts', 'invoices'], ['countA', 'countB', 'countC'], ready);
+	fileChangeEvents(['rentables', 'contracts', 'invoices'], ['fileA', 'fileB', 'fileC'], ready);
 	
 	let spinner = fxcd("spinner");
 	
@@ -110,15 +110,15 @@ function begin() {
 			
 			f1.onload = () => {
 					rentables = CSVToArray(f1.result, ";");
-					ready["countA"] -=1;
+					ready["fileA"] -=1;
 				};
 			f2.onload = () => {
 					contracts = CSVToArray(f2.result, ";");
-					ready["countB"] -= 1;
+					ready["fileB"] -= 1;
 				};
 			f3.onload = () => {
 					invoices = CSVToArray(f3.result, ";");
-					ready["countC"] -= 1;
+					ready["fileC"] -= 1;
 				};
 			
 			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");

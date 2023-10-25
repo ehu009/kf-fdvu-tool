@@ -2,8 +2,8 @@
 
 const eventName = "dataReady";
 let readyTarget = {
-		countA: 2,
-		countB: 2
+		fileA: 2,
+		fileB: 2
 	};
 
 const readyEvent = new Event(eventName);
@@ -11,9 +11,9 @@ let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
 				fxcd("download").disabled = true;
-				if (target["countA"] < 1 &&  target["countB"] < 1) {
+				if (target["fileA"] < 1 &&  target["fileB"] < 1) {
 					document.dispatchEvent(readyEvent);
-				} else if (target["countA"] < 2 &&  target["countB"] < 2) {
+				} else if (target["fileA"] < 2 &&  target["fileB"] < 2) {
 					fxcd("filter").disabled = false;
 				} else {
 					fxcd("filter").disabled = true;
@@ -46,7 +46,7 @@ function begin() {
 	let rentables = null;
 	let deviations = null;
 	
-	fileChangeEvents(['rentables', 'deviations'], ['countA', 'countB'], ready);
+	fileChangeEvents(['rentables', 'deviations'], ['fileA', 'fileB'], ready);
 	
 	let spinner = fxcd("spinner");
 	
@@ -61,11 +61,11 @@ function begin() {
 			
 			f1.onload = () => {
 					rentables = CSVToArray(f1.result, ";");
-					ready["countA"] -=1;
+					ready["fileA"] -=1;
 				};
 			f2.onload = () => {
 					deviations = CSVToArray(f2.result, ";");
-					ready["countB"] -= 1;
+					ready["fileB"] -= 1;
 				};
 			
 			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");

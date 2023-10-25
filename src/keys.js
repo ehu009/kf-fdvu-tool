@@ -3,23 +3,21 @@
 
 const eName = "dataReady";
 let dataReadyTarget = {
-		fileA: 1,
-		fileB: 1,
-		count: 2
+		fileA: 2,
+		fileB: 2
 	};
 
 const dataReadyEvent = new Event(eName);
 let dataReady = new Proxy(dataReadyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
-				if (target["fileA"] <= 0 && target["fileB"] <= 0) {
+				if (target["fileA"] < 2 && target["fileB"] < 2) {
 					fxcd("filter").disabled = false;
+					if (target["fileA"] < 1 && target["fileB"] < 1) {
+						document.dispatchEvent(dataReadyEvent);
+					}
 				} else {
 					fxcd("filter").disabled = true;
-				}
-				if (target["count"] <= 0) {
-					target["count"] = 0;
-					document.dispatchEvent(dataReadyEvent);
 				}
 				return true;
 			}
@@ -66,11 +64,11 @@ function setupKeyFilter() {
 			
 			f1.onload = () => {
 					rentablesList = CSVToArray(f1.result, ";");
-					dataReady["count"] -= 1;
+					dataReady["fileA"] -= 1;
 				};
 			f2.onload = () => {
 					keysList = CSVToArray(f2.result, ";");
-					dataReady["count"] -= 1;
+					dataReady["fileB"] -= 1;
 				};
 			
 			f1.readAsText(rentables.files[0], "iso-8859-1");

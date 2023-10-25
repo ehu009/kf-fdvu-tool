@@ -136,8 +136,8 @@ function beginLoss() {
 	
 	const eventName = "dataReady";
 	let readyTarget = {
-			countA: 2,
-			countB: 2,
+			fileA: 2,
+			fileB: 2,
 			dateA: 1,
 			dateB: 1
 		};
@@ -148,10 +148,10 @@ function beginLoss() {
 					target[key] = value;
 					fxcd("download").disabled = true;
 					
-					if (target["countA"] < 1 && target["countB"] < 1) {
+					if (target["fileA"] < 1 && target["fileB"] < 1) {
 						document.dispatchEvent(readyEvent);
 					} else {
-						if (target["countA"] < 2 && target["countB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
+						if (target["fileA"] < 2 && target["fileB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
 							fxcd("filter").disabled = false;
 						} else {
 							fxcd("filter").disabled = true;
@@ -199,16 +199,16 @@ function beginLoss() {
 		};
 	actives.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["countA"] -= 1;
+				ready["fileA"] -= 1;
 			} else {
-				ready["countA"] += 1;
+				ready["fileA"] += 1;
 			}
 		};
 	contracts.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["countB"] -= 1;
+				ready["fileB"] -= 1;
 			} else {
-				ready["countB"] += 1;
+				ready["fileB"] += 1;
 			}
 		};
 	
@@ -233,12 +233,12 @@ function beginLoss() {
 			f1.onload = () => {
 					activeList = CSVToArray(f1.result, ";");
 					CSVRemoveBlanks(activeList);
-					ready["countA"] -= 1;
+					ready["fileA"] -= 1;
 				};
 			f2.onload = () => {
 					contractList = CSVToArray(f2.result, ";");
 					CSVRemoveBlanks(contractList);
-					ready["countB"] -= 1;
+					ready["fileB"] -= 1;
 				};
 			
 			f1.readAsText(actives.files[0], "iso-8859-1");

@@ -228,16 +228,16 @@ function setupCustomerOverlapFilter() {
 	
 	const eventName = "dataReady";
 	let readyTarget = {
-			count: 2,
+			fileA: 2,
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
+					if (target['fileA'] < 2) {
 						fxcd('filter').disabled = false;
-						if (target["count"] < 1) {
+						if (target["fileA"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
 					}
@@ -251,7 +251,7 @@ function setupCustomerOverlapFilter() {
 	let contracts = fxcd('contracts');
 	let contractList = null;
 	
-	fileChangeEvents(['contracts'], ['count'], ready);
+	fileChangeEvents(['contracts'], ['fileA'], ready);
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
@@ -260,7 +260,7 @@ function setupCustomerOverlapFilter() {
 			
 			f.onload = () => {
 				contractList = CSVToArray(f.result, ";");
-				ready["count"] -= 1;
+				ready["fileA"] -= 1;
 			};
 			
 			f.readAsText(contracts.files[0], "iso-8859-1");
@@ -282,16 +282,16 @@ function setupRentableOverlapFilter() {
 	
 	const eventName = "dataReady";
 	let readyTarget = {
-			count: 2,
+			fileA: 2,
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
+					if (target['fileA'] < 2) {
 						fxcd('filter').disabled = false;
-						if (target["count"] < 1) {
+						if (target["fileA"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
 					}
@@ -307,9 +307,9 @@ function setupRentableOverlapFilter() {
 	
 	rentables.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
+				ready["fileA"] -= 1;
 			} else {
-				ready["count"] += 1;
+				ready["fileA"] += 1;
 				fxcd("filter").disabled = true;
 			}
 		};
@@ -329,7 +329,7 @@ function setupRentableOverlapFilter() {
 			
 			f.onload = () => {
 					rentablesList = CSVToArray(f.result, ";");
-					ready["count"] -= 1;
+					ready["fileA"] -= 1;
 				};
 			
 			f.readAsText(rentables.files[0], "iso-8859-1");
@@ -342,16 +342,16 @@ function setupContractOverlapFilter() {
 	
 	const eventName = "dataReady";
 	let readyTarget = {
-			count: 2,
+			fileA: 2,
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
+					if (target['fileA'] < 2) {
 						fxcd('filter').disabled = false;
-						if (target["count"] < 1) {
+						if (target["fileA"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
 					}
@@ -372,9 +372,9 @@ function setupContractOverlapFilter() {
 	
 	contracts.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
+				ready["fileA"] -= 1;
 			} else {
-				ready["count"] += 1;
+				ready["file"] += 1;
 				fxcd("filter").disabled = true;
 			}
 		};
@@ -394,7 +394,7 @@ function setupContractOverlapFilter() {
 			
 			f.onload = () => {
 					contractList = CSVToArray(f.result, ";");
-					ready["count"] -= 1;
+					ready["fileA"] -= 1;
 				};
 			
 			f.readAsText(contracts.files[0], "iso-8859-1");
@@ -406,16 +406,16 @@ function setupKeyOverlapFilter() {
 	
 	const eventName = "dataReady";
 	let readyTarget = {
-			count: 2,
+			fileA: 2,
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
+					if (target['fileA'] < 2) {
 						fxcd('filter').disabled = false;
-						if (target["count"] < 1) {
+						if (target["fileA"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
 					}
@@ -430,9 +430,9 @@ function setupKeyOverlapFilter() {
 	
 	keys.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
+				ready["fileA"] -= 1;
 			} else {
-				ready["count"] += 1;
+				ready["fileA"] += 1;
 				fxcd("filter").disabled = true;
 			}
 		};
@@ -452,7 +452,7 @@ function setupKeyOverlapFilter() {
 			
 			f.onload = () => {
 					keyList = CSVToArray(f.result, ";");
-					ready["count"] -= 1;
+					ready["fileA"] -= 1;
 				};
 			
 			f.readAsText(keys.files[0], "iso-8859-1");
@@ -462,16 +462,16 @@ function setupKeyOverlapFilter() {
 function setupEstateOverlapFilter() {
 	const eventName = "dataReady";
 	let readyTarget = {
-			count: 2,
+			fileA: 2,
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
 					fxcd("download").disabled = true;
-					if (target['count'] < 2) {
+					if (target['fileA'] < 2) {
 						fxcd('filter').disabled = false;
-						if (target["count"] < 1) {
+						if (target["fileA"] < 1) {
 							document.dispatchEvent(readyEvent);
 						}
 					}
@@ -487,9 +487,9 @@ function setupEstateOverlapFilter() {
 	
 	estates.onchange = (evt) => {
 			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
+				ready["fileA"] -= 1;
 			} else {
-				ready["count"] += 1;
+				ready["fileA"] += 1;
 				fxcd("filter").disabled = true;
 			}
 		};
@@ -509,7 +509,7 @@ function setupEstateOverlapFilter() {
 			
 			f.onload = () => {
 					estateList = CSVToArray(f.result, ";");
-					ready["count"] -= 1;
+					ready["fileA"] -= 1;
 				};
 			
 			f.readAsText(estates.files[0], "iso-8859-1");

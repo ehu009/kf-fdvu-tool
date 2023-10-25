@@ -55,7 +55,7 @@ function begin() {
 	
 	const eName = "dataReady";
 	let dataReadyTarget = {
-			file: 1,
+			fileA: 1,
 			mode: 1,
 			colA: 1,
 			colB: 1,
@@ -88,7 +88,7 @@ function begin() {
 			set: (target, key, value) => {
 					target[key] = value;
 					
-					if (dataReady['file'] + dataReady['mode'] + dataReady['colA'] + dataReady['colB'] + dataReady['dateA'] == 0) {
+					if (dataReady['fileA'] + dataReady['mode'] + dataReady['colA'] + dataReady['colB'] + dataReady['dateA'] == 0) {
 						let v = fxcd("mode-select").value;
 						if (['Før', 'Etter', 'Eksakt'].includes(v) || (['Mellom', 'Utenfor'].includes(v) && dataReady['dateB'] == 0)) {
 							document.dispatchEvent(dataReadyEvent);
@@ -130,11 +130,11 @@ function begin() {
 						
 						inputCSV = arr;
 						hide(spinner);
-						dataReady['file'] = 0;
+						dataReady['fileA'] = 0;
 					};
 				r.readAsText(file.files[0], "iso-8859-1");
 			} else {
-				dataReady['file'] = 1;
+				dataReady['fileA'] = 1;
 				dataReady['colA'] = 1;
 				dataReady['colB'] = 1;
 				hide(spinner);
