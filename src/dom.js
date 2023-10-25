@@ -14,39 +14,9 @@ function fxcd(t) {
 	return document.getElementById(t);
 }
 
-/*
-function unitTestBtn(container) {
-	let b = xcd("button");
-	b.type = "button";
-	b.onclick = testAndAlert();
-	axcd(b, txcd("Kj\u00F8r enhetstest"));
-	axcd(container, b);
-	addLine(container);
-	addLine(container);
-}*/
-
 function addLine(e) {
 	axcd(e, xcd('br'));
 }
-/*
-function newRow(content, header, className) {
-	let r = xcd("tr");
-	for (let i = 0; i < content.length; i += 1) {
-		let c = xcd("td");
-		if (header == true) {
-			c = xcd("th");
-		}
-		if (i > 1) {
-			if (className != "") {
-				c.classList.add(className);
-			}
-		}
-		axcd(c, txcd(content[i]));
-		axcd(r, c);
-	}
-	return r;
-}
-*/
 
 function toggleCheckbox(id) {
 	let b = fxcd(id);
@@ -57,8 +27,6 @@ function toggleCheckbox(id) {
 		return;
 	}
 }
-
-
 function createCheckbox(container, name) {
 	const n = 'checkbox';
 	let c = xcd('span');
@@ -150,19 +118,7 @@ function populateCheckboxes(containerId, nameList, defaults) {
 		createCheckbox(containerId, c);
 	}
 }
-/*
-function radioButtonTag(id, name, value, checked) {
-	let i = xcd("input");
-	i.type = "radio";
-	i.id = id;
-	i.name = name;
-	i.value = value;
-	if (checked == true) {
-		i.checked = checked;
-	}
-	return i;
-}
-*/
+
 function labelTag(txt) {
 	let l = xcd('label');
 	axcd(l, txcd(txt));
@@ -182,32 +138,6 @@ function fileInputTag(id) {
 	i.id = id;
 	return i;
 }
-/*
-function buttonTag(buttonId, txt, disabled) {
-	let b = xcd("button");
-	b.disabled = disabled;
-	b.type = "button";
-	b.id = name + buttonId;
-	axcd(b, txcd(txt));
-	return b;
-}
-*/
-/*
-function spinnerTag(spinnerId) {
-	let b = xcd("div");
-	b.classList.add("spinning");
-	b.id = spinnerId;
-	axcd(b, txcd("\u2699\uFE0F"));
-	return b;
-}
-*/
-/*
-function dateFieldTag(id) {
-	let i = xcd("input");
-	i.id = id;
-	i.type = "date";
-	return i;
-}*/
 function listTag(txt) {
 	let l = xcd('li');
 	axcd(l, txcd(txt));
@@ -243,111 +173,14 @@ function downloadButton(button, content, defaultName) {
 			downloadCSV(content, defaultName, ';');
 		};
 }
-/*
-function lossSumHeader() {
-	return newRow(["Sum - dager vakant", "Sum - vakansetap", "Sum - dager hos drift", "Sum - tap pga drift", "Sum - dager passiv", "Sum - passiv kostnad", "Sum - Vakanse + Drift"], true, "");
-}
-function gainSumHeader() {
-	return newRow(["Sum av ikke-passive boliger", "Sum av passive boliger", "Totalsum - inntekter"], true, "");
-}
-*/
-/*
-function defaultButtonTags(name) {
-	let con = fxcd(name + "-container");
-	let b = buttonTag(name + "-calc-btn", "Beregn", true);
-	axcd(con, b);
-	axcd(con, txcd(" "));
-	
-	b = buttonTag(name + "-download-btn", "Last ned CSV", true);
-	axcd(con, b);
-	axcd(con, txcd(" "));
-	
-	b = spinnerTag(name + "-spinner");
-	axcd(con, b);
-}
-*/
-/*
-function spanSandwich(e, txt1, txt2, cls) {
-	axcd(e, txcd(txt1));
-	let s = xcd("span");
-	s.classList.add(cls);
-	axcd(s, txcd(txt2));
-	axcd(e, s);
-	axcd(e, txcd("."));
-	addLine(e);
-}
-function lossLegend() {
-	let b = xcd("b");
-	spanSandwich(b, "Gul markering er brukt n\u00E5r ", "bolig har v\u00E6rt vakant hele perioden", "missing");
-	spanSandwich(b, "Oransje markering er brukt n\u00E5r en seksjon ", "har overlappende kontrakter", "double");
-	addLine(b);
-	return b;
-}
-function gainLegend() {
-	let b = xcd("b");
-	spanSandwich(b, "R\u00F8d markering er brukt n\u00E5r ", "kontrakt mangler pris", "danger");
-	spanSandwich(b, "Gul markering er brukt n\u00E5r ", "bolig har v\u00E6rt vakant hele perioden", "missing");
-	let s = xcd("span");
-	axcd(s, txcd("Passiv kontrakt og Driftskontrakt"));
-	s.classList.add("passive");
-	axcd(b, s);
-	axcd(b, txcd(" er markert i gr\u00F8nt."));
-	addLine(b);
-	return b;
-}
-*/
-/*
-function keysText(containerId) {
-	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over "));
-	let tmp = xcd("i");
-	axcd(tmp, txcd("alle"));
-	axcd(con, tmp);
-	axcd(con, txcd(" n\u00F8kler:"));
-}
-function lossText(con) {
-	
-	let i = fxcd("ignore-list");
-	for (let e of ignoreContracts) {
-		axcd(i, listTag(e));
-	}
-	
-	axcd(con, i);
-	axcd(con, txcd("Perioder som har overlappende kontrakter gir misvisende resultat, og regnes ikke med i summeringer."));
-	addLine(con);
-	axcd(con, txcd("Passive kontrakter regnes ikke som vedlikehold- eller utleiekontrakter."));
-	
-}
-*/
-/*
-function contractsText(containerId) {
-	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over alle utleiekontrakter"));
-}
-function rentablesText(containerId) {
-	let con = fxcd(containerId);
-	axcd(con, txcd("Liste over alle "));
-	let tmp = xcd("i");
-	axcd(tmp,txcd("relevante"));
-	axcd(con,tmp);
-	
-	axcd(con, txcd(" bolig-seksjoner"));
-}
-*/
+
 function hide(elem) {
 	elem.style.visibility = 'hidden';
 }
 function show(elem) {
 	elem.style.visibility = 'visible';
 }
-/*
-function spinnerFunction(spinnerId, func) {
-	let spinner = fxcd(spinnerId);
-	show(spinner);
-	func();
-	hide(spinner);
-}
-*/
+
 function col4() {
 	let k = xcd('div');
 	k.classList.add('col-4');
@@ -394,35 +227,3 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	}
 	axcd(parent, a);
 }
-/*
-function gainDOM() {
-	
-	let l = fxcd("ignore-list");
-	axcd(l, listTag("Passiv"));
-	for (let e of ignoreContracts) {
-		axcd(l, listTag(e));
-	}
-}
-
-function writeArrayToTable(array, tableId) {
-	let table = fxcd(tableId);
-	table.innerHTML = "";
-	let header = xcd("tr");
-	for (let c = 0; c < array[0].length; c += 1) {
-		let cell = xcd("th");
-		axcd(cell, txcd(array[0][c]));
-		axcd(header, cell);
-	}
-	axcd(table, header);
-	
-	for (let r = 1; r < array.length; r += 1) {
-		let row = xcd("tr");
-		for (let c = 0; c < array[r].length; c += 1) {
-			let cell = xcd("td");
-			axcd(cell, txcd(array[r][c]));
-			axcd(row, cell);
-		}
-		axcd(table, row);
-	}
-}
-*/
