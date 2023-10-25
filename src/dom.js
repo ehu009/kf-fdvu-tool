@@ -62,16 +62,13 @@ function toggleCheckbox(id) {
 function createCheckbox(container, name) {
 	const n = 'checkbox';
 	let c = xcd('span');
-	{
-		let label = xcd('label');
-		axcd(label, txcd(name));
-		axcd(c, label);
-	}
+	
+	axcd(c, labelTag(name));
+	
 	c.onclick = () => {
 			toggleCheckbox(name + '-' + n);
 			fxcd(container).dispatchEvent(new Event('change'));
 		};
-	
 	{
 		let box = xcd('input');
 		box.type = n;
@@ -166,9 +163,8 @@ function radioButtonTag(id, name, value, checked) {
 	return i;
 }
 */
-function labelTag(target, txt) {
+function labelTag(txt) {
 	let l = xcd('label');
-	l.for = target;
 	axcd(l, txcd(txt));
 	return l;
 }
@@ -381,7 +377,7 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	axcd(a, b);
 	
 	axcd(parent, a);
-
+	
 
 	a = xcd('div');
 	a.id = id;
@@ -393,7 +389,6 @@ function iframeCarousel(parent, id, btnCls, interval, path, urls) {
 	b.id = 'carousel-inner';
 	b.classList.add('carousel-inner');
 	axcd(a, b);
-	
 	for (let i = 0; i < urls.length; i += 1) {
 		axcd(b, iframeTag(path + urls[i] + '.html', i == 0));
 	}
