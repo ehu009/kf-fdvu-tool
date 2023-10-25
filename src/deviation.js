@@ -48,24 +48,6 @@ function begin() {
 	
 	fileChangeEvents(['rentables', 'deviations'], ['countA', 'countB'], ready);
 	
-	/*
-	fxcd("rentables").onchange = (evt) => {
-			if (evt.target.files.length == 0) {
-				ready["countA"] = 2;
-			} else {
-				ready["countA"] -= 1;
-			}
-		};
-		
-	fxcd("deviations").onchange = (evt) => {
-			if (evt.target.files.length == 0) {
-				ready["countB"] = 2;
-			} else {
-				ready["countB"] -= 1;
-			}
-		};
-		*/
-		
 	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {

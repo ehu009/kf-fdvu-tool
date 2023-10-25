@@ -95,29 +95,6 @@ function begin() {
 		
 	fileChangeEvents(['rentables', 'contracts', 'invoices'], ['countA', 'countB', 'countC'], ready);
 	
-		/*
-	fxcd("rentables").onchange = (evt) => {
-			if (evt.target.files.length == 0) {
-				ready["countA"] = 2;
-			} else {
-				ready["countA"] -= 1;
-			}
-		};
-	fxcd("contracts").onchange = (evt) => {
-			if (evt.target.files.length == 0) {
-				ready["countB"] = 2;
-			} else {
-				ready["countB"] -= 1;
-			}
-		};
-	fxcd("invoices").onchange = (evt) => {
-			if (evt.target.files.length == 0) {
-				ready["countC"] = 2;
-			} else {
-				ready["countC"] -= 1;
-			}
-		};
-	*/
 	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {

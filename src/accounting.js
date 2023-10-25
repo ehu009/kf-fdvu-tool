@@ -166,24 +166,6 @@ function beginLoss() {
 	{
 		fileChangeEvents(['rentables', 'contracts'], ['fileA', 'fileB'], ready);
 		
-		/*
-		fxcd("rentables").onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready["fileA"] += 1;
-				} else {
-					ready["fileA"] -= 1;
-				}
-			};
-			
-		fxcd("contracts").onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready["fileB"] += 1;
-				} else {
-					ready["fileB"] -= 1;
-				}
-			};
-			*/
-			
 		let l = fxcd("ignore-list");
 		for (let e of ignoreContracts) {
 			axcd(l, listTag(e));

@@ -74,24 +74,6 @@ function fieldEvents() {
 	
 	fileChangeEvents(['rentables', 'contracts'], ['countA', 'countB'], ready);
 	
-	/*
-	field = fxcd("rentables");
-	field.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["countA"] -= 1;
-			} else {
-				ready["countA"] += 1;
-			}
-		};
-	field = fxcd("contracts");
-	field.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["countB"] -= 1;
-			} else {
-				ready["countB"] += 1;
-			}
-		};
-		*/
 }
 
 function filter(contractList, rentablesList) {

@@ -28,51 +28,9 @@ function begin() {
 					return true;
 				}
 		});
-	{
-		fileChangeEvents(['rentables', 'contracts', 'facilities', 'estates'], ['fileA', 'fileB', 'fileC', 'fileD'], ready);
-		/*
-		for (let i = 0; i < 4; i += 1) {
-			fxcd(id[i]).onchange = (evt) => {
-					let n = 'file' + key[i];
-					if (evt.target.files.length < 1) {
-						ready[n] -= 1;
-					} else {
-						ready[n] = 2;
-					}
-				};
-		}
-		*/
-		/*
-		fxcd('rentables').onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready['fileA'] -= 1;
-				} else {
-					ready['fileA'] = 2;
-				}
-			};
-		fxcd('contracts').onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready['fileB'] -= 1;
-				} else {
-					ready['fileB'] = 2;
-				}
-			};
-		fxcd('facilities').onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready['fileC'] -= 1;
-				} else {
-					ready['fileC'] = 2;
-				}
-			};
-		fxcd('estates').onchange = (evt) => {
-				if (evt.target.files.length < 1) {
-					ready['fileD'] -= 1;
-				} else {
-					ready['fileD'] = 2;
-				}
-			};
-			*/
-	}
+	
+	fileChangeEvents(['rentables', 'contracts', 'facilities', 'estates'], ['fileA', 'fileB', 'fileC', 'fileD'], ready);
+	
 	let inputData = null;
 	let spinner = fxcd('spinner');
 	document.addEventListener(eventName, () => {

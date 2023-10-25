@@ -253,17 +253,6 @@ function setupCustomerOverlapFilter() {
 	
 	fileChangeEvents(['contracts'], ['count'], ready);
 	
-	/*
-	contracts.onchange = function (evt) {
-			if (evt.target.files.length > 0) {
-				ready["count"] -= 1;
-			} else {
-				ready["count"] += 1;
-				fxcd("filter").disabled = true;
-			}
-		};
-		*/
-	
 	fxcd("filter").onclick = () => {
 			show(spinner);
 			

@@ -53,22 +53,6 @@ function setupKeyFilter() {
 	
 	fileChangeEvents(['rentables', 'keys'], ['fileA', 'fileB'], dataReady);
 	
-	/*
-	rentables.onchange = (evt) => {
-			if (evt.target.files.length < 1) {
-				dataReady["fileB"] += 1;
-			} else {
-				dataReady["fileB"] -= 1;
-			}
-		};
-	keys.onchange = (evt) => {
-			if (evt.target.files.length < 1) {
-				dataReady["fileA"] += 1;
-			} else {
-				dataReady["fileA"] -= 1;
-			}
-		};
-	*/
 	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {
