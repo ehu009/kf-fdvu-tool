@@ -29,6 +29,19 @@ function begin() {
 				}
 		});
 	{
+		let key = ['A', 'B', 'C', 'D'];
+		let id = ['rentables', 'contracts', 'facilities', 'estates'];
+		for (let i = 0; i < 4; i += 1) {
+			fxcd(id[i]).onchange = (evt) => {
+					let n = 'file' + key[i];
+					if (evt.target.files.length < 1) {
+						ready[n] -= 1;
+					} else {
+						ready[n] = 2;
+					}
+				};
+		}
+		/*
 		fxcd('rentables').onchange = (evt) => {
 				if (evt.target.files.length < 1) {
 					ready['fileA'] -= 1;
@@ -57,6 +70,7 @@ function begin() {
 					ready['fileD'] = 2;
 				}
 			};
+			*/
 	}
 	let inputData = null;
 	let spinner = fxcd('spinner');

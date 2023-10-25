@@ -93,6 +93,23 @@ function begin() {
 	let contracts = null;
 	let invoices = null;
 	
+	
+	{
+		let id = ['rentables', 'contracts', 'invoices'];
+		let key = ['A', 'B', 'C'];
+		for (let i = 0; i < 3; i += 1) {
+			fxcd(id[i]).onchange = (evt) => {
+					let n = "count" + key[i];
+					if (evt.target.files.length == 0) {
+						ready[n] = 2;
+					} else {
+						ready[n] -= 1;
+					}
+				};
+		}
+		
+	}
+		/*
 	fxcd("rentables").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
 				ready["countA"] = 2;
@@ -114,7 +131,7 @@ function begin() {
 				ready["countC"] -= 1;
 			}
 		};
-	
+	*/
 	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {
