@@ -46,6 +46,9 @@ function begin() {
 	let rentables = null;
 	let deviations = null;
 	
+	fileChangeEvents(['rentables', 'deviations'], ['countA', 'countB'], ready);
+	
+	/*
 	fxcd("rentables").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
 				ready["countA"] = 2;
@@ -61,6 +64,7 @@ function begin() {
 				ready["countB"] -= 1;
 			}
 		};
+		*/
 		
 	let spinner = fxcd("spinner");
 	

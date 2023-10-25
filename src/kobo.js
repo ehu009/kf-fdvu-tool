@@ -29,8 +29,8 @@ function begin() {
 				}
 		});
 	{
-		let key = ['A', 'B', 'C', 'D'];
-		let id = ['rentables', 'contracts', 'facilities', 'estates'];
+		fileChangeEvents(['rentables', 'contracts', 'facilities', 'estates'], ['fileA', 'fileB', 'fileC', 'fileD'], ready);
+		/*
 		for (let i = 0; i < 4; i += 1) {
 			fxcd(id[i]).onchange = (evt) => {
 					let n = 'file' + key[i];
@@ -41,6 +41,7 @@ function begin() {
 					}
 				};
 		}
+		*/
 		/*
 		fxcd('rentables').onchange = (evt) => {
 				if (evt.target.files.length < 1) {

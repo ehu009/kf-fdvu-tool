@@ -219,3 +219,15 @@ function mapRows(arr, idx) {
 	}
 	return m;
 }
+
+function fileChangeEvents(ids, keys, readyObj) {
+	for (let i = 0; i < ids.length; i += 1) {
+		fxcd(ids[i]).onchange = (evt) => {
+				if (evt.target.files.length == 0) {
+					readyObj[keys[i]] = 2;
+				} else {
+					readyObj[keys[i]] -= 1;
+				}
+			};
+	}
+}

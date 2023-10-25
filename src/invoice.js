@@ -92,23 +92,9 @@ function begin() {
 	let rentables = null;
 	let contracts = null;
 	let invoices = null;
-	
-	
-	{
-		let id = ['rentables', 'contracts', 'invoices'];
-		let key = ['A', 'B', 'C'];
-		for (let i = 0; i < 3; i += 1) {
-			fxcd(id[i]).onchange = (evt) => {
-					let n = "count" + key[i];
-					if (evt.target.files.length == 0) {
-						ready[n] = 2;
-					} else {
-						ready[n] -= 1;
-					}
-				};
-		}
 		
-	}
+	fileChangeEvents(['rentables', 'contracts', 'invoices'], ['countA', 'countB', 'countC'], ready);
+	
 		/*
 	fxcd("rentables").onchange = (evt) => {
 			if (evt.target.files.length == 0) {
