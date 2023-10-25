@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
 
 const ignoreContracts = [
-		"Driftsadministrasjonen",
-		"Driftsavdelingen",
-		"Troms\u00F8 kommune v/Byggforvaltningen",
-		"Drift Leide Boliger",
-		"Stiftelsen Kommunale Boliger"
+		'Driftsadministrasjonen',
+		'Driftsavdelingen',
+		'Troms\u00F8 kommune v/Byggforvaltningen',
+		'Drift Leide Boliger',
+		'Stiftelsen Kommunale Boliger'
 	];
 
 
@@ -87,12 +87,12 @@ function dateWithDefault(value, defaultDate) {
 	return defaultDate;
 }
 function fdvuDateToDate(s) {
-	let arr = s.split(".");
+	let arr = s.split('.');
 	return new Date(arr.reverse());
 }
 function dateToFdvuDate(date) {
-	const arr = date.split("-");
-	return arr.reverse().join(".");
+	const arr = date.split('-');
+	return arr.reverse().join('.');
 }
 function temporalOverlap(beginA, endA, beginB, endB) {
 	let q = ((endA >= beginB) & (endA <= endB))
@@ -103,17 +103,17 @@ function temporalOverlap(beginA, endA, beginB, endB) {
 }
 
 function stringToNumber(s) {
-	return parseFloat(s.replace(",", ".").replace(" ", ""));
+	return parseFloat(s.replace(',', '.').replace(' ', ''));
 }
 function numToFDVUNum(n) {
 	let u = String(n);
-	return u.replace(".", ",");
+	return u.replace('.', ',');
 }
 function isInvalid(val) {
 	if (val == null
 			|| val == undefined
-			|| val == ""
-			|| val == " ") {
+			|| val == ''
+			|| val == ' ') {
 		return true;
 	}
 	return false;
@@ -219,12 +219,12 @@ function fileReadInput(ids, readyObj) {
 		let e = fxcd(ids[i]);
 		let f = new FileReader();
 		f.onload = () => {
-				let l = CSVToArray(f.result, ";");
+				let l = CSVToArray(f.result, ';');
 				CSVRemoveBlanks(l);
 				out[ids[i]] = l;
 				readyObj[fileKeys[i]] -= 1;
 			};
-		f.readAsText(e.files[0], "iso-8859-1");
+		f.readAsText(e.files[0], 'iso-8859-1');
 	}
 	return out;
 }

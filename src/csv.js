@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
 function CSVToArray(strData, strDelimiter) {
 	
-	strDelimiter = (strDelimiter || ",");
+	strDelimiter = (strDelimiter || ',');
 	let objPattern = new RegExp(
 			(
-				"(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-				"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-				"([^\"\\" + strDelimiter + "\\r\\n]*))"
+				'(\\" + strDelimiter + "|\\r?\\n|\\r|^)' +
+				'(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|' +
+				'([^\"\\" + strDelimiter + "\\r\\n]*))'
 			),
-			"gi"
+			'gi'
 		);
 
 	let arrData = [[]];
@@ -23,7 +23,7 @@ function CSVToArray(strData, strDelimiter) {
 
 		let strMatchedValue;
 		if (arrMatches[2]) {
-			strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
+			strMatchedValue = arrMatches[2].replace(new RegExp('\'\'', 'g'), '\'');
 		} else {
 			strMatchedValue = arrMatches[3];
 		}
@@ -34,27 +34,27 @@ function CSVToArray(strData, strDelimiter) {
 }
 
 function arrayToCSV(arr, separator) {
-	let out = "data:text/csv;charset=utf-8,";
+	let out = 'data:text/csv;charset=utf-8,';
 	arr.forEach((rowArray) => {
 			let row = [];
 			for (let c = 0; c < rowArray.length; c += 1) {
 				let f = rowArray[c];
 				if ((f == undefined) == false) {
 					if (isNaN(f)) {
-						if (isNaN(parseFloat(f.replaceAll(",", ".")/2)) == true) {
-							if (f[0] == "-" || f[0] == "=") {
-								f = "'" + rowArray[c] + "'";
+						if (isNaN(parseFloat(f.replaceAll(',', '.')/2)) == true) {
+							if (f[0] == '-' || f[0] == '=') {
+								f = '\'' + rowArray[c] + '\'';
 							}
 						}
 					}
 					f = encodeURIComponent(f);
 				} else {
-					f = "";
+					f = '';
 				}
 				
 				row.push(f);
 			}
-			out += row.join(separator) + "\r\n";
+			out += row.join(separator) + '\r\n';
 		});
 	return out;
 }
@@ -89,10 +89,10 @@ function mergeCSV(csvList) {
 }
 
 function downloadCSV(csvContent, defaultName, separator) {
-	let fname = prompt("Oppgi filnavn for lagring", defaultName);
+	let fname = prompt('Oppgi filnavn for lagring', defaultName);
 	if (fname != null) {
-		fname = fname.replace(".csv", "");
-		let link = downloadLink(arrayToCSV(csvContent, separator), fname + ".csv");
+		fname = fname.replace('.csv', '');
+		let link = downloadLink(arrayToCSV(csvContent, separator), fname + '.csv');
 		axcd(document.body, link);
 		link.click();
 	}

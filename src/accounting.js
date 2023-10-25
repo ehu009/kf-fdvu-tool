@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 
 
@@ -16,8 +16,8 @@ function calcLoss(begin, end, contracts, rentables) {
 	{
 		let header = rentables.shift();
 		filteredRentables = rentables.filter((row) => {
-				if ((row[rentableIdx['aktiv']] == "False")
-						|| (row[rentableIdx['utleibar' == "False"]])) {
+				if ((row[rentableIdx['aktiv']] == 'False')
+						|| (row[rentableIdx['utleibar' == 'False']])) {
 					return false;
 				}
 				return true;
@@ -127,14 +127,14 @@ function calcLoss(begin, end, contracts, rentables) {
 			out.push(add);
 		});
 	
-	out.unshift(["Seksjonsnummer", "Navn", "Dager vakant", "Vakansetap", "Dager vedlikehold", "Vedlikeholdstap", "Differanse"]);
+	out.unshift(['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Differanse']);
 	
 	return out;
 }
 
 function beginLoss() {
 	
-	const eventName = "dataReady";
+	const eventName = 'dataReady';
 	let readyTarget = {
 			fileA: 2,
 			fileB: 2,
@@ -146,93 +146,61 @@ function beginLoss() {
 	let ready = new Proxy(readyTarget, {
 			set: (target, key, value) => {
 					target[key] = value;
-					fxcd("download").disabled = true;
+					fxcd('download').disabled = true;
 					
-					if (target["fileA"] < 1 && target["fileB"] < 1) {
+					if (target['fileA'] < 1 && target['fileB'] < 1) {
 						document.dispatchEvent(readyEvent);
 					} else {
-						if (target["fileA"] < 2 && target["fileB"] < 2 && target["dateA"] < 1 && target["dateB"] < 1) {
-							fxcd("filter").disabled = false;
+						if (target['fileA'] < 2 && target['fileB'] < 2 && target['dateA'] < 1 && target['dateB'] < 1) {
+							fxcd('filter').disabled = false;
 						} else {
-							fxcd("filter").disabled = true;
+							fxcd('filter').disabled = true;
 						}
 					}
 					return true;
 				}
 		});
 	
+	unorderedList('ignore-list', ignoreContracts);
+	
+	fileChangeEvents(['rentables', 'contracts'], ready);
 	
 	
-	{
-		fileChangeEvents(['rentables', 'contracts'], ready);
-		
-		let l = fxcd("ignore-list");
-		for (let e of ignoreContracts) {
-			axcd(l, listTag(e));
-		}
-		
-	}
-	
-	
-	let spinner = fxcd("spinner");
+	let spinner = fxcd('spinner');
 	
 	let inputData = null;
-	/*
-	let actives = fxcd('rentables');
-	let activeList = null;
-	let contracts = fxcd('contracts');
-	let contractList = null;
-	*/
 	
 	
-	fxcd("end").onchange = (evt) => {
+	fxcd('end').onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
-				ready["dateB"] = 1;
+				ready['dateB'] = 1;
 			} else {
-				ready["dateB"] = 0;
+				ready['dateB'] = 0;
 			}
 		};
-	fxcd("begin").onchange = (evt) => {
+	fxcd('begin').onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
-				ready["dateA"] = 1;
+				ready['dateA'] = 1;
 			} else {
-				ready["dateA"] = 0;
+				ready['dateA'] = 0;
 			}
 		};
 	
 	
 	document.addEventListener(eventName, () => {
 			
-			let from = new Date(fxcd("begin").value);
-			let to = new Date(fxcd("end").value);
+			let from = new Date(fxcd('begin').value);
+			let to = new Date(fxcd('end').value);
 			
-			let btn = fxcd("download");
+			let btn = fxcd('download');
 			btn.disabled = false;
-			downloadButton(btn, calcLoss(from, to, inputData['contracts'], inputData['rentables']), "tap " + fxcd("begin").value + " til " + fxcd("end").value);
+			downloadButton(btn, calcLoss(from, to, inputData['contracts'], inputData['rentables']), 'tap ' + fxcd('begin').value + ' til ' + fxcd('end').value);
 			hide(spinner);
 		});
 	
-	fxcd("filter").onclick = () => {
+	fxcd('filter').onclick = () => {
 			show(spinner);
 			inputData = fileReadInput(['rentables', 'contracts'], ready);
-			/*
-			let f1 = new FileReader();
-			let f2 = new FileReader();
-			
-			f1.onload = () => {
-					activeList = CSVToArray(f1.result, ";");
-					CSVRemoveBlanks(activeList);
-					ready["fileA"] -= 1;
-				};
-			f2.onload = () => {
-					contractList = CSVToArray(f2.result, ";");
-					CSVRemoveBlanks(contractList);
-					ready["fileB"] -= 1;
-				};
-			
-			f1.readAsText(actives.files[0], "iso-8859-1");
-			f2.readAsText(contracts.files[0], "iso-8859-1");
-			*/
 		};
 }
 
@@ -240,21 +208,21 @@ function beginLoss() {
 
 function lossTest() {
 	
-	const begin = fdvuDateToDate("01.01.2008");
-	const end = fdvuDateToDate("01.02.2008");
+	const begin = fdvuDateToDate('01.01.2008');
+	const end = fdvuDateToDate('01.02.2008');
 	
 	const contracts = contractSample.concat([
-			["K00006443", "Kontrakt for Driftsadministrasjonen", "", "Driftsadministrasjonen", "1118047541", "239119", "", "", "10.01.2008", "9739,12", "01.01.3000", "01.01.2024", "01.01.2025", "24100610114", "24100610114 Sørslettvegen 3 - Underetasje", "1180", "Åsgård", "118002", "Åsgård Lars Eriksens vei 20", "", "Etterskudd Agresso", "1", "", "Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.", "", "Løpende", "", "0", "Månedlig", "Månedlig", "Januar", "False", "", "Rus og Psykiatribolig"]
+			['K00006443', 'Kontrakt for Driftsadministrasjonen', '', 'Driftsadministrasjonen', '1118047541', '239119', '', '', '10.01.2008', '9739,12', '01.01.3000', '01.01.2024', '01.01.2025', '24100610114', '24100610114 Sørslettvegen 3 - Underetasje', '1180', 'Åsgård', '118002', 'Åsgård Lars Eriksens vei 20', '', 'Etterskudd Agresso', '1', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig']
 		]);
 	
 	const wanted = [
-			["Seksjonsnummer", "Navn", "Dager vakant", "Vakansetap", "Dager vedlikehold", "Vedlikeholdstap", "Differanse"],
-			["24100610114", "Sørslettvegen 3 - Underetasje", "21", numToFDVUNum(21*(11247/31)), "10", numToFDVUNum(10*(11247/31)), "0"],
-			["24100610115", "Sørslettvegen 3, H0101", "31", "8723,2", "0", "0", "0"],
-			["24979620028", "Sørslettveien 8 U 0101", "0", "0", "0", "0", "0"],
-			["24979620029", "Sørslettveien 8 U 0102", "31", "9691", "0", "0", "0"],
-			["24979620030", "Sørslettveien 8 H 0201", "0", "0", "0", "0", "0"],
-			["24979620031", "Sørslettveien 8 H 0202", "31", "9696", "0", "0", "5304"]
+			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Differanse'],
+			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '0'],
+			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '0'],
+			['24979620028', 'Sørslettveien 8 U 0101', '0', '0', '0', '0', '0'],
+			['24979620029', 'Sørslettveien 8 U 0102', '31', '9691', '0', '0', '0'],
+			['24979620030', 'Sørslettveien 8 H 0201', '0', '0', '0', '0', '0'],
+			['24979620031', 'Sørslettveien 8 H 0202', '31', '9696', '0', '0', '5304']
 		];
 	
 	return compareCSV(wanted, calcLoss(begin, end, contracts, rentableSample));
