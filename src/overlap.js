@@ -19,13 +19,10 @@ function overlapHeader(n, firstCol, label) {
 
 function customerOverlapFilter(arr) {
 	arr = arr.filter((row) => {
-			if (isInvalid(row[contractIdx['leietakernummer']])
-					|| isInvalid(row[contractIdx['leietakernavn']])
-					|| isInvalid(row[contractIdx['fasilitetsnummer']])
-					|| isInvalid(row[contractIdx['løpenummer']])) {
-				return false;
-			}
-			return true;
+			return !(isInvalid(row[contractIdx['leietakernummer']])
+					| isInvalid(row[contractIdx['leietakernavn']])
+					| isInvalid(row[contractIdx['fasilitetsnummer']])
+					| isInvalid(row[contractIdx['løpenummer']]));
 		});
 	const defaultBegin = new Date();
 	const defaultEnd = new Date();
@@ -101,14 +98,11 @@ function rentableOverlapFilter(arr) {
 }
 function contractOverlapFilter(arr) {
 	arr = arr.filter((row) => {
-			if (isInvalid(row[contractIdx['leietakernummer']])
-					|| isInvalid(row[contractIdx['leietakernavn']])
-					|| isInvalid(row[contractIdx['fasilitetsnummer']])
-					|| isInvalid(row[contractIdx['løpenummer']])
-					|| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']])) {
-				return false;
-			}
-			return true;
+			return !(isInvalid(row[contractIdx['leietakernummer']])
+					| isInvalid(row[contractIdx['leietakernavn']])
+					| isInvalid(row[contractIdx['fasilitetsnummer']])
+					| isInvalid(row[contractIdx['løpenummer']])
+					| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']]));
 		});
 	const defaultBegin = new Date();
 	const defaultEnd = new Date();
@@ -156,11 +150,8 @@ function contractOverlapFilter(arr) {
 }
 function keyOverlapFilter(arr) {
 	arr = arr.filter((row) => {
-			if (isInvalid(row[keyIdx['seksjonsnummer']])
-					||	isInvalid(row[keyIdx['hanknummer']])) {
-				return false;
-			}
-			return true;
+			return !(isInvalid(row[keyIdx['seksjonsnummer']])
+					|	isInvalid(row[keyIdx['hanknummer']]));
 		});
 	
 	let l = 2;
@@ -228,7 +219,7 @@ function setupCustomerOverlapFilter() {
 	
 	const eventName = 'dataReady';
 	let readyTarget = {
-			fileA: 2,
+			fileA: 2
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
@@ -273,7 +264,7 @@ function setupRentableOverlapFilter() {
 	
 	const eventName = 'dataReady';
 	let readyTarget = {
-			fileA: 2,
+			fileA: 2
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
@@ -319,7 +310,7 @@ function setupContractOverlapFilter() {
 	
 	const eventName = 'dataReady';
 	let readyTarget = {
-			fileA: 2,
+			fileA: 2
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
@@ -336,7 +327,7 @@ function setupContractOverlapFilter() {
 				}
 		});
 	
-	unorderedList('ignore-list',['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)))
+	unorderedList('ignore-list',['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)));
 	
 	let spinner = fxcd('spinner');
 	let inputData = null;
@@ -363,7 +354,7 @@ function setupKeyOverlapFilter() {
 	
 	const eventName = 'dataReady';
 	let readyTarget = {
-			fileA: 2,
+			fileA: 2
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
@@ -404,7 +395,7 @@ function setupKeyOverlapFilter() {
 function setupEstateOverlapFilter() {
 	const eventName = 'dataReady';
 	let readyTarget = {
-			fileA: 2,
+			fileA: 2
 		};
 	const readyEvent = new Event(eventName);
 	let ready = new Proxy(readyTarget, {
@@ -486,7 +477,7 @@ function customerOverlapTest() {
 			['24979620017', 'K00006441', 'K00006442']
 		];
 	
-	return compareCSV(customerOverlapFilter(sample), wanted);
+	return compareCSV(wanted, customerOverlapFilter(sample));
 }
 
 function rentableOverlapTest() {
@@ -505,7 +496,7 @@ function rentableOverlapTest() {
 			['24979620028', 'Sørslettveien 8 U 0101', 'Lars Eriksens veg 17, H0201']
 		];
 	
-	return compareCSV(rentableOverlapFilter(sample), wanted);
+	return compareCSV(wanted, rentableOverlapFilter(sample));
 }
 
 function contractOverlapTest() {
@@ -525,7 +516,7 @@ function contractOverlapTest() {
 			['21016729768', 'K00006433', 'K00006438']
 		];
 	
-	return compareCSV(contractOverlapFilter(sample), wanted);
+	return compareCSV(wanted, contractOverlapFilter(sample));
 }
 
 function keyOverlapTest() {
@@ -538,7 +529,7 @@ function keyOverlapTest() {
 			['548', 'Post - Vestregata 15, Leilighet 442, H0408', '', '4', '2 i skap 18.04.23 EJH. Oppdater antall ved innlevering', '1073', 'Vestregata Heracleum', '107302', 'Vestregata 9/15 Heracleum', '114611217', 'Vestregata 15, Leilighet 442, H0408'],
 			['548', 'Vestregata 15, Leilighet 442, H0408', 'XL72011 K75', '6', '3 i skap 18.04.23 EJH. Oppdater antall ved innlevering', '1073', 'Vestregata Heracleum', '107302', 'Vestregata 9/15 Heracleum', '114611217', 'Vestregata 15, Leilighet 442, H0408'],
 			[' ', 'tullenøkkel, Leilighet 442, H0408', 'XL72011 K75', '6', '3 i skap 18.04.23 EJH. Oppdater antall ved innlevering', '1073', 'Vestregata Heracleum', '107302', 'Vestregata 9/15 Heracleum', '114611217', 'Vestregata 15, Leilighet 442, H0408'],
-			['', 'dustenøkkel, Leilighet 442, H0408', 'XL72011 K75', '6', '3 i skap 18.04.23 EJH. Oppdater antall ved innlevering', '1073', 'Vestregata Heracleum', '107302', 'Vestregata 9/15 Heracleum', '114611217', 'Vestregata 15, Leilighet 442, H0408'],
+			['', 'dustenøkkel, Leilighet 442, H0408', 'XL72011 K75', '6', '3 i skap 18.04.23 EJH. Oppdater antall ved innlevering', '1073', 'Vestregata Heracleum', '107302', 'Vestregata 9/15 Heracleum', '114611217', 'Vestregata 15, Leilighet 442, H0408']
 		];
 	//	nøkkelhank nummer 546 tilhører flere seksjoner
 	let wanted = [

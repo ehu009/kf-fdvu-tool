@@ -58,7 +58,7 @@ function unitTest() {
 		q = true;
 	}
 	if (testContractConnectivity()) {
-		xc('contract failed')
+		xc('contract failed');
 		q = true;
 	}
 	if (testFacilityConnectivity()) {

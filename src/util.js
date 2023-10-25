@@ -95,11 +95,10 @@ function dateToFdvuDate(date) {
 	return arr.reverse().join('.');
 }
 function temporalOverlap(beginA, endA, beginB, endB) {
-	let q = ((endA >= beginB) & (endA <= endB))
+	return ((endA >= beginB) & (endA <= endB))
 			| ((beginA >= beginB) & (beginA <= endB))
 			| ((endB >= beginA) & (endB <= endA))
 			| ((beginB >= beginA) & (beginB <= endA));
-	return q;
 }
 
 function stringToNumber(s) {
@@ -110,13 +109,10 @@ function numToFDVUNum(n) {
 	return u.replace('.', ',');
 }
 function isInvalid(val) {
-	if (val == null
-			|| val == undefined
-			|| val == ''
-			|| val == ' ') {
-		return true;
-	}
-	return false;
+	return val == null
+			| val == undefined
+			| val == ''
+			| val == ' ';
 }
 
 function arraySortNumeric(arr, idx) {
@@ -132,22 +128,7 @@ function arraySortNumeric(arr, idx) {
 			return aNum - bNum;
 		});
 }
-function arrayAddition(src, dst) {
-	for (let c = 0; c < src.length; c += 1) {
-		dst[c] += src[c];
-	}
-}
-function arrayCompare(a, b) {
-	if (a.length - b.length != 0) {
-		return false;
-	}
-	for (let i = 0; i < a.length; i += 1) {
-		if (a[i] != b[i]) {
-			return false;
-		}
-	}
-	return true;
-}
+
 function arrayColFilter(array, wantedList) {
 	let filterIdx = [];
 	for (let col = 0; col < array[0].length; col += 1) {

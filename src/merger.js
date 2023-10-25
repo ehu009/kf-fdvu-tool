@@ -53,8 +53,7 @@ function begin() {
 							ready['count'] -=1;
 						};
 					f.readAsText(fxcd('file'+i).files[0], 'iso-8859-1');
-				}
-				catch (e) {
+				} catch (e) {
 					ready['count'] -=1;
 				}
 			}

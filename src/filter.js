@@ -89,7 +89,7 @@ function setupRowFilter() {
 			A: 1,
 			B: 1,
 			C: 1,
-			D: 1,
+			D: 1
 		};
 	
 	const readyEvent = new Event(eventName);
@@ -247,7 +247,7 @@ function testColFilter() {
 	let wanted1 = [['col a', 'col b'],
 			['1234', '1235'],
 			['1134', '1135'],
-			['1580', '1580'],
+			['1580', '1580']
 		];
 	let wanted2 = [['col b', 'col c'],
 			['1235', '1236'],

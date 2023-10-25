@@ -70,7 +70,7 @@ function unitTest() {
 			['Nummer', 'Navn', 'Systemnr', 'Antall nøkler', 'Merknad', 'Eiendomsnr', 'Eiendomsnavn', 'Bygningsnr', 'Bygningsnavn', 'Seksjonsnr', 'Seksjonsnavn'],
 			['546', 'Sørslettvegen 3 - H0101 - Mellomdør til Underetasjen', ' DXT 557    K2', '2', 'SKAL IKKE UTLEVERES LEIETAKER', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101'],
 			['546', 'Sørslettvegen 3 - H0101 Reservenøkler ', '', '4', 'Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101'],
-			['546', 'Sørslettvegen 3 - H0101 Ytterdør', '', '4', 'Hovedinngang ', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101'],
+			['546', 'Sørslettvegen 3 - H0101 Ytterdør', '', '4', 'Hovedinngang ', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101']
 		];
 		
 	return compareCSV(wanted, filter(rentableSample, keySample));

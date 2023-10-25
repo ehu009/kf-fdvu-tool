@@ -120,7 +120,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				}
 			}
 			
-			let add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff]
+			let add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff];
 			for (let i = 2; i < add.length; i += 1) {
 				add[i] = numToFDVUNum(add[i]);
 			}
