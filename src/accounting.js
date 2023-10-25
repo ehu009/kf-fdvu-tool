@@ -197,20 +197,6 @@ function beginLoss() {
 				ready["dateA"] = 0;
 			}
 		};
-	actives.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileA"] -= 1;
-			} else {
-				ready["fileA"] += 1;
-			}
-		};
-	contracts.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileB"] -= 1;
-			} else {
-				ready["fileB"] += 1;
-			}
-		};
 	
 	
 	document.addEventListener(eventName, () => {
