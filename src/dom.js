@@ -220,7 +220,7 @@ function listTag(txt) {
 function unorderedList(id, contents) {
 	let c = fxcd(id);
 	for (let e of contents) {
-		axcd(i, listTag(e));
+		axcd(c, listTag(e));
 	}
 }
 
