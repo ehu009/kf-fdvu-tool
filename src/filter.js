@@ -203,28 +203,39 @@ function setupRowFilter() {
 
 function testRowFilter() {
 	
-	const csv = [['fisk', 'col a', 'col b', 'col c'],
+	const csv = [
+			['fisk', 'col a', 'col b', 'col c'],
 			['7', '1234', '1235', '1236'],
 			['9', '1134', '1135', '1136'],
 			['0', '1134', '13', '2136'],
 			['1', '1134', '35', '1236'],
 			['2', '1580', '1580', '1580']
 		];
-	const filter1 = [['col a', 'col b', 'col c'],
+	const filter1 = [
+			['col a', 'col b', 'col c'],
 			['1134', '1135', '1136']
 		];
-	const filter2 = [['fisk', 'col a', 'col c'],
+	const filter2 = [
+			['fisk', 'col a', 'col c'],
 			['1', '1134', '1236']
 		];
 	
-	const wanted1 = [['fisk', 'col a', 'col b', 'col c'],
+	const wanted1 = [
+			['fisk', 'col a', 'col b', 'col c'],
 			['9', '1134', '1135', '1136'],
 			['0', '1134', '13', '2136'],
 			['1', '1134', '35', '1236']
 		];
-	const wanted2 = [['fisk', 'col a', 'col b', 'col c'],
+	const wanted2 = [
+			['fisk', 'col a', 'col b', 'col c'],
 			['7', '1234', '1235', '1236'],
 			['1', '1134', '35', '1236']
+		];
+	const wanted3 = [
+			['fisk', 'col a', 'col b', 'col c'],
+			['9', '1134', '1135', '1136'],
+			['0', '1134', '13', '2136'],
+			['2', '1580', '1580', '1580']
 		];
 	
 	if (compareCSV(wanted1, arrayRowFilter(csv, 1, filter1, 0, true))) {
@@ -233,23 +244,29 @@ function testRowFilter() {
 	if (compareCSV(wanted2, arrayRowFilter(csv, 3, filter2, 2, true))) {
 		return true;
 	}
+	if (compareCSV(wanted3, arrayRowFilter(csv, 3, filter2, 2, false))) {
+		return true;
+	}
 	return false;
 }
 
 function testColFilter() {
 	
-	let csv = [['col a', 'col b', 'col c'],
+	let csv = [
+			['col a', 'col b', 'col c'],
 			['1234', '1235', '1236'],
 			['1134', '1135', '1136'],
 			['1580', '1580', '1580']
 		];
 	
-	let wanted1 = [['col a', 'col b'],
+	let wanted1 = [
+			['col a', 'col b'],
 			['1234', '1235'],
 			['1134', '1135'],
 			['1580', '1580']
 		];
-	let wanted2 = [['col b', 'col c'],
+	let wanted2 = [
+			['col b', 'col c'],
 			['1235', '1236'],
 			['1135', '1136'],
 			['1580', '1580']
