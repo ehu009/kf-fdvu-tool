@@ -58,6 +58,43 @@ const estateIdx = {
 		'navn': 1,
 		'eiendom': 3
 	};
+const koboIdx = {
+		'kommunenummer': 0,
+		'gnrbnr': 1,
+		'festenummer': 2,
+		'seksjonsnummer': 3,
+		'bruksenhetsnummer': 4,
+		'gatenavn': 5,
+		'husnummer': 6,
+		'husbokstav': 7,
+		'postnummer': 8,
+		'ekstrareferanse': 9,
+		'koboboligtype': 10,
+		'underkategoriboligtype': 11,
+		'kobodisposisjonsform': 12,
+		'boligeersnavn': 13,
+		'boligeiersorganisasjonsnummer': 14,
+		'boligeiersmobilnummer': 15,
+		'boligstatus': 16,
+		'statusdato': 17,
+		'manedsleie': 18,
+		'malernummerstrom': 19,
+		'malernummervann': 20,
+		'depositum': 21,
+		'errullestoltilpasset': 22,
+		'antallsoverom': 23,
+		'skolekretsbarneskole': 24,
+		'skolekretsungdomsskole': 25,
+		'ovriginformasjon': 26,
+		'kvalifiserermvakompensasjon': 27,
+		'erbofellesskap': 28,
+		'erdognbemannet': 29,
+		'harpersonalbase': 30,
+		'hovedsoker': 31,
+		'leieforholdertidsubegrenset': 32,
+		'leieforholdstartdato': 33,
+		'leieforholdsluttdato': 34
+	};
 
 
 function xc(...args) {
