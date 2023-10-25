@@ -176,11 +176,13 @@ function beginLoss() {
 	
 	let spinner = fxcd("spinner");
 	
+	let inputData = null;
+	/*
 	let actives = fxcd('rentables');
 	let activeList = null;
 	let contracts = fxcd('contracts');
 	let contractList = null;
-	
+	*/
 	
 	
 	fxcd("end").onchange = (evt) => {
@@ -206,13 +208,14 @@ function beginLoss() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, calcLoss(from, to, contractList, activeList), "tap " + fxcd("begin").value + " til " + fxcd("end").value);
+			downloadButton(btn, calcLoss(from, to, inputData['contracts'], inputData['rentables']), "tap " + fxcd("begin").value + " til " + fxcd("end").value);
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['rentables', 'contracts'], ready);
+			/*
 			let f1 = new FileReader();
 			let f2 = new FileReader();
 			
@@ -229,6 +232,7 @@ function beginLoss() {
 			
 			f1.readAsText(actives.files[0], "iso-8859-1");
 			f2.readAsText(contracts.files[0], "iso-8859-1");
+			*/
 		};
 }
 

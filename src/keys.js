@@ -42,12 +42,14 @@ function filter(rentables, keys) {
 }
 
 function setupKeyFilter() {
-	
+	/*
 	let rentables = fxcd('rentables');
 	let keys = fxcd('keys');
 	let rentablesList = null;
 	let keysList = null;
+	*/
 	
+	let inputData = null;
 	
 	fileChangeEvents(['rentables', 'keys'], dataReady);
 	
@@ -55,7 +57,8 @@ function setupKeyFilter() {
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['rentables', 'keys'], dataReady);
+			/*
 			let f1 = new FileReader();
 			let f2 = new FileReader();
 			
@@ -73,12 +76,13 @@ function setupKeyFilter() {
 			
 			f1.readAsText(rentables.files[0], "iso-8859-1");
 			f2.readAsText(keys.files[0], "iso-8859-1");
+			*/
 		};
 	document.addEventListener(eName, () => {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, filter(rentablesList, keysList), "n\u00F8kler - filtrert");
+			downloadButton(btn, filter(inputData['rentables'], inputData['keysList']), "n\u00F8kler - filtrert");
 			
 			hide(spinner);
 		});

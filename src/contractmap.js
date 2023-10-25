@@ -113,12 +113,15 @@ function begin() {
 	
 	fieldEvents();
 	
+	let inputData = null;
+	/*
 	let rentablesList = null;
 	let contractList = null;
-	
+	*/
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['contracts', 'rentables'], ready);
+			/*
 			rentablesList = null;
 			contractList = null;
 			let rentables = fxcd("rentables");
@@ -139,11 +142,12 @@ function begin() {
 					ready["fileB"] -= 1;
 				}
 			f2.readAsText(contracts.files[0], "iso-8859-1");
+			*/
 		};
 	
 	document.addEventListener(eventName, () => {
 			
-			let out = filter(contractList, rentablesList);
+			let out = filter(inputData['contracts'], inputData['rentables']);
 			
 			
 			let btn = fxcd("download");

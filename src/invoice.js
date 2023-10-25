@@ -89,17 +89,21 @@ function filterInvoices(contracts, invoices) {
 
 function begin() {
 	
+	let inputData = null;
+	/*
 	let rentables = null;
 	let contracts = null;
 	let invoices = null;
-		
+		*/
+	
 	fileChangeEvents(['rentables', 'contracts', 'invoices'], ready);
 	
 	let spinner = fxcd("spinner");
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			fileReadInput(['rentables', 'contracts', 'invoices'], ready);
+			/*
 			rentables = null;
 			contracts = null;
 			invoices = null;
@@ -124,11 +128,12 @@ function begin() {
 			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
 			f2.readAsText(fxcd("contracts").files[0], "iso-8859-1");
 			f3.readAsText(fxcd("invoices").files[0], "iso-8859-1");
+			*/
 		};
 			
 			
 	document.addEventListener(eventName, () => {
-			let filteredInvoices = filterInvoices(filterContracts(contracts, rentables), invoices);
+			let filteredInvoices = filterInvoices(filterContracts(inputData['contracts'], inputData['rentables']), inputData['invoices']);
 			
 			let btn = fxcd("download");
 			btn.disabled = false;

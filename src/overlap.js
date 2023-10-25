@@ -247,15 +247,19 @@ function setupCustomerOverlapFilter() {
 	
 	
 	let spinner = fxcd("spinner");
-	
+	/*
 	let contracts = fxcd('contracts');
 	let contractList = null;
+	*/
+	let inputData = null;
 	
 	fileChangeEvents(['contracts'], ready);
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
+			inputData = fileReadInput(['contracts'], ready);
 			
+			/*
 			let f = new FileReader();
 			
 			f.onload = () => {
@@ -264,13 +268,14 @@ function setupCustomerOverlapFilter() {
 			};
 			
 			f.readAsText(contracts.files[0], "iso-8859-1");
+			*/
 		};
 		
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, customerOverlapFilter(contractList), "overlappende kontrakter");
+			downloadButton(btn, customerOverlapFilter(inputData['contracts']), "overlappende kontrakter");
 			
 			hide(spinner);
 		});
@@ -301,9 +306,11 @@ function setupRentableOverlapFilter() {
 	
 	
 	let spinner = fxcd("spinner");
-	
+	/*
 	let rentables = fxcd("rentables");
 	let rentablesList = null;
+	*/
+	let inputData = null;
 	
 	fileChangeEvents(['rentables'], ready);
 	
@@ -312,14 +319,15 @@ function setupRentableOverlapFilter() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, rentableOverlapFilter(rentablesList), "overlappende seksjoner");
+			downloadButton(btn, rentableOverlapFilter(inputData['rentables']), "overlappende seksjoner");
 			
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['rentables'], ready);
+			/*
 			let f = new FileReader();
 			
 			f.onload = () => {
@@ -328,6 +336,7 @@ function setupRentableOverlapFilter() {
 				};
 			
 			f.readAsText(rentables.files[0], "iso-8859-1");
+			*/
 		};
 }
 
@@ -361,6 +370,7 @@ function setupContractOverlapFilter() {
 	}
 	
 	let spinner = fxcd("spinner");
+	let inputData = null;
 	
 	let contracts = fxcd('contracts');
 	let contractList = null;
@@ -371,14 +381,15 @@ function setupContractOverlapFilter() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, contractOverlapFilter(contractList), "overlappende kontrakter");
+			downloadButton(btn, contractOverlapFilter(inputData['contracts']), "overlappende kontrakter");
 			
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['contracts'], ready);
+			/*
 			let f = new FileReader();
 			
 			f.onload = () => {
@@ -387,6 +398,7 @@ function setupContractOverlapFilter() {
 				};
 			
 			f.readAsText(contracts.files[0], "iso-8859-1");
+			*/
 		};
 }
 
@@ -414,8 +426,11 @@ function setupKeyOverlapFilter() {
 	
 	let spinner = fxcd("spinner");
 	
+	/*
 	let keys = fxcd('keys');
 	let keyList = null;
+	*/
+	let inputData = null;
 	
 	fileChangeEvents(['keys'], ready);
 	
@@ -423,14 +438,15 @@ function setupKeyOverlapFilter() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, keyOverlapFilter(keyList), "nøkler i flere seksjoner");
+			downloadButton(btn, keyOverlapFilter(inputData['keys']), "nøkler i flere seksjoner");
 			
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['keys'], ready);
+			/*
 			let f = new FileReader();
 			
 			f.onload = () => {
@@ -439,6 +455,7 @@ function setupKeyOverlapFilter() {
 				};
 			
 			f.readAsText(keys.files[0], "iso-8859-1");
+			*/
 		};
 }
 
@@ -465,8 +482,11 @@ function setupEstateOverlapFilter() {
 	
 	let spinner = fxcd("spinner");
 	
+	/*
 	let estates = fxcd("estates");
 	let estateList = null;
+	*/
+	let inputData = null;
 	
 	fileChangeEvents(['estates'], ready);
 	
@@ -474,14 +494,15 @@ function setupEstateOverlapFilter() {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, estateOverLapFilter(estateList), "overlappende matrikkelnumre");
+			downloadButton(btn, estateOverLapFilter(inputData['estates']), "overlappende matrikkelnumre");
 			
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['estates'], ready);
+			/*
 			let f = new FileReader();
 			
 			f.onload = () => {
@@ -490,6 +511,7 @@ function setupEstateOverlapFilter() {
 				};
 			
 			f.readAsText(estates.files[0], "iso-8859-1");
+			*/
 		};
 }
 

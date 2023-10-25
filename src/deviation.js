@@ -49,10 +49,12 @@ function begin() {
 	fileChangeEvents(['rentables', 'deviations'], ready);
 	
 	let spinner = fxcd("spinner");
+	let inputData = null;
 	
 	fxcd("filter").onclick = () => {
 			show(spinner);
-			
+			inputData = fileReadInput(['rentables', 'deviations'], ready);
+			/*
 			let f1 = new FileReader();
 			let f2 = new FileReader();
 			
@@ -70,14 +72,14 @@ function begin() {
 			
 			f1.readAsText(fxcd("rentables").files[0], "iso-8859-1");
 			f2.readAsText(fxcd("deviations").files[0], "iso-8859-1");
-			
+			*/
 		};
 		
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
 			btn.disabled = false;
-			downloadButton(btn, filter(deviations, rentables), "avvik - filtrert");
+			downloadButton(btn, filter(inputData['deviations'], inputData['rentables']), "avvik - filtrert");
 			
 			hide(spinner);
 			
