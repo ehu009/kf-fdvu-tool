@@ -305,14 +305,9 @@ function setupRentableOverlapFilter() {
 	let rentables = fxcd("rentables");
 	let rentablesList = null;
 	
-	rentables.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileA"] -= 1;
-			} else {
-				ready["fileA"] += 1;
-				fxcd("filter").disabled = true;
-			}
-		};
+	fileChangeEvents(['rentables'], ready);
+	
+	
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
@@ -370,14 +365,8 @@ function setupContractOverlapFilter() {
 	let contracts = fxcd('contracts');
 	let contractList = null;
 	
-	contracts.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileA"] -= 1;
-			} else {
-				ready["file"] += 1;
-				fxcd("filter").disabled = true;
-			}
-		};
+	fileChangeEvents(['contracts'], ready);
+	
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
@@ -428,14 +417,8 @@ function setupKeyOverlapFilter() {
 	let keys = fxcd('keys');
 	let keyList = null;
 	
-	keys.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileA"] -= 1;
-			} else {
-				ready["fileA"] += 1;
-				fxcd("filter").disabled = true;
-			}
-		};
+	fileChangeEvents(['keys'], ready);
+	
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
@@ -485,14 +468,8 @@ function setupEstateOverlapFilter() {
 	let estates = fxcd("estates");
 	let estateList = null;
 	
-	estates.onchange = (evt) => {
-			if (evt.target.files.length > 0) {
-				ready["fileA"] -= 1;
-			} else {
-				ready["fileA"] += 1;
-				fxcd("filter").disabled = true;
-			}
-		};
+	fileChangeEvents(['estates'], ready);
+	
 	document.addEventListener(eventName, () => {
 			
 			let btn = fxcd("download");
