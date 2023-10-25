@@ -26,13 +26,8 @@ function filter(deviations, rentables) {
 	/*
 		finn alle unike relevante bygninger
 	*/
-	let propertyMap = new Map();
-	rentables.forEach((row)  => {
-			let key = row[rentableIdx['bygningsnavn']];
-			if (propertyMap.has(key) == false) {
-				propertyMap.set(key, 0);
-			}
-		});
+	let propertyMap = mapRows(rentableIdx['bygningsnavn']);
+	
 	/*
 		filtrer avvik etter bygninger
 	*/
