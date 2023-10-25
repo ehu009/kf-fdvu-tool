@@ -134,7 +134,6 @@ function begin() {
 			btn.disabled = false;
 			downloadButton(btn, filteredInvoices, "fakturalinjer - filtrert");
 			
-			draw("result", filteredInvoices);
 			hide(spinner);
 		});
 }
