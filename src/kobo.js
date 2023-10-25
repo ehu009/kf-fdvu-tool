@@ -1,7 +1,7 @@
 'use strict';
 
 
-function generate(rentables, contracts, facilities, estates) {
+function generate(input) {
 	
 }
 
@@ -36,11 +36,10 @@ function begin() {
 	let spinner = fxcd('spinner');
 	document.addEventListener(eventName, () => {
 			
-			let out = generate(inputData['rentables'], inputData['contracts'], inputData['facilities'], inputData['estates']);
+			let out = generate(inputData);
 			let btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, out, 'boligimport');
-			xc(inputData);
 			hide(spinner);
 		});
 	
