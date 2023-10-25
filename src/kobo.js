@@ -40,28 +40,13 @@ function begin() {
 			let btn = fxcd("download");
 			btn.disabled = false;
 			downloadButton(btn, out, "overlappende matrikkelnumre");
-			
+			xc(inputData);
 			hide(spinner);
 		});
 	
 	fxcd("filter").onclick = () => {
-			inputData = {};
 			show(spinner);
-			let key = ['A', 'B', 'C', 'D'];
-			let id = ['rentables', 'contracts', 'facilities', 'estates'];
-			
-			for (let i = 0; i < 4; i += 1) {
-				let e = fxcd(id[i]);
-				
-				let f = new FileReader();
-				f.onload = () => {
-						let l = CSVToArray(f.result, ";");
-						CSVRemoveBlanks(l);
-						inputData[id[i]] = l;
-						ready["file" + key[i]] -= 1;
-					};
-				f.readAsText(e.files[0], "iso-8859-1");
-			}
+			inputData = fileReadInput(['rentables', 'contracts', 'facilities', 'estates'], ready);
 		};
 }
 

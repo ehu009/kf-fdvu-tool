@@ -200,15 +200,31 @@ function mapRows(arr, idx) {
 	return m;
 }
 
+const fileKeys = ['fileA', 'fileB', 'fileC', 'fileD', 'fileE', 'fileF', 'fileG', 'fileH'];
 function fileChangeEvents(ids, readyObj) {
-	const keys = ['fileA', 'fileB', 'fileC', 'fileD', 'fileE', 'fileF', 'fileG', 'fileH'];
 	for (let i = 0; i < ids.length; i += 1) {
 		fxcd(ids[i]).onchange = (evt) => {
 				if (evt.target.files.length == 0) {
-					readyObj[keys[i]] = 2;
+					readyObj[fileKeys[i]] = 2;
 				} else {
-					readyObj[keys[i]] -= 1;
+					readyObj[fileKeys[i]] -= 1;
 				}
 			};
 	}
+}
+function fileReadInput(ids, readyObj) {
+	let out = {};
+	for (let i = 0; i < ids.length; i += 1) {
+		
+		let e = fxcd(ids[i]);
+		let f = new FileReader();
+		f.onload = () => {
+				let l = CSVToArray(f.result, ";");
+				CSVRemoveBlanks(l);
+				out[ids[i]] = l;
+				readyObj[fileKeys[i]] -= 1;
+			};
+		f.readAsText(e.files[0], "iso-8859-1");
+	}
+	return out;
 }
