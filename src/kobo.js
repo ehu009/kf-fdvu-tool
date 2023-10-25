@@ -1,3 +1,4 @@
+"use strict";
 
 
 function generate(rentables, contracts, facilities, estates) {
