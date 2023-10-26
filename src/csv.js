@@ -5,9 +5,9 @@ function CSVToArray(strData, strDelimiter) {
 	strDelimiter = (strDelimiter || ',');
 	let objPattern = new RegExp(
 			(
-				'(\\" + strDelimiter + "|\\r?\\n|\\r|^)' +
-				'(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|' +
-				'([^\"\\" + strDelimiter + "\\r\\n]*))'
+				"(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+				"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+				"([^\"\\" + strDelimiter + "\\r\\n]*))"
 			),
 			'gi'
 		);
@@ -23,7 +23,7 @@ function CSVToArray(strData, strDelimiter) {
 
 		let strMatchedValue;
 		if (arrMatches[2]) {
-			strMatchedValue = arrMatches[2].replace(new RegExp('\'\'', 'g'), '\'');
+			strMatchedValue = arrMatches[2].replace(new RegExp("''", 'g'), "'");
 		} else {
 			strMatchedValue = arrMatches[3];
 		}
@@ -43,7 +43,7 @@ function arrayToCSV(arr, separator) {
 					if (isNaN(f)) {
 						if (isNaN(parseFloat(f.replaceAll(',', '.')/2)) == true) {
 							if (f[0] == '-' || f[0] == '=') {
-								f = '\'' + rowArray[c] + '\'';
+								f = "'" + rowArray[c] + "'";
 							}
 						}
 					}
