@@ -42,6 +42,7 @@ const contractIdx = {
 		'løpenummer': 0,
 		'startdato': 7,
 		'sluttdato': 8,
+		'utgårdato': 10,
 		'behandlingsstatus': 25,
 		'kontraktsum': 9
 	};
