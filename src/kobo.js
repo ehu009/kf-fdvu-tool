@@ -167,7 +167,10 @@ function generate(input) {
 				data fra grunneiendom
 			*/
 			{
-				
+				let l = facilities.get(f('eiendom'));
+				l.forEach((row) => {
+						enter('gnrbnr', row[estateIdx['nummer']].replace('.', '/'));
+					});
 			}
 			
 			if (ok) {
