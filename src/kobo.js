@@ -2,24 +2,23 @@
 
 
 function generate(input) {
+	let out = [[]];
+	Object.entries(koboIdx).forEach((entry) => {
+			out[0].push(entry[0]);
+		});
+	
 	let facilities = mapRows(input['facilities', facilityIdx['seksjonsnummer']);
 	let contracts = mapRows(input['contracts', contractIdx['fasilitetsnummer']);
 	let estates = mapRows(input['estates', contractIdx['eiendom']);
 	
-	let out = [];
+	
 	input['rentables'].forEach((row) => {
-			
-			
 			
 			
 			
 		});
 	
-	let header = [];
-	Object.entries(koboIdx).forEach((entry) => {
-			header.push(entry[0]);
-		});
-	out.unshift(header);
+	return out;
 }
 
 
