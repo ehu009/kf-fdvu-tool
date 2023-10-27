@@ -16,7 +16,9 @@ function generate(input) {
 			if (row[rentableIdx['leietakernavn']] == 'Passiv') {
 				return;
 			}
-			
+			if (row[rentableIdx['utleibar']] == 'False' || row[rentableIdx['aktiv']] == 'False') {
+				return;
+			}
 			
 			
 		});
