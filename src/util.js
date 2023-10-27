@@ -23,6 +23,7 @@ const rentableIdx = {
 		'seksjonspris': 16,
 		'anskaffelsespris': 17,
 		'leietakernavn': 25,
+		'leietakernummer': 24,
 		'aktiv': 21,
 		'utleibar': 22,
 		'adresse': 3,
