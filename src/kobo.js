@@ -20,7 +20,14 @@ function generate(input) {
 				return;
 			}
 			
+			let ok = true;
+			let add = [];
+			add.fill('', 0, out[0].length);
 			
+			
+			if (ok) {
+				out.push(add);
+			}
 		});
 	
 	return out;
