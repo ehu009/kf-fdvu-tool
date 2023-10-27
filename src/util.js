@@ -24,7 +24,8 @@ const rentableIdx = {
 		'anskaffelsespris': 17,
 		'leietakernavn': 25,
 		'aktiv': 21,
-		'utleibar': 22
+		'utleibar': 22,
+		'adresse': 3
 	};
 const keyIdx = {
 		'hanknummer': 0,
