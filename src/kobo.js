@@ -13,6 +13,9 @@ function generate(input) {
 	
 	
 	input['rentables'].forEach((row) => {
+			if (row[rentableIdx['leietakernavn']] == 'Passiv') {
+				return;
+			}
 			
 			
 			
