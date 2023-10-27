@@ -168,9 +168,13 @@ function generate(input) {
 			*/
 			{
 				let l = facilities.get(f('eiendom'));
-				l.forEach((row) => {
-						enter('gnrbnr', row[estateIdx['nummer']].replace('.', '/'));
-					});
+				if (l.length < 2) {
+					if (l.length > 0) {
+						l.forEach((row) => {
+								enter('gnrbnr', row[estateIdx['nummer']].replace('.', '/'));
+							});
+					}
+				}
 			}
 			
 			if (ok) {
