@@ -80,7 +80,82 @@ function generate(input) {
 				data fra fasilitetsbeskrivelse
 			*/
 			{
+				const bools = ['Døgnbemanning', 'Personalbase', 'Handicaptilpasset']
+				let base = '';
+				let staffed = '';
+				let handicap = '';
 				
+				let bedrooms = '';
+				let power = '';
+				let ownerName = '';
+				let ownerPhone = '';
+				let ownerReg = '';
+				
+				let ignorePower = false;
+				
+				facilities.get(r('seksjonsnummer')).forEach((facility) => {
+						function f(key) {
+							return facility[facilityIdx[key]];
+						}
+						
+						const k = f('beskrivelse');
+						let v = '1';
+						if (bools.includes(k)) {
+							switch(k) {
+								case 'Døgnbemanning':
+								staffed = v;
+								break;
+								
+								case 'Handicaptilpasset':
+								handicap = v;
+								break;
+								
+								case 'Personalbase':
+								base = v;
+								break;
+							}
+							
+						} else {
+						
+							v = f('merknad');
+							switch(k) {
+								case 'Eier navn':
+								ownerName = v;
+								break;
+								
+								case 'Eier tlf. nummer':
+								ownerPhone = f('');
+								break;
+								
+								case 'Eier org. nummer':
+								ownerReg = v;
+								break;
+								
+								case 'Målernummer strøm':
+								if (power != '') {
+									power = v;
+								} else {
+									ignorePower = true;
+								}
+								break;
+								
+								case 'Soverom':
+								bedrooms = v;
+								break;
+							}
+						}
+					});
+				
+				if (!ignorePower) {
+					enter('malernummerstrom', power);
+				}
+				enter('antallsoverom', bedrooms);
+				enter('erdognbemannet', staffed);
+				enter('harpersonalbase', base);
+				enter('errullestoltilpasset', handicap);
+				enter('boligeiersnavn', ownerName);
+				enter('boligeiersorganisasjonsnummer');
+				enter('boligeiersmobilnummer');
 			}
 			/*
 				data fra kontrakter
