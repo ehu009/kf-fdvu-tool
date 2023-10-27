@@ -11,6 +11,10 @@ function generate(input) {
 	let contracts = mapRows(input['contracts', contractIdx['fasilitetsnummer']);
 	let estates = mapRows(input['estates', estateIdx['eiendom']);
 	
+	let numbers = [];
+	for (let i = 0; i < 10; i += 1) {
+		numbers.push(i.toString());
+	}
 	
 	input['rentables'].forEach((row) => {
 			if (row[rentableIdx['leietakernavn']] == 'Passiv') {
@@ -33,8 +37,44 @@ function generate(input) {
 			/*
 				data rett fra seksjon
 			*/
-			{	
+			{
+				function postnummer() {
+					let addr = r('adresse');
+					addr.split(' ');
+					return addr[addr.length - 2];
+				}
 				
+				enter('kommunenummer', '5401');
+				enter('manedsleie', r('seksjonspris'));
+				enter('postnummer', postnummer());
+				
+				let info = r('merknad');
+				
+				let name = r('navn').trim().split(',');
+				let len = name.length;
+				if (len > 1) {
+					if (len > 2) {
+						// legger leilighetsnummer i merknad
+						info = name[2].trim() + '.\t' + info;
+					}
+					enter('bruksenhetsnummer', name[1].trim());
+				}
+				enter('ovriginformasjon', info);
+				
+				
+				name = name[0].trim();
+				let letter = name[name.length-1];
+				if (isNaN(parseInt(letter))) {
+					name = name.slice(0, name[name.length - 1]).trim();
+				} else {
+					letter = '';
+				}
+				enter('husbokstav', letter);
+				
+				let street = name.split(' ');
+				enter('husnummer', street[street.length - 1]);
+				street.pop();
+				enter('gatenavn', street.join(' '));
 			}
 			/*
 				data fra fasilitetsbeskrivelse
