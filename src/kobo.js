@@ -23,6 +23,9 @@ function generate(input) {
 			let ok = true;
 			let add = [];
 			add.fill('', 0, out[0].length);
+			function enter(key, val) {
+				add[koboIdx[key]] = val.trim();
+			}
 			
 			
 			if (ok) {
