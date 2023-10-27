@@ -9,7 +9,7 @@ function generate(input) {
 	
 	let facilities = mapRows(input['facilities', facilityIdx['seksjonsnummer']);
 	let contracts = mapRows(input['contracts', contractIdx['fasilitetsnummer']);
-	let estates = mapRows(input['estates', contractIdx['eiendom']);
+	let estates = mapRows(input['estates', estateIdx['eiendom']);
 	
 	
 	input['rentables'].forEach((row) => {
