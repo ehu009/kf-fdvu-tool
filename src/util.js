@@ -43,6 +43,7 @@ const contractIdx = {
 		'startdato': 7,
 		'sluttdato': 8,
 		'utgårdato': 10,
+		'kontrakttype': 19,
 		'behandlingsstatus': 25,
 		'kontraktsum': 9
 	};
