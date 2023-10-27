@@ -3,6 +3,8 @@
 function setupColumnFilter() {
 	
 	let button = fxcd('download');
+	let filter = fxcd('filter');
+	
 	let file = fxcd('file');
 	let spinner = fxcd('spinner');
 	
@@ -22,7 +24,6 @@ function setupColumnFilter() {
 			set: (target, key, value) => {
 					target[key] = value;
 					if (target['A']  < 1) {
-						outputCSV = arrayColFilter(inputCSV, wanted);
 						document.dispatchEvent(readyEvent);
 					}
 					return true;
@@ -45,6 +46,7 @@ function setupColumnFilter() {
 			show(spinner);
 			inputCSV = null;
 			button.disabled = true;
+			filter.disabled = true;
 			if (file.files.length >= 1) {
 				let r = new FileReader();
 				r.onload = () => {
@@ -56,8 +58,9 @@ function setupColumnFilter() {
 						allOrNoneBtn('none-btn', 'field', false, options);
 						fxcd('all-btn').disabled = false;
 						fxcd('none-btn').disabled = false;
-						button.disabled = false;
 						ready['A'] -= 1;
+						filter.disabled = false;
+						hide(spinner);
 						
 					};
 				r.readAsText(file.files[0], 'iso-8859-1');
@@ -70,12 +73,21 @@ function setupColumnFilter() {
 			}
 		};
 	
-	
-	document.addEventListener(eventName, () => {
-			button.disabled = false;
+	filter.onclick = () => {
+			show(spinner);
+			for (let e of mapCheckboxes('field').entries()) {
+				if ((e[1] == fxcd('keep-option').checked) == true) {
+					wanted.push(e[0]);
+				}
+			}
+			outputCSV = arrayColFilter(inputCSV, wanted);
 			downloadButton(button, outputCSV, fxcd('file').files[0].name.replace('.csv', ' - filtrert.csv'));
+			button.disabled = false;
 			hide(spinner);
-		});
+		};
+	
+			
+	
 }
 
 
