@@ -30,7 +30,30 @@ function generate(input) {
 				return row[rentableIdx[key]];
 			}
 			
-			
+			/*
+				data rett fra seksjon
+			*/
+			{	
+				
+			}
+			/*
+				data fra fasilitetsbeskrivelse
+			*/
+			{
+				
+			}
+			/*
+				data fra kontrakter
+			*/
+			{
+				
+			}
+			/*
+				data fra grunneiendom
+			*/
+			{
+				
+			}
 			
 			if (ok) {
 				out.push(add);
