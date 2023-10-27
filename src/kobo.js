@@ -26,6 +26,10 @@ function generate(input) {
 			function enter(key, val) {
 				add[koboIdx[key]] = val.trim();
 			}
+			function r(key) {
+				return row[rentableIdx[key]];
+			}
+			
 			
 			
 			if (ok) {
