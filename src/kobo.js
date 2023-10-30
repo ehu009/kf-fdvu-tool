@@ -161,7 +161,42 @@ function generate(input) {
 				data fra kontrakter
 			*/
 			{
-				
+				let customerName = r('leietakernavn');
+				if (customerName != ['Passiv']) {
+					
+					let customerID = r('leietakernummer');
+					for (; customerID.length < 11 && customerID.length != 6;) {
+						customerID = "0" + customerID;
+					}
+					
+					if (!isInvalid(customerID)) {
+						let l = contracts.get(f('seksjonsnummer')).filter((contract) => {
+								return !(contract[contractIdx['behandlingsstatus']] == 'Avsluttet'
+										|| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(contract[contractIdx['leietakernavn']]));
+							});
+						
+						let timeLimited = false;
+						let startDate = '';
+						let stopDate = '';
+						let expiry = '';
+						l.forEach((contract) => {
+								function c(key) {
+									return contract[contractIdx[key]];
+								}
+								
+								if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
+									timeLimited = true;
+								}
+								startDate = c('startdato');
+								stopDate = c('sluttdato');
+								expiry = c('utgårdato');
+							});
+						enter('leieforholdertidsubegrenset', timeLimited);
+						enter('leieforholdstartdato', startDate);
+						enter('leieforholdsluttdato', stopDate);
+						enter('hovedsoker', customerID);
+					}
+				}
 			}
 			/*
 				data fra grunneiendom
