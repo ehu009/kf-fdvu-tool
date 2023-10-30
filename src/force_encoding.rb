@@ -2,11 +2,11 @@
 
 
 ARGV.each do |file_name|
-
-  puts file_name
   text = File.read(file_name)
   
-  File.open(file_name, "w") do |file|
+  new_name = String.new(file_name)
+  new_name[".csv"] = " - korrigert.csv"
+  File.open(new_name, "w") do |file|
     unless text.valid_encoding? then
       text.scrub
     else
