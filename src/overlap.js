@@ -1,13 +1,5 @@
 'use strict';
 
-let ignoreContractsAddition = ['Omsorgstjenesten S\u00F8r\u00F8ya',
-		'Enhet for psykisk helse og rus, avdeling Ankeret v/Heidi H\u00F8ie',
-		'Enhet for psykisk helse og rus, avdeling B\u00F8lgen',
-		'Stiftelsen Kommunale Boliger',
-		'Flyktningtjenesten Privatinnleide',
-		'Tildelingskontoret'
-	];
-
 
 function overlapHeader(n, firstCol, label) {
 	let head = [firstCol];
