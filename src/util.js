@@ -85,7 +85,7 @@ const koboIdx = {
 		'koboboligtype': 10,
 		'underkategoriboligtype': 11,
 		'kobodisposisjonsform': 12,
-		'boligeersnavn': 13,
+		'boligeiersnavn': 13,
 		'boligeiersorganisasjonsnummer': 14,
 		'boligeiersmobilnummer': 15,
 		'boligstatus': 16,
