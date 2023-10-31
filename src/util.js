@@ -64,7 +64,7 @@ const invoiceIdx = {
 const facilityIdx = {
 		'beskrivelse': 0,
 		'merknad': 1,
-		'seksjonsnummer': 4
+		'seksjon': 4
 	};
 const estateIdx = {
 		'nummer': 0,
