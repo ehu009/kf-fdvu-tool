@@ -39,10 +39,17 @@ function generate(input) {
 				data rett fra seksjon
 			*/
 			{
+				
 				function postnummer() {
-					let addr = r('adresse');
-					addr.split(' ');
-					return addr[addr.length - 2];
+					let addr = r('adresse').split(' ');
+					xc(addr);
+					
+					
+					let pos = 1;
+					while (addr[addr.length - pos] == '') {
+						pos += 1;
+					}
+					return addr[addr.length - (pos + 1)];
 				}
 				enter('postnummer', postnummer());
 				enter('kommunenummer', '5401');
@@ -94,7 +101,7 @@ function generate(input) {
 				
 				let ignorePower = true;
 				
-				if (facilities.has(r('seksjonsnummer') + ' ' + r('seksjonsnavn')) {
+				if (facilities.has(r('seksjonsnummer') + ' ' + r('seksjonsnavn'))) {
 				facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
 						function f(key) {
 							return facility[facilityIdx[key]];
