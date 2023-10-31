@@ -124,11 +124,11 @@ function generate(input) {
 								break;
 								
 								case 'Eier tlf. nummer':
-								ownerPhone = f('');
+								ownerPhone = v.replaceAll(' ', '').replaceAll('-', '');
 								break;
 								
 								case 'Eier org. nummer':
-								ownerReg = v;
+								ownerReg = v.replaceAll(' ', '').replaceAll('-', '');
 								break;
 								
 								case 'Målernummer strøm':
