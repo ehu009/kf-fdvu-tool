@@ -45,7 +45,7 @@ function generate(input) {
 				}
 				
 				enter('kommunenummer', '5401');
-				enter('manedsleie', r('seksjonspris'));
+				enter('manedsleie', r('seksjonspris').split(',')[0]);
 				enter('postnummer', postnummer());
 				
 				let info = r('merknad');
