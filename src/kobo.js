@@ -155,8 +155,8 @@ function generate(input) {
 				enter('harpersonalbase', base);
 				enter('errullestoltilpasset', handicap);
 				enter('boligeiersnavn', ownerName);
-				enter('boligeiersorganisasjonsnummer');
-				enter('boligeiersmobilnummer');
+				enter('boligeiersorganisasjonsnummer', ownerReg);
+				enter('boligeiersmobilnummer', ownerPhone);
 			}
 			/*
 				data fra kontrakter
