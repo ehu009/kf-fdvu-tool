@@ -228,13 +228,14 @@ function generate(input) {
 			{
 				if (estates.has(r('eiendom'))) {
 				let l = estates.get(r('eiendom'));
+				
 				if (l.length < 2) {
 					if (l.length > 0) {
 						l.forEach((row) => {
-								enter('gnrbnr', row[estateIdx['nummer']].replace('.', '/'));
+								enter('gnrbnr', estate[estateIdx['nummer']].replace('.', '/'));
 							});
 					}
-				}
+					
 				}
 			}
 			
