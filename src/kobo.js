@@ -44,10 +44,10 @@ function generate(input) {
 					addr.split(' ');
 					return addr[addr.length - 2];
 				}
-				
+				enter('postnummer', postnummer());
 				enter('kommunenummer', '5401');
 				enter('manedsleie', r('seksjonspris').split(',')[0]);
-				enter('postnummer', postnummer());
+				
 				
 				let info = r('merknad');
 				
@@ -94,6 +94,7 @@ function generate(input) {
 				
 				let ignorePower = true;
 				
+				if (facilities.has(r('seksjonsnummer') + ' ' + r('seksjonsnavn')) {
 				facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
 						function f(key) {
 							return facility[facilityIdx[key]];
@@ -167,6 +168,7 @@ function generate(input) {
 				enter('boligeiersnavn', ownerName);
 				enter('boligeiersorganisasjonsnummer', ownerReg);
 				enter('boligeiersmobilnummer', ownerPhone);
+				}
 			}
 			/*
 				data fra kontrakter
@@ -181,7 +183,8 @@ function generate(input) {
 					}
 					
 					if (!isInvalid(customerID)) {
-						let l = contracts.get(f('seksjonsnummer')).filter((contract) => {
+						if (contracts.has(r('seksjonsnummer'))) {
+						let l = contracts.get(r('seksjonsnummer')).filter((contract) => {
 								return !(contract[contractIdx['behandlingsstatus']] == 'Avsluttet'
 										|| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(contract[contractIdx['leietakernavn']]));
 							});
@@ -191,6 +194,7 @@ function generate(input) {
 						let stopDate = '';
 						let expiry = '';
 						l.forEach((contract) => {
+								
 								function c(key) {
 									return contract[contractIdx[key]];
 								}
@@ -206,20 +210,24 @@ function generate(input) {
 						enter('leieforholdstartdato', startDate);
 						enter('leieforholdsluttdato', stopDate);
 						enter('hovedsoker', customerID);
+						}
 					}
 				}
 			}
+			
 			/*
 				data fra grunneiendom
 			*/
 			{
-				let l = estates.get(f('eiendom'));
+				if (estates.has(r('eiendom'))) {
+				let l = estates.get(r('eiendom'));
 				if (l.length < 2) {
 					if (l.length > 0) {
 						l.forEach((row) => {
 								enter('gnrbnr', row[estateIdx['nummer']].replace('.', '/'));
 							});
 					}
+				}
 				}
 			}
 			
