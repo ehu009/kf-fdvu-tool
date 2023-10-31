@@ -34,7 +34,8 @@ const rentableIdx = {
 		'aktiv': 21,
 		'utleibar': 22,
 		'adresse': 3,
-		'merknad': 2
+		'merknad': 2,
+		'eiendom' : 5
 	};
 const keyIdx = {
 		'hanknummer': 0,
