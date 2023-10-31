@@ -213,7 +213,7 @@ function generate(input) {
 				data fra grunneiendom
 			*/
 			{
-				let l = facilities.get(f('eiendom'));
+				let l = estates.get(f('eiendom'));
 				if (l.length < 2) {
 					if (l.length > 0) {
 						l.forEach((row) => {
