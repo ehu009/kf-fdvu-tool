@@ -102,79 +102,78 @@ function generate(input) {
 				let ignorePower = true;
 				
 				if (facilities.has(r('seksjonsnummer') + ' ' + r('seksjonsnavn'))) {
-				facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
-						function f(key) {
-							return facility[facilityIdx[key]];
-						}
-						
-						const k = f('beskrivelse');
-						let v = '1';
-						if (bools.includes(k)) {
-							switch(k) {
-								case 'Døgnbemanning':
-								staffed = v;
-								break;
-								
-								case 'Handicaptilpasset':
-								handicap = v;
-								break;
-								
-								case 'Personalbase':
-								base = v;
-								break;
+					facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
+							function f(key) {
+								return facility[facilityIdx[key]];
 							}
 							
-						} else {
-						
-							v = f('merknad').trim();
-							switch(k) {
-								case 'Eier navn':
-								ownerName = v;
-								break;
-								
-								case 'Eier tlf. nummer':
-								ownerPhone = v.replaceAll(' ', '').replaceAll('-', '');
-								break;
-								
-								case 'Eier org. nummer':
-								ownerReg = v.replaceAll(' ', '').replaceAll('-', '');
-								break;
-								
-								case 'Målernummer strøm':
-								if (power == null) {
-									power = v;
-									ignorePower = false;
+							const k = f('beskrivelse');
+							let v = '1';
+							if (bools.includes(k)) {
+								switch(k) {
+									case 'Døgnbemanning':
+									staffed = v;
+									break;
+									
+									case 'Handicaptilpasset':
+									handicap = v;
+									break;
+									
+									case 'Personalbase':
+									base = v;
 									break;
 								}
-								if (!ignorePower) {
-									if (power == '') {
+								
+							} else {
+							
+								v = f('merknad').trim();
+								switch(k) {
+									case 'Eier navn':
+									ownerName = v;
+									break;
+									
+									case 'Eier tlf. nummer':
+									ownerPhone = v.replaceAll(' ', '').replaceAll('-', '');
+									break;
+									
+									case 'Eier org. nummer':
+									ownerReg = v.replaceAll(' ', '').replaceAll('-', '');
+									break;
+									
+									case 'Målernummer strøm':
+									if (power == null) {
 										power = v;
-									} else {
-										if (v != '') {
-											ignorePower = true;
+										ignorePower = false;
+										break;
+									}
+									if (!ignorePower) {
+										if (power == '') {
+											power = v;
+										} else {
+											if (v != '') {
+												ignorePower = true;
+											}
 										}
 									}
+									break;
+									
+									case 'Soverom':
+									bedrooms = v;
+									break;
 								}
-								break;
-								
-								
-								case 'Soverom':
-								bedrooms = v;
-								break;
 							}
-						}
-					});
-				
-				if (!ignorePower) {
-					enter('malernummerstrom', power);
-				} 
-				enter('antallsoverom', bedrooms);
-				enter('erdognbemannet', staffed);
-				enter('harpersonalbase', base);
-				enter('errullestoltilpasset', handicap);
-				enter('boligeiersnavn', ownerName);
-				enter('boligeiersorganisasjonsnummer', ownerReg);
-				enter('boligeiersmobilnummer', ownerPhone);
+						});
+					
+					if (!ignorePower) {
+						enter('malernummerstrom', power);
+					} 
+					enter('antallsoverom', bedrooms);
+					enter('erdognbemannet', staffed);
+					enter('harpersonalbase', base);
+					enter('errullestoltilpasset', handicap);
+					enter('boligeiersnavn', ownerName);
+					enter('boligeiersorganisasjonsnummer', ownerReg);
+					enter('boligeiersmobilnummer', ownerPhone);
 				}
 			}
 			/*
@@ -227,15 +226,16 @@ function generate(input) {
 			*/
 			{
 				if (estates.has(r('eiendom'))) {
-				let l = estates.get(r('eiendom'));
-				
-				if (l.length < 2) {
-					if (l.length > 0) {
-						l.forEach((row) => {
-								enter('gnrbnr', estate[estateIdx['nummer']].replace('.', '/'));
-							});
-					}
+					let l = estates.get(r('eiendom'));
 					
+					if (l.length < 2) {
+						if (l.length > 0) {
+							l.forEach((estate) => {
+									enter('gnrbnr', estate[estateIdx['nummer']].replace('.', '/'));
+								});
+						}
+						
+					}
 				}
 			}
 			
