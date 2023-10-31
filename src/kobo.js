@@ -16,6 +16,7 @@ function generate(input) {
 		numbers.push(i.toString());
 	}
 	
+	input['rentables'].shift();
 	input['rentables'].forEach((row) => {
 			if (row[rentableIdx['leietakernavn']] == 'Passiv') {
 				return;
