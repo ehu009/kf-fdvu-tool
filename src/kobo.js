@@ -7,9 +7,9 @@ function generate(input) {
 			out[0].push(entry[0]);
 		});
 	
-	let facilities = mapRows(input['facilities', facilityIdx['seksjonsnummer']]);
-	let contracts = mapRows(input['contracts', contractIdx['fasilitetsnummer']]);
-	let estates = mapRows(input['estates', estateIdx['eiendom']]);
+	let facilities = mapRows(input['facilities'], facilityIdx['seksjon']);
+	let contracts = mapRows(input['contracts'], contractIdx['fasilitetsnummer']);
+	let estates = mapRows(input['estates'], estateIdx['eiendom']);
 	
 	let numbers = [];
 	for (let i = 0; i < 10; i += 1) {
