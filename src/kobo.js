@@ -87,12 +87,12 @@ function generate(input) {
 				let handicap = '';
 				
 				let bedrooms = '';
-				let power = '';
+				let power = null;
 				let ownerName = '';
 				let ownerPhone = '';
 				let ownerReg = '';
 				
-				let ignorePower = false;
+				let ignorePower = true;
 				
 				facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
 						function f(key) {
@@ -118,7 +118,7 @@ function generate(input) {
 							
 						} else {
 						
-							v = f('merknad');
+							v = f('merknad').trim();
 							switch(k) {
 								case 'Eier navn':
 								ownerName = v;
@@ -133,12 +133,22 @@ function generate(input) {
 								break;
 								
 								case 'Målernummer strøm':
-								if (power != '') {
+								if (power == null) {
 									power = v;
-								} else {
-									ignorePower = true;
+									ignorePower = false;
+									break;
+								}
+								if (!ignorePower) {
+									if (power == '') {
+										power = v;
+									} else {
+										if (v != '') {
+											ignorePower = true;
+										}
+									}
 								}
 								break;
+								
 								
 								case 'Soverom':
 								bedrooms = v;
@@ -149,7 +159,7 @@ function generate(input) {
 				
 				if (!ignorePower) {
 					enter('malernummerstrom', power);
-				}
+				} 
 				enter('antallsoverom', bedrooms);
 				enter('erdognbemannet', staffed);
 				enter('harpersonalbase', base);
