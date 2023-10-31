@@ -93,7 +93,7 @@ function generate(input) {
 				
 				let ignorePower = false;
 				
-				facilities.get(r('seksjonsnummer')).forEach((facility) => {
+				facilities.get(r('seksjonsnummer') + ' ' + r('seksjonsnavn')).forEach((facility) => {
 						function f(key) {
 							return facility[facilityIdx[key]];
 						}
