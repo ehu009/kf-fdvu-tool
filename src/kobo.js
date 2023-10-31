@@ -50,7 +50,7 @@ function generate(input) {
 				
 				let info = r('merknad');
 				
-				let name = r('navn').trim().split(',');
+				let name = r('seksjonsnavn').trim().split(',');
 				let len = name.length;
 				if (len > 1) {
 					if (len > 2) {
