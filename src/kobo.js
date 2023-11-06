@@ -41,8 +41,6 @@ function generate(input) {
 				
 				function postnummer() {
 					const addr = r('adresse').split(' ');
-					xc(addr);
-					
 					
 					let pos = 1;
 					while (addr[addr.length - pos] == '') {
