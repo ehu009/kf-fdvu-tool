@@ -18,42 +18,42 @@ let ignoreContractsAddition = ['Omsorgstjenesten S\u00F8r\u00F8ya',
 
 
 const deviationIdx = {
-		'bygningsnavn': 10,
 		'avviksnavn': 0,
+		'avviksmerknad': 1,
 		'fasilitet': 8,
-		'avviksmerknad': 1
+		'bygningsnavn': 10
 	};
 const rentableIdx = {
 		'seksjonsnummer': 0,
 		'seksjonsnavn': 1,
+		'merknad': 2,
+		'adresse': 3,
+		'eiendom' : 5,
 		'bygningsnavn': 6,
 		'seksjonspris': 16,
 		'anskaffelsespris': 17,
-		'leietakernavn': 25,
-		'leietakernummer': 24,
 		'aktiv': 21,
 		'utleibar': 22,
-		'adresse': 3,
-		'merknad': 2,
-		'eiendom' : 5
+		'leietakernummer': 24,
+		'leietakernavn': 25
 	};
 const keyIdx = {
 		'hanknummer': 0,
 		'seksjonsnummer': 9
 	};
 const contractIdx = {
-		'fasilitetsnummer': 13,
-		'fasilitet': 14,
-		'reskontronummer': 5,
-		'leietakernummer': 4,
-		'leietakernavn': 3,
 		'løpenummer': 0,
+		'leietakernavn': 3,
+		'leietakernummer': 4,
+		'reskontronummer': 5,
 		'startdato': 7,
 		'sluttdato': 8,
+		'kontraktsum': 9,
 		'utgårdato': 10,
+		'fasilitetsnummer': 13,
+		'fasilitet': 14,
 		'kontrakttype': 19,
-		'behandlingsstatus': 25,
-		'kontraktsum': 9
+		'behandlingsstatus': 25
 	};
 const invoiceIdx = {
 		'løpenummer': 5,
