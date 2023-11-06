@@ -171,9 +171,11 @@ function generate(input) {
 			*/
 			{
 				const customerName = r('leietakernavn');
-				enter('boligstatus', 'KLAR_FOR_INNFLYTTING');
-				
-				if (customerName != ['Passiv']) {
+				if (customerName == '') {
+					enter('boligstatus', 'KLAR_FOR_INNFLYTTING');
+				} else if (customerName == ['Passiv']) {
+					enter('boligstatus', 'IKKE_TILGJENGELIG');
+				} else {
 					
 					const customerID = r('leietakernummer');
 					for (; customerID.length < 11 && customerID.length != 6;) {
