@@ -14,7 +14,7 @@ function calcLoss(begin, end, contracts, rentables) {
 	let filteredContracts;
 	
 	{
-		const header = rentables.shift();
+		let header = rentables.shift();
 		filteredRentables = rentables.filter((row) => {
 				if ((row[rentableIdx['aktiv']] == 'False')
 						|| (row[rentableIdx['utleibar' == 'False']])) {
@@ -65,7 +65,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			const diff = acqPrice - rentPrice;
+			let diff = acqPrice - rentPrice;
 			if (isNaN(acqPrice)) {
 				diff = 0;
 			}

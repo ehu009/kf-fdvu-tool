@@ -80,7 +80,7 @@ function CSVRemoveBlanks(csv) {
 }
 
 function mergeCSV(csvList) {
-	const out = csvList[0];
+	let out = csvList[0];
 	for (let i = 1; i < csvList.length; i += 1) {
 		csvList[i].shift();
 		out = out.concat(csvList[i]);

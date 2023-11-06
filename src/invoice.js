@@ -61,7 +61,7 @@ function filterInvoices(contracts, invoices) {
 	*/
 	const header = invoices.shift();
 	const out = invoices.filter((invoice) => {
-			const current = invoice[invoiceIdx['løpenummer']];
+			let current = invoice[invoiceIdx['løpenummer']];
 			if (isInvalid(current)) {
 				return false;
 			}
