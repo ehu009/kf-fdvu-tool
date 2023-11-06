@@ -25,7 +25,6 @@ function generate(input) {
 				return;
 			}
 			
-			let ok = true;
 			const add = [];
 			add.fill('', 0, out[0].length);
 			function enter(key, val) {
@@ -246,10 +245,7 @@ function generate(input) {
 					}
 				}
 			}
-			
-			if (ok) {
-				out.push(add);
-			}
+			out.push(add);
 		});
 	
 	return out;
