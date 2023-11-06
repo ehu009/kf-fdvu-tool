@@ -145,5 +145,5 @@ function unitTest() {
 			['K00006433', 'Kontrakt for Kjell Trell Trafikkuhell', '', 'Kjell Trell Trafikkuhell', '21016729768', '236676', '', '01.01.2008', '', '9739,12', '01.01.3000', '01.01.2024', '01.01.2025', '24979620028', '24979620028 Sørslettveien 8 U 0101', '1180', 'Åsgård', '118006', 'Åsgård Sørslettveien 8', '', 'Agresso', '1', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig']
 		];
 	
-	return compareCSV(filter(contractSample, rentableSample));
+	return compareCSV(wanted, filter(contractSample, rentableSample));
 }
