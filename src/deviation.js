@@ -26,14 +26,17 @@ function filter(deviations, rentables) {
 	/*
 		finn alle unike relevante bygninger
 	*/
-	const propertyMap = mapRows(rentableIdx['bygningsnavn']);
+	const propertyMap = mapRows(rentables, rentableIdx['bygningsnavn']);
 	
 	/*
 		filtrer avvik etter bygninger
 	*/
-	return deviations.filter((row) => {
+	const head = deviations.shift();
+	let out = deviations.filter((row) => {
 			return propertyMap.has(row[deviationIdx['bygningsnavn']]);
 		});
+	out.unshift(head);
+	return out;
 }
 
 function begin() {
