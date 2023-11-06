@@ -178,7 +178,7 @@ function generate(input) {
 				} else {
 					
 					const customerID = r('leietakernummer');
-					for (; customerID.length < 11 && customerID.length != 6;) {
+					while (customerID.length < 11 && customerID.length != 6) {
 						customerID = "0" + customerID;
 					}
 					
