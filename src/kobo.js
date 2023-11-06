@@ -60,7 +60,6 @@ function generate(input) {
 				const len = name.length;
 				if (len > 1) {
 					if (len > 2) {
-						// legger leilighetsnummer i merknad
 						enter('ekstrareferanse', name[2].trim());
 					}
 					enter('bruksenhetsnummer', name[1].trim());
