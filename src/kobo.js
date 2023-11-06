@@ -57,15 +57,15 @@ function generate(input) {
 				const len = name.length;
 				if (len > 1) {
 					if (len > 2) {
-						enter('ekstrareferanse', name[2].trim());
+						enter('ekstrareferanse', name[2]);
 					}
-					enter('bruksenhetsnummer', name[1].trim());
+					enter('bruksenhetsnummer', name[1]);
 				}
 				
 				name = name[0].trim();
 				let letter = name.slice(-1);
 				if (isNaN(parseInt(letter))) {
-					name = name.slice(0, name[name.length - 1]).trim();
+					name = name.slice(0, name[name.length - 1]);
 				} else {
 					letter = '';
 				}
