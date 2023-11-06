@@ -20,7 +20,7 @@ let ready = new Proxy(readyTarget, {
 						fxcd('end').disabled = true;
 					}
 				}
-				let b = target['bool'];
+				const b = target['bool'];
 				fxcd(name + 'download').disabled = true;
 				
 				if (target['fileA'] < 1 && target['fileB'] < 1) {
@@ -28,7 +28,7 @@ let ready = new Proxy(readyTarget, {
 						document.dispatchEvent(readyEvent);
 					}
 				} else {
-					let btn = fxcd('filter');
+					const btn = fxcd('filter');
 					if (target['fileA'] < 2 && target['fileB'] < 2) {
 						if (!b || (target['dateA'] < 1 && target['dateB'] < 1)) {
 							btn.disabled = false;
@@ -84,8 +84,8 @@ function filter(contractList, rentablesList) {
 	defaultBegin.setFullYear(1950);
 	defaultEnd.setFullYear(2090);
 	
-	let header = contractList.shift();
-	let out = contractList.filter((c) => {
+	const header = contractList.shift();
+	const out = contractList.filter((c) => {
 			//	tidsfilter
 			if (ready['bool']) {
 				if (dateWithDefault(c[contractIdx['startdato']], defaultBegin) > end
@@ -109,7 +109,7 @@ function filter(contractList, rentablesList) {
 
 function begin() {
 	
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	
 	fieldEvents();
 	
@@ -122,9 +122,9 @@ function begin() {
 	
 	document.addEventListener(eventName, () => {
 			
-			let out = filter(inputData['contracts'], inputData['rentables']);
+			const out = filter(inputData['contracts'], inputData['rentables']);
 			
-			let btn = fxcd('download');
+			const btn = fxcd('download');
 			btn.disabled = false;
 			let fname = 'kontrakter hos seksjoner';
 			if (fxcd('timefilter').checked) {
@@ -139,7 +139,7 @@ function begin() {
 
 function unitTest() {
 	
-	let wanted = [
+	const wanted = [
 			['Løpenummer', 'Overskrift', 'Ekstern ID', 'Leietaker', 'Nummer', 'Reskontronr', 'Saksbehandler', 'Fra', 'Til', 'Sum', 'Kontrakt utgår', 'Regulering', 'Gjengs regulering', 'Fasilitetsnummer', 'Fasilitet', 'Eiendomsnr', 'Eiendomsnavn', 'Byggnr', 'Byggnavn', 'Kontrakttype', 'Fakturatype', 'Mengde', 'Faktura fra', 'Fakturareferanse', 'E-handel faktura', 'Behandlingsstatus', 'Sikkerhetstype', 'Sikkerhetsbeløp', 'Prisperiode', 'Faktureringstermin', 'Terminstart', 'MVA-pliktig', 'Merknad', 'Seksjonstype'],
 			['K00006331', 'Kontrakt for Fredrik Puddingsen', '', 'Fredrik Puddingsen', '7106638432', '236249', '', '01.01.2008', '', '9744,44', '31.12.3000', '01.01.2024', '01.01.2025', '24979620030', '24979620030 Sørslettveien 8 H 0201', '1180', 'Åsgård', '118006', 'Åsgård Sørslettveien 8', '', 'Etterskudd Agresso', '', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig'],
 			['K00006433', 'Kontrakt for Kjell Trell Trafikkuhell', '', 'Kjell Trell Trafikkuhell', '21016729768', '236676', '', '01.01.2008', '', '9739,12', '01.01.3000', '01.01.2024', '01.01.2025', '24979620028', '24979620028 Sørslettveien 8 U 0101', '1180', 'Åsgård', '118006', 'Åsgård Sørslettveien 8', '', 'Agresso', '1', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig']

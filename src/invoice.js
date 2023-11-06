@@ -29,12 +29,12 @@ function filterContracts(contracts, rentables) {
 		map seksjonsnummer -> løpenumre
 	*/
 	
-	let contractMap = mapRows(contracts, contractIdx['fasilitetsnummer']);
+	const contractMap = mapRows(contracts, contractIdx['fasilitetsnummer']);
 	
 	/*
 		velg kun kontrakter som tilhører gjeldende seksjoner
 	*/
-	let filteredContracts = [];
+	const filteredContracts = [];
 	contractMap.forEach((value, key) => {
 			
 			for (let i = 1; i < rentables.length; i += 1) {
@@ -59,9 +59,9 @@ function filterInvoices(contracts, invoices) {
 	/*
 		velg kun fakturalinjer med løpenummer i filtrerte kontrakter
 	*/
-	let header = invoices.shift();
-	let out = invoices.filter((invoice) => {
-			let current = invoice[invoiceIdx['løpenummer']];
+	const header = invoices.shift();
+	const out = invoices.filter((invoice) => {
+			const current = invoice[invoiceIdx['løpenummer']];
 			if (isInvalid(current)) {
 				return false;
 			}
@@ -93,7 +93,7 @@ function begin() {
 	
 	fileChangeEvents(['rentables', 'contracts', 'invoices'], ready);
 	
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	
 	fxcd('filter').onclick = () => {
 			show(spinner);
@@ -102,9 +102,9 @@ function begin() {
 			
 			
 	document.addEventListener(eventName, () => {
-			let filteredInvoices = filterInvoices(filterContracts(inputData['contracts'], inputData['rentables']), inputData['invoices']);
+			const filteredInvoices = filterInvoices(filterContracts(inputData['contracts'], inputData['rentables']), inputData['invoices']);
 			
-			let btn = fxcd('download');
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, filteredInvoices, 'fakturalinjer - filtrert');
 			
@@ -114,7 +114,7 @@ function begin() {
 
 function unitTest() {
 	
-	let wanted = [
+	const wanted = [
 			['År/serienummer', 'Faktura', 'Nummer', 'Leietaker', 'Reskontronr', 'Løpenummer', 'Fasilitet', 'Ordrenummer', 'Tekst', 'Konto', 'Varenr', 'Lønnsart', 'Tilleggsinfo 1', 'Fra dato', 'Til dato', 'Mengde', 'Pris', 'Sum', 'Sum+MVA', 'Rabatt', 'Regulert den', 'Neste regulering', 'MVA-pliktig', 'Manuell', 'Sluttoppgjør'],
 			['2023014', 'Husleie mai 2023', '7106638432', 'Fredrik Puddingsen', '236249', 'K00006331', 'Sørslettveien 8, H 0201', '', 'Husleie', '16300', '7200979', '', '', '01.05.2023', '31.05.2023', '1', '9744,44', '9744,44', '9744,44', '', '01.01.2023', '01.01.2024', 'False', 'False', 'False'],
 			['2023001', 'Husleie januar 2023', '7106638432', 'Fredrik Puddingsen', '236249', 'K00006331', 'Sørslettveien 8, H 0201', '', 'Husleie', '16300', '7200979', '', '', '01.01.2023', '31.01.2023', '1', '9744,44', '9744,44', '9744,44', '', '01.01.2023', '01.01.2024', 'False', 'False', 'False'],

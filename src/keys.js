@@ -25,10 +25,10 @@ let dataReady = new Proxy(dataReadyTarget, {
 	
 function filter(rentables, keys) {
 	
-	let header = keys.shift();
+	const header = keys.shift();
 	keys.unshift(header);
 	
-	let out = keys.filter((key) => {
+	const out = keys.filter((key) => {
 			for (let rentable of rentables) {
 				if (rentable[rentableIdx['seksjonsnummer']] == key[keyIdx['seksjonsnummer']]) {
 					return true;
@@ -47,7 +47,7 @@ function setupKeyFilter() {
 	
 	fileChangeEvents(['rentables', 'keys'], dataReady);
 	
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	
 	fxcd('filter').onclick = () => {
 			show(spinner);
@@ -55,7 +55,7 @@ function setupKeyFilter() {
 		};
 	document.addEventListener(eName, () => {
 			
-			let btn = fxcd('download');
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, filter(inputData['rentables'], inputData['keysList']), 'n\u00F8kler - filtrert');
 			
@@ -66,7 +66,7 @@ function setupKeyFilter() {
 
 function unitTest() {
 	
-	let wanted = [
+	const wanted = [
 			['Nummer', 'Navn', 'Systemnr', 'Antall nøkler', 'Merknad', 'Eiendomsnr', 'Eiendomsnavn', 'Bygningsnr', 'Bygningsnavn', 'Seksjonsnr', 'Seksjonsnavn'],
 			['546', 'Sørslettvegen 3 - H0101 - Mellomdør til Underetasjen', ' DXT 557    K2', '2', 'SKAL IKKE UTLEVERES LEIETAKER', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101'],
 			['546', 'Sørslettvegen 3 - H0101 Reservenøkler ', '', '4', 'Nøkler til hybel ved bad hovedetasjen Skal ikke utleveres', '1180', 'Åsgård', '118007', 'Åsgård Sørslettvegen 3', '24100610115', 'Sørslettvegen 3, H0101'],

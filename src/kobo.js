@@ -2,16 +2,16 @@
 
 
 function generate(input) {
-	let out = [[]];
+	const out = [[]];
 	Object.entries(koboIdx).forEach((entry) => {
 			out[0].push(entry[0]);
 		});
 	
-	let facilities = mapRows(input['facilities'], facilityIdx['seksjon']);
-	let contracts = mapRows(input['contracts'], contractIdx['fasilitetsnummer']);
-	let estates = mapRows(input['estates'], estateIdx['eiendom']);
+	const facilities = mapRows(input['facilities'], facilityIdx['seksjon']);
+	const contracts = mapRows(input['contracts'], contractIdx['fasilitetsnummer']);
+	const estates = mapRows(input['estates'], estateIdx['eiendom']);
 	
-	let numbers = [];
+	const numbers = [];
 	for (let i = 0; i < 10; i += 1) {
 		numbers.push(i.toString());
 	}
@@ -26,7 +26,7 @@ function generate(input) {
 			}
 			
 			let ok = true;
-			let add = [];
+			const add = [];
 			add.fill('', 0, out[0].length);
 			function enter(key, val) {
 				add[koboIdx[key]] = val.trim();
@@ -41,7 +41,7 @@ function generate(input) {
 			{
 				
 				function postnummer() {
-					let addr = r('adresse').split(' ');
+					const addr = r('adresse').split(' ');
 					xc(addr);
 					
 					
@@ -54,24 +54,20 @@ function generate(input) {
 				enter('postnummer', postnummer());
 				enter('kommunenummer', '5401');
 				enter('manedsleie', r('seksjonspris').split(',')[0]);
+				enter('ovriginformasjon', r('merknad'));
 				
-				
-				let info = r('merknad');
-				
-				let name = r('seksjonsnavn').trim().split(',');
-				let len = name.length;
+				const name = r('seksjonsnavn').trim().split(',');
+				const len = name.length;
 				if (len > 1) {
 					if (len > 2) {
 						// legger leilighetsnummer i merknad
-						info = name[2].trim() + '.\t' + info;
+						enter('ekstrareferanse', name[2].trim());
 					}
 					enter('bruksenhetsnummer', name[1].trim());
 				}
-				enter('ovriginformasjon', info);
-				
 				
 				name = name[0].trim();
-				let letter = name[name.length-1];
+				let letter = name.slice(-1);
 				if (isNaN(parseInt(letter))) {
 					name = name.slice(0, name[name.length - 1]).trim();
 				} else {
@@ -79,7 +75,7 @@ function generate(input) {
 				}
 				enter('husbokstav', letter);
 				
-				let street = name.split(' ');
+				const street = name.split(' ');
 				enter('husnummer', street[street.length - 1]);
 				street.pop();
 				enter('gatenavn', street.join(' '));
@@ -108,8 +104,8 @@ function generate(input) {
 							}
 							
 							const k = f('beskrivelse');
-							let v = '1';
 							if (bools.includes(k)) {
+								const v = '1';
 								switch(k) {
 									case 'Døgnbemanning':
 									staffed = v;
@@ -123,10 +119,8 @@ function generate(input) {
 									base = v;
 									break;
 								}
-								
 							} else {
-							
-								v = f('merknad').trim();
+								const v = f('merknad').trim();
 								switch(k) {
 									case 'Eier navn':
 									ownerName = v;
@@ -180,19 +174,19 @@ function generate(input) {
 				data fra kontrakter
 			*/
 			{
-				let customerName = r('leietakernavn');
+				const customerName = r('leietakernavn');
 				enter('boligstatus', 'KLAR_FOR_INNFLYTTING');
 				
 				if (customerName != ['Passiv']) {
 					
-					let customerID = r('leietakernummer');
+					const customerID = r('leietakernummer');
 					for (; customerID.length < 11 && customerID.length != 6;) {
 						customerID = "0" + customerID;
 					}
 					
 					if (!isInvalid(customerID)) {
 						if (contracts.has(r('seksjonsnummer'))) {
-						let l = contracts.get(r('seksjonsnummer')).filter((contract) => {
+						const l = contracts.get(r('seksjonsnummer')).filter((contract) => {
 								return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
 							});
 						
@@ -241,7 +235,7 @@ function generate(input) {
 			*/
 			{
 				if (estates.has(r('eiendom'))) {
-					let l = estates.get(r('eiendom'));
+					const l = estates.get(r('eiendom'));
 					
 					if (l.length < 2) {
 						if (l.length > 0) {
@@ -293,8 +287,8 @@ function begin() {
 	let spinner = fxcd('spinner');
 	document.addEventListener(eventName, () => {
 			
-			let out = generate(inputData);
-			let btn = fxcd('download');
+			const out = generate(inputData);
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, out, 'boligimport');
 			hide(spinner);

@@ -19,7 +19,7 @@ function addLine(e) {
 }
 
 function toggleCheckbox(id) {
-	let b = fxcd(id);
+	const b = fxcd(id);
 	if (b.checked == true) {
 		b.checked = false;
 	} else if (b.checked == false) {
@@ -29,7 +29,7 @@ function toggleCheckbox(id) {
 }
 function createCheckbox(container, name) {
 	const n = 'checkbox';
-	let c = xcd('span');
+	const c = xcd('span');
 	
 	axcd(c, labelTag(name));
 	
@@ -38,7 +38,7 @@ function createCheckbox(container, name) {
 			fxcd(container).dispatchEvent(new Event('change'));
 		};
 	{
-		let box = xcd('input');
+		const box = xcd('input');
 		box.type = n;
 		box.id = name + '-' + n;
 		axcd(c, box);
@@ -51,7 +51,7 @@ function createCheckbox(container, name) {
 }
 
 function mapCheckboxes(containerId) {
-	let out = new Map();
+	const out = new Map();
 	for (let n of fxcd(containerId).childNodes) {
 		if (n.type == 'div') {
 			continue;
@@ -78,7 +78,7 @@ function setCheckboxValues(containerId, options) {
 
 function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 	fxcd(buttonId).onclick = () => {
-			let m = new Map();
+			const m = new Map();
 			for (let e of allOptions) {
 				m.set(e, desired);
 			}
@@ -88,8 +88,8 @@ function allOrNoneBtn(buttonId, containerId, desired, allOptions) {
 }
 
 function createCheckboxSelection(containerId, defaultsMap) {
-	let i = xcd('select');
-	let c = xcd('option');
+	const i = xcd('select');
+	const c = xcd('option');
 	axcd(c, txcd('velg innstilling'));
 	c.disabled = true;
 	c.selected = 'selected';
@@ -104,7 +104,7 @@ function createCheckboxSelection(containerId, defaultsMap) {
 			setCheckboxes(containerId, defaultsMap.get(i.value));
 		};
 	
-	let d = xcd('div');
+	const d = xcd('div');
 	axcd(d, i);
 	axcd(fxcd(containerId), d);
 }
@@ -120,12 +120,12 @@ function populateCheckboxes(containerId, nameList, defaults) {
 }
 
 function labelTag(txt) {
-	let l = xcd('label');
+	const l = xcd('label');
 	axcd(l, txcd(txt));
 	return l;
 }
 function optionTag(txt, val, selected, disabled) {
-	let t = xcd('option');
+	const t = xcd('option');
 	axcd(t, txcd(txt));
 	t.value = val;
 	t.selected = selected;
@@ -133,26 +133,26 @@ function optionTag(txt, val, selected, disabled) {
 	return t;
 }
 function fileInputTag(id) {
-	let i = xcd('input');
+	const i = xcd('input');
 	i.type = 'file';
 	i.id = id;
 	return i;
 }
 function listTag(txt) {
-	let l = xcd('li');
+	const l = xcd('li');
 	axcd(l, txcd(txt));
 	return l;
 }
 function unorderedList(id, contents) {
-	let c = fxcd(id);
+	const c = fxcd(id);
 	for (let e of contents) {
 		axcd(c, listTag(e));
 	}
 }
 
 function iframeTag(url, active) {
-	let d = xcd('div');
-	let i = xcd('iframe');
+	const d = xcd('div');
+	const i = xcd('iframe');
 	i.src = url;
 	axcd(d, i);
 	d.classList.add('carousel-item');
@@ -182,7 +182,7 @@ function show(elem) {
 }
 
 function col4() {
-	let k = xcd('div');
+	const k = xcd('div');
 	k.classList.add('col-4');
 	return k;
 }

@@ -26,7 +26,7 @@ function filter(deviations, rentables) {
 	/*
 		finn alle unike relevante bygninger
 	*/
-	let propertyMap = mapRows(rentableIdx['bygningsnavn']);
+	const propertyMap = mapRows(rentableIdx['bygningsnavn']);
 	
 	/*
 		filtrer avvik etter bygninger
@@ -40,7 +40,7 @@ function begin() {
 	
 	fileChangeEvents(['rentables', 'deviations'], ready);
 	
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	let inputData = null;
 	
 	fxcd('filter').onclick = () => {
@@ -50,7 +50,7 @@ function begin() {
 		
 	document.addEventListener(eventName, () => {
 			
-			let btn = fxcd('download');
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, filter(inputData['deviations'], inputData['rentables']), 'avvik - filtrert');
 			
@@ -61,7 +61,7 @@ function begin() {
 
 function unitTest() {
 	
-	let wanted = [
+	const wanted = [
 			['Navn', 'Merknad', 'Prioritet', 'Tilstandsgrad', 'Konsekvensgrad', 'Kostnad', 'Ansvarlig', 'Meldt av', 'Fasilitet', 'Eiendom', 'Bygning', 'Opprettet dato', 'Registrert', 'Utbedret', 'Epost sendt', 'Fra helpdesk', 'Fra kontrollplan', 'Fag', 'Frekvens', 'NS 3451', 'NS 3454', 'Oppgave', 'Planlagt start oppgave', 'Budsjett oppgave', 'Avvikstype'],
 			['Montere stikk til ventilator,nytt kjøkken i u.et.', 'Ventilator er montert.', '4', '1 - svake symptomer', '1 - små konsekvenser', '', 'Geir Frode Olsen', 'Finn Løkvoll', '118007 Åsgård Sørslettvegen 3', '1180 Åsgård', '118007 Åsgård Sørslettvegen 3', '25.11.2021', '25.11.2021', '21.01.2022', '', 'False', 'False', 'Elektriske anlegg', '', '2 Bygning', '3 DRIFTSKOSTNADER ', '', '', '0', 'Elektriske Anlegg'],
 			['Montere vaskbar plate.', 'Det må monteres vaskbar plate bak komfyr, av hygieniske grunner.', '3', '1 - svake symptomer', '1 - små konsekvenser', '', 'Finn Løkvoll', 'Finn Løkvoll', '118007 Åsgård Sørslettvegen 3', '1180 Åsgård', '118007 Åsgård Sørslettvegen 3', '24.03.2020', '24.03.2020', '14.05.2021', '', 'False', 'False', 'Bygg Vedlikehold', '', '2 Bygning', '3 DRIFTSKOSTNADER ', '', '', '0', 'Bygningsmessig'],

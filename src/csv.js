@@ -12,11 +12,11 @@ function CSVToArray(strData, strDelimiter) {
 			'gi'
 		);
 
-	let arrData = [[]];
+	const arrData = [[]];
 	let arrMatches = null;
 
 	while (arrMatches = objPattern.exec(strData)) {
-		let strMatchedDelimiter = arrMatches[1];
+		const strMatchedDelimiter = arrMatches[1];
 		if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
 			arrData.push([]);
 		}
@@ -36,7 +36,7 @@ function CSVToArray(strData, strDelimiter) {
 function arrayToCSV(arr, separator) {
 	let out = 'data:text/csv;charset=utf-8,';
 	arr.forEach((rowArray) => {
-			let row = [];
+			const row = [];
 			for (let c = 0; c < rowArray.length; c += 1) {
 				let f = rowArray[c];
 				if ((f == undefined) == false) {
@@ -80,7 +80,7 @@ function CSVRemoveBlanks(csv) {
 }
 
 function mergeCSV(csvList) {
-	let out = csvList[0];
+	const out = csvList[0];
 	for (let i = 1; i < csvList.length; i += 1) {
 		csvList[i].shift();
 		out = out.concat(csvList[i]);
@@ -92,7 +92,7 @@ function downloadCSV(csvContent, defaultName, separator) {
 	let fname = prompt('Oppgi filnavn for lagring', defaultName);
 	if (fname != null) {
 		fname = fname.replace('.csv', '');
-		let link = downloadLink(arrayToCSV(csvContent, separator), fname + '.csv');
+		const link = downloadLink(arrayToCSV(csvContent, separator), fname + '.csv');
 		axcd(document.body, link);
 		link.click();
 	}

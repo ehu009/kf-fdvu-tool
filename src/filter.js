@@ -2,16 +2,16 @@
 
 function setupColumnFilter() {
 	
-	let button = fxcd('download');
-	let filter = fxcd('filter');
+	const button = fxcd('download');
+	const filter = fxcd('filter');
 	
-	let file = fxcd('file');
-	let spinner = fxcd('spinner');
+	const file = fxcd('file');
+	const spinner = fxcd('spinner');
 	
 	let inputCSV = null;
 	let outputCSV = null;
 	
-	let wanted = [];
+	const wanted = [];
 		
 	const eventName = 'dataReady';
 	let readyTarget = {
@@ -126,7 +126,7 @@ function setupRowFilter() {
 		});
 	
 		
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	fxcd('contrast-column').onchange = () => {
 			show(spinner);
 			ready['C'] = 0;
@@ -143,10 +143,10 @@ function setupRowFilter() {
 			if (evt.target.files.length >= 1) {
 				let r = new FileReader();
 				r.onload = () => {
-						let l = fxcd('contrast-column');
+						const l = fxcd('contrast-column');
 						l.innerHTML = '';
 						axcd(l, optionTag('Velg', -1, true, true));
-						let arr = CSVToArray(r.result, ';');
+						const arr = CSVToArray(r.result, ';');
 						
 						for (let i = 0; i < arr[0].length; i += 1) {
 							const e = arr[0][i];
@@ -166,16 +166,16 @@ function setupRowFilter() {
 			hide(spinner);
 		};
 		
-	let button = fxcd('download');
-	let file = fxcd('file');
+	const button = fxcd('download');
+	const file = fxcd('file');
 	file.onchange = () => {
 			show(spinner);
 			if (file.files.length >= 1) {
 				let r = new FileReader();
 				r.onload = () => {
-						let arr = CSVToArray(r.result, ';');
+						const arr = CSVToArray(r.result, ';');
 						
-						let l = fxcd('id-column');
+						const l = fxcd('id-column');
 						l.innerHTML = '';
 						axcd(l, optionTag('Velg', -1, true, true));
 						
@@ -264,20 +264,20 @@ function testRowFilter() {
 
 function testColFilter() {
 	
-	let csv = [
+	const csv = [
 			['col a', 'col b', 'col c'],
 			['1234', '1235', '1236'],
 			['1134', '1135', '1136'],
 			['1580', '1580', '1580']
 		];
 	
-	let wanted1 = [
+	const wanted1 = [
 			['col a', 'col b'],
 			['1234', '1235'],
 			['1134', '1135'],
 			['1580', '1580']
 		];
-	let wanted2 = [
+	const wanted2 = [
 			['col b', 'col c'],
 			['1235', '1236'],
 			['1135', '1136'],

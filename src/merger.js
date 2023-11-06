@@ -22,14 +22,14 @@ function begin() {
 		});
 	
 	fxcd('number-select').onchange = (evt) => {
-			let s = fxcd('field');
+			const s = fxcd('field');
 			s.innerHTML = '';
 			
 			n = parseInt(evt.target.value);
 			ready['count'] = n;
 			
 			for (let i = 1; i <= n; i += 1) {
-				let line = xcd('p');
+				const line = xcd('p');
 				axcd(line, txcd('Fil '+i+': '));
 				addLine(line);
 				axcd(line, fileInputTag('file'+i));
@@ -37,8 +37,8 @@ function begin() {
 			}
 		};
 	
-	let csvs = [];
-	let spinner = fxcd('spinner');
+	const csvs = [];
+	const spinner = fxcd('spinner');
 	
 	fxcd('merge').onclick = () => {
 			show(spinner);
@@ -48,7 +48,7 @@ function begin() {
 				try {
 					let f = new FileReader();
 					f.onload = () => {
-							let c = CSVToArray(f.result, ';');
+							const c = CSVToArray(f.result, ';');
 							csvs.push(c);
 							ready['count'] -=1;
 						};
@@ -60,8 +60,8 @@ function begin() {
 		};
 	document.addEventListener(eventName, () => {
 			
-			let out = mergeCSV(csvs);
-			let btn = fxcd('download');
+			const out = mergeCSV(csvs);
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, out, 'csv - sammenføyd');
 			hide(spinner);
@@ -72,7 +72,7 @@ function begin() {
 
 
 function unitTest() {
-	let csv1 = [
+	const csv1 = [
 			['nummer', 'navn', 'sum', 'adresse'],
 			['010192', 'kjeller', '729', 'alta'],
 			['010193', 'bod', '729', 'alta'],
@@ -80,7 +80,7 @@ function unitTest() {
 			['010195', 'loft', '729', 'alta']
 		];
 			
-	let csv2 = [
+	const csv2 = [
 			['nummer', 'navn', 'sum', 'adresse'],
 			['010182', 'kjeller', '729', 'harstad'],
 			['010183', 'bod', '729', 'harstad'],
@@ -88,7 +88,7 @@ function unitTest() {
 			['010185', 'loft', '729', 'harstad']
 		];
 		
-	let expected = [
+	const expected = [
 			['nummer', 'navn', 'sum', 'adresse'],
 			['010192', 'kjeller', '729', 'alta'],
 			['010193', 'bod', '729', 'alta'],

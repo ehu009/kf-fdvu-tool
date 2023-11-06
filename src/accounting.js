@@ -14,7 +14,7 @@ function calcLoss(begin, end, contracts, rentables) {
 	let filteredContracts;
 	
 	{
-		let header = rentables.shift();
+		const header = rentables.shift();
 		filteredRentables = rentables.filter((row) => {
 				if ((row[rentableIdx['aktiv']] == 'False')
 						|| (row[rentableIdx['utleibar' == 'False']])) {
@@ -29,16 +29,16 @@ function calcLoss(begin, end, contracts, rentables) {
 				if (isInvalid(row[contractIdx['leietakernavn']])) {
 					return false;
 				}
-				let start = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
-				let stop = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
+				const start = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
+				const stop = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
 				
 				return temporalOverlap(begin, end, start, stop);
 			});
 		filteredContracts.unshift(header);
 	}
 	
-	let out = [];
-	let m = mapRows(filteredContracts, contractIdx['fasilitetsnummer']);
+	const out = [];
+	const m = mapRows(filteredContracts, contractIdx['fasilitetsnummer']);
 	
 	filteredRentables.forEach((rentable) => {
 			const key = rentable[rentableIdx['seksjonsnummer']];
@@ -65,7 +65,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			let diff = acqPrice - rentPrice;
+			const diff = acqPrice - rentPrice;
 			if (isNaN(acqPrice)) {
 				diff = 0;
 			}
@@ -120,7 +120,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				}
 			}
 			
-			let add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff];
+			const add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff];
 			for (let i = 2; i < add.length; i += 1) {
 				add[i] = numToFDVUNum(add[i]);
 			}
@@ -166,7 +166,7 @@ function beginLoss() {
 	fileChangeEvents(['rentables', 'contracts'], ready);
 	
 	
-	let spinner = fxcd('spinner');
+	const spinner = fxcd('spinner');
 	
 	let inputData = null;
 	
@@ -189,10 +189,10 @@ function beginLoss() {
 	
 	document.addEventListener(eventName, () => {
 			
-			let from = new Date(fxcd('begin').value);
-			let to = new Date(fxcd('end').value);
+			const from = new Date(fxcd('begin').value);
+			const to = new Date(fxcd('end').value);
 			
-			let btn = fxcd('download');
+			const btn = fxcd('download');
 			btn.disabled = false;
 			downloadButton(btn, calcLoss(from, to, inputData['contracts'], inputData['rentables']), 'tap ' + fxcd('begin').value + ' til ' + fxcd('end').value);
 			hide(spinner);
