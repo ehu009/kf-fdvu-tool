@@ -181,6 +181,8 @@ function generate(input) {
 			*/
 			{
 				let customerName = r('leietakernavn');
+				enter('boligstatus', 'KLAR_FOR_INNFLYTTING');
+				
 				if (customerName != ['Passiv']) {
 					
 					let customerID = r('leietakernummer');
@@ -191,8 +193,7 @@ function generate(input) {
 					if (!isInvalid(customerID)) {
 						if (contracts.has(r('seksjonsnummer'))) {
 						let l = contracts.get(r('seksjonsnummer')).filter((contract) => {
-								return !(contract[contractIdx['behandlingsstatus']] == 'Avsluttet'
-										|| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(contract[contractIdx['leietakernavn']]));
+								return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
 							});
 						
 						let timeLimited = false;
@@ -205,8 +206,22 @@ function generate(input) {
 									return contract[contractIdx[key]];
 								}
 								
-								if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
-									timeLimited = true;
+								if (r('leietakernummer') != c('leietakernummer')) {
+									return;
+								}
+								
+								const tenant = c('leietakernavn');
+								
+								
+								if (c('kontrakttype') == 'Vedlikehold') {
+									enter('boligstatus', 'VEDLIKEHOLD');
+								} else {
+								
+									enter('boligstatus', 'UTLEID');
+								
+									if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
+										timeLimited = true;
+									}
 								}
 								startDate = c('startdato');
 								stopDate = c('sluttdato');
