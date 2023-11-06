@@ -182,48 +182,45 @@ function generate(input) {
 						customerID = "0" + customerID;
 					}
 					
-					if (!isInvalid(customerID)) {
-						if (contracts.has(r('seksjonsnummer'))) {
-						const l = contracts.get(r('seksjonsnummer')).filter((contract) => {
-								return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
-							});
-						
+					if (!isInvalid(customerID) && contracts.has(r('seksjonsnummer'))) {
+							
 						let timeLimited = false;
 						let startDate = '';
 						let stopDate = '';
 						let expiry = '';
-						l.forEach((contract) => {
+						contracts.get(r('seksjonsnummer')).filter((contract) => {
+								return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
+							}).forEach((contract) => {
 								
-								function c(key) {
-									return contract[contractIdx[key]];
-								}
-								
-								if (r('leietakernummer') != c('leietakernummer')) {
-									return;
-								}
-								
-								const tenant = c('leietakernavn');
-								
-								
-								if (c('kontrakttype') == 'Vedlikehold') {
-									enter('boligstatus', 'VEDLIKEHOLD');
-								} else {
-								
-									enter('boligstatus', 'UTLEID');
-								
-									if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
-										timeLimited = true;
+									function c(key) {
+										return contract[contractIdx[key]];
 									}
-								}
-								startDate = c('startdato');
-								stopDate = c('sluttdato');
-								expiry = c('utgårdato');
-							});
+									
+									if (r('leietakernummer') != c('leietakernummer')) {
+										return;
+									}
+									
+									const tenant = c('leietakernavn');
+									
+									
+									if (c('kontrakttype') == 'Vedlikehold') {
+										enter('boligstatus', 'VEDLIKEHOLD');
+									} else {
+									
+										enter('boligstatus', 'UTLEID');
+									
+										if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
+											timeLimited = true;
+										}
+									}
+									startDate = c('startdato');
+									stopDate = c('sluttdato');
+									expiry = c('utgårdato');
+								});
 						enter('leieforholdertidsubegrenset', timeLimited);
 						enter('leieforholdstartdato', startDate);
 						enter('leieforholdsluttdato', stopDate);
 						enter('hovedsoker', customerID);
-						}
 					}
 				}
 			}
@@ -282,10 +279,9 @@ function begin() {
 	let spinner = fxcd('spinner');
 	document.addEventListener(eventName, () => {
 			
-			const out = generate(inputData);
 			const btn = fxcd('download');
 			btn.disabled = false;
-			downloadButton(btn, out, 'boligimport');
+			downloadButton(btn, generate(inputData), 'boligimport');
 			hide(spinner);
 		});
 	
