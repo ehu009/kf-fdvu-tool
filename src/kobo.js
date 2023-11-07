@@ -354,6 +354,7 @@ function testEstateConnectivity() {
 			['118.408','Lars Eriksens veg 2','','3078 Lars Eriksens veg 1 - 3','','','.118.408','','','','','','','','','','','','',''],
 			['118.1729','Lars Eriksens veg 1 og 3','','3078 Lars Eriksens veg 1 - 3','','','.118.1729','','','','','','','','','','','','','']
 		];
+	const estates = mapRows(sampleB, estateIdx['eiendom']);
 	
 	const wanted = [koboHeader()];
 	for (let i = 0; i < sampleA.length; i += 1) {
@@ -364,7 +365,26 @@ function testEstateConnectivity() {
 	wanted[6][koboIdx['gnrbnr']] = '118/507';
 	wanted[7][koboIdx['gnrbnr']] = '118/507';
 	
-	return true;
+	const result = [koboHeader()];
+	sampleA.filter((row) => {
+			return !ignoreRentable(row);
+		}).forEach((row) => {
+				
+				function read(key) {
+					return row[rentableIdx[key]].trim();
+				}
+				
+				const add = new Array(result[0].length);
+				add.fill('');
+				function write(key, val) {
+					add[koboIdx[key]] = val.trim();
+				}
+				
+				applyEstates(read, write, estates);
+				result.push(add);
+			});
+	
+	return compareCSV(wanted, result);
 }
 
 function testContractConnectivity() {
