@@ -220,9 +220,12 @@ function applyContracts(rowFn, enterFn, contracts) {
 }
 
 function ignoreRentable(r) {
-	return (r[rentableIdx['leietakernavn']] == 'Passiv'
-			|| r[rentableIdx['utleibar']] == 'False'
-			|| r[rentableIdx['aktiv']] == 'False');
+	function check(key, val) {
+		return r[rentableIdx[key]] == val;
+	}
+	return (check('leietakernavn', 'Passiv')
+			|| check('utleibar', 'False')
+			|| check('aktiv', 'False'));
 }
 
 function generate(input) {
