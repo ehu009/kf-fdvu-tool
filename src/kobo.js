@@ -182,7 +182,7 @@ function applyContracts(rowFn, enterFn, contracts) {
 			let startDate = '';
 			let stopDate = '';
 			let expiry = '';
-			contracts.get(rowFn('seksjonsnummer')).filterowFn((contract) => {
+			contracts.get(rowFn('seksjonsnummer')).filter((contract) => {
 					return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
 				}).forEach((contract) => {
 					
