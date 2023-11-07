@@ -2,9 +2,9 @@
 
 
 function koboHeader() {
-	const out = [[]];
+	const out = [];
 	Object.entries(koboIdx).forEach((entry) => {
-			out[0].push(entry[0]);
+			out.push(entry[0]);
 		});
 	return out;
 }
@@ -242,8 +242,8 @@ function generate(input) {
 					return row[rentableIdx[key]].trim();
 				}
 				
-				const add = [];
-				add.fill('', 0, out[0].length);
+				const add = new Array(out[0].length);
+				add.fill('')
 				function write(key, val) {
 					add[koboIdx[key]] = val.trim();
 				}
@@ -354,9 +354,13 @@ function testEstateConnectivity() {
 	
 	const wanted = [koboHeader()];
 	for (let i = 0; i < sampleA.length; i += 1) {
-		wanted[5][koboIdx['gnrbnr']] = '118.507';
-		wanted[6][koboIdx['gnrbnr']] = '118.507';
+		const a = new Array(wanted[0].length);
+		a.fill('');
+		wanted.push(a);
 	}
+	wanted[6][koboIdx['gnrbnr']] = '118.507';
+	wanted[7][koboIdx['gnrbnr']] = '118.507';
+	
 	
 	return true;
 }
