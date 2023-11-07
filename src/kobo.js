@@ -148,15 +148,15 @@ function applyFacilities(rowFn, enterFn, facilities) {
 			});
 		
 		if (!ignorePower) {
-			enterowFn('malernummerstrom', power);
+			enterFn('malernummerstrom', power);
 		} 
-		enterowFn('antallsoverom', bedrooms);
-		enterowFn('erdognbemannet', staffed);
-		enterowFn('harpersonalbase', base);
-		enterowFn('errullestoltilpasset', handicap);
-		enterowFn('boligeiersnavn', ownerName);
-		enterowFn('boligeiersorganisasjonsnummer', ownerReg);
-		enterowFn('boligeiersmobilnummer', ownerPhone);
+		enterFn('antallsoverom', bedrooms);
+		enterFn('erdognbemannet', staffed);
+		enterFn('harpersonalbase', base);
+		enterFn('errullestoltilpasset', handicap);
+		enterFn('boligeiersnavn', ownerName);
+		enterFn('boligeiersorganisasjonsnummer', ownerReg);
+		enterFn('boligeiersmobilnummer', ownerPhone);
 	}
 }
 
