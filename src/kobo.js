@@ -394,6 +394,30 @@ function testContracts() {
 
 function testFacilities() {
 	
+	const sampleA = [
+			['114613178','Ishavsvegen 54, U0102, A','Eies av UNN. Kontaktperson Ragni Løkholm Ramberg epost: ragni.lokholm.ramberg@unn.no Tlf.: 97514546 Se dokumentfane','Ishavsvegen 54A, U0102  9010 TROMSØ ','317801 Ishavsvegen 54','3178 Ishavsvegen 54','317801 Ishavsvegen 54','Tromsøya nord','Bolig','Ukrainabolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','','Komm.bolig','80,00','14021,40','','20.04.2022','','3','True','True','K00016789','270553','Tatiana Fesenko','Leid'],
+			['3078001','Lars Eriksens veg 1B','3 soverom. Bod i kjeller. Uteområde: Leietaker benytter fritt tomt som ligger i naturlig tilknytning til boenheten. Antall parkeringsplasser: 1 utendørs oppstillingsplass utenfor boligen (i innkjørsel). Ekstra parkering kan leies hos Tromsø Parkering.  Dyrehold og røyking ikke tillatt.  Strøm er inkludert, ikke internett. Delvis møblert: komfyr med koketopp, kjøleskap, oppvaskmaskin og vaskemaskin. ','Lars Eriksens veg 1B, H0101  9016 TROMSØ ','307800 Lars Eriksens veg 1','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','Tromsøya sør','Bolig','','','','','Ingen korreksjon','Flyktningebolig','90,00','15503,00','22 000','01.12.2017','','4','True','True','K00017466','14038725476','Ana Beatriz Do Nascimento Sampaio','Leid'],
+			['14110612053','Glimmerveien 7 ','Parkeringsplass: - Privat. Plass til 3-4 biler.   Bod:  - Tre boder inne - En utebod  Vedovn i stua','Glimmerveien 7  9022 KROKELVDALEN ','102503 Glimmerveien borettslag Glimmerveien','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','','Bolig','','','Kvaløya, Hamna, Lunheim og Kroken','Normal','Ingen korreksjon','Andels og sameie','85,00','12509,00','','','','4','True','True','K00012843','17058925829','Kadija Mama Diallo','Tromsøbolig KF']
+		];
+	
+	const sampleB = [
+			['Beskrivelse','Merknad','Eiendom','Bygning','Seksjon','Seksjonstype'],
+			['Anleggsnummer','9203','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Handicaptilpasset','','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Eier navn','Universitetssykehuset Nord-Norge HF','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Eier org. nummer','983974899','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Eier tlf. nummer','77754000','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Målernummer strøm','TK-27464433','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['TV løsning med utstyrsnummer','Se bilder under dokumenter','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			['Anleggsnummer','9289','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
+			['Målernummer strøm','Deles med 1A - #27920411: 49154 - 20.05.2023','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
+			['Soverom','3','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
+			['Målernummer strøm','Måler 2: TK 89875 Merknad: 30.06.05: 070365 ','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie'],
+			['Målernummer strøm','Avlest EB 07.07.16. TK-89875. 275996 kwh.','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie'],
+			['Målernummer strøm','Avlest IB 13.07.16. TK-89875. 276045 kwh.','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie'],
+			['Målernummer strøm','Merknad: 25.02.16: 272187 ','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie']
+		];
+	
 	return true;
 }
 
