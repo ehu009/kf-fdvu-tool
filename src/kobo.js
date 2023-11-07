@@ -308,15 +308,15 @@ function begin() {
 function unitTest() {
 	let q = false;
 	
-	if (testEstateConnectivity()) {
+	if (testEstates()) {
 		xc('estate failed');
 		q = true;
 	}
-	if (testContractConnectivity()) {
+	if (testContracts()) {
 		xc('contract failed');
 		q = true;
 	}
-	if (testFacilityConnectivity()) {
+	if (testFacilities()) {
 		xc('facility failed');
 		q = true;
 	}
@@ -332,7 +332,7 @@ function unitTest() {
 	return q;
 }
 
-function testEstateConnectivity() {
+function testEstates() {
 	
 	const sampleA = [
 			['114613276','Lars Eriksens veg 17, H0101, Leil. 52','Leilighetsnr. 52 Felles trapperom. Brannslange, i gang utenfor boenhet. Vaskemaskin montert på kjøkken. Utvendig postkasse merket med leilighetsnr. Stor bod i kjeller merket med leilighetsnr. Kodelås på ytterdør og egen nøkkel til leilighet. Mulighet for parkering gjennom Tromsø Parkering. WiFi forsterker står i leiligheten. S/N: 073221000928747 MAC: 840112D610E6','Lars Eriksens veg 17, H0101  9016 TROMSØ ','117702 Lars Eriksens veg 17','1177 Lars Eriksens veg','117702 Lars Eriksens veg 17','Tromsøya sør','Bolig','Ukrainabolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Flyktningebolig','32,00','9900,00','','01.11.2022','','2','True','True','K00017123','230790231116','Kostiantyn Kryvoshlykov','Leid'],
@@ -387,12 +387,12 @@ function testEstateConnectivity() {
 	return compareCSV(wanted, result);
 }
 
-function testContractConnectivity() {
+function testContracts() {
 	
 	return true;
 }
 
-function testFacilityConnectivity() {
+function testFacilities() {
 	
 	return true;
 }
