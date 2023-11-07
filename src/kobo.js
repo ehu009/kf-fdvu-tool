@@ -409,6 +409,9 @@ function testFacilities() {
 			['Eier tlf. nummer','77754000','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
 			['Målernummer strøm','TK-27464433','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
 			['TV løsning med utstyrsnummer','Se bilder under dokumenter','3178 Ishavsvegen 54','317801 Ishavsvegen 54','114613178 Ishavsvegen 54, U0102, A','Komm.bolig'],
+			
+			
+			
 			['Anleggsnummer','9289','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
 			['Målernummer strøm','Deles med 1A - #27920411: 49154 - 20.05.2023','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
 			['Soverom','3','3078 Lars Eriksens veg 1 - 3','307800 Lars Eriksens veg 1','3078001 Lars Eriksens veg 1B','Flyktningebolig'],
@@ -417,6 +420,26 @@ function testFacilities() {
 			['Målernummer strøm','Avlest IB 13.07.16. TK-89875. 276045 kwh.','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie'],
 			['Målernummer strøm','Merknad: 25.02.16: 272187 ','1025 Glimmerveien borettslag','102503 Glimmerveien borettslag Glimmerveien','14110612053 Glimmerveien 7 ','Andels og sameie']
 		];
+	
+	
+	
+	const wanted = [koboHeader()];
+	for (let i = 0; i < sampleA.length; i += 1) {
+		const a = new Array(wanted[0].length);
+		a.fill('');
+		wanted.push(a);
+	}
+	function desire(idx, key, val) {
+		wanted[idx][koboIdx[key]] = val;
+	}
+	desire(1, 'errullestoltilpasset', '1');
+	desire(1, 'boligeiersnavn', 'Universitetssykehuset Nord-Norge HF');
+	desire(1, 'boligeiersorganisasjonsnummer', '983974899');
+	desire(1, 'boligeiersmobilnummer', '77754000');
+	desire(1, 'malernummerstrom', 'TK-27464433');
+	desire(2, 'antallsoverom', '3');
+	desire(2, 'malernummerstrom', 'Deles med 1A - #27920411: 49154 - 20.05.2023');
+	desire(3, 'malernummerstrom', '');
 	
 	return true;
 }
