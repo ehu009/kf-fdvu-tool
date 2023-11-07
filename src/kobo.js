@@ -2,7 +2,7 @@
 
 
 function koboHeader() {
-	const out = [];
+	const out = [[]];
 	Object.entries(koboIdx).forEach((entry) => {
 			out[0].push(entry[0]);
 		});
@@ -354,9 +354,9 @@ function testEstateConnectivity() {
 	
 	const wanted = [koboHeader()];
 	for (let i = 0; i < sampleA.length; i += 1) {
-	wanted[5][koboIdx['gnrbnr']] = '118.507';
-	wanted[6][koboIdx['gnrbnr']] = '118.507';
-	
+		wanted[5][koboIdx['gnrbnr']] = '118.507';
+		wanted[6][koboIdx['gnrbnr']] = '118.507';
+	}
 	
 	return true;
 }
