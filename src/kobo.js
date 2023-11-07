@@ -361,9 +361,8 @@ function testEstateConnectivity() {
 		a.fill('');
 		wanted.push(a);
 	}
-	wanted[6][koboIdx['gnrbnr']] = '118.507';
-	wanted[7][koboIdx['gnrbnr']] = '118.507';
-	
+	wanted[6][koboIdx['gnrbnr']] = '118/507';
+	wanted[7][koboIdx['gnrbnr']] = '118/507';
 	
 	return true;
 }
