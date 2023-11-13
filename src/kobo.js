@@ -27,7 +27,7 @@ function applyRentable(rowFn, enterFn) {
 	enterFn('manedsleie', rowFn('seksjonspris').split(',')[0]);
 	enterFn('ovriginformasjon', rowFn('merknad'));
 	
-	const name = rowFn('seksjonsnavn').trim().split(',');
+	let name = rowFn('seksjonsnavn').trim().split(',');
 	const len = name.length;
 	if (len > 1) {
 		if (len > 2) {
