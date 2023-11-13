@@ -385,10 +385,10 @@ function testEstates() {
 	return compareCSV(wanted, result);
 }
 
+
 function testContracts() {
 	
 	const sampleA = [
-			['Nummer','Navn','Merknad','Adresse','Fasilitet','Eiendom','Bygning','Region','Kategori bolig','Formål','Status utleie','Plassering','Standard','Korreksjonsfaktorer','Seksjonstype','Mengde','Sum','Anskaffelsespris','Anskaffet dato','SSB nummer','Antall rom','Aktiv','Utleibar','Løpenummer','Leietaker nummer','Leietaker','Eierform'],
 			['24130610164','Ishavsvegen 63, U0102, A','Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 A, U0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013974','00001','Passiv','Leid'],
 			['24130610165','Ishavsvegen 63, U0101, B','Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 B, U0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','','','','Leid'],
 			['24130610166','Ishavsvegen 63, H0102, C','Leilighet 1. etasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 C, H0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','12822,60','','01.01.2016','','3','True','True','K00015565','(ikke oppgitt)','Midlertidig bolig','Leid'],
@@ -430,7 +430,12 @@ function testContracts() {
 		wanted[idx][koboIdx[key]] = val;
 	}
 	
+	desire(1, 'boligstatus', 'IKKE_TILGJENGELIG');
+	
 	desire(2, 'boligstatus', 'KLAR_FOR_INNFLYTTING');
+	
+	desire(3, 'boligstatus', 'IKKE_TILGJENGELIG');
+	desire(4, 'boligstatus', 'IKKE_TILGJENGELIG');
 	
 	desire(5, 'boligstatus', 'UTLEID');
 	desire(5, 'hovedsoker', '29017322999');
