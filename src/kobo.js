@@ -47,8 +47,12 @@ function applyRentable(rowFn, enterFn) {
 	
 	const street = name.split(' ');
 	enterFn('husnummer', street.pop());
-	
 	enterFn('gatenavn', street.join(' '));
+	
+	const category = rowFn('seksjonstype');
+	if (category != 'Komm.bolig') {
+		enterFn('underkategoriboligtype', category);
+	}
 }
 
 function applyEstates(rowFn, enterFn, estates) {
@@ -635,7 +639,6 @@ function testRentables() {
 				applyRentable(read, write);
 				result.push(add);
 			});
-	xc(wanted);
-	xc(result)
+	
 	return compareCSV(wanted, result);
 }
