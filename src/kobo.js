@@ -223,8 +223,7 @@ function ignoreRentable(r) {
 	function check(key, val) {
 		return r[rentableIdx[key]] == val;
 	}
-	return (check('leietakernavn', 'Passiv')
-			|| check('utleibar', 'False')
+	return (check('utleibar', 'False')
 			|| check('aktiv', 'False'));
 }
 
