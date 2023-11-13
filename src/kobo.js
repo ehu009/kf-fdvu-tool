@@ -353,7 +353,6 @@ function testEstates() {
 			['118.408','Lars Eriksens veg 2','','3078 Lars Eriksens veg 1 - 3','','','.118.408','','','','','','','','','','','','',''],
 			['118.1729','Lars Eriksens veg 1 og 3','','3078 Lars Eriksens veg 1 - 3','','','.118.1729','','','','','','','','','','','','','']
 		];
-	const estates = mapRows(sampleB, estateIdx['eiendom']);
 	
 	const wanted = [koboHeader()];
 	for (let i = 0; i < sampleA.length; i += 1) {
@@ -379,7 +378,7 @@ function testEstates() {
 					add[koboIdx[key]] = val.trim();
 				}
 				
-				applyEstates(read, write, estates);
+				applyEstates(read, write, mapRows(sampleB, estateIdx['eiendom']));
 				result.push(add);
 			});
 	
