@@ -431,25 +431,21 @@ function testContracts() {
 	}
 	
 	desire(2, 'boligstatus', 'KLAR_FOR_INNFLYTTING');
-	desire(2, 'koboboligtype', 'ORDINAR_BOLIG');
-	
 	
 	desire(5, 'boligstatus', 'UTLEID');
 	desire(5, 'hovedsoker', '29017322999');
-	desire(6, 'leieforholdstartdato', '22.06.2017');
-	desire(6, 'leieforholdsluttdato', '30.06.2023');
+	desire(5, 'leieforholdstartdato', '22.06.2017');
+	desire(5, 'leieforholdsluttdato', '30.06.2023');
 	
 	desire(6, 'boligstatus', 'UTLEID');
 	desire(6, 'hovedsoker', '07118931534');
 	desire(6, 'leieforholdstartdato', '07.09.2017');
 	desire(6, 'leieforholdsluttdato', '30.09.2023');
 	
-	
 	desire(7, 'boligstatus', 'UTLEID');
 	desire(7, 'hovedsoker', '130188');
 	desire(7, 'leieforholdstartdato', '01.05.2023');
 	desire(7, 'leieforholdsluttdato', '31.05.2026');
-	
 	
 	desire(8, 'boligstatus', 'UTLEID');
 	desire(8, 'hovedsoker', '010180');
