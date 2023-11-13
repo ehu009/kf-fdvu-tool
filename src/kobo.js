@@ -39,15 +39,15 @@ function applyRentable(rowFn, enterFn) {
 	name = name[0].trim();
 	let letter = name.slice(-1);
 	if (isNaN(parseInt(letter))) {
-		name = name.slice(0, name[name.length - 1]);
+		name = name.slice(0, name.length - 1);
 	} else {
 		letter = '';
 	}
 	enterFn('husbokstav', letter);
 	
 	const street = name.split(' ');
-	enterFn('husnummer', street[street.length - 1]);
-	street.pop();
+	enterFn('husnummer', street.pop());
+	
 	enterFn('gatenavn', street.join(' '));
 }
 
