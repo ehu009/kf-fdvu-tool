@@ -34,6 +34,7 @@ const rentableIdx = {
 		'anskaffelsespris': 17,
 		'aktiv': 21,
 		'utleibar': 22,
+		'løpenummer': 23,
 		'leietakernummer': 24,
 		'leietakernavn': 25
 	};
