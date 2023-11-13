@@ -326,12 +326,8 @@ function unitTest() {
 		xc('facility failed');
 		q = true;
 	}
-	if (testAddressParse()) {
-		xc('address failed');
-		q = true;
-	}
-	if (testRoomNumberParse()) {
-		xc('room number failed');
+	if (testRentables()) {
+		xc('rentables failed');
 		q = true;
 	}
 	
@@ -555,12 +551,7 @@ function testFacilities() {
 	return compareCSV(wanted, result);
 }
 
-function testAddressParse() {
-	
-	return true;
-}
-
-function testRoomNumberParse() {
+function testRentables() {
 	
 	return true;
 }
