@@ -577,7 +577,7 @@ function testRentables() {
 	desire(1, 'postnummer', '9010');
 	desire(1, 'ekstrareferanse', 'A');
 	desire(1, 'underkategoriboligtype', 'Midlertidig bolig');
-	desire(1, 'manedsleie', '13555,6');
+	desire(1, 'manedsleie', '13555');
 	desire(1, 'ovriginformasjon', 'Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
 	desire(2, 'kommunenummer', '5401');
@@ -586,7 +586,7 @@ function testRentables() {
 	desire(2, 'husnummer', '63');
 	desire(2, 'postnummer', '9010');
 	desire(2, 'ekstrareferanse', 'B');
-	desire(2, 'manedsleie', '13555,6');
+	desire(2, 'manedsleie', '13555');
 	desire(2, 'ovriginformasjon', 'Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
 	desire(3, 'kommunenummer', '5401');
@@ -596,22 +596,22 @@ function testRentables() {
 	desire(3, 'postnummer', '9010');
 	desire(3, 'ekstrareferanse', 'E');
 	desire(3, 'underkategoriboligtype', 'Flyktningebolig');
-	desire(3, 'manedsleie', '13555,6');
+	desire(3, 'manedsleie', '13555');
 	desire(3, 'ovriginformasjon', 'Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
 	desire(4, 'kommunenummer', '5401');
 	desire(4, 'gatenavn', 'Nordslettvegen');
 	desire(4, 'husnummer', '2');
-	desire(4, 'husnummer', 'B');
+	desire(4, 'husbokstav', 'B');
 	desire(4, 'postnummer', '9016');
 	desire(4, 'underkategoriboligtype', 'Omsorgsbolig');
-	desire(4, 'manedsleie', '13555,6');
+	desire(4, 'manedsleie', '16650');
 	desire(4, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
 	
 	desire(5, 'kommunenummer', '5401');
 	desire(5, 'gatenavn', 'Nordslettvegen');
 	desire(5, 'husnummer', '2');
-	desire(5, 'husnummer', 'A');
+	desire(5, 'husbokstav', 'A');
 	desire(5, 'postnummer', '9016');
 	desire(5, 'underkategoriboligtype', 'Rus og Psykiatribolig');
 	desire(5, 'manedsleie', '16650');
@@ -635,6 +635,7 @@ function testRentables() {
 				applyRentable(read, write);
 				result.push(add);
 			});
-	
+	xc(wanted);
+	xc(result)
 	return compareCSV(wanted, result);
 }
