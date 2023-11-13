@@ -167,7 +167,8 @@ function applyContracts(rowFn, enterFn, contracts) {
 	const customerName = rowFn('leietakernavn');
 	if (customerName == '') {
 		enterFn('boligstatus', 'KLAR_FOR_INNFLYTTING');
-	} else if (customerName == ['Passiv']) {
+	} else if (customerName == 'Passiv'
+			|| customerName == 'Midlertidig bolig') {
 		enterFn('boligstatus', 'IKKE_TILGJENGELIG');
 	} else {
 		
@@ -176,46 +177,52 @@ function applyContracts(rowFn, enterFn, contracts) {
 			customerID = "0" + customerID;
 		}
 		
-		if (!isInvalid(customerID) && contracts.has(rowFn('seksjonsnummer'))) {
-				
-			let timeLimited = false;
-			let startDate = '';
-			let stopDate = '';
-			let expiry = '';
+		let timeLimited = false;
+		let startDate = '';
+		let stopDate = '';
+		let expiry = '';
+		if (contracts.has(rowFn('seksjonsnummer'))) {
 			contracts.get(rowFn('seksjonsnummer')).filter((contract) => {
-					return !contract[contractIdx['behandlingsstatus']] == 'Avsluttet';
+					return !(contract[contractIdx['behandlingsstatus']] == 'Avsluttet');
 				}).forEach((contract) => {
-					
 						function c(key) {
-							return contract[contractIdx[key]];
+							return contract[contractIdx[key]].trim();
 						}
 						
-						if (rowFn('leietakernummer') != c('leietakernummer')) {
+						if (rowFn('løpenummer') != c('løpenummer')) {
 							return;
 						}
 						
 						const tenant = c('leietakernavn');
-						
-						
-						if (c('kontrakttype') == 'Vedlikehold') {
-							enterFn('boligstatus', 'VEDLIKEHOLD');
+						if (tenant == 'Passiv') {
+							enterFn('boligstatus', 'IKKE_TILGJENGELIG');
 						} else {
-						
-							enterFn('boligstatus', 'UTLEID');
-						
-							if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
-								timeLimited = true;
+							if (tenant == 'Midlertidig bolig') {
+								enterFn('boligstatus', 'IKKE_TILGJENGELIG');
+							} else {
+								if (c('kontrakttype') == 'Vedlikehold') {
+									enterFn('boligstatus', 'VEDLIKEHOLD');
+								} else {
+								
+									enterFn('boligstatus', 'UTLEID');
+								
+									if (c('kontrakttype') != 'A-Omsorg tidsubestemt') {
+										timeLimited = true;
+									}
+								}
+								startDate = c('startdato');
+								stopDate = c('sluttdato');
+								expiry = c('utgårdato');
 							}
 						}
-						startDate = c('startdato');
-						stopDate = c('sluttdato');
-						expiry = c('utgårdato');
 					});
-			enterFn('leieforholdertidsubegrenset', timeLimited.toString());
-			enterFn('leieforholdstartdato', startDate);
-			enterFn('leieforholdsluttdato', stopDate);
-			enterFn('hovedsoker', customerID);
+			if (stopDate == '') {
+				stopDate = expiry;
+			}
 		}
+		enterFn('leieforholdstartdato', startDate);
+		enterFn('leieforholdsluttdato', stopDate);
+		enterFn('hovedsoker', customerID);
 	}
 }
 
