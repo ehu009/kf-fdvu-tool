@@ -562,7 +562,8 @@ function testRentables() {
 			['24130610165','Ishavsvegen 63, U0101, B','Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 B, U0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','','','','Leid'],
 			['24130610168','Ishavsvegen 63, H0202, E','Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 E, H0202  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Flyktningbolig  - Intro','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Flyktningebolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013660','29017322999','Mohamed Abdulrahman Mohamed Ahmed','Leid'],
 			['114613314','Nordslettvegen 2B','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Omsorgsbolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid'],
-			['114613315','Nordslettvegen 2A','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Rus og Psykiatribolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid']
+			['114613315','Nordslettvegen 2A','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Rus og Psykiatribolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid'],
+			['114613173','Uranusvegen 37','Enebolig over 2 plan, med trappefri adkomst fra gateplan. 2 parkeringsplasser utenfor boligen. Møblert med hvitevarer. Ikke tillat med dyr/røyk. Mulighet med oppkobling til internett/tv, leietaker må bestille selv.','Uranusvegen 37  9024 TOMASJORD ','317501 Uranusvegen 37','3175 Uranusvegen 37','317501 Uranusvegen 37','Fastlandet','Bolig','Ukrainabolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','135','20830','26 000','01.04.2022','','6','True','True','K00016729','21038717801','Aviel Hreis','Leid']
 		];
 	
 	const wanted = [koboHeader()];
@@ -620,6 +621,14 @@ function testRentables() {
 	desire(5, 'underkategoriboligtype', 'Rus og Psykiatribolig');
 	desire(5, 'manedsleie', '16650');
 	desire(5, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
+	
+	desire(6, 'kommunenummer', '5401');
+	desire(6, 'gatenavn', 'Uranusvegen');
+	desire(6, 'husnummer', '37');
+	desire(6, 'postnummer', '9024');
+	desire(6, 'manedsleie', '20830');
+	desire(6, 'ovriginformasjon', 'Enebolig over 2 plan, med trappefri adkomst fra gateplan. 2 parkeringsplasser utenfor boligen. Møblert med hvitevarer. Ikke tillat med dyr/røyk. Mulighet med oppkobling til internett/tv, leietaker må bestille selv.');
+	
 	
 	const result = [koboHeader()];
 	sample.filter((row) => {
