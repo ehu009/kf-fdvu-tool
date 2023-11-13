@@ -553,5 +553,88 @@ function testFacilities() {
 
 function testRentables() {
 	
-	return true;
+	const sample = [
+			['24130610164','Ishavsvegen 63, U0102, A','Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 A, U0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013974','00001','Passiv','Leid'],
+			['24130610165','Ishavsvegen 63, U0101, B','Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 B, U0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','','','','Leid'],
+			['24130610168','Ishavsvegen 63, H0202, E','Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 E, H0202  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Flyktningbolig  - Intro','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Flyktningebolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013660','29017322999','Mohamed Abdulrahman Mohamed Ahmed','Leid'],
+			['114613314','Nordslettvegen 2B','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Omsorgsbolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid'],
+			['114613315','Nordslettvegen 2A','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Rus og Psykiatribolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid']
+		];
+	
+	const wanted = [koboHeader()];
+	for (let i = 0; i < sample.length; i += 1) {
+		const a = new Array(wanted[0].length);
+		a.fill('');
+		wanted.push(a);
+	}
+	function desire(idx, key, val) {
+		wanted[idx][koboIdx[key]] = val;
+	}
+	desire(1, 'kommunenummer', '5401');
+	desire(1, 'bruksenhetsnummer', 'U0102');
+	desire(1, 'gatenavn', 'Ishavsvegen');
+	desire(1, 'husnummer', '63');
+	desire(1, 'postnummer', '9010');
+	desire(1, 'ekstrareferanse', 'A');
+	desire(1, 'underkategoriboligtype', 'Midlertidig bolig');
+	desire(1, 'manedsleie', '13555,6');
+	desire(1, 'ovriginformasjon', 'Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
+	
+	desire(2, 'kommunenummer', '5401');
+	desire(2, 'bruksenhetsnummer', 'U0101');
+	desire(2, 'gatenavn', 'Ishavsvegen');
+	desire(2, 'husnummer', '63');
+	desire(2, 'postnummer', '9010');
+	desire(2, 'ekstrareferanse', 'B');
+	desire(2, 'manedsleie', '13555,6');
+	desire(2, 'ovriginformasjon', 'Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
+	
+	desire(3, 'kommunenummer', '5401');
+	desire(3, 'bruksenhetsnummer', 'H0202');
+	desire(3, 'gatenavn', 'Ishavsvegen');
+	desire(3, 'husnummer', '63');
+	desire(3, 'postnummer', '9010');
+	desire(3, 'ekstrareferanse', 'E');
+	desire(3, 'underkategoriboligtype', 'Flyktningebolig');
+	desire(3, 'manedsleie', '13555,6');
+	desire(3, 'ovriginformasjon', 'Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
+	
+	desire(4, 'kommunenummer', '5401');
+	desire(4, 'gatenavn', 'Nordslettvegen');
+	desire(4, 'husnummer', '2');
+	desire(4, 'husnummer', 'B');
+	desire(4, 'postnummer', '9016');
+	desire(4, 'underkategoriboligtype', 'Omsorgsbolig');
+	desire(4, 'manedsleie', '13555,6');
+	desire(4, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
+	
+	desire(5, 'kommunenummer', '5401');
+	desire(5, 'gatenavn', 'Nordslettvegen');
+	desire(5, 'husnummer', '2');
+	desire(5, 'husnummer', 'A');
+	desire(5, 'postnummer', '9016');
+	desire(5, 'underkategoriboligtype', 'Rus og Psykiatribolig');
+	desire(5, 'manedsleie', '16650');
+	desire(5, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
+	
+	const result = [koboHeader()];
+	sample.filter((row) => {
+			return !ignoreRentable(row);
+		}).forEach((row) => {
+				
+				function read(key) {
+					return row[rentableIdx[key]].trim();
+				}
+				
+				const add = new Array(result[0].length);
+				add.fill('');
+				function write(key, val) {
+					add[koboIdx[key]] = val.trim();
+				}
+				
+				applyRentable(read, write);
+				result.push(add);
+			});
+	
+	return compareCSV(wanted, result);
 }
