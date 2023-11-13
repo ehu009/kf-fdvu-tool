@@ -211,7 +211,7 @@ function applyContracts(rowFn, enterFn, contracts) {
 						stopDate = c('sluttdato');
 						expiry = c('utgårdato');
 					});
-			enterFn('leieforholdertidsubegrenset', timeLimited);
+			enterFn('leieforholdertidsubegrenset', timeLimited.toString());
 			enterFn('leieforholdstartdato', startDate);
 			enterFn('leieforholdsluttdato', stopDate);
 			enterFn('hovedsoker', customerID);
@@ -390,7 +390,7 @@ function testEstates() {
 function testContracts() {
 	
 	const sampleA = [
-			['Nummer','Navn','Merknad','Adresse','Fasilitet','Eiendom','Bygning','Region','Kategori bolig','Formål','Status utleie','Plassering','Standard','Korreksjonsfaktorer','Seksjonstype','Mengde','Sum','Anskaffelsespris','Anskaffet dato','SSB nummer','Antall rom','Aktiv','Utleibar','Løpenummer','Leietaker nummer','Leietaker','Eierform'
+			['Nummer','Navn','Merknad','Adresse','Fasilitet','Eiendom','Bygning','Region','Kategori bolig','Formål','Status utleie','Plassering','Standard','Korreksjonsfaktorer','Seksjonstype','Mengde','Sum','Anskaffelsespris','Anskaffet dato','SSB nummer','Antall rom','Aktiv','Utleibar','Løpenummer','Leietaker nummer','Leietaker','Eierform'],
 			['24130610164','Ishavsvegen 63, U0102, A','Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 A, U0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013974','00001','Passiv','Leid'],
 			['24130610165','Ishavsvegen 63, U0101, B','Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 B, U0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','','','','Leid'],
 			['24130610166','Ishavsvegen 63, H0102, C','Leilighet 1. etasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 C, H0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','12822,60','','01.01.2016','','3','True','True','K00015565','(ikke oppgitt)','Midlertidig bolig','Leid'],
@@ -474,7 +474,7 @@ function testContracts() {
 					add[koboIdx[key]] = val.trim();
 				}
 				
-				applyContracts(read, write, estates);
+				applyContracts(read, write, mapRows(sampleB, contractIdx['fasilitetsnummer']));
 				result.push(add);
 			});
 	
