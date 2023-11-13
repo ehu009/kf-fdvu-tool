@@ -389,7 +389,96 @@ function testEstates() {
 
 function testContracts() {
 	
-	return true;
+	const sampleA = [
+			['Nummer','Navn','Merknad','Adresse','Fasilitet','Eiendom','Bygning','Region','Kategori bolig','Formål','Status utleie','Plassering','Standard','Korreksjonsfaktorer','Seksjonstype','Mengde','Sum','Anskaffelsespris','Anskaffet dato','SSB nummer','Antall rom','Aktiv','Utleibar','Løpenummer','Leietaker nummer','Leietaker','Eierform'
+			['24130610164','Ishavsvegen 63, U0102, A','Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 A, U0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013974','00001','Passiv','Leid'],
+			['24130610165','Ishavsvegen 63, U0101, B','Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 B, U0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','','','','Leid'],
+			['24130610166','Ishavsvegen 63, H0102, C','Leilighet 1. etasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 C, H0102  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','12822,60','','01.01.2016','','3','True','True','K00015565','(ikke oppgitt)','Midlertidig bolig','Leid'],
+			['24130610167','Ishavsvegen 63, H0101, D','Leilighet 1. etasje Nord. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 D, H0101  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Midlertidig bolig','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Midlertidig bolig','80,00','12822,60','','01.01.2016','','3','True','True','K00013975','00001','Passiv','Leid'],
+			['24130610168','Ishavsvegen 63, H0202, E','Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 E, H0202  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','Flyktningbolig  - Intro','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Flyktningebolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013660','29017322999','Mohamed Abdulrahman Mohamed Ahmed','Leid'],
+			['24130610169','Ishavsvegen 63, H0201, F','P-Kort Gjesteparkering for 63 F utlevert til beboer 15.4.2019. Leilighet 2. etasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet','Ishavsvegen 63 F, H0201  9010 TROMSØ ','124701 Ishavsvegen 63','1247 Ishavsvegen 63','124701 Ishavsvegen 63','Tromsøya nord','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','80,00','13555,60','','01.01.2016','','4','True','True','K00013834','07118931534','Florent Twizere','Leid'],
+			['114613313','Nordslettvegen 2A','Nøkkelboks montert med 1 nøkkel i, kode: 7654.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2A  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017456','130188',' Robert Zangabe ','Leid'],
+			['114613314','Nordslettvegen 2B','Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig','Nordslettvegen 2B  9016 TROMSØ ','320802 Nordslettvegen 2','3208 Nordslettvegen 1 og 2','320802 Nordslettvegen 2','Tromsøya sør','Bolig','','','Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)','Normal','Ingen korreksjon','Komm.bolig','150,00','16650,00','18 500','22.11.2022','','4','True','True','K00017458','010180',' Emmanuel Karasira','Leid']
+		];
+	
+	const sampleB = [
+			['Løpenummer','Overskrift','Ekstern ID','Leietaker','Nummer','Reskontronr','Saksbehandler','Fra','Til','Sum','Kontrakt utgår','Regulering','Gjengs regulering','Fasilitetsnummer','Fasilitet','Eiendomsnr','Eiendomsnavn','Byggnr','Byggnavn','Kontrakttype','Fakturatype','Mengde','Faktura fra','Fakturareferanse','E-handel faktura','Behandlingsstatus','Sikkerhetstype','Sikkerhetsbeløp','Prisperiode','Faktureringstermin','Terminstart','MVA-pliktig','Merknad','Seksjonstype'],
+			['K00012491','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','09.05.2017','12500,00','','','','24130610164','24130610164 Ishavsvegen 63, U0102, A','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Etterskudd Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00012492','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','09.05.2017','12500,00','','','','24130610165','24130610165 Ishavsvegen 63, U0101, B','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Etterskudd Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Komm.bolig'],
+			['K00012493','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','18.05.2017','12800,00','','','','24130610166','24130610166 Ishavsvegen 63, H0102, C','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00012494','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','30.06.2017','12800,00','','','','24130610167','24130610167 Ishavsvegen 63, H0101, D','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00012495','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','21.06.2017','12800,00','','','','24130610168','24130610168 Ishavsvegen 63, H0202, E','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Flyktningebolig'],
+			['K00012496','Kontrakt for Flyktningtjenesten Privatinnleide','','Flyktningtjenesten Privatinnleide','24498300000','244983','','01.01.2016','30.06.2017','12800,00','','','','24130610169','24130610169 Ishavsvegen 63, H0201, F','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Agresso','','01.01.2016','','','Avsluttet','','0,00','Månedlig','Månedlig','','False','','Komm.bolig'],
+			['K00013656','Kontrakt for Tildelingskontoret','','Tildelingskontoret','940101808','250314','','19.05.2017','07.08.2019','15177,79','','01.03.2021','01.03.2020','24130610166','24130610166 Ishavsvegen 63, H0102, C','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Etterskudd Agresso','','','','','Avsluttet','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00013660','Kontrakt for Mohamed Abdulrahman Mohamed Ahmed','','Mohamed Abdulrahman Mohamed Ahmed','29017322999','244079','','22.06.2017','','12193,00','30.06.2023','01.07.2024','','24130610168','24130610168 Ishavsvegen 63, H0202, E','1247','Ishavsvegen 63','124701','Ishavsvegen 63','A-Flyktning','Agresso','','','','','Under behandling','Garanti','12000,00','Månedlig','Månedlig','','False','Kona i intro','Flyktningebolig'],
+			['K00013675','Kontrakt for Petros Haile Gebremikael','','Petros Haile Gebremikael','24038221511','216481','','28.06.2017','29.06.2023','12193,00','30.06.2023','','','24130610165','24130610165 Ishavsvegen 63, U0101, B','1247','Ishavsvegen 63','124701','Ishavsvegen 63','A-Velferdsbolig','Agresso','','','','','Avsluttet','Depositum','12000,00','Månedlig','Månedlig','','False','','Komm.bolig'],
+			['K00013834','Kontrakt for Florent Twizere','','Florent Twizere','07118931534','261244','','07.09.2017','','14078,11','30.09.2023','01.10.2024','','24130610169','24130610169 Ishavsvegen 63, H0201, F','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Agresso','','','','','Løpende','Depositum','12000,00','Månedlig','Månedlig','','False','','Komm.bolig'],
+			['K00013974','Kontrakt for Passiv','','Passiv','00001','','','10.05.2017','','13120,00','','','','24130610164','24130610164 Ishavsvegen 63, U0102, A','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Ingen','','','','','Løpende','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00013975','Kontrakt for Passiv','','Passiv','00001','','','01.07.2017','','13120,00','','','','24130610167','24130610167 Ishavsvegen 63, H0101, D','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Ingen','','','','','Løpende','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00015294','Kontrakt for Driftsadministrasjonen','','Driftsadministrasjonen','00000','','','08.08.2019','04.12.2019','13843,27','','','','24130610166','24130610166 Ishavsvegen 63, H0102, C','1247','Ishavsvegen 63','124701','Ishavsvegen 63','Vedlikehold','Vedlikehold','','','','','Avsluttet','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00015508','Kontrakt for Passiv','','Passiv','00001','','','05.12.2019','04.12.2019','13843,27','','01.01.2021','01.01.2023','24130610166','24130610166 Ishavsvegen 63, H0102, C','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Midlertidig','','','','','Avsluttet','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00015565','Kontrakt for Midlertidig bolig','','Midlertidig bolig','','','','05.12.2019','','13843,95','','','','24130610166','24130610166 Ishavsvegen 63, H0102, C','1247','Ishavsvegen 63','124701','Ishavsvegen 63','','Midlertidig','','','','','Løpende','','','Månedlig','Månedlig','','False','','Midlertidig bolig'],
+			['K00017456','Kontrakt for  Robert Zangabe ','130188',' Robert Zangabe ','130188','281469','Andreas Arne Olsen','01.05.2023','','18500,00','31.05.2026','01.05.2024','','114613313','114613313 Nordslettvegen 2A','3208','Nordslettvegen 1 og 2','320802','Nordslettvegen 2','A-Flyktning','Agresso','','','','','Løpende','','','Månedlig','Månedlig','','False','','Komm.bolig'],
+			['K00017458','Kontrakt for  Emmanuel Karasira','010180',' Emmanuel Karasira','010180','282207','Andreas Arne Olsen','25.05.2023','','18500,00','31.05.2026','01.06.2024','','114613314','114613314 Nordslettvegen 2B','3208','Nordslettvegen 1 og 2','320802','Nordslettvegen 2','A-Flyktning','Agresso','','','','','Løpende','','','Månedlig','Månedlig','','False','','Komm.bolig']
+		];
+	
+	const wanted = [koboHeader()];
+	for (let i = 0; i < sampleA.length; i += 1) {
+		const a = new Array(wanted[0].length);
+		a.fill('');
+		wanted.push(a);
+	}
+	function desire(idx, key, val) {
+		wanted[idx][koboIdx[key]] = val;
+	}
+	
+	desire(2, 'boligstatus', 'KLAR_FOR_INNFLYTTING');
+	desire(2, 'koboboligtype', 'ORDINAR_BOLIG');
+	
+	
+	desire(5, 'boligstatus', 'UTLEID');
+	desire(5, 'hovedsoker', '29017322999');
+	desire(6, 'leieforholdstartdato', '22.06.2017');
+	desire(6, 'leieforholdsluttdato', '30.06.2023');
+	
+	desire(6, 'boligstatus', 'UTLEID');
+	desire(6, 'hovedsoker', '07118931534');
+	desire(6, 'leieforholdstartdato', '07.09.2017');
+	desire(6, 'leieforholdsluttdato', '30.09.2023');
+	
+	
+	desire(7, 'boligstatus', 'UTLEID');
+	desire(7, 'hovedsoker', '130188');
+	desire(7, 'leieforholdstartdato', '01.05.2023');
+	desire(7, 'leieforholdsluttdato', '31.05.2026');
+	
+	
+	desire(8, 'boligstatus', 'UTLEID');
+	desire(8, 'hovedsoker', '010180');
+	desire(8, 'leieforholdstartdato', '25.05.2023');
+	desire(8, 'leieforholdsluttdato', '31.05.2026');
+	
+	
+	const result = [koboHeader()];
+	sampleA.filter((row) => {
+			return !ignoreRentable(row);
+		}).forEach((row) => {
+				
+				function read(key) {
+					return row[rentableIdx[key]].trim();
+				}
+				
+				const add = new Array(result[0].length);
+				add.fill('');
+				function write(key, val) {
+					add[koboIdx[key]] = val.trim();
+				}
+				
+				applyContracts(read, write, estates);
+				result.push(add);
+			});
+	
+	return compareCSV(wanted, result);
 }
 
 function testFacilities() {
