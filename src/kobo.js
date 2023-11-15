@@ -49,12 +49,18 @@ function applyRentable(rowFn, enterFn) {
 	enterFn('husnummer', street.pop());
 	enterFn('gatenavn', street.join(' '));
 	
+	let category = '';
+	['eierform', 'formål', 'seksjonstype'].forEach((key) => {
+			let v = rowFn(key);
+			if ( v!= '') {
+				if (category != '') {
+					category += ', ';
+				}
+				category += v;
+			}
+		});
+	enterFn('underkategoriboligtype', category);
 	
-	
-	const category = rowFn('seksjonstype');
-	if (category != 'Komm.bolig') {
-		enterFn('underkategoriboligtype', category);
-	}
 }
 
 function applyEstates(rowFn, enterFn, estates) {
