@@ -226,7 +226,8 @@ function applyContracts(rowFn, enterFn, contracts) {
 							}
 						}
 					});
-			if (stopDate != null) {
+			
+			if (isInvalid(stopDate)) {
 				stopDate = expiry;
 			}
 		}
