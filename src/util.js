@@ -37,7 +37,8 @@ const rentableIdx = {
 		'utleibar': 22,
 		'løpenummer': 23,
 		'leietakernummer': 24,
-		'leietakernavn': 25
+		'leietakernavn': 25,
+		'eierform': 26
 	};
 const keyIdx = {
 		'hanknummer': 0,
