@@ -601,7 +601,7 @@ function testRentables() {
 	desire(1, 'husnummer', '63');
 	desire(1, 'postnummer', '9010');
 	desire(1, 'ekstrareferanse', 'A');
-	desire(1, 'underkategoriboligtype', 'Midlertidig bolig');
+	desire(1, 'underkategoriboligtype', 'Leid, Midlertidig bolig, Midlertidig bolig');
 	desire(1, 'manedsleie', '13555');
 	desire(1, 'ovriginformasjon', 'Leilighet Underetasje sør. Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
@@ -611,6 +611,7 @@ function testRentables() {
 	desire(2, 'husnummer', '63');
 	desire(2, 'postnummer', '9010');
 	desire(2, 'ekstrareferanse', 'B');
+	desire(2, 'underkategoriboligtype', 'Leid, Komm.bolig');
 	desire(2, 'manedsleie', '13555');
 	desire(2, 'ovriginformasjon', 'Leilighet Underetasje Nord Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
@@ -620,7 +621,7 @@ function testRentables() {
 	desire(3, 'husnummer', '63');
 	desire(3, 'postnummer', '9010');
 	desire(3, 'ekstrareferanse', 'E');
-	desire(3, 'underkategoriboligtype', 'Flyktningebolig');
+	desire(3, 'underkategoriboligtype', 'Leid, Flyktningbolig  - Intro, Flyktningebolig');
 	desire(3, 'manedsleie', '13555');
 	desire(3, 'ovriginformasjon', 'Leilighet 2. etasje Sør Leieareal innehar 1/6 del av fellesareal som utgjør 17 m2 pr leilighet. Egen strøm måler i hver leilighet');
 	
@@ -629,7 +630,7 @@ function testRentables() {
 	desire(4, 'husnummer', '2');
 	desire(4, 'husbokstav', 'B');
 	desire(4, 'postnummer', '9016');
-	desire(4, 'underkategoriboligtype', 'Omsorgsbolig');
+	desire(4, 'underkategoriboligtype', 'Leid, Omsorgsbolig');
 	desire(4, 'manedsleie', '16650');
 	desire(4, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
 	
@@ -638,7 +639,7 @@ function testRentables() {
 	desire(5, 'husnummer', '2');
 	desire(5, 'husbokstav', 'A');
 	desire(5, 'postnummer', '9016');
-	desire(5, 'underkategoriboligtype', 'Rus og Psykiatribolig');
+	desire(5, 'underkategoriboligtype', 'Leid, Rus og Psykiatribolig');
 	desire(5, 'manedsleie', '16650');
 	desire(5, 'ovriginformasjon', 'Nøkkelboks montert med 1 nøkkel i, kode: 6543.  Eier: Åsgårdmarka Eiendom AS Publicsak 22/17416 Strøm, TV-signal og internett må leietaker selv bestille. Bolig kan ikke benyttes som rus- og psykiatribolig');
 	
@@ -646,6 +647,7 @@ function testRentables() {
 	desire(6, 'gatenavn', 'Uranusvegen');
 	desire(6, 'husnummer', '37');
 	desire(6, 'postnummer', '9024');
+	desire(6, 'underkategoriboligtype', 'Leid, Ukrainabolig, Komm.bolig');
 	desire(6, 'manedsleie', '20830');
 	desire(6, 'ovriginformasjon', 'Enebolig over 2 plan, med trappefri adkomst fra gateplan. 2 parkeringsplasser utenfor boligen. Møblert med hvitevarer. Ikke tillat med dyr/røyk. Mulighet med oppkobling til internett/tv, leietaker må bestille selv.');
 	
@@ -654,8 +656,7 @@ function testRentables() {
 	desire(7, 'husnummer', '107');
 	desire(7, 'bruksenhetsnummer', 'H0101');
 	desire(7, 'postnummer', '9008');
-	desire(7, 'underkategoriboligtype', 'Tildelingsrett : Flyktningebolig');
-	desire(7, 'manedsleie', '');
+	desire(7, 'underkategoriboligtype', 'Tildelingsrett, Flyktningbolig  - Intro, Flyktningebolig');
 	desire(7, 'ovriginformasjon', 'Bolig over to plan. Hovedstoppekrane i vaskerom. Felles søppelcontainer ute på fortau.   Eies av Boliginvest Nord AS Postboks 5359 9286 Tromsø Inngått avtale om tildleingsrett oktober 2012 Arild Lorentzen 46 93 39 49 - 414 32 675  investex@online.no   Husleie pr 030720 kr 16030,-.');
 	
 	const result = [koboHeader()];
