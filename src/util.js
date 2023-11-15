@@ -225,7 +225,10 @@ function arrayRowFilter(inputCSV, idIdx, filterCSV, filterIdx, keepOpt) {
 function mapRows(arr, idx) {
 	let m = new Map();
 	for (let i = 1; i < arr.length; i += 1) {
-		const key = arr[i][idx];
+		let key = arr[i][idx];
+		if (key != undefined) {
+			key = key.trim()
+		}
 		if (m.has(key) == false) {
 			m.set(key, []);
 		}
