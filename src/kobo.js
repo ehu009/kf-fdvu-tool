@@ -654,7 +654,7 @@ function testRentables() {
 	desire(7, 'husnummer', '107');
 	desire(7, 'bruksenhetsnummer', 'H0101');
 	desire(7, 'postnummer', '9008');
-	desire(7, 'underkategoriboligtype', 'Tildelingsrett : Flyktningbolig  - Intro');
+	desire(7, 'underkategoriboligtype', 'Tildelingsrett : Flyktningebolig');
 	desire(7, 'manedsleie', '');
 	desire(7, 'ovriginformasjon', 'Bolig over to plan. Hovedstoppekrane i vaskerom. Felles søppelcontainer ute på fortau.   Eies av Boliginvest Nord AS Postboks 5359 9286 Tromsø Inngått avtale om tildleingsrett oktober 2012 Arild Lorentzen 46 93 39 49 - 414 32 675  investex@online.no   Husleie pr 030720 kr 16030,-.');
 	
