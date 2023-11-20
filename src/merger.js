@@ -37,7 +37,7 @@ function begin() {
 			}
 		};
 	
-	const csvs = [];
+	let csvs = [];
 	const spinner = fxcd('spinner');
 	
 	fxcd('merge').onclick = () => {
