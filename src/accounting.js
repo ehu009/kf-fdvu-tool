@@ -65,9 +65,9 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			let diff = acqPrice - rentPrice;
-			if (isNaN(acqPrice)) {
-				diff = 0;
+			let diff = 0;
+			if (!isInvalid(acqPrice)) {
+				diff = acqPrice - rentPrice;
 			}
 			
 			if (m.has(key)) {

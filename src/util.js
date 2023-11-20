@@ -157,6 +157,9 @@ function temporalOverlap(beginA, endA, beginB, endB) {
 }
 
 function stringToNumber(s) {
+	if (isInvalid(s)) {
+		return undefined;
+	}
 	return parseFloat(s.replace(',', '.').replace(' ', ''));
 }
 function numToFDVUNum(n) {
