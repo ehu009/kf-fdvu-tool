@@ -123,7 +123,7 @@ function xc(...args) {
 }
 
 function millisecondsToDays(n) {
-	return Math.ceil(n / (1000*60*60*24));
+	return Math.floor(n / (1000*60*60*24));
 }
 function numberOfDaysInMonth(date) {
 	let month = date.getMonth();
