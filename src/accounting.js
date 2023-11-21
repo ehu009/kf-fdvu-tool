@@ -71,53 +71,56 @@ function calcLoss(begin, end, contracts, rentables) {
 			}
 			
 			if (m.has(key)) {
-				for (let row of m.get(key)) {
+				m.get(key).filter((row) => {
+						
+						
+					}).forEach((row) => {
 					
-					const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
-					const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
-					let current;
-					let stop;
-					{
-						let beginDate = begin;
-						if (from > begin) {
-							beginDate = from;
-						}
-						current = new Date(beginDate);
-						
-						let endDate = end;
-						if (to < end) {
-							endDate = to;
-							endDate.setDate(endDate.getDate()+1);
-						}
-						
-						stop = new Date(endDate);
-					}
-					
-					while (current < stop) {
-						
-						let next = new Date(current);
-						next.setMonth(next.getMonth() + 1);
-						next.setDate(1);
-						
-						let limit = next;
-						if (next > stop) {
-							limit = stop;
-						}
-						const monthDays = numberOfDaysInMonth(current);
-						const dailySection = rentPrice / monthDays;
-						
-						const rentDays = millisecondsToDays(limit - current);
-						vacancy -= rentDays * dailySection;
-						daysVacant -= rentDays;
-						
-						if (ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
-							daysRepair += rentDays;
-							repair += rentDays * dailySection;
-						}
-						
-						current = new Date(limit);
-					}
-				}
+							const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
+							const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
+							let current;
+							let stop;
+							{
+								let beginDate = begin;
+								if (from > begin) {
+									beginDate = from;
+								}
+								current = new Date(beginDate);
+								
+								let endDate = end;
+								if (to < end) {
+									endDate = to;
+									endDate.setDate(endDate.getDate()+1);
+								}
+								
+								stop = new Date(endDate);
+							}
+							
+							while (current < stop) {
+								
+								let next = new Date(current);
+								next.setMonth(next.getMonth() + 1);
+								next.setDate(1);
+								
+								let limit = next;
+								if (next > stop) {
+									limit = stop;
+								}
+								const monthDays = numberOfDaysInMonth(current);
+								const dailySection = rentPrice / monthDays;
+								
+								const rentDays = millisecondsToDays(limit - current);
+								vacancy -= rentDays * dailySection;
+								daysVacant -= rentDays;
+								
+								if (ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
+									daysRepair += rentDays;
+									repair += rentDays * dailySection;
+								}
+								
+								current = new Date(limit);
+							}
+						});
 			}
 			
 			const add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff];
