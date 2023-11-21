@@ -177,10 +177,10 @@ function beginLoss() {
 	let inputData = null;
 	
 	{
+		const evt = new Event('change');
+		
 		let tmp = new Date();
 		let field = fxcd('end');
-		tmp.setDate(1);
-		field.value = tmp.toISOString().split('T')[0];
 		field.onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready['dateB'] = 1;
@@ -188,11 +188,12 @@ function beginLoss() {
 				ready['dateB'] = 0;
 			}
 		};
-		
-		field = fxcd('begin');
-		tmp.setDate(0);
 		tmp.setDate(1);
 		field.value = tmp.toISOString().split('T')[0];
+		field.dispatchEvent(evt);
+		
+		
+		field = fxcd('begin');
 		field.onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready['dateA'] = 1;
@@ -200,6 +201,10 @@ function beginLoss() {
 				ready['dateA'] = 0;
 			}
 		};
+		tmp.setDate(0);
+		tmp.setDate(1);
+		field.value = tmp.toISOString().split('T')[0];
+		field.dispatchEvent(evt);
 	}
 	
 	document.addEventListener(eventName, () => {
