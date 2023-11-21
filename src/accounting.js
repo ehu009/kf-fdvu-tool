@@ -108,14 +108,16 @@ function calcLoss(begin, end, contracts, rentables) {
 								}
 								const monthDays = numberOfDaysInMonth(current);
 								const dailySection = rentPrice / monthDays;
+								const dailyContract = stringToNumber(row[contractIdx['kontraktsum']]) / monthDays;
 								
 								const rentDays = millisecondsToDays(limit - current);
-								vacancy -= rentDays * dailySection;
-								daysVacant -= rentDays;
 								
 								if (ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
 									daysRepair += rentDays;
 									repair += rentDays * dailySection;
+								} else {
+									daysVacant -= rentDays;
+									vacancy -= rentDays * dailyContract;
 								}
 								
 								current = new Date(limit);
