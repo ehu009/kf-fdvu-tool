@@ -10,6 +10,9 @@ const ignoreContracts = [
 	];
 const ignoreContractsAddition = [
 		'Omsorgstjenesten S\u00F8r\u00F8ya',
+		'Omsorgstjenesten Sommereng',
+		'Omsorgstjenesten Nord\u00F8ya',
+		'Omsorgstjenesten Kval\u00F8ya, avd Ryllikvegen',
 		'Enhet for psykisk helse og rus, avdeling Ankeret v/Heidi H\u00F8ie',
 		'Enhet for psykisk helse og rus, avdeling B\u00F8lgen',
 		'Flyktningtjenesten Privatinnleide',
