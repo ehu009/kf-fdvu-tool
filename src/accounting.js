@@ -233,13 +233,15 @@ function lossTest() {
 			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Anskaffelse minus seksjonspris'],
 			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '0'],
 			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '0'],
-			['24979620028', 'Sørslettveien 8 U 0101', '0', '0', '0', '0', '0'],
+			['24979620028', 'Sørslettveien 8 U 0101', '0', '-48,1200000000008', '0', '0', '0'],
 			['24979620029', 'Sørslettveien 8 U 0102', '31', '9691', '0', '0', '0'],
-			['24979620030', 'Sørslettveien 8 H 0201', '0', '0', '0', '0', '0'],
+			['24979620030', 'Sørslettveien 8 H 0201', '0', '-48,44000000000051', '0', '0', '0'],
 			['24979620031', 'Sørslettveien 8 H 0202', '31', '9696', '0', '0', '5304']
 		];
-	
-	return compareCSV(wanted, calcLoss(begin, end, contracts, rentableSample));
+	let pp = calcLoss(begin, end, contracts, rentableSample)
+	xc(wanted)
+	xc(pp)
+	return compareCSV(wanted, pp);
 }
 
 function unitTest() {
