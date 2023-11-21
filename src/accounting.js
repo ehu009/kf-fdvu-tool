@@ -175,22 +175,31 @@ function beginLoss() {
 	
 	let inputData = null;
 	
-	
-	fxcd('end').onchange = (evt) => {
+	{
+		let tmp = new Date();
+		let field = fxcd('end');
+		tmp.setDate(1);
+		field.value = tmp.toISOString().split('T')[0];
+		field.onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready['dateB'] = 1;
 			} else {
 				ready['dateB'] = 0;
 			}
 		};
-	fxcd('begin').onchange = (evt) => {
+		
+		field = fxcd('begin');
+		tmp.setDate(0);
+		tmp.setDate(1);
+		field.value = tmp.toISOString().split('T')[0];
+		field.onchange = (evt) => {
 			if (isInvalid(evt.target.value)) {
 				ready['dateA'] = 1;
 			} else {
 				ready['dateA'] = 0;
 			}
 		};
-	
+	}
 	
 	document.addEventListener(eventName, () => {
 			
