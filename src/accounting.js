@@ -65,7 +65,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			let diff = 0;
+			let diff = '-';
 			if (!isInvalid(acqPrice)) {
 				diff = acqPrice - rentPrice;
 			}
@@ -75,7 +75,6 @@ function calcLoss(begin, end, contracts, rentables) {
 						const building = row[contractIdx['bygningsnummer']].trim() +' '+ row[contractIdx['bygningsnavn']].trim();
 						return building == rentable[rentableIdx['fasilitet']].trim();
 					}).forEach((row) => {
-					
 							const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
 							const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
 							let current;
@@ -112,13 +111,12 @@ function calcLoss(begin, end, contracts, rentables) {
 								
 								const rentDays = millisecondsToDays(limit - current);
 								
-								if (ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
+								if (row[contractIdx['kontrakttype']] == 'Vedlikehold') {
 									daysRepair += rentDays;
 									repair += rentDays * dailySection;
-								} else {
-									daysVacant -= rentDays;
-									vacancy -= rentDays * dailyContract;
 								}
+								daysVacant -= rentDays;
+								vacancy -= rentDays * dailyContract;
 								
 								current = new Date(limit);
 							}
@@ -126,8 +124,11 @@ function calcLoss(begin, end, contracts, rentables) {
 			}
 			
 			const add = [key, rentable[rentableIdx['seksjonsnavn']], daysVacant, vacancy, daysRepair, repair, diff];
-			for (let i = 2; i < add.length; i += 1) {
+			for (let i = 2; i < add.length - 1; i += 1) {
 				add[i] = numToFDVUNum(add[i]);
+			}
+			if (add[add.length - 1] != '-') {
+				add[add.length - 1] = numToFDVUNum(add[add.length - 1]);
 			}
 			out.push(add);
 		});
@@ -231,11 +232,11 @@ function lossTest() {
 	
 	const wanted = [
 			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Anskaffelse minus seksjonspris'],
-			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '0'],
-			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '0'],
-			['24979620028', 'Sørslettveien 8 U 0101', '0', '-48,1200000000008', '0', '0', '0'],
-			['24979620029', 'Sørslettveien 8 U 0102', '31', '9691', '0', '0', '0'],
-			['24979620030', 'Sørslettveien 8 H 0201', '0', '-48,44000000000051', '0', '0', '0'],
+			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '-'],
+			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '-'],
+			['24979620028', 'Sørslettveien 8 U 0101', '0', '-48,1200000000008', '0', '0', '-'],
+			['24979620029', 'Sørslettveien 8 U 0102', '31', '9691', '0', '0', '-'],
+			['24979620030', 'Sørslettveien 8 H 0201', '0', '-48,44000000000051', '0', '0', '-'],
 			['24979620031', 'Sørslettveien 8 H 0202', '31', '9696', '0', '0', '5304']
 		];
 	let pp = calcLoss(begin, end, contracts, rentableSample)
