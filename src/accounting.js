@@ -17,7 +17,7 @@ function calcLoss(begin, end, contracts, rentables) {
 		let header = rentables.shift();
 		filteredRentables = rentables.filter((row) => {
 				if ((row[rentableIdx['aktiv']] == 'False')
-						|| (row[rentableIdx['utleibar' == 'False']])) {
+						|| (row[rentableIdx['utleibar']] == 'False')) {
 					return false;
 				}
 				return true;
