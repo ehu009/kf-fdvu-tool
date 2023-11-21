@@ -72,8 +72,8 @@ function calcLoss(begin, end, contracts, rentables) {
 			
 			if (m.has(key)) {
 				m.get(key).filter((row) => {
-						
-						
+						const building = row[contractIdx['bygningsnummer']].trim() +' '+ row[contractIdx['bygningsnavn']].trim();
+						return building == rentable[rentableIdx['fasilitet']].trim();
 					}).forEach((row) => {
 					
 							const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);

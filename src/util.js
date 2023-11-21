@@ -28,6 +28,7 @@ const rentableIdx = {
 		'seksjonsnavn': 1,
 		'merknad': 2,
 		'adresse': 3,
+		'fasilitet': 4,
 		'eiendom' : 5,
 		'bygningsnavn': 6,
 		'formål': 9,
@@ -56,6 +57,8 @@ const contractIdx = {
 		'utgårdato': 10,
 		'fasilitetsnummer': 13,
 		'fasilitet': 14,
+		'bygningsnummer': 17,
+		'bygningsnavn': 18,
 		'kontrakttype': 19,
 		'behandlingsstatus': 25
 	};
