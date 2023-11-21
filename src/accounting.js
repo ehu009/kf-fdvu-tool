@@ -132,7 +132,7 @@ function calcLoss(begin, end, contracts, rentables) {
 			out.push(add);
 		});
 	
-	out.unshift(['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Differanse']);
+	out.unshift(['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Anskaffelse minus seksjonspris']);
 	
 	return out;
 }
@@ -221,7 +221,7 @@ function lossTest() {
 		]);
 	
 	const wanted = [
-			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Differanse'],
+			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Anskaffelse minus seksjonspris'],
 			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '0'],
 			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '0'],
 			['24979620028', 'Sørslettveien 8 U 0101', '0', '0', '0', '0', '0'],
