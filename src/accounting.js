@@ -65,7 +65,7 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			let diff = '-';
+			let diff = '';
 			if (!isInvalid(acqPrice)) {
 				diff = acqPrice - rentPrice;
 			}
@@ -127,7 +127,7 @@ function calcLoss(begin, end, contracts, rentables) {
 			for (let i = 2; i < add.length - 1; i += 1) {
 				add[i] = numToFDVUNum(add[i]);
 			}
-			if (add[add.length - 1] != '-') {
+			if (add[add.length - 1] != '') {
 				add[add.length - 1] = numToFDVUNum(add[add.length - 1]);
 			}
 			out.push(add);
