@@ -122,7 +122,12 @@ function applyFacilities(rowFn, enterFn, facilities) {
 						break;
 					}
 				} else {
-					const v = f('merknad').trim();
+					let v = f('merknad');
+					if (v != undefined) {
+						v = v.trim();
+					} else {
+						v = '';
+					}
 					switch(k) {
 						case 'Eier navn':
 						ownerName = v;
@@ -184,7 +189,7 @@ function applyContracts(rowFn, enterFn, contracts) {
 		enterFn('boligstatus', 'IKKE_TILGJENGELIG');
 	} else {
 		
-		const customerID = rowFn('leietakernummer');
+		let customerID = rowFn('leietakernummer');
 		if (customerID != null) {
 			while (customerID.length < 11 && customerID.length != 6) {
 				customerID = "0" + customerID;
