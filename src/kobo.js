@@ -166,6 +166,8 @@ function applyFacilities(rowFn, enterFn, facilities) {
 			if (power != null) {
 				enterFn('malernummerstrom', power);
 			}
+		} else {
+			enterFn('malernummerstrom', '-');
 		}
 		enterFn('antallsoverom', bedrooms);
 		enterFn('erdognbemannet', staffed);
