@@ -184,7 +184,7 @@ function applyContracts(rowFn, enterFn, contracts) {
 		data fra kontrakter
 	*/
 	const customerName = rowFn('leietakernavn');
-	if (customerName == '') {
+	if (isInvalid(customerName)) {
 		enterFn('boligstatus', 'KLAR_FOR_INNFLYTTING');
 	} else if (customerName == 'Passiv'
 			|| customerName == 'Midlertidig bolig') {
