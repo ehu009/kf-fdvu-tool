@@ -193,6 +193,7 @@ function applyContracts(rowFn, enterFn, contracts) {
 		
 		let customerID = rowFn('leietakernummer');
 		if (customerID != null) {
+			customerID = customerID.replaceAll(' ', '').replaceAll(' ', '');
 			while (customerID.length < 11 && customerID.length != 6) {
 				customerID = "0" + customerID;
 			}
