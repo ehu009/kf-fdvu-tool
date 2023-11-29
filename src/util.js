@@ -47,6 +47,7 @@ const rentableIdx = {
 	};
 const keyIdx = {
 		'hanknummer': 0,
+		'bygningsnummer': 7,
 		'seksjonsnummer': 9
 	};
 const contractIdx = {
@@ -58,6 +59,7 @@ const contractIdx = {
 		'sluttdato': 8,
 		'kontraktsum': 9,
 		'utgårdato': 10,
+		'reguleringsdato': 11,
 		'fasilitetsnummer': 13,
 		'fasilitet': 14,
 		'bygningsnummer': 17,
@@ -81,6 +83,13 @@ const estateIdx = {
 		'nummer': 0,
 		'navn': 1,
 		'eiendom': 3
+	};
+const priceIdx = {
+		'beskrivelse': 1,
+		'reguleringsdato': 5,
+		'regulerbar': 14,
+		'bygningsnummer': 17,
+		'seksjonsnummer': 18
 	};
 const koboIdx = {
 		'kommunenummer': 0,

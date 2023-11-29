@@ -97,7 +97,9 @@ function filter(contractList, rentablesList) {
 			for (let i = 1; i < rentablesList.length; i += 1) {
 				
 				if (c[contractIdx['fasilitetsnummer']] == rentablesList[i][rentableIdx['seksjonsnummer']]) {
-					return true;
+					if (c[contractIdx['bygningsnummer']] == rentablesList[i][rentableIdx['bygningsnummer']]) {
+						return true;
+					}
 				}
 			}
 			return false;
