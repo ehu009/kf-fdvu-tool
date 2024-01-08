@@ -76,34 +76,58 @@ function fieldEvents() {
 	
 }
 
+let defaultBegin = new Date();
+let defaultEnd = new Date();
+
+
 function filter(contractList, rentablesList) {
 	const begin = new Date(fxcd('begin').value);
 	const end = new Date(fxcd('end').value);
-	let defaultBegin = new Date();
-	let defaultEnd = new Date();
-	defaultBegin.setFullYear(1950);
-	defaultEnd.setFullYear(2090);
+	
+	function setDefaultTime(beginYear, endYear)
+	{
+		defaultBegin.setFullYear(beginYear);
+		defaultEnd.setFullYear(endYear);
+	}
+	
+	setDefaultTime(1950, 2090);
 	
 	const header = contractList.shift();
 	const out = contractList.filter((c) => {
 			
 			//	tidsfilter
 			if (ready['bool']) {
+				function timeFilter(contract, begin, end)
+				{
+				const c = contract;
 				if (dateWithDefault(c[contractIdx['startdato']], defaultBegin) > end
 						|| dateWithDefault(c[contractIdx['sluttdato']], defaultEnd) < begin) {
 					return false;
 				}
+				return true;
+				}
+				
+				if (!timeFilter(c, begin, end))
+				{
+				return false;
+				}
 			}
 			
+			
 			//	lokasjonsfilter
-			for (let i = 1; i < rentablesList.length; i += 1) {
-				if (c[contractIdx['fasilitetsnummer']] == rentablesList[i][rentableIdx['seksjonsnummer']]) {
-					if (c[contractIdx['bygningsnummer']] == rentablesList[i][rentableIdx['bygningsnavn']].split(" ")[0]) {
+			function locationFilter(locations, contract)
+			{
+			for (let i = 1; i < locations.length; i += 1) {
+				const r  = locations[i];
+				if (contract[contractIdx['fasilitetsnummer']] == r[rentableIdx['seksjonsnummer']]) {
+					if (contract[contractIdx['bygningsnummer']] == r[rentableIdx['bygningsnavn']].split(" ")[0]) {
 						return true;
 					}
 				}
 			}
 			return false;
+			}
+			return locationFilter(rentablesList, c);
 		});
 	out.unshift(header);
 	contractList.unshift(header);
@@ -111,7 +135,6 @@ function filter(contractList, rentablesList) {
 }
 
 function begin() {
-	
 	const spinner = fxcd('spinner');
 	
 	fieldEvents();
