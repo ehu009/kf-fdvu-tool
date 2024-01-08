@@ -1,5 +1,13 @@
 'use strict';
 
+let defaultBegin = new Date();
+let defaultEnd = new Date();
+
+function setDefaultTime(beginYear, endYear)
+{
+	defaultBegin.setFullYear(beginYear);
+	defaultEnd.setFullYear(endYear);
+}
 
 const ignoreContracts = [
 		'Driftsadministrasjonen',

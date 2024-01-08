@@ -76,14 +76,6 @@ function fieldEvents() {
 	
 }
 
-let defaultBegin = new Date();
-let defaultEnd = new Date();
-function setDefaultTime(beginYear, endYear)
-{
-	defaultBegin.setFullYear(beginYear);
-	defaultEnd.setFullYear(endYear);
-}
-
 function timeFilter(contract, begin, end)
 {
 	const start = dateWithDefault(contract[contractIdx['startdato']], defaultBegin);
