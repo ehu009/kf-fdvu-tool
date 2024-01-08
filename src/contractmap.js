@@ -78,8 +78,8 @@ function fieldEvents() {
 
 function timeFilter(contract, begin, end)
 {
-	const start = dateWithDefault(contract[contractIdx['startdato']], defaultBegin);
-	const stop = dateWithDefault(contract[contractIdx['sluttdato']], defaultEnd)
+	const start = dateWithDefaultBegin(contract[contractIdx['startdato']]);
+	const stop = dateWithDefaultEnd(contract[contractIdx['sluttdato']]);
 	if (start > end
 			|| stop < begin) {
 		return false;
@@ -122,7 +122,7 @@ function filter(contractList, rentablesList) {
 
 function begin() {
 	
-	setDefaultTime(1950, 2090);
+	setDefaultTime();
 	
 	const spinner = fxcd('spinner');
 	

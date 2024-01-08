@@ -5,11 +5,6 @@
 function calcLoss(begin, end, contracts, rentables) {
 	const nDays = millisecondsToDays(end - begin);
 	
-	const defaultBegin = new Date();
-	const defaultEnd = new Date();
-	defaultBegin.setFullYear(1950);
-	defaultEnd.setFullYear(2090);
-	
 	let filteredRentables;
 	let filteredContracts;
 	
@@ -29,8 +24,8 @@ function calcLoss(begin, end, contracts, rentables) {
 				if (isInvalid(row[contractIdx['leietakernavn']])) {
 					return false;
 				}
-				const start = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
-				const stop = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
+				const start = dateWithDefaultBegin(row[contractIdx['startdato']]);
+				const stop = dateWithDefaultEnd(row[contractIdx['sluttdato']]);
 				
 				return temporalOverlap(begin, end, start, stop);
 			});
@@ -75,8 +70,8 @@ function calcLoss(begin, end, contracts, rentables) {
 						const building = row[contractIdx['bygningsnummer']].trim() +' '+ row[contractIdx['bygningsnavn']].trim();
 						return building == rentable[rentableIdx['fasilitet']].trim();
 					}).forEach((row) => {
-							const from = dateWithDefault(row[contractIdx['startdato']], defaultBegin);
-							const to = dateWithDefault(row[contractIdx['sluttdato']], defaultEnd);
+							const from = dateWithDefaultBegin(row[contractIdx['startdato']]);
+							const to = dateWithDefaultEnd(row[contractIdx['sluttdato']]);
 							let current;
 							let stop;
 							{
@@ -139,6 +134,8 @@ function calcLoss(begin, end, contracts, rentables) {
 }
 
 function beginLoss() {
+	
+	setDefaultTime();
 	
 	const eventName = 'dataReady';
 	let readyTarget = {

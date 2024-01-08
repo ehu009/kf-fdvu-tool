@@ -16,10 +16,6 @@ function customerOverlapFilter(arr) {
 					| isInvalid(row[contractIdx['fasilitetsnummer']])
 					| isInvalid(row[contractIdx['løpenummer']]));
 		});
-	const defaultBegin = new Date();
-	const defaultEnd = new Date();
-	defaultBegin.setFullYear(1950);
-	defaultEnd.setFullYear(2090);
 	
 	let l = 2;
 	let out = [];
@@ -31,15 +27,15 @@ function customerOverlapFilter(arr) {
 				for (let i = 0; i < k; i += 1) {
 					const rowA = val[i];
 					
-					const beginA = dateWithDefault(rowA[contractIdx['startdato']], defaultBegin);
-					const endA = dateWithDefault(rowA[contractIdx['sluttdato']], defaultEnd);
+					const beginA = dateWithDefaultBegin(rowA[contractIdx['startdato']]);
+					const endA = dateWithDefaultEnd(rowA[contractIdx['sluttdato']]);
 					
 					const add = [key, rowA[contractIdx['løpenummer']]];
 					for (let j = i + 1; j < k; j += 1) {
 						const rowB = val[j];
 						
-						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
-						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
+						const beginB = dateWithDefaultBegin(rowB[contractIdx['startdato']]);
+						const endB = dateWithDefaultEnd(rowB[contractIdx['sluttdato']]);
 						
 						if (temporalOverlap(beginA, endA, beginB, endB)) {
 							add.push(rowB[contractIdx['løpenummer']]);
@@ -96,10 +92,6 @@ function contractOverlapFilter(arr) {
 					| isInvalid(row[contractIdx['løpenummer']])
 					| ['Passiv'].concat(ignoreContracts.concat(ignoreContractsAddition)).includes(row[contractIdx['leietakernavn']]));
 		});
-	const defaultBegin = new Date();
-	const defaultEnd = new Date();
-	defaultBegin.setFullYear(1950);
-	defaultEnd.setFullYear(2090);
 	
 	let l = 2;
 	const out = [];
@@ -110,15 +102,15 @@ function contractOverlapFilter(arr) {
 				for (let i = 0; i < k; i += 1) {
 					const rowA = val[i];
 					
-					const beginA = dateWithDefault(rowA[contractIdx['startdato']], defaultBegin);
-					const endA = dateWithDefault(rowA[contractIdx['sluttdato']], defaultEnd);
+					const beginA = dateWithDefaultBegin(rowA[contractIdx['startdato']]);
+					const endA = dateWithDefaultEnd(rowA[contractIdx['sluttdato']]);
 					
 					const add = [key, rowA[contractIdx['løpenummer']]];
 					for (let j = i + 1; j < k; j += 1) {
 						const rowB = val[j];
 						
-						const beginB = dateWithDefault(rowB[contractIdx['startdato']], defaultBegin);
-						const endB = dateWithDefault(rowB[contractIdx['sluttdato']], defaultEnd);
+						const beginB = dateWithDefaultBegin(rowB[contractIdx['startdato']]);
+						const endB = dateWithDefaultEnd(rowB[contractIdx['sluttdato']]);
 						
 						if (temporalOverlap(beginA, endA, beginB, endB)) {
 							add.push(rowB[contractIdx['løpenummer']]);
@@ -209,6 +201,8 @@ function estateOverLapFilter(arr) {
 
 function setupCustomerOverlapFilter() {
 	
+	setDefaultTime();
+	
 	const eventName = 'dataReady';
 	let readyTarget = {
 			fileA: 2
@@ -298,7 +292,7 @@ function setupRentableOverlapFilter() {
 
 
 function setupContractOverlapFilter() {
-	
+	setDefaultTime();
 	
 	const eventName = 'dataReady';
 	let readyTarget = {

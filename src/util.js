@@ -2,11 +2,24 @@
 
 let defaultBegin = new Date();
 let defaultEnd = new Date();
-
-function setDefaultTime(beginYear, endYear)
-{
-	defaultBegin.setFullYear(beginYear);
-	defaultEnd.setFullYear(endYear);
+function setDefaultTime() {
+	defaultBegin.setFullYear(1950);
+	defaultEnd.setFullYear(3000);
+}
+function dateWithDefault(value, defaultDate) {
+	if (value != "") {
+		try {
+			return fdvuDateToDate(value);
+		} catch {
+		}
+	}
+	return defaultDate;
+}
+function dateWithDefaultBegin(value) {
+	return dateWithDefault(value, defaultBegin);
+}
+function dateWithDefaultEnd(value) {
+	return dateWithDefault(value, defaultEnd);
 }
 
 const ignoreContracts = [
@@ -154,15 +167,6 @@ function numberOfDaysInMonth(date) {
 		month += 1;
 	}
 	return 31 - (month % 2);
-}
-function dateWithDefault(value, defaultDate) {
-	if (value != "") {
-		try {
-			return fdvuDateToDate(value);
-		} catch {
-		}
-	}
-	return defaultDate;
 }
 function fdvuDateToDate(s) {
 	let arr = s.split('.');

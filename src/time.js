@@ -6,16 +6,11 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 	const begin = new Date(date1);
 	begin.setHours(0);
 	
-	let defaultBegin = new Date();
-	let defaultEnd = new Date();
-	defaultBegin.setFullYear(1950);
-	defaultEnd.setFullYear(2090);
-	
 	const header = arr.shift();
 	const out = arr.filter( (row) => {
 			
-			const dateA = dateWithDefault(row[idx1], defaultBegin);
-			const dateB = dateWithDefault(row[idx2], defaultEnd);
+			const dateA = dateWithDefaultBegin(row[idx1]);
+			const dateB = dateWithDefaultEnd(row[idx2]);
 			
 			if (mode == 'før' || mode == 'etter') {
 				return (((mode == 'før')
@@ -42,6 +37,8 @@ function filter(arr, idx1, idx2, mode, date1, date2) {
 }
 
 function begin() {
+	
+	setDefaultTime();
 	
 	const spinner = fxcd('spinner');
 	let inputCSV = null;
