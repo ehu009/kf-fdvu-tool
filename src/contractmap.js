@@ -12,7 +12,7 @@ const readyEvent = new Event(eventName);
 let ready = new Proxy(readyTarget, {
 		set: (target, key, value) => {
 				target[key] = value;
-				if (key == 'bool') {
+				if (key == 'bool' && value == true) {
 					fxcd('begin').disabled = false;
 					fxcd('end').disabled = false;
 					if (value == false) {
@@ -86,6 +86,7 @@ function filter(contractList, rentablesList) {
 	
 	const header = contractList.shift();
 	const out = contractList.filter((c) => {
+			
 			//	tidsfilter
 			if (ready['bool']) {
 				if (dateWithDefault(c[contractIdx['startdato']], defaultBegin) > end
@@ -93,11 +94,11 @@ function filter(contractList, rentablesList) {
 					return false;
 				}
 			}
+			
 			//	lokasjonsfilter
 			for (let i = 1; i < rentablesList.length; i += 1) {
-				
 				if (c[contractIdx['fasilitetsnummer']] == rentablesList[i][rentableIdx['seksjonsnummer']]) {
-					if (c[contractIdx['bygningsnummer']] == rentablesList[i][rentableIdx['bygningsnummer']]) {
+					if (c[contractIdx['bygningsnummer']] == rentablesList[i][rentableIdx['bygningsnavn']].split(" ")[0]) {
 						return true;
 					}
 				}
