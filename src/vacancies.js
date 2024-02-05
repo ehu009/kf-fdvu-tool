@@ -20,12 +20,7 @@ function filter(owner, rentablesList) {
 					return (row[rentableIdx['eierform']] == 'Tromsøbolig KF');
 				
 				case 'BK':
-					let keep = false;
-					keep |= (row[rentableIdx['eierform']] == 'Leid');
-					keep |= (row[rentableIdx['eierform']] == 'Leid - Midlertidig bolig');
-					keep |= (row[rentableIdx['eierform']] == 'Leid - Driftet');
-					keep |= (row[rentableIdx['eierform']] == 'Tildelingsrett');
-					return keep;
+					return (['Leid', 'Leid - Midlertidig bolig', 'Leid - Driftet', 'Tildelingsrett'].includes(row[rentableIdx['eierform']]));
 				
 				default:
 					return false;
