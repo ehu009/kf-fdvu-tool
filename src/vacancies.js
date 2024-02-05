@@ -22,7 +22,7 @@ function filter(owner, rentablesList) {
 				case 'BK':
 					let keep = false;
 					keep |= (row[rentableIdx['eierform']] == 'Leid');
-					keep |= (row[rentableIdx['eierform']] == 'Leid - Midlertidig');
+					keep |= (row[rentableIdx['eierform']] == 'Leid - Midlertidig bolig');
 					keep |= (row[rentableIdx['eierform']] == 'Leid - Driftet');
 					keep |= (row[rentableIdx['eierform']] == 'Tildelingsrett');
 					return keep;
