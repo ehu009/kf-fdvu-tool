@@ -15,8 +15,7 @@ function setupVacancyFilter() {
 
 
 function vacancyTest() {
-	let owner = "BK";
-
+	
 	const rentables = [
 			['Nummer', 'Navn', 'Merknad', 'Adresse', 'Fasilitet', 'Eiendom', 'Bygning', 'Region', 'Kategori bolig', 'Formål', 'Status utleie', 'Plassering', 'Standard', 'Korreksjonsfaktorer', 'Seksjonstype', 'Mengde', 'Sum', 'Anskaffelsespris', 'Anskaffet dato', 'SSB nummer', 'Antall rom', 'Aktiv', 'Utleibar', 'Løpenummer', 'Leietaker nummer', 'Leietaker', 'Eierform'],
 			['111610064', 'Alaskasvingen 4C', 'TV og internett inkludert i husleie. Standard hastighet. Canal Digital.  Dugnad i sameiet vår og snørydding av svalgang, trapp og foran heis på rullering Adkomst: 3 etg med trapp og heis Røyking og dyrehold: ikke tillatt Garasjeplass i parkeringsanlegg  Søppelsug midt på bygget - bruk brikke Se under fanen Dokument for mer informasjon', 'Alaskasvingen 4C  9013 TROMSØ ', '317201 Alaskasvingen 4', '3172 Alaskasvingen', '317201 Alaskasvingen 4', 'Tromsøya nord', 'Bolig', 'Ukrainabolig', '', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Normal', 'Ingen korreksjon', 'Flyktningebolig', '77', '14754,6', '16 500', '01.04.2022', '', '3', 'False', 'False', '', '', '', 'Leid - Midlertidig bolig'],
@@ -71,14 +70,25 @@ function vacancyTest() {
 			['114613216', 'Stakkevollvegen 303, H0210', 'Studioleilighet på plan 2. Bygget har heis.  Fullt møblert med garderobe, dobbeltseng, vaskemaskin, håndklær, kjøl-og frys, koketopp og stekovn, vannkoker og kjøkkenutstyr.  WIFI inkludert. Ikke anledning til å henge opp noe eller ta hull i vegger. Ikke anledning til å supplere med ekstra møbler, kun ekstra seng. Røyking/dyrehold: ikke tillatt. Fellesarealer/atrium med gapahuk og benker. Ingen bod. Tilgang til sykkelparkering i felles låsbart rom. Ingen parkering. Postkasse merket med leilighetsnr ved inngang. Nøkkelbrikker. Søppel: ? Dagligvarebutikk i plan 1.', 'Stakkevollvegen 303 H0210  9019 TROMSØ ', '320201 Stakkevollvegen 303', '3202 Stakkevollvegen 303', '320201 Stakkevollvegen 303', 'Tromsøya nord', 'Bolig', 'Ukrainabolig', 'Under renovering', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Høy', 'Ingen korreksjon', 'Flyktningebolig', '23,6', '9899,98', '', '01.10.2022', '', '1', 'True', 'True', '', '', '', 'Tromsøbolig KF']
 		];
 	
-	const wanted1 = [];
-	const wanted2 = [];
+	/*	expected result for KF	*/
+	const wanted1 = [
+			['Nummer', 'Navn', 'Merknad', 'Adresse', 'Fasilitet', 'Eiendom', 'Bygning', 'Region', 'Kategori bolig', 'Formål', 'Status utleie', 'Plassering', 'Standard', 'Korreksjonsfaktorer', 'Seksjonstype', 'Mengde', 'Sum', 'Anskaffelsespris', 'Anskaffet dato', 'SSB nummer', 'Antall rom', 'Aktiv', 'Utleibar', 'Løpenummer', 'Leietaker nummer', 'Leietaker', 'Eierform'],
+			['114613214', 'Stakkevollvegen 303, H0208', 'Studioleilighet på plan 2. Bygget har heis.  Fullt møblert med garderobe, dobbeltseng, vaskemaskin, håndklær, kjøl-og frys, koketopp og stekovn, vannkoker og kjøkkenutstyr.  WIFI inkludert. Ikke anledning til å henge opp noe eller ta hull i vegger. Ikke anledning til å supplere med ekstra møbler, kun ekstra seng. Røyking/dyrehold: ikke tillatt. Fellesarealer/atrium med gapahuk og benker. Ingen bod. Tilgang til sykkelparkering i felles låsbart rom. Ingen parkering. Postkasse merket med leilighetsnr ved inngang. Nøkkelbrikker. Søppel: ? Dagligvarebutikk i plan 1.', 'Stakkevollvegen 303 H0208  9019 TROMSØ ', '320201 Stakkevollvegen 303', '3202 Stakkevollvegen 303', '320201 Stakkevollvegen 303', 'Tromsøya nord', 'Bolig', 'Ukrainabolig', 'Klar til tildeling', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Høy', 'Ingen korreksjon', 'Flyktningebolig', '23,6', '9899,98', '', '01.10.2022', '', '1', 'True', 'True', '', '', '', 'Tromsøbolig KF']
+		];
+	
+	/*	expected result for BK	*/
+	const wanted2 = [
+			['Nummer', 'Navn', 'Merknad', 'Adresse', 'Fasilitet', 'Eiendom', 'Bygning', 'Region', 'Kategori bolig', 'Formål', 'Status utleie', 'Plassering', 'Standard', 'Korreksjonsfaktorer', 'Seksjonstype', 'Mengde', 'Sum', 'Anskaffelsespris', 'Anskaffet dato', 'SSB nummer', 'Antall rom', 'Aktiv', 'Utleibar', 'Løpenummer', 'Leietaker nummer', 'Leietaker', 'Eierform'],			
+			['114613177', 'Senjavegen 40', 'Leilighet i enebolig. Inkludert 1 parkeringsplass. Delvis møblert, røyk/dyr ikke tillatt, innvendig bod. Forbeholdt fremleie til ukrainske flyktninger', 'Senjavegen 40  9012 TROMSØ ', '317701 Senjavegen 40', '3177 Senjavegen 40', '317701 Senjavegen 40', 'Tromsøya sør', 'Bolig', 'Ukrainabolig', 'Klar til tildeling', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Normal', 'Ingen korreksjon', 'Komm.bolig', '75', '13483', '13 500', '11.04.2022', '', '3', 'True', 'True', '', '', '', 'Leid - Midlertidig bolig'],
+			['926010204', 'Seminarbakken 4, H0204, Rom 4', 'Møblert (se inventarliste). Fellesarealer: Spiserom/kjøkken, oppholdsrom, vaskerom, 1 toalett, 6 bad. Parkering: 1 delt parkeringsplass foran inngang til 2. etg. Renhold: Fellesarealer blir vasket 2 ganger per uke.', 'Seminarbakken 4, H0204  9008 TROMSØ ', '092601 Seminarbakken 4', '0926 Seminarbakken 4', '092601 Seminarbakken 4', 'Tromsøya sør', 'Bolig', 'Ukrainabolig', 'Klar til tildeling', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Høy', '', 'Flyktningebolig', '14,5', '12204', '13 560,3', '01.12.2023', '', '1', 'True', 'True', '', '', '', 'Leid'],
+			['926010214', 'Seminarbakken 4, H0214, Rom 14', 'Møblert (se inventarliste). Fellesarealer: Spiserom/kjøkken, oppholdsrom, vaskerom, 1 toalett, 6 bad. Parkering: 1 delt parkeringsplass foran inngang til 2. etg. Renhold: Fellesarealer blir vasket 2 ganger per uke.', 'Seminarbakken 4, H0214  9008 TROMSØ ', '092601 Seminarbakken 4', '0926 Seminarbakken 4', '092601 Seminarbakken 4', 'Tromsøya sør', 'Bolig', 'Ukrainabolig', 'Klar til tildeling', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Høy', '', 'Flyktningebolig', '15', '12625', '14 027,9', '01.12.2023', '', '1', 'True', 'True', '', '', '', 'Leid - Driftet'],
+			['114613224', 'Stakkevollvegen 303, H0218', 'Studioleilighet på plan 2. Bygget har heis.  Fullt møblert med garderobe, dobbeltseng, vaskemaskin, håndklær, kjøl-og frys, koketopp og stekovn, vannkoker og kjøkkenutstyr.  WIFI inkludert. Ikke anledning til å henge opp noe eller ta hull i vegger. Ikke anledning til å supplere med ekstra møbler, kun ekstra seng. Røyking/dyrehold: ikke tillatt. Fellesarealer/atrium med gapahuk og benker. Ingen bod. Tilgang til sykkelparkering i felles låsbart rom. Ingen parkering. Postkasse merket med leilighetsnr ved inngang. Nøkkelbrikker. Søppel: ? Dagligvarebutikk i plan 1.', 'Stakkevollvegen 303 H0218  9019 TROMSØ ', '320201 Stakkevollvegen 303', '3202 Stakkevollvegen 303', '320201 Stakkevollvegen 303', 'Tromsøya nord', 'Bolig', 'Ukrainabolig', 'Klar til tildeling', 'Tromsøya (minus Hamna), Tromsdalen (Tomasjordnes - Solligården)', 'Høy', 'Ingen korreksjon', 'Flyktningebolig', '23,6', '9899,98', '', '01.10.2022', '', '1', 'True', 'True', '', '', '', 'Tildelingsrett']
+		];
+	
 	
 	let out = true;
-	out = out & compareCSV(wanted1, filter(owner, rentables));
-	
-	owner = "KF";
-	out = out & compareCSV(wanted2, filter(owner, rentables));
+	out = out & compareCSV(wanted1, filter('KF', rentables));
+	out = out & compareCSV(wanted2, filter('BK', rentables));
 	
 	return out;
 }
@@ -86,4 +96,4 @@ function vacancyTest() {
 
 function unitTest() {
 	return vacancyTest();
-};
+}
