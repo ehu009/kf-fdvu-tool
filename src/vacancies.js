@@ -4,7 +4,53 @@
 
 
 function filter(owner, rentablesList) {
-	const out = [];
+	let out = [];
+	
+	const header = rentablesList.shift();
+	
+	/*	filtrer bort seksjoner med kontrakter 	*/
+	out = out.filter((row) => {
+			return (row[rentableIdx['løpenummer']] == '');
+		});
+	
+	/*	filtrer etter eierform	*/
+	out = rentablesList.filter((row) => {
+			switch(owner) {
+				case 'KF':
+					return (row[rentableIdx['eierform']] == 'Tromsøbolig KF');
+				
+				case 'BK':
+					let keep = false;
+					keep |= (row[rentableIdx['eierform']] == 'Leid');
+					keep |= (row[rentableIdx['eierform']] == 'Leid - Midlertidig');
+					keep |= (row[rentableIdx['eierform']] == 'Leid - Driftet');
+					keep |= (row[rentableIdx['eierform']] == 'Tildelingsrett');
+					return keep;
+				
+				default:
+					return false;
+			}
+		});
+	
+	/*	filtrer etter aktiv / utleibar	*/
+	out = out.filter((row) => {
+			if (row[rentableIdx['aktiv']] == 'False') {
+				return false;
+			}
+			if (row[rentableIdx['utleibar']] == 'False') {
+				return false;
+			}
+			return true;
+		});
+	
+	/*	filtrer etter utleiestatus	*/
+	out = out.filter((row) => {
+			return (row[rentableIdx['utleiestatus']] == 'Klar til tildeling');
+		});
+	
+	
+	rentablesList.unshift(header);
+	out.unshift(header);
 	
 	return out;
 }
