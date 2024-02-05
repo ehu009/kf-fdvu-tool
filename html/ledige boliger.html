@@ -4,26 +4,29 @@
 <script type="text/javascript" src="../src/dom.js"></script>
 <script type="text/javascript" src="../src/util.js"></script>
 <script type="text/javascript" src="../src/tests.js"></script>
-<script type="text/javascript" src="../src/keys.js"></script>
+<script type="text/javascript" src="../src/vacancies.js"></script>
 <link rel="stylesheet" href="../src/style.css"/>
 </head>
 
-<body onload="setupKeyFilter();"></body>
-<h2>Filtrer nøkler basert på seksjon</h2>
+<body onload="setupVacancyFilter();"></body>
+<h2>List alle seksjoner klare for tildeling</h2>
 <button type="button" onclick="testAndAlert();">Kjør enhetstest</button>
 <br/>
 <br/>
 
 <div class="cont" id="container">
-Liste over ønskede seksjoner:
+Liste over alle seksjoner:
 <br/>
 <input type="file" id="rentables"></input>
 <br/>
 <br/>
 
-Liste over alle nøkler:
+Forvalter:
 <br/>
-<input type="file" id="keys"></input>
+<select id ="owner">
+<option value="BK" selected>Tromsø Boligkontor</option>
+<option value="KF">Tromsøbolig KF</option>
+</select>
 <br/>
 <br/>
 
