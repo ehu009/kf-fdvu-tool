@@ -56,7 +56,48 @@ function filter(owner, rentablesList) {
 }
 
 function setupVacancyFilter() {
+	const eventName = 'dataReady';
+	let readyTarget = {
+			fileA: 2
+		};
+	const readyEvent = new Event(eventName);
+	let ready = new Proxy(readyTarget, {
+			set: (target, key, value) => {
+					target[key] = value;
+					fxcd('download').disabled = true;
+					if (target['fileA'] < 2) {
+						fxcd('filter').disabled = false;
+						if (target['fileA'] < 1) {
+							document.dispatchEvent(readyEvent);
+						}
+					}
+					return true;
+				}
+		});
 	
+	
+	const spinner = fxcd('spinner');
+	
+	let inputData = null;
+	
+	fileChangeEvents(['rentables'], ready);
+	
+	
+	document.addEventListener(eventName, () => {
+			
+			const btn = fxcd('download');
+			btn.disabled = false;
+			
+			const owner = fxcd('owner').value;
+			downloadButton(btn, filter(owner, inputData['rentables']), 'seksjoner klare for tildeling');
+			
+			hide(spinner);
+		});
+	
+	fxcd('filter').onclick = () => {
+			show(spinner);
+			inputData = fileReadInput(['rentables'], ready);
+		};
 }
 
 
