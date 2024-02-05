@@ -173,9 +173,9 @@ function vacancyTest() {
 		];
 	
 	
-	let out = true;
-	out = out & compareCSV(wanted1, filter('KF', rentables));
-	out = out & compareCSV(wanted2, filter('BK', rentables));
+	let out = false;
+	out |= compareCSV(wanted1, filter('KF', rentables));
+	out |= compareCSV(wanted2, filter('BK', rentables));
 	
 	return out;
 }
