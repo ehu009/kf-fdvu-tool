@@ -52,7 +52,7 @@ function applyRentable(rowFn, enterFn) {
 	let category = '';
 	['eierform', 'formål', 'seksjonstype'].forEach((key) => {
 			let v = rowFn(key);
-			if ( v!= '') {
+			if (v != '' && v != undefined) {
 				if (category != '') {
 					category += ', ';
 				}
