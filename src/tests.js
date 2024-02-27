@@ -13,10 +13,12 @@ function compareCSV(wanted, gotten) {
 		const row = wanted[i];
 		const gotRow = gotten[i];
 		if (row.length != gotRow.length) {
+			xc("comparison: wrong length (" + row.length + " vs. " + gotRow.length + ")");
 			return true;
 		}
 		for (let c = 0; c < row.length; c += 1) {
 			if (row[c] != gotRow[c]) {
+				xc("comparison: wrong value in row " + i + " column " + c + " ('" + row[c] + "' vs. '" + gotRow[c] + ")");
 				return true;
 			}
 		}
