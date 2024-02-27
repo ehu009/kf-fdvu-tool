@@ -562,7 +562,7 @@ function testFacilities() {
 	desire(1, 'malernummerstrom', 'TK-27464433');
 	desire(2, 'antallsoverom', '3');
 	desire(2, 'malernummerstrom', 'Deles med 1A - #27920411: 49154 - 20.05.2023');
-	desire(3, 'malernummerstrom', '');
+	desire(3, 'malernummerstrom', '-');
 	desire(4, 'malernummerstrom', 'Måler 1: 283476 KWh Måler 2: TK 67314 Merknad: Avlest 17.11.09');
 	
 	const result = [koboHeader()];
