@@ -60,15 +60,17 @@ function calcLoss(begin, end, contracts, rentables) {
 				start = new Date(limit);
 			}
 			
-			let diff = '';
+			let diff = '-';
 			if (!isInvalid(acqPrice)) {
 				diff = acqPrice - rentPrice;
 			}
 			
 			if (m.has(key)) {
 				m.get(key).filter((row) => {
-						const building = row[contractIdx['bygningsnummer']].trim() +' '+ row[contractIdx['bygningsnavn']].trim();
-						return building == rentable[rentableIdx['fasilitet']].trim();
+          
+						const building = row[contractIdx['bygningsnummer']].trim();
+            return rentable[rentableIdx['fasilitet']].trim().includes(building);
+            
 					}).forEach((row) => {
 							const from = dateWithDefaultBegin(row[contractIdx['startdato']]);
 							const to = dateWithDefaultEnd(row[contractIdx['sluttdato']]);
@@ -106,13 +108,15 @@ function calcLoss(begin, end, contracts, rentables) {
 								
 								const rentDays = millisecondsToDays(limit - current);
 								
-								if (row[contractIdx['kontrakttype']] == 'Vedlikehold') {
+                daysVacant -= rentDays;
+								if ((row[contractIdx['kontrakttype']] == 'Vedlikehold')
+                  || ignoreContracts.includes(row[contractIdx['leietakernavn']])) {
 									daysRepair += rentDays;
 									repair += rentDays * dailySection;
-								}
-								daysVacant -= rentDays;
-								vacancy -= rentDays * dailyContract;
-								
+                  vacancy -= rentDays * dailySection;
+								} else {
+								  vacancy -= rentDays * dailyContract;
+                }
 								current = new Date(limit);
 							}
 						});
@@ -229,12 +233,12 @@ function lossTest() {
 	const end = fdvuDateToDate('01.02.2008');
 	
 	const contracts = contractSample.concat([
-			['K00006443', 'Kontrakt for Driftsadministrasjonen', '', 'Driftsadministrasjonen', '1118047541', '239119', '', '', '10.01.2008', '9739,12', '01.01.3000', '01.01.2024', '01.01.2025', '24100610114', '24100610114 Sørslettvegen 3 - Underetasje', '1180', 'Åsgård', '118002', 'Åsgård Lars Eriksens vei 20', '', 'Etterskudd Agresso', '1', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig']
-		]);
+    ['K00006443', 'Kontrakt for Driftsadministrasjonen', '', 'Driftsadministrasjonen', '1118047541', '239119', '', '30.11.2007', '10.01.2008', '9739,12', '01.01.3000', '01.01.2024', '01.01.2025', '24100610114', '24100610114 Sørslettvegen 3 - Underetasje', '1180', 'Åsgård', '118007', 'Åsgård Lars Eriksens vei 20', 'Vedlikehold', 'Etterskudd Agresso', '1', '', 'Husleie indeksreguleres et år etter kontrakten starter, deretter årlig.', '', 'Løpende', '', '0', 'Månedlig', 'Månedlig', 'Januar', 'False', '', 'Rus og Psykiatribolig']
+  ]);
 	
 	const wanted = [
 			['Seksjonsnummer', 'Navn', 'Dager vakant', 'Vakansetap', 'Dager vedlikehold', 'Vedlikeholdstap', 'Anskaffelse minus seksjonspris'],
-			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21*(11247/31)), '10', numToFDVUNum(10*(11247/31)), '-'],
+			['24100610114', 'Sørslettvegen 3 - Underetasje', '21', numToFDVUNum(21 * 11247 / 31), '10', numToFDVUNum(10*(11247/31)), '-'],
 			['24100610115', 'Sørslettvegen 3, H0101', '31', '8723,2', '0', '0', '-'],
 			['24979620028', 'Sørslettveien 8 U 0101', '0', '-48,1200000000008', '0', '0', '-'],
 			['24979620029', 'Sørslettveien 8 U 0102', '31', '9691', '0', '0', '-'],
@@ -242,8 +246,10 @@ function lossTest() {
 			['24979620031', 'Sørslettveien 8 H 0202', '31', '9696', '0', '0', '5304']
 		];
 	let pp = calcLoss(begin, end, contracts, rentableSample)
-	xc(wanted)
-	xc(pp)
+	/*
+	xc(wanted);
+	xc(pp);
+	*/
 	return compareCSV(wanted, pp);
 }
 
